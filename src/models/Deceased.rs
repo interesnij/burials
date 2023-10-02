@@ -27,3 +27,100 @@ pub struct NewDeceased {
     pub data: Option<String>,
     pub memory_words: Option<String>
 }
+
+
+impl Deceased {
+    // Метод для создания нового объекта структуры.
+    pub fn new(id: i32, place_id: i32, first_name: String, last_name: String, 
+               middle_name: Option<String>, birth_date: NaiveDate, death_date: NaiveDate, 
+               photo_link: Option<String>, data: Option<String>, memory_words: Option<String>) -> Self {
+        Deceased {
+            id,
+            place_id,
+            first_name,
+            last_name,
+            middle_name,
+            birth_date,
+            death_date,
+            photo_link,
+            data,
+            memory_words,
+        }
+    }
+
+    // Метод для поиска объекта по идентификатору.
+    pub fn find_by_id(id: i32, connection: &PgConnection) -> Option<Self> {
+        use crate::schema::deceased::dsl::*;
+
+        let result = deceased.filter(id.eq(id))
+            .first(connection)
+            .optional()
+            .expect("Failed to retrieve Deceased by ID");
+
+        result
+    }
+
+    // Метод для получения всех объектов данной структуры.
+    pub fn find_all(connection: &PgConnection) -> Vec<Self> {
+        use crate::schema::deceased::dsl::*;
+
+        let results = deceased.load::<Deceased>(connection)
+            .expect("Failed to retrieve all Deceased records");
+
+        results
+    }
+
+    // Метод для обновления существующего объекта.
+    pub fn update(&self, connection: &PgConnection) -> Result<(), diesel::result::Error> {
+        use crate::schema::deceased::dsl::*;
+
+        diesel::update(deceased.filter(id.eq(self.id)))
+            .set(self)
+            .execute(connection)?;
+
+        Ok(())
+    }
+
+    // Метод для удаления объекта.
+    pub fn delete(&self, connection: &PgConnection) -> Result<(), diesel::result::Error> {
+        use crate::schema::deceased::dsl::*;
+
+        diesel::delete(deceased.filter(id.eq(self.id)))
+            .execute(connection)?;
+
+        Ok(())
+    }
+
+    // Метод для поиска объектов по значению определенного поля.
+    pub fn find_by_field(field_value: &str, connection: &PgConnection) -> Vec<Self> {
+        use crate::schema::deceased::dsl::*;
+
+        let results = deceased.filter(first_name.eq(field_value).or(last_name.eq(field_value)))
+            .load::<Deceased>(connection)
+            .expect("Failed to retrieve Deceased by field value");
+
+        results
+    }
+
+    // Метод для подсчета общего количества объектов данной структуры.
+    pub fn count(connection: &PgConnection) -> usize {
+        use crate::schema::deceased::dsl::*;
+
+        let count = deceased.count()
+            .get_result(connection)
+            .expect("Failed to count Deceased records");
+
+        count
+    }
+}
+
+impl NewDeceased {
+    // Метод для создания нового объекта на основе данных из структуры New.
+    pub fn create(new_data: NewDeceased, connection: &PgConnection) -> Result<Deceased, diesel::result::Error> {
+        use crate::schema::deceased;
+
+        diesel::insert_into(deceased::table)
+            .values(&new_data)
+            .get_result(connection)
+    }
+}
