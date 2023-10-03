@@ -1,3 +1,68 @@
+
+-- Таблица для хранения данных о пользователях
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,               -- Уникальный идентификатор пользователя
+    first_name VARCHAR(255) NOT NULL,    -- Имя пользователя
+    last_name VARCHAR(255) NOT NULL,     -- Фамилия пользователя
+    middle_name VARCHAR(255),            -- Отчество пользователя
+    email VARCHAR(255) NOT NULL,         -- Адрес электронной почты
+    phone_number VARCHAR(20) NOT NULL,   -- Номер телефона пользователя
+    description TEXT,                    -- Описание пользователя
+    photo_link VARCHAR(255)              -- Ссылка на фотографию пользователя
+);
+
+-- Таблица для создания новых объектов пользователя
+CREATE TABLE IF NOT EXISTS new_users (
+    id SERIAL PRIMARY KEY,               -- Уникальный идентификатор (автогенерируемый)
+    first_name VARCHAR(255) NOT NULL,    -- Имя пользователя
+    last_name VARCHAR(255) NOT NULL,     -- Фамилия пользователя
+    middle_name VARCHAR(255),            -- Отчество пользователя
+    email VARCHAR(255) NOT NULL,         -- Адрес электронной почты
+    phone_number VARCHAR(20) NOT NULL,   -- Номер телефона пользователя
+    description TEXT,                    -- Описание пользователя
+    photo_link VARCHAR(255)              -- Ссылка на фотографию пользователя
+);
+
+-- Таблица для хранения данных о пользователях
+CREATE TABLE IF NOT EXISTS user_list (
+    id SERIAL PRIMARY KEY,                -- Уникальный идентификатор
+    user_id VARCHAR(255) NOT NULL,        -- ID пользователя
+    review_ids INTEGER[],                 -- Идентификаторы оставленных отзывов (массив целых чисел)
+    comments_ids INTEGER[],               -- Идентификаторы оставленных комментариев (массив целых чисел)
+    organizations_ids INTEGER[],          -- Идентификаторы зарегистрированных организаций (массив целых чисел)
+    deceaseds_ids INTEGER[]               -- Идентификаторы зарегистрированных усопших (массив целых чисел)
+);
+
+-- Таблица для создания новых объектов пользователя
+CREATE TABLE IF NOT EXISTS new_user_list (
+    id SERIAL PRIMARY KEY,                -- Уникальный идентификатор (автогенерируемый)
+    user_id VARCHAR(255) NOT NULL,        -- ID пользователя
+    review_ids INTEGER[],                 -- Идентификаторы оставленных отзывов (массив целых чисел)
+    comments_ids INTEGER[],               -- Идентификаторы оставленных комментариев (массив целых чисел)
+    organizations_ids INTEGER[],          -- Идентификаторы зарегистрированных организаций (массив целых чисел)
+    deceaseds_ids INTEGER[]               -- Идентификаторы зарегистрированных усопших (массив целых чисел)
+);
+
+
+
+-- Таблица для хранения секретных данных пользователей
+CREATE TABLE IF NOT EXISTS user_secrets (
+    id SERIAL PRIMARY KEY,                -- Уникальный идентификатор
+    user_id VARCHAR(255) NOT NULL,        -- ID пользователя
+    password VARCHAR(255) NOT NULL,       -- Пароль пользователя
+    phone_number VARCHAR(20) NOT NULL     -- Номер телефона пользователя
+);
+
+-- Таблица для создания новых объектов секретных данных пользователей
+CREATE TABLE IF NOT EXISTS new_user_secrets (
+    id SERIAL PRIMARY KEY,                -- Уникальный идентификатор (автогенерируемый)
+    user_id VARCHAR(255) NOT NULL,        -- ID пользователя
+    password VARCHAR(255) NOT NULL,       -- Пароль пользователя
+    phone_number VARCHAR(20) NOT NULL     -- Номер телефона пользователя
+);
+
+
+
 -- Создание таблицы для хранения существующих записей об усопших
 CREATE TABLE IF NOT EXISTS deceased (
     id SERIAL PRIMARY KEY,              -- Уникальный идентификатор записи
@@ -108,19 +173,6 @@ CREATE TABLE IF NOT EXISTS Service (
     price DOUBLE PRECISION NOT NULL,     -- Цена за услугу (используется DOUBLE PRECISION для хранения числа с плавающей точкой)
     city_id INT NOT NULL,                -- Идентификатор города, где предоставляется услуга
     review_ids INT[]                    -- Массив идентификаторов отзывов об услуге
-);
---______________________________________________________________________________________
--- Создание таблицы "User" для хранения данных о пользователях
-CREATE TABLE IF NOT EXISTS "User" (
-    id SERIAL PRIMARY KEY,               -- Уникальный идентификатор
-    first_name TEXT NOT NULL,            -- Имя пользователя
-    last_name TEXT NOT NULL,             -- Фамилия пользователя
-    middle_name TEXT,                    -- Отчество пользователя
-    email TEXT NOT NULL UNIQUE,          -- Адрес электронной почты (уникальный)
-    phone_number TEXT,                   -- Номер телефона пользователя
-    description TEXT,                    -- Описание пользователя
-    photo_link TEXT,                     -- Ссылка на фотографию пользователя
-    deceased_ids INT[]                   -- Массив идентификаторов зарегистрированных усопших
 );
 --______________________________________________________________________________________
 -- Создание таблицы "Comment" для хранения данных о комментариях
