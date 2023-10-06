@@ -1,6 +1,53 @@
-config.route("/place{id}/", web::get().to(place_page));
+use actix_web::{
+    web,
+    web::block,
+    HttpRequest,
+    HttpResponse,
+    error::InternalError,
+    http::StatusCode,
+};
+use crate::errors::Error;
+use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
+use crate::models::{
+    Deceased,
+    Geo,
+    Organization,
+    Places,
+    Reiew,
+    Service,
+    Words,
+    User,
+};
+use sailfish::TemplateOnce;
+use diesel::{
+    RunQueryDsl,
+    ExpressionMethods,
+    QueryDsl,
+    PgConnection,
+    Connection,
+};
+use actix_multipart::{Field, Multipart};
+use futures::StreamExt;
+use serde::{Deserialize, Serialize};
+use std::{
+    io::Write,
+    fs::create_dir_all,
+    str,
+};
+use crate::schema;
+use crate::utils::establish_connection;
 
 
-config.route("/all_places_city{id}/", web::get().to(all_places_city_page));
-config.route("/all_places_region{id}/", web::get().to(all_places_region_page));
-config.route("/all_places_country{id}/", web::get().to(all_places_country_page));
+
+
+
+
+pub fn place_routes(config: &mut web::ServiceConfig) {
+    config.route("/place/{id}/", web::get().to(place_page));
+
+    config.route("/all_places_city/{id}/", web::get().to(all_places_city_page));
+    config.route("/all_places_region/{id}/", web::get().to(all_places_region_page));
+    config.route("/all_places_country/{id}/", web::get().to(all_places_country_page));
+}
+
+
