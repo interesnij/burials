@@ -31,11 +31,10 @@ pub struct NewDeceased {
 
 impl Deceased {
     // Метод для создания нового объекта структуры.
-    pub fn new(id: i32, place_id: i32, first_name: String, last_name: String, 
+    pub fn new( place_id: i32, first_name: String, last_name: String, 
                middle_name: Option<String>, birth_date: NaiveDate, death_date: NaiveDate, 
                photo_link: Option<String>, data: Option<String>, memory_words: Option<String>) -> Self {
         Deceased {
-            id,
             place_id,
             first_name,
             last_name,
@@ -61,7 +60,7 @@ impl Deceased {
     }
 
     // Метод для получения всех объектов данной структуры.
-    pub fn find_all(connection: &PgConnection) -> Vec<Self> {
+    pub fn get_all_deceased(connection: &PgConnection) -> Vec<Self> {
         use crate::schema::deceased::dsl::*;
 
         let results = deceased.load::<Deceased>(connection)
