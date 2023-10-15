@@ -12,7 +12,9 @@ pub struct Deceased {
     pub death_date: NaiveDate,     // Дата смерти усопшего
     pub photo_link: Option<String>, // Ссылка на фото усопшего (может быть отсутствовать)
     pub data: Option<String>,       // Дополнительные данные (description) (может быть отсутствовать)
-    pub memory_words: Option<String>// Слова памяти (комментарии) (может быть отсутствовать)
+    pub memory_words: Option<String>,// Слова памяти (комментарии) (может быть отсутствовать)
+    pub user_id:  i32
+
 }
 
 // Структура для создания новых записей об усопших
@@ -26,6 +28,8 @@ pub struct NewDeceased {
     pub photo_link: Option<String>,
     pub data: Option<String>,
     pub memory_words: Option<String>
+    pub user_id:  i32
+
 }
 
 
@@ -33,7 +37,7 @@ impl Deceased {
     // Метод для создания нового объекта структуры.
     pub fn new( place_id: i32, first_name: String, last_name: String, 
                middle_name: Option<String>, birth_date: NaiveDate, death_date: NaiveDate, 
-               photo_link: Option<String>, data: Option<String>, memory_words: Option<String>) -> Self {
+               photo_link: Option<String>, data: Option<String>, memory_words: Option<String>, user_id: i32) -> Self {
         Deceased {
             place_id,
             first_name,
@@ -44,6 +48,7 @@ impl Deceased {
             photo_link,
             data,
             memory_words,
+            user_id,
         }
     }
 

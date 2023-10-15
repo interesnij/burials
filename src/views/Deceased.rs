@@ -43,11 +43,11 @@ use crate::utils::establish_connection;
 
 
 pub fn deceased_routes(config: &mut web::ServiceConfig) {
-    config.route("/all_deceased_place{id}/", web::get().to(all_deceased_place_page));
+    config.route("/all_deceased_place/{id}/", web::get().to(all_deceased_place_page));
     config.route("/deceased/{id}/", web::get().to(deceased_page));
-
-    config.route("/edit_deceased/{id}/", web::get().to(edit_deceased_page));
-    config.route("/created_deceased/", web::get().to(created_deceased_page));
+    config.route("/delete_deceased/{id}/", web::post().to(delete_deceased_page));
+    config.route("/edit_deceased/{id}/", web::post().to(edit_deceased_page));
+    config.route("/create_deceased/", web::post().to(create_deceased_page));
 }
 
 //-------------------------------------------------------------------------
@@ -241,6 +241,78 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+pub async fn create_deceased_page(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if _request_user.is_admin() {
+            let form = deceased_form(payload.borrow_mut(), _request_user.id).await;
+            Deceased::create_deceased(form);
+        }
+    };
+    HttpResponse::Ok()
+}
+
+
+
+pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        let _deceased = block(move || Deceased::find_by_id(*_id)).await?; 
+        if _request_user.id == deceased.user_id {
+            let form = deceased_form(payload.borrow_mut(), _request_user.id).await;
+            Deceased.edit_deceased(form);
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        let _deceased = block(move || Deceased::find_by_id(*_id)).await?; 
+        if _request_user.id == deceased.user_id {
+            let form = deceased_form(payload.borrow_mut(), _request_user.id).await;
+            Deceased.delete_deceased();
+        }
+    };
+    HttpResponse::Ok()
+}
+
+//---------------------------------------------------------------------------------------
+
+#[derive(Debug, Clone)]
+pub struct UploadedFiles {
+    pub name: String,
+    pub path: String,
+}
+impl UploadedFiles {
+    fn new(filename: String, owner_id: i32) -> UploadedFiles {
+        use chrono::Datelike;
+
+        let now = chrono::Local::now().naive_utc();
+        let format_folder = format!(
+            "./media/{}/{}/{}/{}/",
+            owner_id.to_string(),
+            now.year().to_string(),
+            now.month().to_string(),
+            now.day().to_string(),
+        );
+        let format_path = format_folder.clone() + &filename.to_string();
+        // вариант для https
+        let create_path = format_folder.replace("./", "/my/");
+        // вариант для debug
+        //let create_path = format_folder.replace("./", "/");
+        create_dir_all(create_path).unwrap();
+
+        UploadedFiles {
+            name: filename.to_string(),
+            path: format_path.to_string(),
         }
     }
 }
