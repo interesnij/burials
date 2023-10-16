@@ -155,8 +155,8 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
             #[template(path = "mobile/deceased/anon_all_deceased_place_page.stpl")]
             struct Template {
                 request_user:   User,
-                cats:           Vec<Cat>,
-                all_tags:       Vec<SmallTag>,
+                place:           Vec<Place>,
+                all_deceaseds:       Vec<Deceased>,
             }
             let body = Template {
                 request_user:   _request_user,

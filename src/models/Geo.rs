@@ -96,9 +96,9 @@ impl Countries {
 //---------------------------------------------------------------------------------------------------
 use crate::schema::regions; // Замените на фактический путь к модулю schema
 
-// Структура Regions
+// Структура Region
 #[derive(Queryable, Debug)] // Добавляем Queryable для работы с базой данных и Debug для отладки
-pub struct Regions {
+pub struct Region {
     pub id: i32, // Уникальный идентификатор
     pub name: String, // Название региона
     pub geo_id: i32, // Идентификатор географического местоположения
@@ -107,34 +107,34 @@ pub struct Regions {
 
 // Структура NewRegions для создания новых объектов
 #[derive(Insertable, Debug)]
-#[table_name = "regions"]
-pub struct NewRegions {
+#[table_name = "region"]
+pub struct NewRegion {
     pub name: String, // Название региона
     pub geo_id: i32, // Идентификатор географического местоположения
     pub country_id: i32, // Идентификатор страны, к которой принадлежит регион
 }
 
 
-// Реализация методов для структуры Regions
-impl Regions {
+// Реализация методов для структуры Region
+impl Region {
     // Метод для создания нового объекта структуры.
     pub fn new(name: String, geo_id: i32, country_id: i32) -> Self {
-        Regions { id: 0, name, geo_id, country_id }
+        Region { id: 0, name, geo_id, country_id }
     }
 
     // Метод для поиска объекта по идентификатору.
     pub fn find_by_id(id: i32, connection: &PgConnection) -> Result<Option<Self>, Error> {
-        regions::table.find(id).first(connection).optional()
+        region::table.find(id).first(connection).optional()
     }
 
     // Метод для получения всех объектов данной структуры.
     pub fn find_all(connection: &PgConnection) -> Result<Vec<Self>, Error> {
-        regions::table.load(connection)
+        region::table.load(connection)
     }
 
     // Метод для обновления существующего объекта.
     pub fn update(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::update(regions::table.find(self.id))
+        diesel::update(region::table.find(self.id))
             .set(self)
             .execute(connection)?;
         Ok(())
@@ -142,27 +142,27 @@ impl Regions {
 
     // Метод для удаления объекта.
     pub fn delete(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::delete(regions::table.find(self.id)).execute(connection)?;
+        diesel::delete(region::table.find(self.id)).execute(connection)?;
         Ok(())
     }
 
     // Метод для поиска объектов по значению определенного поля.
     pub fn find_by_field(field_value: i32, field_name: &str, connection: &PgConnection) -> Result<Vec<Self>, Error> {
-        regions::table.filter(diesel::dsl::sql(&format!("{} = {}", field_name, field_value)))
+        region::table.filter(diesel::dsl::sql(&format!("{} = {}", field_name, field_value)))
             .load(connection)
     }
 
     // Метод для подсчета общего количества объектов данной структуры.
     pub fn count(connection: &PgConnection) -> Result<usize, Error> {
-        regions::table.count().get_result(connection)
+        region::table.count().get_result(connection)
     }
 }
 
-// Реализация метода для структуры NewRegions
-impl NewRegions {
+// Реализация метода для структуры NewRegion
+impl NewRegion {
     // Метод для создания нового объекта на основе данных из структуры New.
-    pub fn create(new_data: NewRegions, connection: &PgConnection) -> Result<Self, Error> {
-        diesel::insert_into(regions::table)
+    pub fn create(new_data: NewRegion, connection: &PgConnection) -> Result<Self, Error> {
+        diesel::insert_into(region::table)
             .values(&new_data)
             .get_result(connection)
     }
@@ -171,9 +171,9 @@ impl NewRegions {
 
 use crate::schema::citys; // Замените на фактический путь к модулю schema
 
-// Структура Citys
+// Структура City
 #[derive(Queryable, Debug)] // Добавляем Queryable для работы с базой данных и Debug для отладки
-pub struct Citys {
+pub struct City {
     pub id: i32, // Уникальный идентификатор
     pub name: String, // Название города
     pub geo_id: i32, // Идентификатор географического местоположения
@@ -183,10 +183,10 @@ pub struct Citys {
     pub lon: f64, // Долгота местоположения
 }
 
-// Структура NewCitys для создания новых объектов
+// Структура NewCity для создания новых объектов
 #[derive(Insertable, Debug)]
 #[table_name = "citys"]
-pub struct NewCitys {
+pub struct NewCity {
     pub name: String, // Название города
     pub geo_id: i32, // Идентификатор географического местоположения
     pub region_id: i32, // Идентификатор региона, к которому принадлежит город
@@ -195,10 +195,10 @@ pub struct NewCitys {
     pub lon: f64, // Долгота местоположения
 }
 
-impl Citys {
-    // Метод для создания нового объекта структуры Citys
+impl City {
+    // Метод для создания нового объекта структуры City
     pub fn new(name: String, geo_id: i32, region_id: i32, country_id: i32, lat: f64, lon: f64) -> Self {
-        Citys {
+        City {
             id: 0, // Выставляем нулевой ID, так как база данных автоматически генерирует ID
             name,
             geo_id,
@@ -211,17 +211,17 @@ impl Citys {
 
     // Метод для поиска объекта по идентификатору
     pub fn find_by_id(id: i32, connection: &PgConnection) -> Result<Option<Self>, Error> {
-        citys::table.find(id).first(connection).optional()
+        city::table.find(id).first(connection).optional()
     }
 
     // Метод для получения всех объектов данной структуры
     pub fn find_all(connection: &PgConnection) -> Result<Vec<Self>, Error> {
-        citys::table.load(connection)
+        city::table.load(connection)
     }
 
     // Метод для обновления существующего объекта
     pub fn update(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::update(citys::table.find(self.id))
+        diesel::update(city::table.find(self.id))
             .set(self)
             .execute(connection)?;
         Ok(())
@@ -229,25 +229,25 @@ impl Citys {
 
     // Метод для удаления объекта
     pub fn delete(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::delete(citys::table.find(self.id)).execute(connection)?;
+        diesel::delete(city::table.find(self.id)).execute(connection)?;
         Ok(())
     }
 
     // Метод для поиска объектов по значению определенного поля (пример по полю name)
     pub fn find_by_field(name: &str, connection: &PgConnection) -> Result<Vec<Self>, Error> {
-        citys::table.filter(citys::name.eq(name)).load(connection)
+        city::table.filter(city::name.eq(name)).load(connection)
     }
 
     // Метод для подсчета общего количества объектов данной структуры
     pub fn count(connection: &PgConnection) -> Result<usize, Error> {
-        citys::table.count().get_result(connection)
+        city::table.count().get_result(connection)
     }
 }
 
-impl NewCitys {
+impl NewCity {
     // Метод для создания нового объекта на основе данных из структуры NewCitys
     pub fn create(&self, connection: &PgConnection) -> Result<Citys, Error> {
-        diesel::insert_into(citys::table)
+        diesel::insert_into(city::table)
             .values(self)
             .get_result(connection)
     }

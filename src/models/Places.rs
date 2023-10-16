@@ -89,8 +89,8 @@ impl Place {
         places::table.find(id).first(connection).optional()
     }
 
-    // Метод для получения всех объектов данной структуры.
-    pub fn find_all(connection: &PgConnection) -> Result<Vec<Self>, Error> {
+    // Метод для получения всех объектов данной структуры.get_all_deceased
+    pub fn get_all_place(connection: &PgConnection) -> Result<Vec<Self>, Error> {
         places::table.load::<Place>(connection)
     }
 
