@@ -106,7 +106,7 @@ pub async fn all_organization_place_page(req: HttpRequest, _id: web::Path<i32>) 
             #[template(path = "desctop/organization/all_organization_place_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<Place>,
+                place:          Vec<Place>,
                 all_organization:  Vec<Organization>,
             }
             let body = Template {
