@@ -8,6 +8,7 @@ use std::{
     str,
 };
 
+//-----------------------------------------------------------
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DeceasedForms {
@@ -23,7 +24,6 @@ pub struct DeceasedForms {
     pub position:      i16,
     pub types:         i16,
 }
-
 
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
@@ -115,6 +115,8 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
     form
 }
 
+//-----------------------------------------------------------
+
 #[derive(Deserialize, Serialize, Debug)]
 pub struct PlaceForms {
     pub cemetery_name: String,               // Название кладбища (места)
@@ -133,8 +135,6 @@ pub struct PlaceForms {
     pub position:      i16,
     pub types:         i16,
 }
-
-
 
 // форма для элементов 
 pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
@@ -199,6 +199,149 @@ pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms
                 }
             }
         }
+
+        else if name == "city_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.city_id = _int;
+                }
+            }
+        }
+        else if name == "region_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.region_id = _int;
+                }
+            }
+        }
+        else if name == "country_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.country_id = _int;
+                }
+            }
+        }
+
+        else if name == "position" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i16 = s.parse().unwrap();
+                    form.position = _int;
+                }
+            }
+        }
+        else if name == "types" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i16 = s.parse().unwrap();
+                    form.types = _int;
+                }
+            }
+        }
+
+        else if name == "main_image" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string(), owner_id);
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                }
+                form.main_image = Some(file.path.clone().replace("./","/"));
+            }
+        }
+    }
+    form
+}
+
+//-----------------------------------------------------------
+
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct OrganizationForms {
+    pub name: String,               // Название организации
+    pub description: Option<String>,         // Описание организации
+    pub director: String,    // Руководитель организации
+    pub phone_number: String,        // Номер телефона организации
+    pub working_hours: Option<String>,        // Часы работы 
+    pub main_image: Option<String>, // Ссылки на фотографию
+    pub website: Option<String>,     // Веб-сайт организации (может быть пустым)
+    pub messenger_links: Option<String>, // Ссылки на мессенджеры организации
+    pub city_id: i32,                        // Идентификатор города, в котором находится организация
+    pub region_id: Option<i32>,                      // Идентификатор региона, к которому принадлежит организация
+    pub country_id: i32,                     // Идентификатор страны, к которой принадлежит место
+    pub slug:          String,
+    pub position:      i16,
+    pub types:         i16,
+}
+
+// форма для элементов 
+pub async fn organization_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
+    let mut form: PlaceForms = PlaceForms {
+        name:         "".to_string(),
+        description:         None,
+        director: "".to_string(),
+        phone_number: "".to_string(),
+        working_hours: None,
+        main_image:    None,
+        website:   None,  
+        messenger_links:   None,  
+        city_id: 0,
+        region_id: None,
+        country_id: 0,
+        slug:          "".to_string(),
+        position:      0,
+        types:         0,
+    };
+
+   
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        let name = field.name();
+        let string_list = ["name", "messenger_links","director", "website", "working_hours", "description", "phone_number", "slug"];
+
+        if string_list.contains(&name) {
+            let mut _content = "".to_string();
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "name" {
+                        form.name = data_string;
+                    } else if field.name() == "messenger_links" {
+                        form.messenger_links = Some(data_string);
+                    } else if field.name() == "director" {
+                        form.director = data_string;
+                    } else if field.name() == "website" {
+                        form.website = Some(data_string);
+                    } else if field.name() == "working_hours" {
+                        form.working_hours = Some(data_string);
+                    } else if field.name() == "description" {
+                        form.description = Some(data_string);
+                    } else if field.name() == "phone_number" {
+                        form.phone_number = data_string;
+                    } else if field.name() == "slug" {
+                        form.slug = data_string;
+                    }
+                }
+            }
+        }
+
 
         else if name == "city_id" {
             while let Some(chunk) = field.next().await {

@@ -8,19 +8,16 @@ use crate::schema::*;
 pub struct Organization {
     pub id: i32,                     // Уникальный идентификатор организации
     pub name: String,                // Название организации
-    pub description: String,         // Описание организации
+    pub description: Option<String>,         // Описание организации
     pub director: String,            // Руководитель организации
     pub phone_number: String,        // Номер телефона организации
-    pub place_id: i32,               // Идентификатор места организации
     pub city_id: i32,                // Идентификатор города организации
-    pub region_id: i32,              // Идентификатор региона организации
+    pub region_id: Option<i32>,              // Идентификатор региона организации
     pub country_id: i32,             // Идентификатор страны организации
-    pub service_ids: Vec<i32>,       // Идентификаторы предоставляемых услуг
     pub working_hours: String,       // Время работы организации
     pub website: Option<String>,     // Веб-сайт организации (может быть пустым)
     pub photo_link: Option<String>,  // Ссылка на фотографию организации (может быть пустой)
-    pub messenger_links: Vec<String>, // Ссылки на мессенджеры организации
-    pub location_coordinates: Point, // Координаты расположения организации
+    pub messenger_links: Option<String>, // Ссылки на мессенджеры организации
 }
 
 // Структура для создания новой организации
@@ -29,18 +26,15 @@ pub struct Organization {
 pub struct NewOrganization {
     pub name: String,
     pub description: String,
-    pub director: String,
+    pub director: Option<String>,
     pub phone_number: String,
-    pub place_id: i32,
     pub city_id: i32,
-    pub region_id: i32,
+    pub region_id: Option<i32>,
     pub country_id: i32,
-    pub service_ids: Vec<i32>,
     pub working_hours: String,
     pub website: Option<String>,
     pub photo_link: Option<String>,
-    pub messenger_links: Vec<String>,
-    pub location_coordinates: Point,
+    pub messenger_links: Option<String>,
 }
 
 // Реализация методов для структуры Organization
@@ -48,19 +42,16 @@ impl Organization {
     // Метод для создания нового объекта структуры
     pub fn new(
         name: String,
-        description: String,
+        description: Option<String>,
         director: String,
         phone_number: String,
-        place_id: i32,
         city_id: i32,
-        region_id: i32,
+        region_id: Option<i32>,
         country_id: i32,
-        service_ids: Vec<i32>,
         working_hours: String,
         website: Option<String>,
         photo_link: Option<String>,
-        messenger_links: Vec<String>,
-        location_coordinates: Point,
+        messenger_links: Option<String>,
     ) -> Self {
         Organization {
             id: 0,  // При создании нового объекта устанавливаем id в 0
@@ -68,16 +59,13 @@ impl Organization {
             description,
             director,
             phone_number,
-            place_id,
             city_id,
             region_id,
             country_id,
-            service_ids,
             working_hours,
             website,
             photo_link,
             messenger_links,
-            location_coordinates,
         }
     }
 
@@ -93,8 +81,9 @@ impl Organization {
         }
     }
 
+
     // Метод для получения всех объектов данной структуры
-    pub fn find_all(connection: &PgConnection) -> Vec<Self> {
+    pub fn get_all_organization(connection: &PgConnection) -> Vec<Self> {
         use crate::schema::organizations::dsl::*;
 
         organizations.load(connection).expect("Failed to load organizations")
