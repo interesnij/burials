@@ -1,283 +1,366 @@
-// Подключаем необходимые модули
-use diesel::prelude::*;
-use chrono::NaiveDateTime;
+use crate::schema;
+use crate::schema::{ 
+    users,
+    cookie_users,
+    cookie_stats,
+    stat_pages,
+};
+use crate::diesel::{
+    Queryable,
+    Insertable,
+    QueryDsl,
+    ExpressionMethods,
+    RunQueryDsl,
+    Connection,
+};
+use serde::{Serialize, Deserialize};
+use crate::utils::establish_connection;
+use crate::errors::Error;
 
-// Структура для модели пользователя
-#[derive(Queryable)]
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
 pub struct User {
-    pub id: i32,                // Уникальный идентификатор
-    pub first_name: String,     // Имя пользователя
-    pub last_name: String,      // Фамилия пользователя
-    pub middle_name: String,    // Отчество пользователя
-    pub email: String,          // Адрес электронной почты
-    pub phone_number: String,   // Номер телефона пользователя
-    pub description: String,    // Описание пользователя
-    pub photo_link: String,     // Ссылка на фотографию пользователя
+    pub id:       i32,
+    pub username: String,
+    pub email:    String,
+    pub password: String,
+    pub bio:      Option<String>,
+    pub image:    Option<String>,
+    pub perm:     i16,
 }
 
-// Структура для создания новых объектов пользователя
-#[derive(Insertable)]
-#[table_name = "users"]
-pub struct NewUser {
-    pub first_name: String,     // Имя пользователя
-    pub last_name: String,      // Фамилия пользователя
-    pub middle_name: String,    // Отчество пользователя
-    pub email: String,          // Адрес электронной почты
-    pub phone_number: String,   // Номер телефона пользователя
-    pub description: String,    // Описание пользователя
-    pub photo_link: String,     // Ссылка на фотографию пользователя
-}
-
-use diesel::prelude::*;
-use diesel::result::Error;
-use crate::schema::users; // Замените `schema::users` на фактический путь к схеме таблицы в вашем проекте
-
-// Методы для структуры User
 impl User {
-    // Метод для создания нового объекта структуры User
-    pub fn new() -> User {
-        User {
-            id: 0,
-            first_name: String::new(),
-            last_name: String::new(),
-            middle_name: String::new(),
-            email: String::new(),
-            phone_number: String::new(),
-            description: String::new(),
-            photo_link: String::new(),
+    pub fn is_superuser(&self) -> bool {
+        return self.perm > 59;
+    }
+    pub fn create_superuser(user_id: i32) -> Result<(), Error> {
+        let _connection = establish_connection();
+        _connection.transaction(|| Ok({
+            let _u = diesel::update(users::table.filter(users::id.eq(user_id)))
+                .set(schema::users::perm.eq(60))
+                .execute(&_connection);
+        }))
+    }
+}
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="users"]
+pub struct NewUser {
+    pub username: String,
+    pub email:    String,
+    pub password: String,
+    pub bio:      Option<String>,
+    pub image:    Option<String>,
+    pub perm:     i16,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoginUser {
+    pub username: String,
+    pub password: String,
+}
+
+#[derive(Debug, AsChangeset)]
+#[table_name = "users"]
+pub struct UserChange {
+    pub username: String,
+    pub email:    String,
+    pub password: String,
+    pub bio:      String,
+    pub image:    String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SessionUser {
+    pub id:       i32,
+    pub username: String,
+}
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct CookieUser {
+    pub id:         i32,
+    pub ip:         String,
+    pub device:     i16,
+    pub city_ru:    Option<String>,
+    pub city_en:    Option<String>,
+    pub region_ru:  Option<String>,
+    pub region_en:  Option<String>,
+    pub country_ru: Option<String>,
+    pub country_en: Option<String>,
+    pub height:     f64,
+    pub seconds:    i32,
+    pub created:    chrono::NaiveDateTime,
+}
+impl CookieUser {
+    pub fn get_users_list(page: i32, limit: i32) -> (Vec<CookieUser>, i32) {
+        let mut next_page_number = 0;
+        let have_next: i32;
+        let object_list: Vec<CookieUser>;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * limit + 1;
+            object_list = CookieUser::get_users(limit.into(), step.into());
         }
-    }
-
-    // Метод для поиска объекта по идентификатору
-    pub fn find_by_id(id: i32, connection: &PgConnection) -> Result<Option<User>, Error> {
-        users::table.find(id).first(connection).optional()
-    }
-
-    // Метод для получения всех объектов данной структуры
-    pub fn find_all(connection: &PgConnection) -> Result<Vec<User>, Error> {
-        users::table.load(connection)
-    }
-
-    // Метод для обновления существующего объекта
-    pub fn update(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::update(users::table.find(self.id))
-            .set(self)
-            .execute(connection)?;
-        Ok(())
-    }
-
-    // Метод для удаления объекта
-    pub fn delete(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::delete(users::table.find(self.id)).execute(connection)?;
-        Ok(())
-    }
-
-    // Метод для поиска объектов по значению определенного поля
-    pub fn find_by_field(field_value: &str, connection: &PgConnection) -> Result<Vec<User>, Error> {
-        users::table.filter(users::first_name.eq(field_value)
-            .or(users::last_name.eq(field_value))
-            .or(users::middle_name.eq(field_value))
-            .or(users::email.eq(field_value))
-            .or(users::phone_number.eq(field_value)))
-            .load(connection)
-    }
-
-    // Метод для подсчета общего количества объектов данной структуры
-    pub fn count(connection: &PgConnection) -> Result<usize, Error> {
-        users::table.count().get_result(connection)
-    }
-}
-
-// Метод для создания нового объекта на основе данных из структуры NewUser
-impl NewUser {
-    pub fn create(new_data: NewUser, connection: &PgConnection) -> Result<User, Error> {
-        diesel::insert_into(users::table)
-            .values(&new_data)
-            .get_result(connection)
-    }
-}
-
-//----------------------------------------------------------------------------------------
-
-// Подключаем необходимые модули
-use diesel::prelude::*;
-use chrono::NaiveDateTime;
-
-// Структура для модели пользователя
-#[derive(Queryable)]
-pub struct UserList {
-    pub id: i32,                // Уникальный идентификатор
-    pub user_id: String,        // ID пользователя
-    pub review_ids: Vec<i32>,   // Идентификаторы оставленных отзывов
-    pub comments_ids: Vec<i32>, // Идентификаторы оставленных комментариев
-    pub organizations_ids: Vec<i32>, // Идентификаторы зарегистрированных организаций
-    pub deceaseds_ids: Vec<i32>, // Идентификаторы зарегистрированных усопших
-}
-
-// Структура для создания новых объектов пользователя
-#[derive(Insertable)]
-#[table_name = "userslist"]
-pub struct NewUserList {
-    pub user_id: String,        // ID пользователя
-    pub review_ids: Vec<i32>,   // Идентификаторы оставленных отзывов
-    pub comments_ids: Vec<i32>, // Идентификаторы оставленных комментариев
-    pub organizations_ids: Vec<i32>, // Идентификаторы зарегистрированных организаций
-    pub deceaseds_ids: Vec<i32>, // Идентификаторы зарегистрированных усопших
-}
-
-
-impl UserList {
-    // Метод для создания нового объекта структуры UserList.
-    pub fn new(id: i32, user_id: String, review_ids: Vec<i32>, comments_ids: Vec<i32>,
-               organizations_ids: Vec<i32>, deceaseds_ids: Vec<i32>) -> Self {
-        UserList {
-            id,
-            user_id,
-            review_ids,
-            comments_ids,
-            organizations_ids,
-            deceaseds_ids,
+        else {
+            have_next = limit + 1;
+            object_list = CookieUser::get_users(limit.into(), 0);
         }
-    }
-
-    // Метод для поиска объекта по идентификатору.
-    pub fn find_by_id(id: i32, connection: &PgConnection) -> QueryResult<Option<Self>> {
-        userslist::table.find(id).first(connection).optional()
-    }
-
-    // Метод для получения всех объектов данной структуры.
-    pub fn find_all(connection: &PgConnection) -> QueryResult<Vec<Self>> {
-        userslist::table.load(connection)
-    }
-
-    // Метод для обновления существующего объекта.
-    pub fn update(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::update(userslist::table.find(self.id))
-            .set(self)
-            .execute(connection)?;
-        Ok(())
-    }
-
-    // Метод для удаления объекта.
-    pub fn delete(&self, connection: &PgConnection) -> Result<(), Error> {
-        diesel::delete(userslist::table.find(self.id))
-            .execute(connection)?;
-        Ok(())
-    }
-
-    // Метод для поиска объектов по значению определенного поля.
-    pub fn find_by_field(field_value: &str, connection: &PgConnection) -> QueryResult<Vec<Self>> {
-        userslist::table.filter(userslist::user_id.eq(field_value))
-            .load(connection)
-    }
-
-    // Метод для подсчета общего количества объектов данной структуры.
-    pub fn count(connection: &PgConnection) -> QueryResult<usize> {
-        userslist::table.count().get_result(connection)
-    }
-}
-
-impl NewUserList {
-    // Метод для создания нового объекта на основе данных из структуры NewUserList.
-    pub fn create(new_data: NewUserList, connection: &PgConnection) -> QueryResult<Self> {
-        diesel::insert_into(userslist::table)
-            .values(&new_data)
-            .get_result(connection)
-    }
-}
-
-//--------------------------------------------------------------------------------------------------
-
-// Подключаем необходимые модули
-use diesel::prelude::*;
-use chrono::NaiveDateTime;
-
-// Структура для модели пользователя
-#[derive(Queryable)]
-pub struct UserSecrets {
-    pub id: i32,                // Уникальный идентификатор
-    pub user_id: String,        // ID пользователя
-    pub password: String,       // Пароль пользователя
-    pub phone_number: String,   // Номер телефона пользователя
-}
-
-// Структура для создания новых объектов пользователя
-#[derive(Insertable)]
-#[table_name = "userssecrets"]
-pub struct NewUserSecrets {
-    pub user_id: String,        // ID пользователя
-    pub password: String,       // Пароль пользователя
-    pub phone_number: String,   // Номер телефона пользователя
-}
-
-
-impl UserSecrets {
-    // Метод для создания нового объекта структуры.
-    pub fn new(user_id: String, password: String, phone_number: String) -> Self {
-        UserSecrets {
-            id: 0,  // Вы можете установить значение id по умолчанию здесь
-            user_id,
-            password,
-            phone_number,
+        if CookieUser::get_users(1, have_next.into()).len() > 0 {
+            next_page_number = page + 1;
         }
+
+        return (object_list, next_page_number);
     }
+    pub fn get_users(limit: i64, offset: i64) -> Vec<CookieUser> {
+        use crate::schema::cookie_users::dsl::cookie_users;
 
-    // Метод для поиска объекта по идентификатору.
-    pub fn find_by_id(id: i32, connection: &PgConnection) -> QueryResult<Option<Self>> {
-        use crate::schema::userssecrets::dsl::*;
-
-        userssecrets
-            .filter(id.eq(id))
-            .first(connection)
-            .optional()
-    }
-
-    // Метод для получения всех объектов данной структуры.
-    pub fn find_all(connection: &PgConnection) -> QueryResult<Vec<Self>> {
-        use crate::schema::userssecrets::dsl::*;
-
-        userssecrets.load(connection)
-    }
-
-    // Метод для обновления существующего объекта.
-    pub fn update(&self, connection: &PgConnection) -> QueryResult<usize> {
-        use crate::schema::userssecrets::dsl::*;
-
-        diesel::update(userssecrets.filter(id.eq(self.id)))
-            .set(self)
-            .execute(connection)
-    }
-
-    // Метод для удаления объекта.
-    pub fn delete(&self, connection: &PgConnection) -> QueryResult<usize> {
-        use crate::schema::userssecrets::dsl::*;
-
-        diesel::delete(userssecrets.filter(id.eq(self.id)))
-            .execute(connection)
-    }
-
-    // Метод для поиска объектов по значению определенного поля.
-    pub fn find_by_field(field_value: &str, field_name: &str, connection: &PgConnection) -> QueryResult<Vec<Self>> {
-        use crate::schema::userssecrets::dsl::*;
-
-        userssecrets
-            .filter(diesel::dsl::sql(&format!("{} = ?", field_name)), field_value)
-            .load(connection)
-    }
-
-    // Метод для подсчета общего количества объектов данной структуры.
-    pub fn count(connection: &PgConnection) -> QueryResult<usize> {
-        use crate::schema::userssecrets::dsl::*;
-
-        userssecrets.count().get_result(connection)
+        let _connection = establish_connection();
+        return cookie_users
+            .filter(schema::cookie_users::seconds.ne(0))
+            .filter(schema::cookie_users::height.ne(0.0))
+            .order(schema::cookie_users::created.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<CookieUser>(&_connection)
+            .expect("E.");
     }
 }
 
-impl NewUserSecrets {
-    // Метод для создания нового объекта на основе данных из структуры NewUser.
-    pub fn create(new_data: NewUserSecrets, connection: &PgConnection) -> QueryResult<Self> {
-        diesel::insert_into(userssecrets::table)
-            .values(&new_data)
-            .get_result(connection)
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="cookie_users"]
+pub struct NewCookieUser {
+    pub ip:         String,
+    pub device:     i16,
+    pub city_ru:    Option<String>,
+    pub city_en:    Option<String>,
+    pub region_ru:  Option<String>,
+    pub region_en:  Option<String>,
+    pub country_ru: Option<String>,
+    pub country_en: Option<String>,
+    pub height:     f64,
+    pub seconds:    i32,
+    pub created:    chrono::NaiveDateTime,
+}
+
+/////////////////////////
+// Шифры посещаемых страниц
+// 1 - главная
+// 2 - о сайте
+// 3 - контакты
+// 4 - команда
+// 5 - сотрудничество
+// 6 - вход
+// 7 - регитрация
+// 8 - выход
+// 9 - вопросы ответы
+// 10 - инфо
+
+// 11 - профиль
+// 12 - заказы
+// 13 - история
+// 14 - статистика
+
+// 21 - общий поиск
+// 22 - поиск статей блога
+// 23 - поиск услуг
+// 24 - поиск товаров
+// 25 - поиск статей обучающих
+// 26 - поиск работ
+
+// 31 - теги
+// 32 - тег
+// 33 - тег - статьи блога
+// 34 - тег - услуги
+// 35 - тег - товары
+// 36 - тег - статьи обучающие
+// 37 - тег - работы
+// 38 - тег - Пооощь
+
+// 41 - категории блога
+// 42 - категория блога
+// 43 - статья блога
+
+// 51 - категории опций
+// 52 - категория опций
+// 53 - технологии опций
+// 54 - технология опций
+// 55 - опция
+
+// 61 - категории услуг
+// 62 - категория услуг
+// 63 - услуга
+
+// 71 - категории товаров
+// 72 - категория товаров
+// 73 - товар
+
+// 81 - категории обучения
+// 82 - категория обучения
+// 83 - статья обучения
+
+// 91 - категории работ
+// 92 - категория работ
+// 93 - работа
+////////////////////
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct CookieStat {
+    pub id:       i32,
+    pub user_id:  i32,
+    pub page:     i16,
+    pub link:     String,
+    pub title:    String,
+    pub height:   f64,
+    pub seconds:  i32,
+    pub created:  chrono::NaiveDateTime,
+    pub template: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct HistoryResponse {
+    pub id:       i32,
+    pub link:     String,
+    pub title:    String,
+    pub height:   f64,
+    pub seconds:  i32,
+    pub template: String,
+}
+
+impl CookieStat {
+    pub fn get_stat_list(user_id: i32, page: i32, limit: i32) -> Result<(Vec<CookieStat>, i32), Error> {
+        let mut next_page_number = 0;
+        let have_next: i32;
+        let object_list: Vec<CookieStat>;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * limit + 1;
+            object_list = CookieStat::get_stat_items(user_id, limit.into(), step.into())?;
+        }
+        else {
+            have_next = limit + 1;
+            object_list = CookieStat::get_stat_items(user_id, limit.into(), 0)?;
+        }
+        if CookieStat::get_stat_items(user_id, 1, have_next.into())?.len() > 0 {
+            next_page_number = page + 1;
+        }
+        let _tuple = (object_list, next_page_number);
+        Ok(_tuple)
     }
+    pub fn get_stat_items(user_id: i32, limit: i64, offset: i64) -> Result<Vec<CookieStat>, Error> {
+        use crate::schema::cookie_stats::dsl::cookie_stats;
+
+        let _connection = establish_connection();
+        let list = cookie_stats
+            .filter(schema::cookie_stats::user_id.eq(user_id))
+            .order(schema::cookie_stats::created.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<CookieStat>(&_connection)
+            .expect("E");
+        Ok(list)
+    }
+    pub fn create (
+        user_id:  i32, 
+        page:     i16, 
+        link:     String,
+        title:    String, 
+        height:   f64, 
+        seconds:  i32,
+        template: String
+    ) -> Result<CookieStat, Error> {
+        use chrono::Duration;
+
+        let _connection = establish_connection();
+        let _h = NewCookieStat {
+            user_id:  user_id,
+            page:     page,
+            link:     link.clone(),
+            title:    title.clone(),
+            height:   height,
+            seconds:  seconds,
+            created:  chrono::Local::now().naive_utc() + Duration::hours(3),
+            template: template.clone(),
+        };
+        let new = diesel::insert_into(schema::cookie_stats::table)
+            .values(&_h)
+            .get_result::<CookieStat>(&_connection)?;
+        Ok(new)
+    }
+}
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="cookie_stats"]
+pub struct NewCookieStat {
+    pub user_id:  i32,
+    pub page:     i16,
+    pub link:     String,
+    pub title:    String,
+    pub height:   f64,
+    pub seconds:  i32,
+    pub created:  chrono::NaiveDateTime,
+    pub template: String,
+}
+
+
+////////////////////
+// Шифры посещаемых страниц
+// 1 - главная
+// 2 - о сайте
+// 3 - контакты
+// 4 - команда
+// 5 - сотрудничество
+// 6 - вход
+// 7 - регитрация
+// 8 - выход
+// 9 - вопросы ответы
+// 10 - инфо
+
+// 11 - профиль
+// 12 - заказы
+// 13 - история
+// 14 - статистика
+
+// 21 - общий поиск
+// 22 - поиск статей блога
+// 23 - поиск услуг
+// 24 - поиск товаров
+// 25 - поиск статей обучающих
+// 26 - поиск работ
+
+// 31 - теги
+// 32 - тег
+// 33 - тег - статьи блога
+// 34 - тег - услуги
+// 35 - тег - товары
+// 36 - тег - статьи обучающие
+// 37 - тег - работы
+
+// 41 - категории блога
+// 51 - категории опций
+// 53 - технологии опций
+// 61 - категории услуг
+// 71 - категории товаров
+// 81 - категории обучения
+// 91 - категории работ
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct StatPage {
+    pub id:      i32,
+    pub types:   i16,
+    pub view:    i32,
+    pub height:  f64,
+    pub seconds: i32,
+    pub now_u:   i16,
+}
+////////////////////
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="stat_pages"]
+pub struct NewStatPage {
+    pub types:   i16,
+    pub view:    i32,
+    pub height:  f64,
+    pub seconds: i32,
+    pub now_u:   i16,
 }
