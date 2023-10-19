@@ -7,9 +7,8 @@ use std::{
     fs::create_dir_all,
     str,
 };
-
-//-----------------------------------------------------------
-
+ 
+//----------------------------ФОРМА ПОКОЙНИКОВ--------------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DeceasedForms {
     pub first_name: String,        // Имя усопшего
@@ -24,7 +23,6 @@ pub struct DeceasedForms {
     pub position:      i16,
     pub types:         i16,
 }
-
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
     let mut form: DeceasedForms = DeceasedForms {
@@ -115,8 +113,7 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
     form
 }
 
-//-----------------------------------------------------------
-
+//---------------------------------ФОРМА КЛАДБИЩЬ-----------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct PlaceForms {
     pub cemetery_name: String,               // Название кладбища (места)
@@ -135,7 +132,6 @@ pub struct PlaceForms {
     pub position:      i16,
     pub types:         i16,
 }
-
 // форма для элементов 
 pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
     let mut form: PlaceForms = PlaceForms {
@@ -269,9 +265,7 @@ pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms
     form
 }
 
-//-----------------------------------------------------------
-
-
+//------------------------------ФОРМА ОРГАНИЗАЦИЙ----------------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct OrganizationForms {
     pub name: String,               // Название организации
@@ -289,7 +283,6 @@ pub struct OrganizationForms {
     pub position:      i16,
     pub types:         i16,
 }
-
 // форма для элементов 
 pub async fn organization_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
     let mut form: PlaceForms = PlaceForms {
@@ -412,8 +405,7 @@ pub async fn organization_form(payload: &mut Multipart, owner_id: i32) -> Deceas
     form
 }
 
-//-----------------------------------------------------------
-
+//------------------------------ФОРМА УСЛУГ-----------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ServiceForms {
     pub name_service: String,                // Название Услуги
@@ -426,7 +418,6 @@ pub struct ServiceForms {
     pub position:      i16,
     pub types:         i16,
 }
-
 // форма для элементов 
 pub async fn service_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
     let mut form: PlaceForms = PlaceForms {
@@ -523,3 +514,220 @@ pub async fn service_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFor
     }
     form
 }
+
+
+
+
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+
+
+
+
+
+
+
+//------------------------------ФОРМА ЗАКАЗОВ-----------------
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct OrderForms {
+    pub title:       String,
+    pub types:       i16,
+    pub object_id:   i32,
+    pub username:    String,
+    pub description: Option<String>,
+    pub email:       String,
+    pub files:       Vec<String>,
+    pub serve_list:  Vec<i32>,
+}
+// форма для заказов
+pub async fn order_form(payload: &mut Multipart, owner_id: i32) -> OrderForms {
+    let mut files: Vec<UploadedFiles> = Vec::new();
+
+    let mut form: OrderForms = OrderForms {
+        title:       "".to_string(),
+        types:       0,
+        object_id:   0,
+        username:    "".to_string(),
+        description: None,
+        email:       "".to_string(),
+        files:       Vec::new(),
+        serve_list:  Vec::new(),
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        let name = field.name();
+        let string_list = ["title", "email", "description", "username"];
+
+        if string_list.contains(&name) {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "title" {
+                        form.title = data_string;
+                    } else if field.name() == "description" {
+                        form.description = Some(data_string);
+                    } else if field.name() == "email" {
+                        form.email = data_string;
+                    } else if field.name() == "username" {
+                        form.username = data_string;
+                    }
+                }
+            }
+        }
+        else if name == "object_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.object_id = _int;
+                }
+            }
+        }
+        else if name == "types" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i16 = s.parse().unwrap();
+                    form.types = _int;
+                }
+            }
+        }
+        else if name == "serve_list" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    let v: Vec<&str> = data_string.split(",").collect();
+                    for i in v.iter() {
+                        let _int: i32 = i.parse().unwrap();
+                        form.serve_list.push(_int);
+                    }
+                }
+            }
+        }
+        else if name == "files[]" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string(), owner_id);
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                };
+                files.push(file.clone());
+                form.files.push(file.path.clone().replace("./","/"));
+            }
+        }
+    }
+    form
+}
+
+
+//------------------------------ФОРМА ФАЙЛОВ-----------------
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct FileForm {
+    pub item_types: i16,      // блог, услуга ......
+    pub types:      i16,      // фото, видео, аудио ......
+    pub files:      Vec<String>,
+}
+pub async fn files_form(payload: &mut Multipart, owner_id: i32) -> FileForm {
+    let mut _files: Vec<UploadedFiles> = Vec::new();
+
+    let mut form: FileForm = FileForm {
+        item_types: 0,
+        types:      0,
+        files:      Vec::new(),
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+
+        if field.name() == "files[]" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string(), owner_id);
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                };
+                _files.push(file.clone());
+                form.files.push(file.path.clone().replace("./","/"));
+            }
+        }
+        else if field.name() == "item_types" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i16 = s.parse().unwrap();
+                    form.item_types = _int;
+                }
+            }
+        }
+        else if field.name() == "types" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i16 = s.parse().unwrap();
+                    form.types = _int;
+                }
+            }
+        }
+    }
+    form
+}
+
+
+//------------------------------ФОРМА ОБРАТНОЙ СВЯЗИ-----------------
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct FeedbackForm {
+    pub username: String,
+    pub email:    String,
+    pub message:  String,
+}
+pub async fn feedback_form(payload: &mut Multipart) -> FeedbackForm {
+    let mut form: FeedbackForm = FeedbackForm {
+        username: "".to_string(),
+        email:    "".to_string(),
+        message:  "".to_string(),
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+
+        while let Some(chunk) = field.next().await {
+            let data = chunk.expect("split_payload err chunk");
+            if let Ok(s) = str::from_utf8(&data) {
+                let data_string = s.to_string();
+                if field.name() == "username" {
+                    form.username = data_string
+                } else if field.name() == "email" {
+                    form.email = data_string
+                } else if field.name() == "message" {
+                    form.message = data_string
+                }
+            }
+        }
+    }
+    form
+} 
