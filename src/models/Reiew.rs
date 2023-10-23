@@ -48,7 +48,7 @@ impl Review {
     }
 
     // Метод для получения всех объектов данной структуры
-    pub fn find_all(connection: &PgConnection) -> Vec<Self> {
+    pub fn get_all_reviews(connection: &PgConnection) -> Vec<Self> {
         reviews::table.load::<Review>(connection)
             .expect("Failed to load reviews")
     }
