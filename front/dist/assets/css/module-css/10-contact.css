@@ -1,0 +1,292 @@
+/*** 
+=============================================
+    Main Contact Form Area Css
+=============================================
+***/
+.main-contact-form-area {
+    position: relative;
+    display: block;
+    background: #ffffff;
+    padding: 120px 0px 120px;
+    z-index: 10;
+}
+
+.contact-form {
+    position: relative;
+    display: block;
+}
+
+.contact-form .inner-title {
+    position: relative;
+    display: block;
+    padding-bottom: 25px;
+}
+
+.contact-form .inner-title h5 {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.contact-form form {
+    position: relative;
+    display: block;
+}
+
+.contact-form form .form-group {
+    position: relative;
+    display: block;
+    padding-bottom: 20px;
+}
+
+.contact-form form .form-group label {
+    position: relative;
+    top: -6px;
+    color: var(--thm-black);
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.contact-form form .input-box {
+    position: relative;
+    display: block;
+}
+
+.contact-form form input[type="text"],
+.contact-form form input[type="email"],
+.contact-form form textarea {
+    position: relative;
+    display: block;
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    width: 100%;
+    height: 50px;
+    color: #cecece;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 0px;
+    transition: all 500ms ease;
+    font-family: var(--thm-font);
+}
+
+.contact-form form input[type="text"]:focus,
+.contact-form form input[type="email"]:focus,
+.contact-form form textarea:focus {
+    border: 1px solid var(--thm-base);
+    outline: none;
+}
+
+.contact-form form textarea {
+    height: 120px;
+    padding-top: 12px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+}
+
+.contact-form form input[type="text"]::-webkit-input-placeholder {
+    color: #cecece;
+}
+
+.contact-form form input[type="text"]:-moz-placeholder {
+    color: #cecece;
+}
+
+.contact-form form input[type="text"]::-moz-placeholder {
+    color: #cecece;
+}
+
+.contact-form form input[type="text"]:-ms-input-placeholder {
+    color: #cecece;
+}
+
+
+.contact-form form input[type="email"]::-webkit-input-placeholder {
+    color: #cecece;
+}
+
+.contact-form form input[type="email"]:-moz-placeholder {
+    color: #cecece;
+}
+
+.contact-form form input[type="email"]::-moz-placeholder {
+    color: #cecece;
+}
+
+.contact-form form input[type="email"]:-ms-input-placeholder {
+    color: #cecece;
+}
+
+
+.contact-form form textarea::-webkit-input-placeholder {
+    color: #cecece;
+}
+
+.contact-form form textarea:-moz-placeholder {
+    color: #cecece;
+}
+
+.contact-form form textarea::-moz-placeholder {
+    color: #cecece;
+}
+
+.contact-form form textarea:-ms-input-placeholder {
+    color: #cecece;
+}
+
+.contact-form form .button-box {
+    position: relative;
+    display: block;
+    padding-top: 10px;
+}
+
+.contact-form form .button-box button {}
+
+
+
+.contact-info-box-style1 {
+    position: relative;
+    display: block;
+    border: 1px solid #f6f6f6;
+    border-radius: 4px;
+    padding: 23px 30px 1px;
+}
+
+.contact-info-box-style1 .title {
+    position: relative;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.contact-info-box-style1 .title h4 {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 600;
+}
+
+
+.contact-info-box-style1__single {
+    position: relative;
+    display: block;
+    padding-left: 90px;
+    margin-bottom: 16px;
+}
+
+.contact-info-box-style1__single-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.contact-info-box-style1__single-title h5 {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-family: var(--thm-font);
+}
+
+.contact-info-box-style1__single-text {
+    position: relative;
+    display: block;
+}
+
+.contact-info-box-style1__single-text p {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.contact-info-box-style1__single-text p.email1 {
+    margin-bottom: 14px;
+}
+
+.contact-info-box-style1__single-text p.number1 {
+    margin-bottom: 16px;
+}
+
+.contact-info-box-style1__single-text p.text1 {
+    margin-bottom: 16px;
+}
+
+.contact-info-box-style1__single-text p a {
+    color: var(--thm-gray);
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+}
+
+.contact-info-box-style1__single-text p a:hover {
+    color: var(--thm-base);
+}
+
+.contact-info-box-style1__single .social-link {
+    position: relative;
+    display: block;
+}
+
+.contact-info-box-style1__single .social-link li {
+    position: relative;
+    display: inline-block;
+    margin-right: 16px;
+}
+
+.contact-info-box-style1__single .social-link li:last-child {
+    margin-right: 0px;
+}
+
+.contact-info-box-style1__single .social-link li a {
+    position: relative;
+    display: block;
+    color: var(--thm-gray);
+    font-size: 15px;
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+}
+
+.contact-info-box-style1__single .social-link li a:hover {
+    color: var(--thm-base);
+}
+
+
+
+/*--------------------------------------------------------------
+# Google Map
+--------------------------------------------------------------*/
+.google-map {
+    position: relative;
+    display: block;
+    padding-left: 50px;
+    padding-right: 50px;
+    background: #ffffff;
+}
+
+.google-map__one {
+    position: relative;
+    display: block;
+    border: none;
+    height: 670px;
+    width: 100%;
+    mix-blend-mode: luminosity;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*** 
+=============================================
+    End Css
+=============================================
+***/

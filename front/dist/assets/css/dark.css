@@ -1,0 +1,161 @@
+body {
+    color: rgba(255, 255, 255, 0.70);
+}
+
+
+.main-menu-style1,
+.stricky-header .main-menu__wrapper,
+.stricky-header .main-menu__wrapper-inner,
+.main-slider-style1,
+.about-style1-area,
+.properties-style1-area,
+.explore-our-properties-area,
+.apartments-plan-area,
+.fact-counter-area,
+.testimonial-style1-area,
+.blog-style1-area,
+.partner-area,
+.footer-area {
+    background-color: #0f0f0f;
+}
+
+
+
+
+.main-menu .main-menu__list>li>a,
+.stricky-header .main-menu__list>li>a,
+.phone-number-box-style1 h5,
+.phone-number-box-style1 a,
+.sign-in-box-style1 span::before,
+.sign-in-box-style1 a,
+.about-style1-text-box .title-box h2,
+.sec-title h3,
+.single-properties-box-style1 .text-holder h3 a,
+.single-explore-properties-box .text-holder .inner-title h3 a,
+.single-choose-style1-box .text h3 a,
+.apartments-plan-tab__button .tabs-button-box .tab-btn-item h3,
+.property-details-box-item ul li span,
+.apartments-plan-tab-content-box-item .text-box .property-details-box h4,
+.apartments-plan-tab-content-box-item .text-box h3,
+.apartments-plan-tab-content-box-item .text-box p span,
+.single-footer-widget .title h3,
+.single-footer-widget .our-company-info ul li,
+.footer-widget-contact-info>ul>li,
+.footer-social-link .inner-title h3 {
+    color: #ffffff;
+}
+
+
+
+
+.main-menu .main-menu__list>li.current>a,
+.main-menu .main-menu__list>li:hover>a,
+.stricky-header .main-menu__list>li.current>a,
+.stricky-header .main-menu__list>li:hover>a {
+    color: var(--thm-base);
+}
+
+
+
+
+
+.main-slider .image-layer:before {
+    background-color: var(--thm-base);
+    opacity: 0.80;
+}
+
+.property-search-form-area:before {
+    content: "";
+    position: absolute;
+    top: 120px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--thm-black);
+    z-index: -1;
+}
+
+.about-style1-img-box .shape1 img {
+    opacity: 0.10;
+}
+
+.about-style1-img-box .shape2 img {
+    opacity: 0.10;
+}
+
+.about-style1-img-box .round-box {
+    border: 2px dashed rgba(255, 255, 255, 0.10);
+}
+
+.single-properties-box-style1 .text-holder {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.single-properties-box-style1 .text-holder .info-box::before {
+    background-color: #ffffff;
+    opacity: 0.10;
+}
+
+.single-explore-properties-box {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.single-fact-counter .text p {
+    color: rgba(0, 0, 0, 0.90);
+}
+
+.single-testimonial-style1 .top-box .text p {
+    color: rgba(0, 0, 0, 0.90);
+}
+
+.single-partner-logo-box {
+    border: 1px solid rgba(255, 255, 255, 0.10)
+}
+
+.single-partner-logo-box:before {
+    border: 1px solid #ffffff;
+}
+
+.single-footer-widget .our-company-info .text-box p {
+    color: rgba(255, 255, 255, 0.70)
+}
+
+.footer-widget-links ul li a {
+    color: rgba(255, 255, 255, 0.70)
+}
+
+.footer-widget-contact-info ul>li>a:hover {
+    color: rgba(255, 255, 255, 0.70)
+}
+
+.footer-bottom .bottom-inner .copyright p {
+    color: rgba(255, 255, 255, 0.70)
+}
+
+.footer-bottom .bottom-inner .copyright p a {
+    color: rgba(255, 255, 255, 0.90)
+}
+
+.footer-menu ul li a {
+    color: rgba(255, 255, 255, 0.70)
+}
+
+
+
+
+.choose-style1-area,
+.fact-counter-area::before,
+.footer-bottom {
+    background: #0b0b0b;
+}
+
+
+
+
+
+
+
+
+
+
+/*** End Css **/
