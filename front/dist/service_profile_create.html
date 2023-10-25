@@ -366,26 +366,35 @@
                         
 
 
-                        <h5 class="text-lg font-semibold mb-4">Данные кладбища:</h5>
+                        <h5 class="text-lg font-semibold mb-4">Данные услуги:</h5>
                         <form>
                             <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
                                 <div>
                                     <label class="form-label font-medium">Название : <span class="text-red-600">*</span></label>
                                     <input type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Название" id="firstname" name="name" required="">
+                                
+                                
+                                
                                 </div>
+
                                 <div>
-                                    <label class="form-label font-medium">Руководитель : </label>
-                                    <input name="name" id="occupation" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Введите ФИО руководителя:">
+                                    <label class="form-label font-medium">Цена услуги : <span class="text-red-600">*</span></label>
+                                    <input type="number" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Введите цену в рублях" id="firstname" name="name" required="">
+                                
+                                
+                                
                                 </div>
-                                <div>
-                                    <label class="form-label font-medium">Официальный сайт : </label>
-                                    <input name="name" id="occupation" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Введите адрес сайта:">
+                                
+
+                            </div>        
+                            
+                             <!-------------------------------ОПИСАНИЕ--------------------------------------->
+                             <div class="grid grid-cols-1">
+                                <div class="mt-5">
+                                    <label class="form-label font-medium">Описание : </label>
+                                    <textarea name="comments" id="comments" class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Введите описание :"></textarea>
                                 </div>
-                                <div>
-                                    <label class="form-label font-medium">Контактный номер : </label>
-                                    <input name="name" id="occupation" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Номер:">
-                                </div>
-                            </div>                                    
+                            </div><!--end row-->
 
  <!------------------------------ЗАГРУЗКА ФОТО--------------------------------------->
  
@@ -405,58 +414,8 @@
                                     <input id="Address" type="text" class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Введите адрес">
                                 </div>
                             </div>
-                                    <br>
 
 
-
-                            <!-------------------------------ЧАСЫ РАБОТЫ--------------------------------------->
-                            <br>
-                                <div class="md:col-span-3 col-span-12 text-start">
-                                    <label class="font-semibold md:invisible md:block hidden">Часы работы в летнее время:</label>
-                                    <div class="relative mt-1">
-
-                                        <input type="number" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Время работы летом, например с 8 до 18" name="minsalary">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="md:col-span-3 col-span-12 text-start">
-                                    <label class="font-semibold md:invisible md:block hidden">Часы работы в зимнее время:</label>
-                                    <div class="relative mt-1">
-
-                                        <input type="number" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Время работы земой, например с 11 до 15" name="maxsalary">
-                                    </div>
-                                </div>
-
-
-
-                            
-
-
-
-
-
-                            <br>
-
-
- <!-------------------------------ОПИСАНИЕ--------------------------------------->
-                            <div class="grid grid-cols-1">
-                                <div class="mt-5">
-                                    <label class="form-label font-medium">Описание : </label>
-                                    <textarea name="comments" id="comments" class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" placeholder="Введите описание :"></textarea>
-                                </div>
-                            </div><!--end row-->
-
-                        
-
- <br><br>
-  <!-------------------------------КОЛЛИЧЕСТВО ЗАХОРОНЕНИЙ--------------------------------------->
-                                        <div class="md:col-span-3 col-span-12 text-start">
-                                            <label class="font-semibold md:invisible md:block hidden">Колличество захоронений:</label>
-                                            <div class="relative mt-1">
-
-                                                <input type="number" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Введите колличество захоронений на кладбище" name="minsalary">
-                                            </div>
-                                        </div>
  <br><br>
   <!-------------------------------ID ГОРОДА--------------------------------------->
                                         <div class="md:col-span-6 col-span-12 text-start">
