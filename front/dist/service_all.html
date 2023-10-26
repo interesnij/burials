@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prolan || Responsive HTML 5 Template</title>
+    <title>Захоронения| Поиск и оцифровка</title>
     <!-- Favicons Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon-16x16.png" />
     <link rel="manifest" href="assets/images/favicons/site.webmanifest" />
-    <meta name="description" content="Prolan HTML 5 Template " />
+    <meta name="description" content="Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений " />
 
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,10 +59,266 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
 
+
+
+        <!-- favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+        <!-- Css -->
+        <link href="assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
+        <!-- Main Css -->
+        <link href="assets/libs/@iconscout/unicons/css/line.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="assets/css/icons.css" />
+        <link rel="stylesheet" href="assets/css/tailwind.css" />
+
+
 </head>
 
 
 <body>
+     
+    
+    
+    <!-- Start Navbar -->
+        <nav id="topnav" class="defaultscroll is-sticky">
+            <div class="container">
+                <!-- Logo container-->
+                <a class="logo pl-0" href="index.html">
+                    <img src="assets/images/logo-dark.png" class="inline-block dark:hidden" alt="">
+                    <img src="assets/images/logo-light.png" class="hidden dark:inline-block" alt="">
+                </a>
+
+                <!-- End Logo container-->
+                <div class="menu-extras">
+                    <div class="menu-item">
+                        <!-- Mobile menu toggle-->
+                        <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </div>
+                </div>
+
+                <!--Login button Start-->
+                <ul class="buy-button list-none mb-0">
+                    <li class="inline mb-0">
+                        <a href="user-setting.html" class="btn btn-icon rounded-full bg-indigo-600/5 hover:bg-indigo-600 border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white"><i data-feather="settings" class="h-4 w-4"></i></a>
+                    </li>
+            
+                    <li class="inline pl-1 mb-0">
+                        <a href="user-profile.html" target="_blank" class="btn btn-icon rounded-full bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white"><i data-feather="user" class="h-4 w-4"></i></a>
+                    </li>
+                </ul>
+                <!--Login button End-->
+
+                <div id="navigation">
+                    <!-- Navigation Menu-->   
+                    <ul class="navigation-menu">
+                        <li><a href="index.html" class="sub-menu-item">Главная</a></li>
+                
+                        
+
+                        <li class="has-submenu parent-parent-menu-item">
+                            <a href="javascript:void(0)">Захоронения</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Кладбища</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="place_all" class="sub-menu-item">База захоронений</a></li>
+                                        <li><a href="place_all.html" class="sub-menu-item">Поиск</a></li>
+                                        <li><a href="place_profile_create.html" class="sub-menu-item">Оцифровать кладбище</a></li>
+                                      </ul> 
+                                </li>
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Усопший</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="place_all.html" class="sub-menu-item">База захоронений</a></li>
+                                        <li><a href="deceased_all.html" class="sub-menu-item">Поиск</a></li>
+                                        <li><a href="deceased_profile_create.html" class="sub-menu-item">Регистрация</a></li>
+                                        <li><a href="deceased_all" class="sub-menu-item">Известные личности</a></li>
+                                    </ul> 
+                                </li>
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Стена памяти</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="place_all" class="sub-menu-item">Мемориалы</a></li>
+                                        <li><a href="place_all" class="sub-menu-item">Братские могилы</a></li>
+                                    </ul> 
+                                </li>
+                                
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu parent-parent-menu-item">
+                            <a href="javascript:void(0)">Регионы</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Города</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="place_all.html" class="sub-menu-item">Москва</a></li>
+                                        <li><a href="place_all.html" class="sub-menu-item">СПБ</a></li>
+                                        <li><a href="place_all.html" class="sub-menu-item">Севастополь</a></li>
+                                    </ul> 
+                                </li>
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Края</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="city_all.html" class="sub-menu-item">Алтайский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Камчатский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Хабаровский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Краснодарский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Красноярский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Приморский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ставропольский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Забайкальский</a></li>
+                                       
+                                    </ul> 
+                                </li>
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Области</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="city_all.html" class="sub-menu-item">Архангельская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Амурская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Астраханская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Белгородская</a></li>                                   
+                                        <li><a href="city_all.html" class="sub-menu-item">Брянская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Челябинская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Иркутская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ивановская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Калининградская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Калужская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Кемеровская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Херсонская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Кировская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Костромская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Курганская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Курская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ленинградская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Липецкая</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Магаданская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Московская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Мурманская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Нижегородская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Новгородская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Новосибирская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Омская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Оренбургская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Орловская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Пензенская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Псковская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ростовская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Рязанская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Сахалинская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Самарская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Саратовская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Смоленская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Свердловская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Тамбовская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Тверская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Тульская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Тюменская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ульяновская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Владимирская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Волгоградская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Вологодская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Воронежская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Property Detail</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ярославская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Запорожская</a></li>
+                                    </ul> 
+                                </li>
+
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Республики</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="city_all.html" class="sub-menu-item">Адыгея</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Алтай</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Башкортастан</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Бурятия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Дагестан</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Донецкая</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ингушетия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Кабардино-Балкарская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Калмыкия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Карачаево-Черкесская</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Карелия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Коми</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Крым</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Марий Эл</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Мордовия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Саха</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Северная Осетия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Татарстан</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Тыва</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Удмуртия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Хакасия</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Чечня</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Чувашия</a></li>
+                                    </ul> 
+                                </li>
+                                <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Округа</a><span class="submenu-arrow"></span>
+                                    <ul class="submenu">
+                                        <li><a href="city_all.html" class="sub-menu-item">Ненецкий</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ханты-Мансийский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Чукотский</a></li>
+                                        <li><a href="city_all.html" class="sub-menu-item">Ямало-Ненецкий</a></li>
+                                    </ul> 
+                                </li>
+                                
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu parent-menu-item">
+                            <a href="javascript:void(0)">Услуги</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="service_all.html" class="sub-menu-item">Изготовление памятников</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Ритуальные услуги</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Ритуальный агент</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Ритуальный транспорт</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Ритуальные магазины</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Проведение поминок</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Изготовление медальонов</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Художественная ковка</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Живые цветы</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Ритуальные товары оптом</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Оборудование для изготовления памятников</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Скульптуры</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Уборка захоронений</a></li>
+                                <li><a href="service_all.html" class="sub-menu-item">Художественное литье</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu parent-menu-item">
+                            <a href="javascript:void(0)">Сервисы</a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                <li><a href="deceased_all.html" class="sub-menu-item">Слова памяти</a></li>
+                                <li><a href="place_all.html" class="sub-menu-item">Поиск захоронений</a></li>
+                                <li><a href="deceased_profile_create.html" class="sub-menu-item">Регистрация усопшего</a></li>
+                                <li><a href="place_profile_create.html" class="sub-menu-item">Оцифровка кладбища</a></li>
+                                <li><a href="organization_profile_create.html" class="sub-menu-item">Регистрация организации</a></li>
+                                <li><a href="info_1.html" class="sub-menu-item">Партнерство</a></li>
+                                <li><a href="info_2.html" class="sub-menu-item">Заказать услугу</a></li>
+                                <li><a href="info_3.html" class="sub-menu-item">Часто задаваемые вопросы</a></li>
+                                <li><a href="info_4.html" class="sub-menu-item">О нас</a></li>
+                                <li><a href="info_5.html" class="sub-menu-item">Политика конфиденциальности</a></li>
+                                <li><a href="info_6.html" class="sub-menu-item">Пользовательское соглашение</a></li>
+                                <li><a href="info_7.html" class="sub-menu-item">Контакты</a></li>
+                                <li><a href="sitemap.html" class="sub-menu-item">Карта сайта</a></li>
+
+
+                                
+                                
+                                
+                                
+                                
+                            
+                            </ul>
+                        </li>
+                
+                        
+                    </ul><!--end navigation menu-->
+                </div><!--end navigation-->
+            </div><!--end container-->
+        </nav><!--end header-->
+        <!-- End Navbar -->
+
 
 
     <div class="page-wrapper">
@@ -93,7 +349,20 @@
         </section>
         <!--End breadcrumb area-->
 
-        <!--Start Property five-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ФИЛЬТРЫ СБОКУ -->
         <section class="property-five">
             <div class="container">
                 <div class="row">
@@ -101,7 +370,7 @@
                     <div class="col-xl-2 colum1">
                         <div class="property-sidebar-content">
                             <div class="inner-title">
-                                <h5>Advanced Search</h5>
+                                <h5>Настройки поиска</h5>
                             </div>
 
                             <div class="advanced-search-box">
@@ -110,181 +379,38 @@
                                         <div class="col-xl-12">
                                             <!--Start Form Group -->
                                             <div class="form-group clearfix">
-                                                <label>Keywords</label>
+                                                <label>Ключевое слово</label>
                                                 <div class="field-input">
                                                     <input type="text" name="keywords"
-                                                        placeholder="What are you looking for?">
+                                                        placeholder="Что вы хотите найти?">
                                                 </div>
                                             </div>
                                             <!--End Form Group -->
                                             <!--Start Form Group -->
                                             <div class="form-group clearfix">
-                                                <label>Type</label>
+                                                <label>Тип</label>
                                                 <div class="field-input">
                                                     <div class="select-box">
                                                         <select class="wide">
-                                                            <option data-display="Property Type">Property
-                                                                Type
+                                                            <option data-display="Выберите тип">Выберите тип
                                                             </option>
-                                                            <option value="1">Laxury</option>
-                                                            <option value="2">Classic</option>
-                                                            <option value="3">Modern</option>
-                                                            <option value="4">New</option>
+                                                            <option value="1">Город</option>
+                                                            <option value="2">Захоронение</option>
+                                                            <option value="3">Кладбище</option>
+                                                            <option value="4">Услугу</option>
+                                                            <option value="4">Организацию</option>
+
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!--End Form Group -->
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label>Status</label>
-                                                <div class="field-input">
-                                                    <div class="select-box">
-                                                        <select class="wide">
-                                                            <option data-display="Select Status">
-                                                                Select Status
-                                                            </option>
-                                                            <option value="1">Select Status 01</option>
-                                                            <option value="2">Select Status 02</option>
-                                                            <option value="3">Select Status 03</option>
-                                                            <option value="4">Select Status 04</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label>Bed/Bathrooms</label>
-                                                <div class="field-input">
-                                                    <div class="select-box">
-                                                        <select class="wide">
-                                                            <option data-display="00 Bed / 00 Bathrooms">
-                                                                00 Bed / 00 Bathrooms
-                                                            </option>
-                                                            <option value="1">05 Bed / 02 Bathrooms</option>
-                                                            <option value="2">02 Bed / 01 Bathrooms</option>
-                                                            <option value="3">07 Bed / 03 Bathrooms</option>
-                                                            <option value="4">01 Bed / 01 Bathrooms</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label>Floors</label>
-                                                <div class="field-input">
-                                                    <input type="number" min="1" max="30" step="1" placeholder="1">
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label for="currency-field">Price</label>
-                                                <div class="field-input">
-                                                    <input type="text" name="currency-field" id="currency-field"
-                                                        pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value=""
-                                                        data-type="currency" placeholder="$000,000.00">
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
 
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label>Square Feet</label>
-                                                <div class="field-input">
-                                                    <input type="text" placeholder="1600 SQFT  -  2200 SQFT">
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
-
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label>Year Built</label>
-                                                <div class="field-input">
-                                                    <input type="text" placeholder="2005  -  2022">
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
-                                            <!--Start Form Group -->
-                                            <div class="form-group clearfix">
-                                                <label>Your Location</label>
-                                                <div class="field-input">
-                                                    <div class="select-box">
-                                                        <select class="wide">
-                                                            <option data-display="Your Location">
-                                                                Your Location
-                                                            </option>
-                                                            <option value="1">New York</option>
-                                                            <option value="2">California</option>
-                                                            <option value="3">London</option>
-                                                            <option value="4">Maxico</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--End Form Group -->
-                                            <!--Start Sidebar Map Box-->
-                                            <div class="sidebar-map-box">
-                                                <iframe
-                                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4562.753041141002!2d-118.80123790098536!3d34.152323469614075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80e82469c2162619%3A0xba03efb7998eef6d!2sCostco+Wholesale!5e0!3m2!1sbn!2sbd!4v1562518641290!5m2!1sbn!2sbd"
-                                                    class="google-map__two" allowfullscreen></iframe>
-                                            </div>
-                                            <!--End Sidebar Map Box-->
-                                            <!--Start Sidebar Features Box-->
-                                            <div class="sidebar-features-box">
-                                                <div class="inner-title">
-                                                    <h5>Features</h5>
-                                                </div>
-                                                <div class="scrollbar" id="style-1">
-                                                    <div class="force-overflow">
-                                                        <div class="checkboxes">
-                                                            <input id="check-2" type="checkbox" name="check">
-                                                            <label for="check-2">Free parking</label>
-
-                                                            <input id="check-3" type="checkbox" name="check">
-                                                            <label for="check-3">Free Internet (WiFi)</label>
-
-                                                            <input id="check-4" type="checkbox" name="check" checked>
-                                                            <label for="check-4">Bar</label>
-
-                                                            <input id="check-5" type="checkbox" name="check" checked>
-                                                            <label for="check-5">Coffeeshop</label>
-
-                                                            <input id="check-6" type="checkbox" name="check">
-                                                            <label for="check-6">WiFi</label>
-
-                                                            <input id="check-7" type="checkbox" name="check">
-                                                            <label for="check-7">Refrigerator</label>
-
-                                                            <input id="check-8" type="checkbox" name="check">
-                                                            <label for="check-8">Outdoor Shower</label>
-
-                                                            <input id="check-9" type="checkbox" name="check">
-                                                            <label for="check-9">Refrigerator</label>
-
-                                                            <input id="check-10" type="checkbox" name="check">
-                                                            <label for="check-10">Outdoor Shower</label>
-
-                                                            <input id="check-11" type="checkbox" name="check">
-                                                            <label for="check-11">Microwave</label>
-
-                                                            <input id="check-12" type="checkbox" name="check">
-                                                            <label for="check-12">Laundry</label>
-
-                                                            <input id="check-13" type="checkbox" name="check">
-                                                            <label for="check-13">Smoking rooms</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--End Sidebar Features Box-->
                                             <div class="btn-box">
                                                 <button class="btn-one" type="submit"
                                                     data-loading-text="Please wait...">
                                                     <span class="txt">
-                                                        search here
+                                                        Поиск
                                                         <i class="icon-plus-sign"></i>
                                                     </span>
                                                 </button>
@@ -298,6 +424,10 @@
                         </div>
                     </div>
 
+
+
+
+
                     <div class="col-xl-6 colum2">
                         <div class="property-content-box">
                             <div class="property-item-shorting">
@@ -305,36 +435,23 @@
                                 <div class="left-column">
                                     <div class="short-menu">
                                         <div class="inner-title">
-                                            <h6>View as:</h6>
+                                            <h6>Вид:</h6>
                                         </div>
                                         <div class="btn-box">
                                             <button class="grid-view on"><i class="icon-squares"></i></button>
                                             <button class="list-view"><i class="icon-list"></i></button>
                                         </div>
                                     </div>
-                                    <div class="short-box">
-                                        <div class="inner-title">
-                                            <h6>Sort by:</h6>
-                                        </div>
-                                        <div class="select-box">
-                                            <select class="wide">
-                                                <option data-display="Most Recent">Most Recent</option>
-                                                <option value="1">New Arrival</option>
-                                                <option value="2">Top Rated</option>
-                                                <option value="3">Offer Place</option>
-                                                <option value="4">Most Place</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <!--End Left Colum-->
-                                <!--Start Right Colum-->
-                                <div class="right-column">
-                                    <p><span>205</span> Properties Found</p>
-                                </div>
-                                <!--End Right Colum-->
+                                
                             </div>
 
+
+
+
+                            <!--ОБЪЕКТЫ-->
                             <div class="property-content-box__inner grid">
 
                                 <!-- Start Properties Grid Content-->
@@ -345,405 +462,30 @@
                                         <div class="col-xl-6 col-lg-6">
                                             <div class="single-properties-box-style1">
                                                 <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v2-1.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
+                                                    <img src="assets/images/properties2/properties-v2-1.jpg" alt="">
                                                 </div>
                                                 <div class="text-holder">
                                                     <div class="top">
                                                         <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
+                                                        <p> <a href="#">Кладбище</a></p>
                                                     </div>
                                                     <h3>
-                                                        <a href="property-details.html">Luxury Villa in Los Angeles.</a>
+                                                        <a href="place_profile.html">Новосильское кладбище</a>
                                                     </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
+                                                    <p>Краснодарский край, Сочи</p>
+                                                    
                                                     <div class="info-box">
                                                         <ul>
                                                             <li>
-                                                                <span class="icon-bed"></span>04 Bed
+                                                                <span class=""></span>115 Захоронений
                                                             </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
+                                                            
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- End Single Properties Box Style1-->
-                                        <!-- Start Single Properties Box Style1-->
-                                        <div class="col-xl-6 col-lg-6">
-                                            <div class="single-properties-box-style1">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v2-2.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg2">For Rent</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Smart fokhrey Ara Ashan
-                                                            Garden.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$70.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Properties Box Style1-->
-
-                                        <!-- Start Single Properties Box Style1-->
-                                        <div class="col-xl-6 col-lg-6">
-                                            <div class="single-properties-box-style1">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v2-3.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Purbachal Marine City.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$40.00</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Properties Box Style1-->
-
-                                        <!-- Start Single Properties Box Style1-->
-                                        <div class="col-xl-6 col-lg-6">
-                                            <div class="single-properties-box-style1">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v2-4.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Purbachal Marine City.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$40.00</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Properties Box Style1-->
-
-                                        <!-- Start Single Properties Box Style1-->
-                                        <div class="col-xl-6 col-lg-6">
-                                            <div class="single-properties-box-style1">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v2-5.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg2">For Rent</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Smart fokhrey Ara Ashan
-                                                            Garden.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$70.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Properties Box Style1-->
-
-                                        <!-- Start Single Properties Box Style1-->
-                                        <div class="col-xl-6 col-lg-6">
-                                            <div class="single-properties-box-style1">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v2-6.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Luxury Villa in Los Angeles.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Properties Box Style1-->
-
                                     </div>
                                 </div>
                                 <!--End Properties Grid Content-->
@@ -756,12 +498,9 @@
                                         <div class="row">
                                             <div class="col-xl-6 col-lg-6">
                                                 <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v3-1.jpg" alt="">
+                                                    <img src="assets/images/properties2/properties-v3-1.jpg" alt="">
                                                     <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
+                                                        
                                                     </div>
                                                     <div class="icon">
                                                         <span class="icon-heart"></span>
@@ -772,398 +511,19 @@
                                                 <div class="text-holder">
                                                     <div class="top">
                                                         <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
+                                                        <p> <a href="#">Кладбище</a></p>
                                                     </div>
                                                     <h3>
-                                                        <a href="property-details.html">Luxury Villa in Los Angeles.</a>
+                                                        <a href="property-details.html">Новосильское кладбище</a>
                                                     </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
+                                                    <p>Краснодарский край, Сочи</p>
+                                                    
                                                     <div class="info-box">
                                                         <ul>
                                                             <li>
-                                                                <span class="icon-bed"></span>04 Bed
+                                                                <span class=""></span>115 захоронений
                                                             </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Single Properties Box Style2-->
-                                    <!--Start Single Properties Box Style2-->
-                                    <div class="single-properties-box-style1 single-properties-box-style1--style2">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v3-2.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Apartment in Glasgow</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Single Properties Box Style2-->
-                                    <!--Start Single Properties Box Style2-->
-                                    <div class="single-properties-box-style1 single-properties-box-style1--style2">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v3-3.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg2">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Luxury Villa in Los Angeles.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Single Properties Box Style2-->
-                                    <!--Start Single Properties Box Style2-->
-                                    <div class="single-properties-box-style1 single-properties-box-style1--style2">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v3-4.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Family Home For Sale</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Single Properties Box Style2-->
-                                    <!--Start Single Properties Box Style2-->
-                                    <div class="single-properties-box-style1 single-properties-box-style1--style2">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v3-5.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Luxury Villa in Los Angeles.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Single Properties Box Style2-->
-                                    <!--Start Single Properties Box Style2-->
-                                    <div class="single-properties-box-style1 single-properties-box-style1--style2">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="img-holder">
-                                                    <img src="assets/images/properties1/properties-v3-6.jpg" alt="">
-                                                    <div class="overlay-content">
-                                                        <ul>
-                                                            <li>Featured</li>
-                                                            <li class="bg1">For Sell</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="icon">
-                                                        <span class="icon-heart"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="text-holder">
-                                                    <div class="top">
-                                                        <div class="dot"></div>
-                                                        <p>By <a href="#">Mex Bond</a></p>
-                                                    </div>
-                                                    <h3>
-                                                        <a href="property-details.html">Luxury Villa in Los Angeles.</a>
-                                                    </h3>
-                                                    <p>Buffalo, New York</p>
-                                                    <div class="rating-value-box">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star"></span>
-                                                                </li>
-                                                                <li>
-                                                                    <span class="icon-star-1"></span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="text">(5.4)</span>
-                                                        </div>
-                                                        <div class="value-box">
-                                                            <h4>$59.60</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="info-box">
-                                                        <ul>
-                                                            <li>
-                                                                <span class="icon-bed"></span>04 Bed
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-bath-tub"></span>02 Bath
-                                                            </li>
-                                                            <li>
-                                                                <span class="icon-selection"></span>2500 sq ft
-                                                            </li>
+                                                            
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -1176,13 +536,23 @@
                             </div>
 
 
+
+
+
+
+
+
+
+
+
+
                             <!--Start Styled Pagination-->
                             <div class="row">
                                 <div class="col-xl-12">
                                     <ul class="styled-pagination clearfix">
                                         <li class="arrow prev">
                                             <a href="#">
-                                                <span class="icon-left-arrow left"></span>Prev
+                                                <span class="icon-left-arrow left"></span>Назад
                                             </a>
                                         </li>
                                         <li class="active"><a href="#">1</a></li>
@@ -1190,7 +560,7 @@
                                         <li><a href="#">3</a></li>
                                         <li class="arrow next">
                                             <a href="#">
-                                                Next<span class="icon-right-arrow-1 right"></span>
+                                                Вперед<span class="icon-right-arrow-1 right"></span>
                                             </a>
                                         </li>
                                     </ul>
@@ -1198,8 +568,15 @@
                             </div>
                             <!--End Styled Pagination-->
 
+
+
+
+
                         </div>
                     </div>
+
+
+
 
                     <div class="col-xl-4 col-md-12 colum3">
                         <div class="listings-page-map">
@@ -1207,7 +584,7 @@
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4562.753041141002!2d-118.80123790098536!3d34.152323469614075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80e82469c2162619%3A0xba03efb7998eef6d!2sCostco+Wholesale!5e0!3m2!1sbn!2sbd!4v1562518641290!5m2!1sbn!2sbd"
                                 class="google-map" allowfullscreen></iframe>
 
-                            <!--Start location Box-->
+                            <!-- ТОЧКА НА КАРТЕ Start location Box-->
                             <div class="location-box one">
                                 <div class="map-marker">1</div>
                                 <div class="map-marker-content">
@@ -1235,201 +612,7 @@
                             </div>
                             <!--End location Box-->
 
-                            <!--Start location Box-->
-                            <div class="location-box two">
-                                <div class="map-marker">2</div>
-                                <div class="map-marker-content left">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
-
-                            <!--Start location Box-->
-                            <div class="location-box three">
-                                <div class="map-marker">3</div>
-                                <div class="map-marker-content left">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
-
-                            <!--Start location Box-->
-                            <div class="location-box four">
-                                <div class="map-marker">4</div>
-                                <div class="map-marker-content">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
-
-                            <!--Start location Box-->
-                            <div class="location-box five">
-                                <div class="map-marker">5</div>
-                                <div class="map-marker-content left">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
-
-                            <!--Start location Box-->
-                            <div class="location-box six">
-                                <div class="map-marker">6</div>
-                                <div class="map-marker-content">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
-
-                            <!--Start location Box-->
-                            <div class="location-box seven">
-                                <div class="map-marker">7</div>
-                                <div class="map-marker-content left">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
-
-                            <!--Start location Box-->
-                            <div class="location-box eight">
-                                <div class="map-marker">8</div>
-                                <div class="map-marker-content left">
-                                    <div class="img-box">
-                                        <img src="assets/images/resources/map-marker-1.jpg" alt="">
-                                    </div>
-                                    <div class="text-box">
-                                        <p>Buffalo, New York</p>
-                                        <h5>Luxury Villa in Los</h5>
-                                        <div class="rating-value-box">
-                                            <div class="value-box">
-                                                <h4>$59.60</h4>
-                                            </div>
-                                            <div class="rating-box">
-                                                <ul>
-                                                    <li>
-                                                        <span class="icon-star"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="text">(5.4)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End location Box-->
+                            
 
                         </div>
                     </div>
@@ -1437,22 +620,86 @@
                 </div>
             </div>
         </section>
-        <!--End Property five-->
+        <!--End -->
 
 
-        <!--Start slogan area-->
-        <section class="slogan-area">
+
+
+
+
+
+
+
+
+        <!-- Footer Start -->
+        <footer class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">    
             <div class="container">
-                <div class="slogan-content-box">
-                    <div class="inner-title">
-                        <a href="index.html"> <h2><span>На главную!</span> Поиск и оцифрока захоронений и кладбищ</h2></a>
+                <div class="grid grid-cols-12">
+                    <div class="col-span-12">
+                        <div class="py-[60px] px-0">
+                            <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+                                <div class="lg:col-span-4 md:col-span-12">
+                                    <a href="#" class="text-[22px] focus:outline-none">
+                                        <img src="assets/images/logo-light.png" alt="">
+                                    </a>
+                                    <p class="mt-6 text-gray-300">Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений.</p>
+                                    
+                                </div><!--end col-->
+                        
+                                <div class="lg:col-span-2 md:col-span-4">
+                                    <h5 class="tracking-[1px] text-gray-100 font-semibold">Захоронения</h5>
+                                    <ul class="list-none footer-list mt-6">
+                                        <li><a href="place_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> База захоронений</a></li>
+                                        <li class="mt-[10px]"><a href="deceased_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Стена памяти</a></li>
+                                        <li class="mt-[10px]"><a href="deceased_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Известные личности</a></li>
+                                        <li class="mt-[10px]"><a href="deceased_profile_create.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Регистрация захоронения</a></li>
+                                        <li class="mt-[10px]"><a href="place_profile_create.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Оцифровка кладбища</a></li>
+                                        <li class="mt-[10px]"><a href="organization_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Организации</a></li>
+                                        <li class="mt-[10px]"><a href="service_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Услуги</a></li>
+                                    </ul>
+                                </div><!--end col-->
+                        
+                                <div class="lg:col-span-3 md:col-span-4">
+                                    <h5 class="tracking-[1px] text-gray-100 font-semibold">Регионы</h5>
+                                    <ul class="list-none footer-list mt-6">
+                                        <li><a href="page-terms.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Города</a></li>
+                                        <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Края</a></li>
+                                        <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i>Области</a></li>
+                                        <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Республики</a></li>
+                                        <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Округа</a></li>
+                                    </ul>
+                                </div><!--end col-->
+
+                                <div class="lg:col-span-3 md:col-span-4">
+                                    <h5 class="tracking-[1px] text-gray-100 font-semibold">О нас</h5>
+                                    <ul class="list-none footer-list mt-6">
+                                        <li><a href="info_7.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Контакты</a></li>
+                                        <li class="mt-[10px]"><a href="info_4.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Обратная связь</a></li>
+                                        <li class="mt-[10px]"><a href="info_1.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Партнерство</a></li>
+                                        <li class="mt-[10px]"><a href="info_5.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Политика конфиденциальности</a></li>
+                                    </ul>
+                                </div><!--end col-->
+                               
+                            </div><!--end grid-->
+                        </div><!--end col-->
                     </div>
-                </div>
+                </div><!--end grid-->
+            </div><!--end container-->
+
+            <div class="py-[30px] px-0 border-t border-slate-800">
+                <div class="container text-center">
+                    <div class="grid md:grid-cols-2 items-center">
+                        <div class="md:text-left text-center">
+                            <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <i class="mdi mdi-heart text-red-600"></i> </p>
+                        </div>
+
+                        
+                    </div><!--end grid-->
+                </div><!--end container-->
             </div>
-        </section>
-        <!--End slogan area-->
-
-
+        </footer><!--end footer-->
+        <!-- Footer End -->
+        <!--End footer area-->
 
 
 
@@ -1460,38 +707,7 @@
     <!-- /.page-wrapper -->
 
 
-    <div class="mobile-nav__wrapper">
-        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
-        <div class="mobile-nav__content">
-            <span class="mobile-nav__close mobile-nav__toggler">
-                <i class="icon-plus-sign"></i>
-            </span>
-            <div class="logo-box">
-                <a href="index.html" aria-label="logo image">
-                    <img src="assets/images/resources/mobile-nav-logo.png" alt="" />
-                </a>
-            </div>
-            <div class="mobile-nav__container"></div>
-            <ul class="mobile-nav__contact list-unstyled">
-                <li>
-                    <i class="fa fa-envelope"></i>
-                    <a href="mailto:info@example.com">info@example.com</a>
-                </li>
-                <li>
-                    <i class="fa fa-phone-alt"></i>
-                    <a href="tel:123456789">444 000 777 66</a>
-                </li>
-            </ul>
-            <div class="mobile-nav__social">
-                <a href="#" class="fab fa-twitter"></a>
-                <a href="#" class="fab fa-facebook-square"></a>
-                <a href="#" class="fab fa-pinterest-p"></a>
-                <a href="#" class="fab fa-instagram"></a>
-            </div>
 
-
-        </div>
-    </div>
 
 
     <div class="search-popup">
