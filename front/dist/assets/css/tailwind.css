@@ -3269,7 +3269,7 @@ h1,  h2,  h3,  h4,  h5,  h6,  .h1,  .h2,  .h3,  .h4,  .h5,  .h6{
   top: 0px;
   z-index: 999;
   border-width: 0px;
-  background-color: transparent;
+  background-color: white;
   -webkit-transition-property: all;
   transition-property: all;
   -webkit-transition-duration: 500ms;
