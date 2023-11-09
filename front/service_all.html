@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ЗАХОРОНЕНИЯ | ПОИСК</title>
+    <meta
+      name="description"
+      content="Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений."
+    />
+
+    <link rel="stylesheet" href="static/styles/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/styles/bootstrap-select.min.css" />
+    <link href="static/styles/theme-color.css" id="jssDefault" rel="stylesheet" />
+    <link rel="stylesheet" href="static/styles/style.css" />
+    <link rel="stylesheet" href="static/styles/responsive.css" />
+    <link rel="stylesheet" href="static/styles/tailwind.css" />
+    <link rel="stylesheet" href="static/styles/my-css.css" />
+  </head>
+
+  <body>
+
+
+
+
+
+    <nav id="topnav" class="defaultscroll is-sticky">
+      <div class="container">
+        <!-- Logo container-->
+        <a class="logo pl-0" href="index.html">
+          <img
+            src="static/images/main/logo-dark.png"
+            class="inline-block dark:hidden"
+            alt=""
+          />
+          <img
+            src="static/images/main/logo-light.png"
+            class="hidden dark:inline-block"
+            alt=""
+          />
+        </a>
+
+        <!-- End Logo container-->
+        <div class="menu-extras">
+          <div class="menu-item">
+            <!-- Mobile menu toggle-->
+            <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+              <div class="lines">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </a>
+            <!-- End mobile menu toggle-->
+          </div>
+        </div>
+
+        <!--Login button Start-->
+        <ul class="buy-button list-none mb-0">
+          <li class="inline mb-0">
+            <a href="user-setting.html" class="btn btn-icon rounded-full"
+              ><img
+                src="static/images/main/iconSetting.png"
+                alt="iconSetting"
+                srcset=""
+            /></a>
+          </li>
+
+          <li class="inline pl-1 mb-0">
+            <a
+              href="user-profile.html"
+              target="_blank"
+              class="btn btn-icon rounded-full"
+            >
+              <img
+                src="static/images/main/iconProfile.png"
+                alt="iconProfile"
+                srcset=""
+            /></a>
+          </li>
+        </ul>
+        <!--Login button End-->
+
+        <div id="navigation">
+          <!-- Navigation Menu-->
+          <ul class="navigation-menu">
+            <li>
+              <a href="index.html" class="sub-menu-item">Главная</a>
+            </li>
+            
+
+            <li class="has-submenu parent-parent-menu-item">
+              <a href="javascript:void(0)">Захоронения</a
+              ><span class="menu-arrow"></span>
+              <ul class="submenu">
+                <li class="has-submenu parent-menu-item">
+                  <a href="javascript:void(0)">Кладбища</a
+                  ><span class="submenu-arrow"></span>
+                  <ul class="submenu">
+                    <li>
+                      <a href="place_all" class="sub-menu-item"
+                        >База захоронений</a
+                      >
+                    </li>
+                    
+                    <li>
+                      <a href="place_profile_create.html" class="sub-menu-item"
+                        >Оцифровать кладбище</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="has-submenu parent-menu-item">
+                  <a href="javascript:void(0)">Усопший</a
+                  ><span class="submenu-arrow"></span>
+                  <ul class="submenu">
+                    <li>
+                      <a href="place_all.html" class="sub-menu-item"
+                        >База захоронений</a
+                      >
+                    </li>
+                    
+                    <li>
+                      <a
+                        href="deceased_profile_create.html"
+                        class="sub-menu-item"
+                        >Регистрация</a
+                      >
+                    </li>
+                    
+                  </ul>
+                </li>
+                <li class="has-submenu parent-menu-item">
+                  <a href="javascript:void(0)">Стена памяти</a
+                  ><span class="submenu-arrow"></span>
+                  <ul class="submenu">
+                    <li>
+                      <a href="place_all" class="sub-menu-item">Мемориалы</a>
+                    </li>
+                    <li>
+                      <a href="place_all" class="sub-menu-item"
+                        >Братские могилы</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="city_all.html" class="sub-menu-item"
+                >Поиск</a
+              >
+            </li>
+            <li class="has-submenu parent-menu-item">
+              <a href="javascript:void(0)">Сервисы</a
+              ><span class="menu-arrow"></span>
+              <ul class="submenu">
+                <li>
+                  <a href="deceased_all.html" class="sub-menu-item"
+                    >Слова памяти</a
+                  >
+                </li>
+                <li>
+                  <a href="place_all.html" class="sub-menu-item"
+                    >Поиск захоронений</a
+                  >
+                </li>
+                <li>
+                  <a href="deceased_profile_create.html" class="sub-menu-item"
+                    >Регистрация усопшего</a
+                  >
+                </li>
+                <li>
+                  <a href="place_profile_create.html" class="sub-menu-item"
+                    >Оцифровка кладбища</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="organization_profile_create.html"
+                    class="sub-menu-item"
+                    >Регистрация организации</a
+                  >
+                </li>
+                <li>
+                  <a href="info_1.html" class="sub-menu-item">Партнерство</a>
+                </li>
+                <li>
+                  <a href="info_2.html" class="sub-menu-item"
+                    >Заказать услугу</a
+                  >
+                </li>
+                <li>
+                  <a href="info_3.html" class="sub-menu-item"
+                    >Часто задаваемые вопросы</a
+                  >
+                </li>
+                <li><a href="info_4.html" class="sub-menu-item">О нас</a></li>
+                <li>
+                  <a href="info_5.html" class="sub-menu-item"
+                    >Политика конфиденциальности</a
+                  >
+                </li>
+                <li>
+                  <a href="info_6.html" class="sub-menu-item"
+                    >Пользовательское соглашение</a
+                  >
+                </li>
+                <li>
+                  <a href="info_7.html" class="sub-menu-item">Контакты</a>
+                </li>
+                <li>
+                  <a href="sitemap.html" class="sub-menu-item">Карта сайта</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <!--end navigation menu-->
+        </div>
+        <!--end navigation-->
+      </div>
+      <!--end container-->
+    </nav>
+
+
+
+
+
+
+
+    <div class="page-wrapper">
+      <header class="main-header main-header-style1"></header>
+
+      <div class="stricky-header stricked-menu main-menu">
+        <div class="sticky-header__content"></div>
+        <!-- /.sticky-header__content -->
+      </div>
+      <!-- /.stricky-header -->
+
+      <!--Start breadcrumb area-->
+      <section class="breadcrumb-area">
+        <div class="breadcrumb-area-bg"></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="inner-content">
+                <div
+                  class="breadcrumb-menu"
+                  data-aos="fade-left"
+                  data-aos-easing="linear"
+                  data-aos-duration="500"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--End breadcrumb area-->
+
+      <!-- ФИЛЬТРЫ СБОКУ -->
+      <section class="property-five">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-2 colum1">
+              <div class="property-sidebar-content">
+                <div class="inner-title">
+                  <h5>Настройки поиска</h5>
+                </div>
+
+                <div class="advanced-search-box">
+                  <form
+                    action="index.html"
+                    method="post"
+                    class="advanced-search-form clearfix"
+                  >
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <!--Start Form Group -->
+                        <div class="form-group clearfix">
+                          <label>Ключевое слово</label>
+                          <div class="field-input">
+                            <input
+                              type="text"
+                              name="keywords"
+                              placeholder="Что вы хотите найти?"
+                            />
+                          </div>
+                        </div>
+                        <!--End Form Group -->
+                        <!--Start Form Group -->
+                        <div class="form-group clearfix">
+                          <label>Тип</label>
+                          <div class="field-input">
+                            <div class="select-box">
+                              <select class="wide">
+                                <option data-display="Выберите тип">
+                                  Выберите тип
+                                </option>
+                                <option value="1">Усопший</option>
+                                <option value="1">Город</option>
+                                <option value="2">Захоронение</option>
+                                <option value="3">Кладбище</option>
+                                <option value="4">Услугу</option>
+                                <option value="4">Организацию</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <!--End Form Group -->
+
+                        <div class="btn-box">
+                          <button
+                            class="btn-one"
+                            type="submit"
+                            data-loading-text="Please wait..."
+                          >
+                            <span class="txt">
+                              Поиск
+                              <i class="icon-plus-sign"></i>
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 colum2">
+              <div class="property-content-box">
+                <!--ОБЪЕКТЫ-->
+
+                <div class="property-content-box__inner grid">
+                  <!-- Start Properties Grid Content-->
+                  <div class="property-grid-content grid-item">
+                    <div class="row">
+                      <!-- Start Single Properties Box Style1-->
+                      <div class="col-xl-6 col-lg-6">
+                        <div class="single-properties-box-style1">
+                          <div class="img-holder">
+                            <img
+                              src="static/images/service/1/1.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div class="text-holder">
+                            <div class="top">
+                              <div class="dot"></div>
+                              <p><a href="#">Услуга</a></p>
+                            </div>
+                            <h3>
+                              <a href="place_profile.html"
+                                >Изготовление памятников</a
+                              >
+                            </h3>
+                            <p>Краснодарский край, Сочи</p>
+                            <br />
+                            <div class="info-box">
+                              <ul>
+                                <li>
+                                  <span class=""></span>Ритуальная организация
+                                  №1
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single Properties Box Style1-->
+                    </div>
+                  </div>
+                  <!--End Properties Grid Content-->
+                </div>
+
+                <!--Start Styled Pagination-->
+                <div class="row">
+                  <div class="col-xl-12">
+                    <ul class="styled-pagination clearfix">
+                      <li class="arrow prev">
+                        <a href="#">
+                          <span class="icon-left-arrow left"></span>Назад
+                        </a>
+                      </li>
+                      <li class="active"><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li class="arrow next">
+                        <a href="#">
+                          Вперед<span class="icon-right-arrow-1 right"></span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!--End Styled Pagination-->
+              </div>
+            </div>
+
+            <div class="col-xl-4 col-md-12 colum3">
+              <div class="listings-page-map">
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"
+                  class="google-map"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--End -->
+
+      <!-- Footer Start -->
+      <footer
+        class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200"
+      >
+        <div class="container">
+          <div class="grid grid-cols-12">
+            <div class="col-span-12">
+              <div class="py-[60px] px-0">
+                <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+                  <div class="lg:col-span-4 md:col-span-12">
+                    <a href="#" class="text-[22px] focus:outline-none">
+                      <img src="static/images/main/logo-light.png" alt="footerLogo" />
+                    </a>
+                    <p class="mt-6 text-gray-300">
+                      Этот сайт является агрегатором ритуальных услуг со всех
+                      городов, а так же предоставляет электронную регистрацию
+                      захоронений.
+                    </p>
+                  </div>
+                  <!--end col-->
+
+                  <div class="lg:col-span-2 md:col-span-4">
+                    <h5 class="tracking-[1px] text-gray-100 font-semibold">
+                      Захоронения
+                    </h5>
+                    <ul class="list-none footer-list mt-6">
+                      <li>
+                        <a
+                          href="place_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> База
+                          захоронений</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="deceased_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Стена
+                          памяти</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="deceased_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Известные
+                          личности</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="deceased_profile_create.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i>
+                          Регистрация захоронения</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="place_profile_create.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Оцифровка
+                          кладбища</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="organization_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i>
+                          Организации</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="service_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Услуги</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <!--end col-->
+
+                  <div class="lg:col-span-3 md:col-span-4">
+                    <h5 class="tracking-[1px] text-gray-100 font-semibold">
+                      Регионы
+                    </h5>
+                    <ul class="list-none footer-list mt-6">
+                      <li>
+                        <a
+                          href="page-terms.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Города</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="city_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Края</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="city_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i>Области</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="city_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i>
+                          Республики</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="city_all.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Округа</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <!--end col-->
+
+                  <div class="lg:col-span-3 md:col-span-4">
+                    <h5 class="tracking-[1px] text-gray-100 font-semibold">
+                      О нас
+                    </h5>
+                    <ul class="list-none footer-list mt-6">
+                      <li>
+                        <a
+                          href="info_7.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i>
+                          Контакты</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="info_4.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Обратная
+                          связь</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="info_1.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i>
+                          Партнерство</a
+                        >
+                      </li>
+                      <li class="mt-[10px]">
+                        <a
+                          href="info_5.html"
+                          class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                          ><i class="uil uil-angle-right-b me-1"></i> Политика
+                          конфиденциальности</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <!--end col-->
+                </div>
+                <!--end grid-->
+              </div>
+              <!--end col-->
+            </div>
+          </div>
+          <!--end grid-->
+        </div>
+        <!--end container-->
+
+        <div class="py-[30px] px-0 border-t border-slate-800">
+          <div class="container text-center">
+            <div class="grid md:grid-cols-2 items-center">
+              <div class="md:text-left text-center">
+                <p class="mb-0">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  <i class="mdi mdi-heart text-red-600"></i>
+                </p>
+              </div>
+            </div>
+            <!--end grid-->
+          </div>
+          <!--end container-->
+        </div>
+      </footer>
+      <!--end footer-->
+      <!-- Footer End -->
+      <!--End footer area-->
+    </div>
+    <!-- /.page-wrapper -->
+
+    <div class="search-popup">
+      <div class="search-popup__overlay search-toggler"></div>
+      <div class="search-popup__content">
+        <form action="#">
+          <label for="search" class="sr-only">search here</label>
+          <input type="text" id="search" placeholder="Search Here..." />
+          <button type="submit" aria-label="search submit" class="thm-btn">
+            <i class="icon-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+      <i class="icon-up-arrow-1"></i>
+    </a>
+    <script src="static/js/app.js"></script>
+  </body>
+</html>

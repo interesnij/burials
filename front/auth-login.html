@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru" class="light scroll-smooth" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ЗАХОРОНЕНИЯ | ПОИСК</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений."
+    />
+    <meta
+      name="keywords"
+      content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css"
+    />
+    <meta name="author" content="Shreethemes" />
+    <meta name="website" content="https://shreethemes.in" />
+    <meta name="email" content="support@shreethemes.in" />
+    <meta name="version" content="1.5.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- favicon -->
+
+    <link rel="shortcut icon" href="static/images/main/favicon.ico" />
+
+    <!-- Css -->
+    <!-- Main Css -->
+    <link
+      href="static/libs/@iconscout/unicons/css/line.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/styles/icons.css" />
+    <link rel="stylesheet" href="static/styles/tailwind.css" />
+  </head>
+
+  <body
+    class="font-nunito text-base text-black dark:text-white dark:bg-slate-900"
+  >
+
+    <!-- Start Navbar -->
+    <nav id="topnav" class="defaultscroll is-sticky" style="background-color: aliceblue;">
+      <div class="container">
+          <!-- Logo container-->
+          <a class="logo pl-0" href="index.html">
+              <img src="static/images/main/logo-dark.png" class="inline-block dark:hidden" alt="">
+              <img src="static/images/main/logo-light.png" class="hidden dark:inline-block" alt="">
+          </a>
+  
+          <!-- End Logo container-->
+          <div class="menu-extras">
+              <div class="menu-item">
+                  <!-- Mobile menu toggle-->
+                  <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                      <div class="lines">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                      </div>
+                  </a>
+                  <!-- End mobile menu toggle-->
+              </div>
+          </div>
+  
+          <!--Login button Start-->
+          <ul class="buy-button list-none mb-0">
+              <li class="inline mb-0">
+                  <a href="user-setting.html" class="btn btn-icon rounded-full bg-indigo-600/5 hover:bg-indigo-600 border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white"><i data-feather="settings" class="h-4 w-4"></i></a>
+              </li>
+      
+              <li class="inline pl-1 mb-0">
+                  <a href="user-profile.html" target="_blank" class="btn btn-icon rounded-full bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white"><i data-feather="user" class="h-4 w-4"></i></a>
+              </li>
+          </ul>
+          <!--Login button End-->
+  
+          <div id="navigation">
+              <!-- Navigation Menu-->   
+              <ul class="navigation-menu">
+                  <li><a href="index.html" class="sub-menu-item">Главная</a></li>
+          
+                  
+  
+                  <li class="has-submenu parent-parent-menu-item">
+                      <a href="javascript:void(0)">Захоронения</a><span class="menu-arrow"></span>
+                      <ul class="submenu">
+                          <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Кладбища</a><span class="submenu-arrow"></span>
+                              <ul class="submenu">
+                                  <li><a href="place_all.html" class="sub-menu-item">База захоронений</a></li>
+                                  <li><a href="place_profile_create.html" class="sub-menu-item">Оцифровать кладбище</a></li>
+                                </ul> 
+                          </li>
+                          <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Усопший</a><span class="submenu-arrow"></span>
+                              <ul class="submenu">
+                                  <li><a href="place_all.html" class="sub-menu-item">База захоронений</a></li>
+                                  <li><a href="deceased_profile_create.html" class="sub-menu-item">Регистрация</a></li>
+                              </ul> 
+                          </li>
+                          <li class="has-submenu parent-menu-item"><a href="javascript:void(0)">Стена памяти</a><span class="submenu-arrow"></span>
+                              <ul class="submenu">
+                                  <li><a href="place_all.html" class="sub-menu-item">Мемориалы</a></li>
+                                  <li><a href="place_all.html" class="sub-menu-item">Братские могилы</a></li>
+                              </ul> 
+                          </li>
+                          
+                      </ul>
+                  </li>
+  
+                 
+                  <li><a href="city_all.html" class="sub-menu-item">Поиск</a></li>
+  
+  
+  
+  
+                  
+  
+                  <li class="has-submenu parent-menu-item">
+                      <a href="javascript:void(0)">Сервисы</a><span class="menu-arrow"></span>
+                      <ul class="submenu">
+                          <li><a href="deceased_all.html" class="sub-menu-item">Слова памяти</a></li>
+                          <li><a href="place_all.html" class="sub-menu-item">Поиск захоронений</a></li>
+                          <li><a href="deceased_profile_create.html" class="sub-menu-item">Регистрация усопшего</a></li>
+                          <li><a href="place_profile_create.html" class="sub-menu-item">Оцифровка кладбища</a></li>
+                          <li><a href="organization_profile_create.html" class="sub-menu-item">Регистрация организации</a></li>
+                          <li><a href="info_1.html" class="sub-menu-item">Партнерство</a></li>
+                          <li><a href="info_2.html" class="sub-menu-item">Заказать услугу</a></li>
+                          <li><a href="info_3.html" class="sub-menu-item">Часто задаваемые вопросы</a></li>
+                          <li><a href="info_4.html" class="sub-menu-item">О нас</a></li>
+                          <li><a href="info_5.html" class="sub-menu-item">Политика конфиденциальности</a></li>
+                          <li><a href="info_6.html" class="sub-menu-item">Пользовательское соглашение</a></li>
+                          <li><a href="info_7.html" class="sub-menu-item">Контакты</a></li>
+                          <li><a href="sitemap.html" class="sub-menu-item">Карта сайта</a></li>
+  
+  
+                         
+                      </ul>
+                  </li>
+          
+                  
+              </ul><!--end navigation menu-->
+          </div><!--end navigation-->
+      </div><!--end container-->
+  </nav><!--end header-->
+  <!-- End Navbar -->
+
+
+
+
+
+
+
+
+    <section class="md:h-screen py-36 flex items-center" style="background: linear-gradient(45deg, #ff6600, #0066ff);">
+
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-transparent to-black"
+      ></div>
+      <div class="container">
+        <div class="flex justify-center">
+          <div
+            class="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md"
+          >
+            <a href="index.html"
+              ><img src="static/images/main/logo-icon.png" class="mx-auto" alt=""
+            /></a>
+            <h5 class="my-6 text-xl font-semibold">Вход</h5>
+            <form class="text-left">
+              <div class="grid grid-cols-1">
+                <div class="mb-4">
+                  <label class="font-semibold" for="LoginEmail"
+                    >Email адрес:</label
+                  >
+                  <input
+                    id="LoginEmail"
+                    type="email"
+                    class="form-input mt-3"
+                    placeholder="name@yandex.ru"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <label class="font-semibold" for="LoginPassword"
+                    >Пароль:</label
+                  >
+                  <input
+                    id="LoginPassword"
+                    type="password"
+                    class="form-input mt-3"
+                    placeholder="Ваш пароль:"
+                  />
+                </div>
+
+                <div class="flex justify-between mb-4">
+                  <div class="form-checkbox flex items-center mb-0">
+                    <input
+                      class="mr-2 border border-inherit w-[14px] h-[14px]"
+                      type="checkbox"
+                      value=""
+                      id="RememberMe"
+                    />
+                    <label class="text-slate-400" for="RememberMe"
+                      >Запомнить меня</label
+                    >
+                  </div>
+                  <p class="text-slate-400 mb-0">
+                    <a href="auth-re-password.html" class="text-slate-400"
+                      >Забыли пароль ?</a
+                    >
+                  </p>
+                </div>
+
+                <div class="mb-4">
+                  <input
+                    type="submit"
+                    class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
+                    value="Войти"
+                  />
+                </div>
+
+                <div class="text-center">
+                  <span class="text-slate-400 me-2"
+                    >Пока что нет аккаунта ?</span
+                  >
+                  <a
+                    href="auth-signup.html"
+                    class="text-black dark:text-white font-bold"
+                    >Зарегестрироваться</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--end section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <!-- Footer Start -->
+    <footer
+      class="footer bg-dark-footer relative text-gray-200 dark:text-gray-200"
+    >
+      <div class="container">
+        <div class="grid grid-cols-12">
+          <div class="col-span-12">
+            <div class="py-[60px] px-0">
+              <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+                <div class="lg:col-span-4 md:col-span-12">
+                  <a href="#" class="text-[22px] focus:outline-none">
+                    <img src="static/images/main/logo-light.png" alt="" />
+                  </a>
+                  <p class="mt-6 text-gray-300">
+                    Этот сайт является агрегатором ритуальных услуг со всех
+                    городов, а так же предоставляет электронную регистрацию
+                    захоронений.
+                  </p>
+                </div>
+                <!--end col-->
+
+                <div class="lg:col-span-2 md:col-span-4">
+                  <h5 class="tracking-[1px] text-gray-100 font-semibold">
+                    Захоронения
+                  </h5>
+                  <ul class="list-none footer-list mt-6">
+                    <li>
+                      <a
+                        href="place_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> База
+                        захоронений</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="deceased_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Стена
+                        памяти</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="deceased_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Известные
+                        личности</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="deceased_profile_create.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Регистрация
+                        захоронения</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="place_profile_create.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Оцифровка
+                        кладбища</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="organization_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i>
+                        Организации</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="service_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Услуги</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!--end col-->
+
+                <div class="lg:col-span-3 md:col-span-4">
+                  <h5 class="tracking-[1px] text-gray-100 font-semibold">
+                    Регионы
+                  </h5>
+                  <ul class="list-none footer-list mt-6">
+                    <li>
+                      <a
+                        href="page-terms.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Города</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="city_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Края</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="city_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i>Области</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="city_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i>
+                        Республики</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="city_all.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Округа</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!--end col-->
+
+                <div class="lg:col-span-3 md:col-span-4">
+                  <h5 class="tracking-[1px] text-gray-100 font-semibold">
+                    О нас
+                  </h5>
+                  <ul class="list-none footer-list mt-6">
+                    <li>
+                      <a
+                        href="info_7.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Контакты</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="info_4.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Обратная
+                        связь</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="info_1.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i>
+                        Партнерство</a
+                      >
+                    </li>
+                    <li class="mt-[10px]">
+                      <a
+                        href="info_5.html"
+                        class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                        ><i class="uil uil-angle-right-b me-1"></i> Политика
+                        конфиденциальности</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <!--end col-->
+              </div>
+              <!--end grid-->
+            </div>
+            <!--end col-->
+          </div>
+        </div>
+        <!--end grid-->
+      </div>
+      <!--end container-->
+
+      <div class="py-[30px] px-0 border-t border-slate-800">
+        <div class="container text-center">
+          <div class="grid md:grid-cols-2 items-center">
+            <div class="md:text-left text-center">
+              <p class="mb-0">
+                ©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                вебсервисы.рф <i class="mdi mdi-heart text-red-600"></i>
+              </p>
+            </div>
+          </div>
+          <!--end grid-->
+        </div>
+        <!--end container-->
+      </div>
+    </footer>
+    <!--end footer-->
+    <!-- Footer End -->
+
+    <div class="fixed bottom-3 right-3">
+      <a
+        href=""
+        class="back-button btn btn-icon bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-full"
+        ><i data-feather="arrow-left" class="h-4 w-4"></i
+      ></a>
+    </div>
+
+    <!-- JAVASCRIPTS -->
+    <script src="static/libs/feather-icons/feather.min.js"></script>
+    <script src="static/js/plugins.init.js"></script>
+    <script src="static/js/app.js"></script>
+    <!-- JAVASCRIPTS -->
+  </body>
+</html>
