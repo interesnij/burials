@@ -15,7 +15,7 @@ pub struct Place {
     pub winter_hours: Option<String>,        // Часы работы в зимнее время
     pub photo_links: Option<String>,          // Ссылки на фотографии кладбища
     pub address: Option<String>,             // Адрес кладбища
-    pub deceased_id: i32,                    // Идентификатор покойников
+    pub place_id: i32,                    // Идентификатор покойников
     pub organization_id: i32,                // Идентификатор организаций
     pub burial_count: i32,                   // Количество захоронений
     pub cemetery_director: Option<String>,    // Руководитель кладбища
@@ -35,7 +35,7 @@ pub struct NewPlace {
     pub winter_hours: Option<String>,        // Часы работы в зимнее время
     pub photo_links: Option<String>,         // Ссылки на фотографии кладбища
     pub address: Option<String>,             // Адрес кладбища
-    pub deceased_id: i32,                    // Идентификатор покойников
+    pub place_id: i32,                    // Идентификатор покойников
     pub organization_id: i32,                // Идентификатор организаций
     pub burial_count: i32,                   // Количество захоронений
     pub cemetery_director: Option<String>,    // Руководитель кладбища
@@ -49,18 +49,161 @@ use crate::schema::places; // Подключение модуля для таб�
 // Реализация методов для структуры Place
 
 impl Place {
+
+
+    pub fn get_place (
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Place> {
+        use crate::schema::place::dsl::place;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return place
+                .order(schema::place::cemetery_name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::place::id,
+                    schema::place::city_id,
+                    schema::place::region_id,
+                    schema::place::country_id,
+                    schema::place::cemetery_name,
+                    schema::place::description.nullable(),
+                    schema::place::summer_hours.nullable(),
+                    schema::place::winter_hours.nullable(),
+                    schema::place::photo_links.nullable(),
+                    schema::place::address.nullable(),
+                    schema::place::place_id,
+                    schema::place::organization_id,
+                    schema::place::burial_count,
+                    schema::place::cemetery_director.nullable(),
+                    schema::place::cemetery_phone_number.nullable(),
+                ))
+                .load::<Place>(&_connection)
+                .expect("E.");
+        } else {
+            return place
+                .order(schema::place::cemetery_name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::place::id,
+                    schema::place::city_id,
+                    schema::place::region_id,
+                    schema::place::country_id,
+                    schema::place::cemetery_name,
+                    schema::place::description.nullable(),
+                    schema::place::summer_hours.nullable(),
+                    schema::place::winter_hours.nullable(),
+                    schema::place::photo_links.nullable(),
+                    schema::place::address.nullable(),
+                    schema::place::place_id,
+                    schema::place::organization_id,
+                    schema::place::burial_count,
+                    schema::place::cemetery_director.nullable(),
+                    schema::place::cemetery_phone_number.nullable(),
+                ))
+                .load::<Place>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn search_place (
+        q:        &String,
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Place> {
+        use crate::schema::place::dsl::place;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return place
+                .filter(schema::place::cemetery_name.ilike(&q))
+                .or_filter(schema::place::description.ilike(&q))
+                .or_filter(schema::place::address.ilike(&q))
+                .or_filter(schema::place::cemetery_director.ilike(&q))
+                .order(schema::place::cemetery_name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::place::id,
+                    schema::place::city_id,
+                    schema::place::region_id,
+                    schema::place::country_id,
+                    schema::place::cemetery_name,
+                    schema::place::description.nullable(),
+                    schema::place::summer_hours.nullable(),
+                    schema::place::winter_hours.nullable(),
+                    schema::place::photo_links.nullable(),
+                    schema::place::address.nullable(),
+                    schema::place::place_id,
+                    schema::place::organization_id,
+                    schema::place::burial_count,
+                    schema::place::cemetery_director.nullable(),
+                    schema::place::cemetery_phone_number.nullable(),
+                ))
+                .load::<Place>(&_connection)
+                .expect("E.");
+        } else {
+            return place
+                .filter(schema::place::cemetery_name.ilike(&q))
+                .or_filter(schema::place::description.ilike(&q))
+                .or_filter(schema::place::address.ilike(&q))
+                .or_filter(schema::place::cemetery_director.ilike(&q))
+                .order(schema::place::cemetery_name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::place::id,
+                    schema::place::city_id,
+                    schema::place::region_id,
+                    schema::place::country_id,
+                    schema::place::cemetery_name,
+                    schema::place::description.nullable(),
+                    schema::place::summer_hours.nullable(),
+                    schema::place::winter_hours.nullable(),
+                    schema::place::photo_links.nullable(),
+                    schema::place::address.nullable(),
+                    schema::place::place_id,
+                    schema::place::organization_id,
+                    schema::place::burial_count,
+                    schema::place::cemetery_director.nullable(),
+                    schema::place::cemetery_phone_number.nullable(),
+                ))
+                .load::<Place>(&_connection)
+                .expect("E.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Метод для создания нового объекта структуры.
     pub fn new(
         city_id: i32,
         region_id: i32,
         country_id: i32,
-        cemetery_name: String,
+        cemetery_name: String, 
         description: Option<String>,
         summer_hours: Option<String>,
         winter_hours: Option<String>,
         photo_links: Option<String>,
         address: Option<String>,
-        deceased_id: i32,
+        place_id: i32,
         organization_id: i32,
         burial_count: i32,
         cemetery_director: Option<String>,
@@ -76,7 +219,7 @@ impl Place {
             winter_hours,
             photo_links,
             address,
-            deceased_id,
+            place_id,
             organization_id,
             burial_count,
             cemetery_director,
@@ -89,7 +232,7 @@ impl Place {
         places::table.find(id).first(connection).optional()
     }
 
-    // Метод для получения всех объектов данной структуры.get_all_deceased
+    // Метод для получения всех объектов данной структуры.get_all_place
     pub fn get_all_place(connection: &PgConnection) -> Result<Vec<Self>, Error> {
         places::table.load::<Place>(connection)
     }

@@ -34,6 +34,152 @@ pub struct NewDeceased {
 
 
 impl Deceased {
+
+    pub fn get_deceased (
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Deceased> {
+        use crate::schema::deceased::dsl::deceased;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return deceased
+                .order(schema::deceased::death_date.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::deceased::id,
+                    schema::deceased::place_id,
+                    schema::deceased::first_name,
+                    schema::deceased::middle_name.nullable(),
+                    schema::deceased::birth_date,
+                    schema::deceased::death_date,
+                    schema::deceased::photo_link.nullable(),
+                    schema::deceased::data.nullable(),
+                    schema::deceased::memory_words.nullable(),
+                    schema::deceased::user_id,
+                ))
+                .load::<Deceased>(&_connection)
+                .expect("E.");
+        } else {
+            return deceased
+                .order(schema::deceased::death_date.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::deceased::id,
+                    schema::deceased::place_id,
+                    schema::deceased::first_name,
+                    schema::deceased::middle_name.nullable(),
+                    schema::deceased::birth_date,
+                    schema::deceased::death_date,
+                    schema::deceased::photo_link.nullable(),
+                    schema::deceased::data.nullable(),
+                    schema::deceased::memory_words.nullable(),
+                    schema::deceased::user_id,
+                ))
+                .load::<Deceased>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn search_deceased (
+        q:        &String,
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Deceased> {
+        use crate::schema::deceased::dsl::deceased;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return deceased
+                .filter(schema::deceased::first_name.ilike(&q))
+                .or_filter(schema::deceased::middle_name.ilike(&q))
+                .or_filter(schema::deceased::birth_date.ilike(&q))
+                .or_filter(schema::deceased::death_date.ilike(&q))
+                .or_filter(schema::deceased::data.ilike(&q))
+                .order(schema::deceased::death_date.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::deceased::id,
+                    schema::deceased::place_id,
+                    schema::deceased::first_name,
+                    schema::deceased::middle_name.nullable(),
+                    schema::deceased::birth_date,
+                    schema::deceased::death_date,
+                    schema::deceased::photo_link.nullable(),
+                    schema::deceased::data.nullable(),
+                    schema::deceased::memory_words.nullable(),
+                    schema::deceased::user_id,
+                ))
+                .load::<Deceased>(&_connection)
+                .expect("E.");
+        } else {
+            return deceased
+                .filter(schema::deceased::first_name.ilike(&q))
+                .or_filter(schema::deceased::middle_name.ilike(&q))
+                .or_filter(schema::deceased::birth_date.ilike(&q))
+                .or_filter(schema::deceased::death_date.ilike(&q))
+                .or_filter(schema::deceased::data.ilike(&q))
+                .order(schema::deceased::death_date.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::deceased::id,
+                    schema::deceased::place_id,
+                    schema::deceased::first_name,
+                    schema::deceased::middle_name.nullable(),
+                    schema::deceased::birth_date,
+                    schema::deceased::death_date,
+                    schema::deceased::photo_link.nullable(),
+                    schema::deceased::data.nullable(),
+                    schema::deceased::memory_words.nullable(),
+                    schema::deceased::user_id,
+                ))
+                .load::<Deceased>(&_connection)
+                .expect("E.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Метод для создания нового объекта структуры.
     pub fn new( place_id: i32, first_name: String, last_name: String, 
                middle_name: Option<String>, birth_date: NaiveDate, death_date: NaiveDate, 

@@ -93,6 +93,9 @@ impl Countries {
 }
 
 
+
+
+
 //---------------------------------------------------------------------------------------------------
 use crate::schema::regions; // Замените на фактический путь к модулю schema
 
@@ -196,6 +199,125 @@ pub struct NewCity {
 }
 
 impl City {
+
+
+    pub fn get_city (
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<City> {
+        use crate::schema::city::dsl::city;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return city
+                .order(schema::city::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::city::id,
+                    schema::city::name,
+                    schema::city::geo_id,
+                    schema::city::region_id,
+                    schema::city::country_id,
+                    schema::city::lat,
+                    schema::city::lon,
+                ))
+                .load::<City>(&_connection)
+                .expect("E.");
+        } else {
+            return city
+                .order(schema::city::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::city::id,
+                    schema::city::name,
+                    schema::city::geo_id,
+                    schema::city::region_id,
+                    schema::city::country_id,
+                    schema::city::lat,
+                    schema::city::lon,
+                ))
+                .load::<City>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn search_city (
+        q:        &String,
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<City> {
+        use crate::schema::city::dsl::city;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return city
+                .filter(schema::city::name.ilike(&q))
+                .or_filter(schema::city::lat.ilike(&q))
+                .or_filter(schema::city::lon.ilike(&q))
+                .order(schema::city::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::city::id,
+                    schema::city::name,
+                    schema::city::geo_id,
+                    schema::city::region_id,
+                    schema::city::country_id,
+                    schema::city::lat,
+                    schema::city::lon,
+                ))
+                .load::<City>(&_connection)
+                .expect("E.");
+        } else {
+            return city
+            .filter(schema::city::name.ilike(&q))
+            .or_filter(schema::city::lat.ilike(&q))
+            .or_filter(schema::city::lon.ilike(&q))
+            .order(schema::city::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::city::id,
+                    schema::city::name,
+                    schema::city::geo_id,
+                    schema::city::region_id,
+                    schema::city::country_id,
+                    schema::city::lat,
+                    schema::city::lon,
+                ))
+                .load::<City>(&_connection)
+                .expect("E.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Метод для создания нового объекта структуры City
     pub fn new(name: String, geo_id: i32, region_id: i32, country_id: i32, lat: f64, lon: f64) -> Self {
         City {

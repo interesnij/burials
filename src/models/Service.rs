@@ -33,9 +33,130 @@ pub struct NewService {
 
 
 use diesel::{PgConnection, QueryDsl, RunQueryDsl, ExpressionMethods};
-use crate::schema::services; // Подключение модуля с описанием схемы БД
+use crate::schema::service; // Подключение модуля с описанием схемы БД
 
 impl Service {
+
+    pub fn get_service (
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Service> {
+        use crate::schema::service::dsl::service;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return service
+                .order(schema::service::price.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::service::id,
+                    schema::service::name_service,
+                    schema::service::organization_id,
+                    schema::service::description,
+                    schema::service::photo_link,
+                    schema::service::price,
+                    schema::service::city_id,
+                    schema::service::review_ids,
+                ))
+                .load::<Service>(&_connection)
+                .expect("E.");
+        } else {
+            return service
+                .order(schema::service::price.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::service::id,
+                    schema::service::name_service,
+                    schema::service::organization_id,
+                    schema::service::description,
+                    schema::service::photo_link,
+                    schema::service::price,
+                    schema::service::city_id,
+                    schema::service::review_ids,
+                ))
+                .load::<Service>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn search_service (
+        q:        &String,
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Service> {
+        use crate::schema::service::dsl::service;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return service
+                .filter(schema::service::name_service.ilike(&q))
+                .or_filter(schema::service::description.ilike(&q))
+                .order(schema::service::price.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::service::id,
+                    schema::service::name_service,
+                    schema::service::organization_id,
+                    schema::service::description,
+                    schema::service::photo_link,
+                    schema::service::price,
+                    schema::service::city_id,
+                    schema::service::review_ids,
+                ))
+                .load::<Service>(&_connection)
+                .expect("E.");
+        } else {
+            return service
+                .filter(schema::service::name_service.ilike(&q))
+                .or_filter(schema::service::description.ilike(&q))
+                .order(schema::service::price.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::service::id,
+                    schema::service::name_service,
+                    schema::service::organization_id,
+                    schema::service::description,
+                    schema::service::photo_link,
+                    schema::service::price,
+                    schema::service::city_id,
+                    schema::service::review_ids,
+                ))
+                .load::<Service>(&_connection)
+                .expect("E.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Метод для создания нового объекта структуры Service.
     pub fn new(
         name_service: String,

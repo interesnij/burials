@@ -1,7 +1,7 @@
 mod deceased;
 mod geo;
 mod organization;
-mod places;
+mod place;
 mod progs;
 mod reiew;
 mod service;
@@ -12,7 +12,7 @@ pub use self::{
     deceased::*,
     geo::*,
     organization::*,
-    places::*,
+    place::*,
     progs::*,
     reiew::*,
     service::*,

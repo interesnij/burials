@@ -34,11 +34,141 @@ pub struct NewOrganization {
     pub working_hours: String,
     pub website: Option<String>,
     pub photo_link: Option<String>,
-    pub messenger_links: Option<String>,
+    pub messenger_links: Option<String>, 
 }
 
 // Реализация методов для структуры Organization
 impl Organization {
+
+
+    pub fn get_organization (
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Organization> {
+        use crate::schema::organization::dsl::organization;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return organization
+                .order(schema::organization::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::organization::id,
+                    schema::organization::name,
+                    schema::organization::description.nullable(),
+                    schema::organization::phone_number,
+                    schema::organization::city_id,
+                    schema::organization::region_id.nullable(),
+                    schema::organization::country_id,
+                    schema::organization::working_hours,
+                    schema::organization::website.nullable(),
+                    schema::organization::photo_link.nullable(),
+                    schema::organization::messenger_links.nullable(),
+                ))
+                .load::<Organization>(&_connection)
+                .expect("E.");
+        } else {
+            return organization
+                .order(schema::organization::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::organization::id,
+                    schema::organization::name,
+                    schema::organization::description.nullable(),
+                    schema::organization::phone_number,
+                    schema::organization::city_id,
+                    schema::organization::region_id.nullable(),
+                    schema::organization::country_id,
+                    schema::organization::working_hours,
+                    schema::organization::website.nullable(),
+                    schema::organization::photo_link.nullable(),
+                    schema::organization::messenger_links.nullable(),
+                ))
+                .load::<Organization>(&_connection)
+                .expect("E.");
+        }
+    }
+    pub fn search_organization (
+        q:        &String,
+        limit:    i64,
+        offset:   i64,
+        is_admin: bool
+    ) -> Vec<Organization> {
+        use crate::schema::organization::dsl::organization;
+
+        let _connection = establish_connection();
+        if is_admin {
+             return organization
+                .filter(schema::organization::name.ilike(&q))
+                .or_filter(schema::organization::description.ilike(&q))
+                .order(schema::organization::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::organization::id,
+                    schema::organization::name,
+                    schema::organization::description.nullable(),
+                    schema::organization::phone_number,
+                    schema::organization::city_id,
+                    schema::organization::region_id.nullable(),
+                    schema::organization::country_id,
+                    schema::organization::working_hours,
+                    schema::organization::website.nullable(),
+                    schema::organization::photo_link.nullable(),
+                    schema::organization::messenger_links.nullable(),
+                ))
+                .load::<Organization>(&_connection)
+                .expect("E.");
+        } else {
+            return organization
+                .filter(schema::organization::name.ilike(&q))
+                .or_filter(schema::organization::description.ilike(&q))
+                .order(schema::organization::name.desc())
+                .limit(limit)
+                .offset(offset)
+                .select((
+                    schema::organization::id,
+                    schema::organization::name,
+                    schema::organization::description.nullable(),
+                    schema::organization::phone_number,
+                    schema::organization::city_id,
+                    schema::organization::region_id.nullable(),
+                    schema::organization::country_id,
+                    schema::organization::working_hours,
+                    schema::organization::website.nullable(),
+                    schema::organization::photo_link.nullable(),
+                    schema::organization::messenger_links.nullable(),
+                ))
+                .load::<Organization>(&_connection)
+                .expect("E.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Метод для создания нового объекта структуры
     pub fn new(
         name: String,
