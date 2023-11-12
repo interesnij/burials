@@ -1,7 +1,0 @@
-<% include!("../header.stpl"); %>
-
-<% if template_types == 1 { %>
-    <% include!("items/1/private_object.stpl"); %>
-<% } %>
-
-<% include!("../footer.stpl"); %>

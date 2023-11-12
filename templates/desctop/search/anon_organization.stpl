@@ -1,5 +1,7 @@
 <% include!("../anon_header.stpl"); %>
 
-<% include!("1/anon_empty_search.stpl"); %>
+
+<% include!("1/anon_deceased.stpl"); %>
+
 
 <% include!("../anon_footer.stpl"); %>
