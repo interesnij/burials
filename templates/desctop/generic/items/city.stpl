@@ -6,12 +6,6 @@
       </div>
     </div>
     <div class="work-intro">
-      <h3 class="work-title">
-        <% if !object.is_active { %>
-          <span style="color: red">🛇</span>
-        <% } %>
-        <%= object.title %>
-      </h3>
       <div class="work-descr">
         <% if object.description.is_some() { %>
           <%= object.description.as_deref().unwrap() %>
@@ -19,6 +13,61 @@
           Без описания
         <% } %>
       </div>
+
+
+
     </div>
   </a>
 </li>
+
+
+
+
+
+ <!--ОБЪЕКТЫ--><!--ОБЪЕКТЫ-->
+                <div class="property-content-box__inner grid">
+                  <!-- Start Properties Grid Content-->
+                  <div class="property-grid-content grid-item">
+                    <div class="row">
+
+
+      <!--ГОРОД-->
+                      <!-- Start Single Properties Box Style1-->
+                      <div class="col-xl-6 col-lg-6">
+                        <div class="single-properties-box-style1">
+                          <div class="img-holder">
+                            <img
+                              src="static/images/city/1/city1.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div class="text-holder">
+                            <div class="top">
+                              <div class="dot"></div>
+                              <p><a href="#">Город</a></p>
+                            </div>
+                            <h3>
+                              <a href="place_profile.html">Сочи</a>
+                            </h3>
+                            <p>Краснодарский край</p>
+                            <br />
+                            <div class="info-box">
+                              <ul>
+                                <li>
+                                  <span class=""></span>25 кладбищ , 40
+                                  памятников, 3 мемориала
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+
+
+                    </div>
+                  </div>
+                </div>

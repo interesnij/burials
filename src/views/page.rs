@@ -9,13 +9,6 @@ use actix_web::{
 use crate::errors::Error;
 use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 use crate::models::{
-    Deceased,
-    Geo,
-    Organization,
-    Places,
-    Reiew,
-    Service,
-    Words,
     User,
 };
 use sailfish::TemplateOnce;
@@ -42,201 +35,570 @@ use crate::utils::establish_connection;
 
 pub fn page_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
+    
+    config.route("/info_1/", web::get().to(info_1_page));
+    config.route("/info_2/", web::get().to(info_2_page));
+    config.route("/info_3/", web::get().to(info_3_page));
+    config.route("/info_4/", web::get().to(info_4_page));
+    config.route("/info_5/", web::get().to(info_5_page));
+    config.route("/info_6/", web::get().to(info_6_page));
+    config.route("/info_7/", web::get().to(info_7_page));
+
 }
 
 
-pub async fn index_page (
-    req: HttpRequest,
-    session: Session,
-    websocket_srv: Data<Addr<Server>>) -> actix_web::Result<HttpResponse> {
-    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
-    let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Главная страница".to_string(),
-            "вебсервисы - Комплексное, экспертное создание и развитие высоконагруженных веб-ресурсов".to_string(),
-            "/".to_string(),
-            "/static/images/dark/store.jpg".to_string(),
-            template_types,
-        ).await
+async fn get_request_user_id(req: &HttpRequest) -> Option<i32> { 
+    match Authorization::<Bearer>::parse(req) {
+        Ok(ok) => {
+            let token = ok.as_ref().token().to_string();
+            return match verify_jwt(token, "MYSECRETKEY").await {
+                Ok(ok) => ok.id,
+                Err(_) => None,
+            }
+        },
+        Err(_) => return None,
     }
+}
+fn get_user(pk: i32) -> User {
+    use crate::schema::users::dsl::users;
+    let _connection = establish_connection();
+    return users
+        .filter(schema::users::id.eq(pk))
+        .first::<User>(&_connection)
+        .expect("E");
+}
+fn get_content_type<'a>(req: &'a HttpRequest) -> Option<&'a str> {
+    return req.headers().get("user-agent")?.to_str().ok();
+}
+pub fn is_desctop(req: &HttpRequest) -> bool {
+    if get_content_type(req).unwrap().contains("Mobile") {
+        return false;
+    };
+    return true;
+} 
+
+
+
+
+pub async fn index_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/mainpage.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/mainpage.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+
     else {
-        use crate::schema::stat_pages::dsl::stat_pages;
-        use crate::models::{Blog, Service, Store, Wiki, Work};
-        use crate::websocket::MessageToClient;
-
-        let _connection = establish_connection();
-        let _stat: StatPage;
-
-        let _stats = stat_pages
-            .filter(schema::stat_pages::types.eq(1))
-            .first::<StatPage>(&_connection);
-        if _stats.is_ok() {
-            _stat = _stats.expect("E");
-            diesel::update(&_stat)
-                .set(schema::stat_pages::now_u.eq(_stat.now_u + 1))
-                .get_result::<StatPage>(&_connection)
-                .expect("Error.");
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_mainpage.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
-            use crate::models::NewStatPage;
-            let form = NewStatPage {
-                types:   1,
-                view:    0,
-                height:  0.0,
-                seconds: 0,
-                now_u:   1,
-            };
-            _stat = diesel::insert_into(schema::stat_pages::table)
-                .values(&form)
-                .get_result::<StatPage>(&_connection)
-                .expect("Error.");
-
-        }
-        //if let Ok(res) = to_value(_stat.now_u.to_string()) {
-        //    let msg = MessageToClient::new("page_view", _stat.types.into(), res);
-        //    websocket_srv.do_send(msg);
-        //}
-
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
-            let is_admin = _request_user.is_superuser();
-            //User::create_superuser(_request_user.id);
-            let _last_works = Item::get_works(3, 0, is_admin);
-            let _last_services = Item::get_services(3, 0, is_admin);
-            let _last_wikis = Item::get_wikis(3, 0, is_admin);
-            let _last_blogs = Item::get_blogs(3, 0, is_admin);
-            let _last_stores = Item::get_stores(3, 0, is_admin);
-
-            if is_desctop {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/main/mainpage.stpl")]
-                struct Template {
-                    request_user:   User,
-                    last_works:     Vec<Work>,
-                    last_services:  Vec<Service>,
-                    last_wikis:     Vec<Wiki>,
-                    last_blogs:     Vec<Blog>,
-                    last_stores:    Vec<Store>,
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    request_user:   _request_user,
-                    last_works:     _last_works,
-                    last_services:  _last_services,
-                    last_wikis:     _last_wikis,
-                    last_blogs:     _last_blogs,
-                    last_stores:    _last_stores,
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_mainpage.stpl")]
+            struct Template {
+                request_user:   User,
             }
-            else {
-                #[derive(TemplateOnce)]
-                #[template(path = "mobile/main/mainpage.stpl")]
-                struct Template {
-                    request_user:   User,
-                    last_works:     Vec<Work>,
-                    last_services:  Vec<Service>,
-                    last_wikis:     Vec<Wiki>,
-                    last_blogs:     Vec<Blog>,
-                    last_stores:    Vec<Store>,
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    request_user:   _request_user,
-                    last_works:     _last_works,
-                    last_services:  _last_services,
-                    last_wikis:     _last_wikis,
-                    last_blogs:     _last_blogs,
-                    last_stores:    _last_stores,
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+            let body = Template {
+                request_user:   _request_user,
             }
-        }
-        else {
-            let _last_works = Item::get_works(3, 0, false);
-            let _last_services = Item::get_services(3, 0, false);
-            let _last_wikis = Item::get_wikis(3, 0, false);
-            let _last_blogs = Item::get_blogs(3, 0, false);
-            let _last_stores = Item::get_stores(3, 0, false);
-
-            if is_desctop {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/main/anon_mainpage.stpl")]
-                struct Template {
-                    last_works:     Vec<Work>,
-                    last_services:  Vec<Service>,
-                    last_wikis:     Vec<Wiki>,
-                    last_blogs:     Vec<Blog>,
-                    last_stores:    Vec<Store>,
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    last_works:     _last_works,
-                    last_services:  _last_services,
-                    last_wikis:     _last_wikis,
-                    last_blogs:     _last_blogs,
-                    last_stores:    _last_stores,
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-            else {
-                #[derive(TemplateOnce)]
-                #[template(path = "mobile/main/anon_mainpage.stpl")]
-                struct Template {
-                    last_works:     Vec<Work>,
-                    last_services:  Vec<Service>,
-                    last_wikis:     Vec<Wiki>,
-                    last_blogs:     Vec<Blog>,
-                    last_stores:    Vec<Store>,
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    last_works:     _last_works,
-                    last_services:  _last_services,
-                    last_wikis:     _last_wikis,
-                    last_blogs:     _last_blogs,
-                    last_stores:    _last_stores,
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     }
 }
 
 
+pub async fn info_1_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_1.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_1.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
 
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_info_1.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_info_1.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn info_2_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_2.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_2.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_2.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_2.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn info_3_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_3.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_3.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_info_3.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_info_3.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn info_4_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_4.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_4.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_info_4.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_info_4.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn info_5_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_5.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_5.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_info_5.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_info_5.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn info_6_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_6.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_6.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_info_6.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_info_6.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+
+
+pub async fn info_7_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let is_desctop = is_desctop(&req);
+    let user_id = get_request_user_id(&req);
+    if user_id.is_some() {
+        let _request_user = get_user(user_id.unwrap());
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/info_7.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/info_7.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+
+    }
+    
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_info_7.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/main/anon_info_7.stpl")]
+            struct Template {
+                request_user:   User,
+            }
+            let body = Template {
+                request_user:   _request_user,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
 
 
 

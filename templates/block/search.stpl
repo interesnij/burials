@@ -3,11 +3,6 @@
       <section class="property-five">
         <div class="container">
           <div class="row">
-
-
-
-
-
             <!-- ФИЛЬТРЫ СБОКУ --><!-- ФИЛЬТРЫ СБОКУ --><!-- ФИЛЬТРЫ СБОКУ -->
             <div class="col-xl-2 colum1">       
               <div class="property-sidebar-content">
@@ -28,9 +23,13 @@
                           <label>Ключевое слово</label>
                           <div class="field-input">
                             <input
+
+
                               type="text"
                               name="keywords"
                               placeholder="Что вы хотите найти?"
+                            
+                            
                             />
                           </div>
                         </div>
@@ -74,29 +73,14 @@
                 </div>
               </div>
             </div>
-
-
-
-
-
             <div class="col-xl-6 colum2">
               <div class="property-content-box">
-                
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-                                    <!--ОБЪЕКТЫ--><!--ОБЪЕКТЫ-->
+                           <!--ОБЪЕКТЫ--><!--ОБЪЕКТЫ-->
                 <div class="property-content-box__inner grid">
                   <!-- Start Properties Grid Content-->
                   <div class="property-grid-content grid-item">
@@ -277,44 +261,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <!--ПАГИНАЦИЯ--><!--ПАГИНАЦИЯ--><!--ПАГИНАЦИЯ--><!--ПАГИНАЦИЯ-->
                 <div class="row">
                   <div class="col-xl-12">
@@ -340,17 +286,6 @@
             </div>
  
 
-
-
-
-
-
-
-
-
-
-
- 
                            <!--КАРТА--><!--КАРТА--><!--КАРТА-->
             <div class="col-xl-4 col-md-12 colum3">
               <div class="listings-page-map">
@@ -361,15 +296,6 @@
                 ></iframe>
               </div>
             </div>
-
-
-
-
-
-
-
-
-
 
 
 

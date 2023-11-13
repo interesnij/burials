@@ -1,5 +1,3 @@
-<% include!("../header.stpl"); %>
-
 <!-- Hero Start -->
 <section class="relative mt-20">
   <div class="container-fluid md:mx-4 mx-2">
@@ -1059,7 +1057,7 @@
                 class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
                 alt=""
               />
-              <h6 class="mt-2 font-semibold">Сидоров Иван</h6>
+              <h6 class="mt-2 font-semibold">Иванов Иван</h6>
               <span class="text-slate-400 text-sm">Пользователь</span>
             </div>
           </div>
@@ -1190,5 +1188,3 @@
 
 
     <br><br><br><br>
-
-<% include!("../footer.stpl"); %>
