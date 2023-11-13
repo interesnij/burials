@@ -1,0 +1,204 @@
+<% include!("../header.stpl"); %>
+
+    <div class="page-wrapper">
+      <section class="property-five">
+        <div class="container">
+          <div class="row">
+
+
+
+<!-------------------------------------- ФИЛЬТРЫ ПОИСКА --------------------------------------------------------------->
+
+
+            <div class="col-xl-2 colum1">       
+              <div class="property-sidebar-content">
+                <div class="inner-title">
+
+                  <h5>Настройки поиска</h5>
+                </div>
+
+                <div class="advanced-search-box">
+                  <form
+                    action="index.html"
+                    method="post"
+                    class="advanced-search-form clearfix"
+                  >
+
+
+
+                    <div class="row">
+                      <div class="col-xl-12">
+                        
+                        <div class="form-group clearfix">
+
+                          <label>Ключевое слово</label>
+
+                          <div class="field-input">
+
+<!------------------------------------------Поле ввода -->
+
+                            <input
+                              type="text"
+                              name="keywords"
+                              placeholder="Что вы хотите найти?"/>
+
+                          </div>
+                        </div>
+
+
+<!-----------------------------------------Тип поиска -->
+                        
+                        <div class="form-group clearfix">
+
+                          <label>Тип</label>
+
+                          <div class="field-input">
+                            <div class="select-box">
+
+                              <select class="wide">
+
+                                <option data-display="Выберите тип">
+                                  Выберите тип
+                                </option>
+
+                                <option value="1">Усопший</option>
+                                <option value="1">Город</option>
+                                <option value="2">Захоронение</option>
+                                <option value="3">Кладбище</option>
+                                <option value="4">Услугу</option>
+                                <option value="4">Организацию</option>
+
+                            
+                              </select>
+
+                            </div>
+                          </div>
+                        </div>
+
+
+<!----------------------------------------------Кнопка -->
+
+                        <div class="btn-box">
+                          <button
+                            class="btn-one"
+                            type="submit"
+                            data-loading-text="Please wait..."
+                          >
+                            <span class="txt">
+                              Поиск
+                              <i class="icon-plus-sign"></i>
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
+
+
+<!-----------------------------------------------ОБЪЕКТЫ----------------------------------------------->
+
+<div class="col-xl-6 colum2">
+              <div class="property-content-box">
+                <div class="property-content-box__inner grid">
+                  <!-- Start Properties Grid Content-->
+                  <div class="property-grid-content grid-item">
+                    <div class="row">
+
+
+
+<!-------------------------------------------------------------------------КЛАДБИЩЕ-->
+
+                      <!-- Start Single Properties Box Style1-->
+                      <div class="col-xl-6 col-lg-6">
+                        <div class="single-properties-box-style1">
+                          <div class="img-holder">
+                          
+                            <img
+                              src="static/images/place/1/place1.jpg"
+                              alt=""
+                              />
+
+                          </div>
+                          <div class="text-holder">
+                            <div class="top">
+                              <div class="dot"></div>
+                              <p><a href="place_profile.html">Кладбище</a></p>
+                            </div>
+                            <h3>
+
+                              <a href="place_profile.html"
+                                >Новосильское кладбище
+                              </a>
+
+                            </h3>
+
+                            <p>Краснодарский край, Сочи</p>
+                           
+                            <br >
+                            <div class="info-box">
+
+                              <ul>
+                                <li><span class=""></span>
+                                245 захоронений
+                                </li>
+
+                              </ul>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+<!-----------------------------------------------ПАГИНАЦИЯ--->
+
+               <div class="row">
+                  <div class="col-xl-12">
+                    <ul class="styled-pagination clearfix">
+                      <li class="arrow prev">
+                        <a href="#">
+                          <span class="icon-left-arrow left"></span>Назад
+                        </a>
+                      </li>
+                      <li class="active"><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li class="arrow next">
+                        <a href="#">
+                          Вперед<span class="icon-right-arrow-1 right"></span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+ 
+
+
+
+
+<!-------------------------------------------------------КАРТА-->
+
+            <div class="col-xl-4 col-md-12 colum3">
+              <div class="listings-page-map">
+                <iframe
+                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"
+                  class="google-map"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--End -->
+    </div>
+
+<% include!("../footer.stpl"); %>
