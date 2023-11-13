@@ -1,3 +1,4 @@
+<% include!("../header.stpl"); %>
 
     <div class="page-wrapper">
       <section class="property-five">
@@ -6,12 +7,13 @@
 
 
 
+<!-------------------------------------- ФИЛЬТРЫ ПОИСКА --------------------------------------------------------------->
 
 
-            <!-- ФИЛЬТРЫ СБОКУ --><!-- ФИЛЬТРЫ СБОКУ --><!-- ФИЛЬТРЫ СБОКУ -->
             <div class="col-xl-2 colum1">       
               <div class="property-sidebar-content">
                 <div class="inner-title">
+
                   <h5>Настройки поиска</h5>
                 </div>
 
@@ -21,40 +23,60 @@
                     method="post"
                     class="advanced-search-form clearfix"
                   >
+
+
+
                     <div class="row">
                       <div class="col-xl-12">
-                        <!--Start Form Group -->
+                        
                         <div class="form-group clearfix">
+
                           <label>Ключевое слово</label>
+
                           <div class="field-input">
+
+<!------------------------------------------Поле ввода -->
+
                             <input
                               type="text"
                               name="keywords"
-                              placeholder="Что вы хотите найти?"
-                            />
+                              placeholder="Что вы хотите найти?"/>
+
                           </div>
                         </div>
-                        <!--End Form Group -->
-                        <!--Start Form Group -->
+
+
+<!-----------------------------------------Тип поиска -->
+                        
                         <div class="form-group clearfix">
+
                           <label>Тип</label>
+
                           <div class="field-input">
                             <div class="select-box">
+
                               <select class="wide">
+
                                 <option data-display="Выберите тип">
                                   Выберите тип
                                 </option>
+
                                 <option value="1">Усопший</option>
                                 <option value="1">Город</option>
                                 <option value="2">Захоронение</option>
                                 <option value="3">Кладбище</option>
                                 <option value="4">Услугу</option>
                                 <option value="4">Организацию</option>
+
+                            
                               </select>
+
                             </div>
                           </div>
                         </div>
-                        <!--End Form Group -->
+
+
+<!----------------------------------------------Кнопка -->
 
                         <div class="btn-box">
                           <button
@@ -78,88 +100,19 @@
 
 
 
+<!-----------------------------------------------ОБЪЕКТЫ----------------------------------------------->
 
-            <div class="col-xl-6 colum2">
+<div class="col-xl-6 colum2">
               <div class="property-content-box">
-                
-
-
-
-
-
-
-
-                                    <!--ОБЪЕКТЫ--><!--ОБЪЕКТЫ-->
                 <div class="property-content-box__inner grid">
                   <!-- Start Properties Grid Content-->
                   <div class="property-grid-content grid-item">
                     <div class="row">
 
 
-                                      <!--УСОПШИЙ-->
-                      <!-- Start Single Properties Box Style1-->
-                      <div class="col-xl-6 col-lg-6">
-                        <div class="single-properties-box-style1">
-                          <div class="img-holder">
-                            <img
-                              src="static/images/deceased/deceased1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div class="text-holder">
-                            <div class="top">
-                              <div class="dot"></div>
-                              <p><a href="#">Усопший</a></p>
-                            </div>
-                            <h3>
-                              <a href="place_profile.html">Олег Янковский</a>
-                            </h3>
-                            <p>Москва</p>
-                            <br />
-                            <div class="info-box">
-                              <ul>
-                                <li>
-                                  <span class=""></span>23.02.1944 г. -
-                                  20.05.2009 г.
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                                      <!--ГОРОД-->
-                      <!-- Start Single Properties Box Style1-->
-                      <div class="col-xl-6 col-lg-6">
-                        <div class="single-properties-box-style1">
-                          <div class="img-holder">
-                            <img
-                              src="static/images/city/city1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div class="text-holder">
-                            <div class="top">
-                              <div class="dot"></div>
-                              <p><a href="#">Город</a></p>
-                            </div>
-                            <h3>
-                              <a href="place_profile.html">Сочи</a>
-                            </h3>
-                            <p>Краснодарский край</p>
-                            <br />
-                            <div class="info-box">
-                              <ul>
-                                <li>
-                                  <span class=""></span>25 кладбищ , 40
-                                  памятников, 3 мемориала
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
 
-                                    <!--ОРГАНИЗАЦИЯ-->
+<!-----------------------------------------------------------ОРГАНИЗАЦИЯ-->
+
                       <!-- Start Single Properties Box Style1-->
                       <div class="col-xl-6 col-lg-6">
                         <div class="single-properties-box-style1">
@@ -175,110 +128,38 @@
                               <p><a href="organization_profile.html">Организация</a></p>
                             </div>
                             <h3>
-                              <a href="organization_profile.html">Ритуальные услуги</a>
+
+                              <a href="organization_profile.html">
+                              Название
+                              </a>
+
                             </h3>
-                            <p>Краснодарский край, Сочи</p>
-                            <br />
+
+                            <p>
+                            Краснодарский край, Сочи
+                            </p>
+
+
+                            <br>
+
                             <div class="info-box">
+
                               <ul>
+
                                 <li>
-                                  <span class=""></span>изготовление памятников
+                                  <span class=""></span>Тип 
                                 </li>
+
                               </ul>
+                              
                             </div>
                           </div>
                         </div>
                       </div>
 
+<!-----------------------------------------------ПАГИНАЦИЯ--->
 
-                                     <!--КЛАДБИЩЕ-->
-                      <!-- Start Single Properties Box Style1-->
-                      <div class="col-xl-6 col-lg-6">
-                        <div class="single-properties-box-style1">
-                          <div class="img-holder">
-                            <img
-                              src="static/images/place/1/place1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div class="text-holder">
-                            <div class="top">
-                              <div class="dot"></div>
-                              <p><a href="place_profile.html">Кладбище</a></p>
-                            </div>
-                            <h3>
-                              <a href="place_profile.html"
-                                >Новосильское кладбище</a
-                              >
-                            </h3>
-                            <p>Краснодарский край, Сочи</p>
-                            <br />
-                            <div class="info-box">
-                              <ul>
-                                <li><span class=""></span>245 захоронений</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-                            <!--УСЛУГА-->
-                      <!-- Start Single Properties Box Style1-->
-                      <div class="col-xl-6 col-lg-6">
-                        <div class="single-properties-box-style1">
-                          <div class="img-holder">
-                            <img
-                              src="static/images/service/1/1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div class="text-holder">
-                            <div class="top">
-                              <div class="dot"></div>
-                              <p><a href="service_profile.html">Услуга</a></p>
-                            </div>
-                            <h3>
-                              <a href="service_profile.html"
-                                >Изготовление памятников</a
-                              >
-                            </h3>
-                            <p>Краснодарский край, Сочи</p>
-                            <br />
-                            <div class="info-box">
-                              <ul>
-                                <li>
-                                  <span class=""></span>Ритуальная организация
-                                  №1
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-
-
-
-
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                <!--ПАГИНАЦИЯ--><!--ПАГИНАЦИЯ--><!--ПАГИНАЦИЯ--><!--ПАГИНАЦИЯ-->
-                <div class="row">
+               <div class="row">
                   <div class="col-xl-12">
                     <ul class="styled-pagination clearfix">
                       <li class="arrow prev">
@@ -305,8 +186,8 @@
 
 
 
- 
-                           <!--КАРТА--><!--КАРТА--><!--КАРТА-->
+<!-------------------------------------------------------КАРТА-->
+
             <div class="col-xl-4 col-md-12 colum3">
               <div class="listings-page-map">
                 <iframe
@@ -316,15 +197,10 @@
                 ></iframe>
               </div>
             </div>
-
-
-
-
-
-
           </div>
         </div>
       </section>
       <!--End -->
     </div>
 
+<% include!("../footer.stpl"); %>

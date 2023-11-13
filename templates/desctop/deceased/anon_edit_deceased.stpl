@@ -1,0 +1,361 @@
+<% include!("../header.stpl"); %>
+
+
+
+
+         <!-- Банер                                          ЦВЕТ ГРАДИЕНТА ТУТ -->
+        <section class="relative table w-full py-32 lg:py-40 bg-gradient-to-br to-orange-600/20 via-fuchsia-600/20 from-indigo-600/20">
+            <div class="container relative">
+                <div class="grid grid-cols-1 text-center mt-10">
+                    <h3 class="text-3xl leading-normal font-medium">Регистрация усопшего</h3>
+                </div><!--end grid-->
+            </div><!--end container-->
+            
+            <div class="absolute text-center z-10 bottom-5 start-0 end-0 mx-3">
+                <ul class="tracking-[0.5px] mb-0 inline-block">
+                    <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600">
+                    <a href="index.html">Главная</a></li>
+                    <li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
+                    
+                    <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600">
+                    <a href="deceased_all.html">Усопшие</a></li>
+                    <li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
+                    
+                    <li class="inline-block uppercase text-[13px] font-bold text-indigo-600" aria-current="page">Регистрация усопшего</li>
+                </ul>
+            </div>
+        </section><!--end section-->
+
+
+        
+        <div class="relative">
+            <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden z-1 text-white dark:text-slate-900">
+                <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+                </svg>
+            </div>
+        </div>
+        <!-- End Hero -->
+
+
+
+        <!-- Start -->
+        <section class="relative md:py-24 py-16">
+            <div class="container">
+                <div class="grid md:grid-cols-12 gap-[30px]">
+                    <div class="lg:col-span-3 md:col-span-4">
+                        <div class="group profile-pic w-[112px]">
+                            <input id="pro-img" name="profile-image" type="file" class="hidden" onchange="loadFile(event)" />
+                            <div>
+                                <div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
+                                    <img src="static/images/main/1111.png" class="rounded-full" id="profile-image" alt="">
+                                    <div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
+                                    <label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-400 mt-3">Регистрация усопшего</p>
+                    </div><!--end col-->
+                    
+
+
+                <div class="lg:col-span-9 md:col-span-8">
+
+
+
+
+                                                                            <!-------------ОСНОВНЫЕ ДАННЫЕ ------------------->
+
+                    <div class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
+
+                        
+
+
+                        <h5 class="text-lg font-semibold mb-4">Данные усопшего:</h5>
+                        <form>
+                            <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
+                                <div>
+                                    <label class="form-label font-medium">Имя : <span class="text-red-600">*</span></label>
+                                   
+                                    <input 
+                                    type="text" 
+                                    class="form-input w-full py-2 px-3 h-10 bg-transparent 
+                                    dark:bg-slate-900 dark:text-slate-200 rounded 
+                                    outline-none border border-gray-200 focus:border-indigo-600 
+                                    dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
+                                    placeholder="Имя" 
+                                    id="firstname"
+                                    name="name" required="">
+                               
+                                </div>
+
+                                <div>
+
+                                    <label class="form-label font-medium">Фамилия : </label>
+                                    
+                                    <input 
+                                    name="name" 
+                                    id="occupation" 
+                                    type="text" 
+                                    class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900
+                                     dark:text-slate-200 rounded outline-none border border-gray-200 
+                                     focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
+                                     placeholder="Фамилия:">
+                               
+                                </div>
+
+                                <div>
+
+                                    <label 
+                                    class="form-label font-medium">Отчество : </label>
+                                
+                                    <input 
+                                    name="name" 
+                                    id="occupation" 
+                                    type="text" 
+                                    class="form-input w-full py-2 px-3 h-10 bg-transparent 
+                                    dark:bg-slate-900 dark:text-slate-200 rounded outline-none border 
+                                    border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
+                                    placeholder="Отчество:">
+                                
+                                </div>
+
+                               
+                            </div>      
+                            
+                            <!-------------------------------Годы жизни--------------------------------------->
+                            <br>
+                                <div class="md:col-span-3 col-span-12 text-start">
+
+                                    <label class="font-semibold md:invisible md:block hidden">Дата рождения:</label>
+                                   
+                                    <div class="relative mt-1">
+                                        
+                                        <input 
+                                        type="number" 
+                                        class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
+                                        rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
+                                        placeholder="Введите дату рождения" 
+                                        name="minsalary">
+                                    
+                                    </div>
+
+                                </div>
+
+                                <br>
+                                <div class="md:col-span-3 col-span-12 text-start">
+
+                                    <label class="font-semibold md:invisible md:block hidden">Дата смерти:</label>
+                                   
+                                    <div class="relative mt-1">
+                                        
+                                        <input 
+                                        type="number" 
+                                        class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
+                                        rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
+                                        placeholder="Введите дату смерти" 
+                                        name="maxsalary">
+                                   
+                                    </div>
+                                </div> <br>      
+                                
+                                 <!-------------------------------Дополнительные данные--------------------------------------->
+
+                                <div class="grid grid-cols-1">
+
+                                    <div class="mt-5">
+
+                                        <label class="form-label font-medium">Информация : </label>
+                                        
+                                        <textarea 
+                                        name="comments" 
+                                        id="comments" 
+                                        class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent 
+                                        dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 
+                                        dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
+                                        placeholder="Введите информацию :">
+                                        </textarea>
+                                
+                                    </div>
+
+                                </div><!--end row-->
+
+
+<!------------------------------ЗАГРУЗКА ФОТО---------------------------------------><!------------------------------ЗАГРУЗКА ФОТО--------------------------------------->
+ 
+                                    <br>
+                                    <div class="lg:w-3/3 md:w-5/5">
+
+                                        <p class="font-semibold mb-6">Загрузите изображение.</p>
+
+                                        <div class="preview-box flex justify-center rounded-md shadow dark:shadow-gray-800 overflow-hidden 
+                                        bg-gray-50 dark:bg-slate-800 text-slate-400 p-2 text-center small">
+                                        Прикрепите изображение. Максимальный размер файла : 10MB.</div>
+                                        
+                                        <input 
+                                        type="file" 
+                                        id="input-file" 
+                                        name="input-file" 
+                                        accept="image/*" 
+                                        onchange={handleChange()} 
+                                        hidden />
+                                       
+                                        <label 
+                                        class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md 
+                                        w-full mt-6 cursor-pointer" for="input-file">
+                                        Загрузить изображение
+                                        </label>
+                                       
+                                        <label 
+                                        class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md 
+                                        w-full mt-6 cursor-pointer" for="input-file">
+                                        Сделайте фото
+                                        </label>
+
+                                    </div>
+                                    <br>
+
+
+<!-------------------------------АДРЕС---------------------------------------><!-------------------------------АДРЕС--------------------------------------->
+
+            
+                                <div class="grid grid-cols-12 gap-4 mt-4">
+                                    <div class="col-span-12 text-start">
+                                        <label class="font-semibold" for="Address">Адрес захоронения:</label>
+
+                                        <input 
+                                        id="Address" 
+                                        type="text" 
+                                        class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
+                                        outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
+                                        placeholder="Введите адрес">
+
+                                        <input 
+                                        id="Address" 
+                                        type="text" 
+                                        class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
+                                        outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
+                                        placeholder="Введите координаты">
+
+                                        <label class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white 
+                                        rounded-md w-full mt-6 cursor-pointer" for="input-file">
+                                        Отправить из буфера обмена
+                                        </label>
+                                        
+                                        <label class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white 
+                                        rounded-md w-full mt-6 cursor-pointer" for="input-file">
+                                        Отправить координаты с места захоронения
+                                        </label>
+
+
+                                    </div>
+                                </div>
+                             <br>
+    
+
+
+                             <!-------------------------------ID ГОРОДА--------------------------------------->
+
+                                        <div class="md:col-span-6 col-span-12 text-start">
+                                            <label class="font-semibold">Страна:</label>
+
+                                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
+                                            rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                                
+                                                <option value="WD">
+                                                Россия
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                        <br>
+
+                                        <div class="md:col-span-6 col-span-12 text-start">
+
+                                            <label class="font-semibold">Регион:</label>
+
+                                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
+                                            rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                               
+                                                <option value="FT">
+
+                                                Краснодарский край</option>
+                                                
+                                            </select>
+                                        </div>
+                                        <br>
+
+                                        <div class="md:col-span-6 col-span-12 text-start">
+
+                                            <label class="font-semibold">Город:</label>
+
+                                            <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
+                                            rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                               
+                                                <option value="HOURL">
+                                                Сочи</option>
+                                            </select>
+                                        </div>
+
+
+
+
+
+<!-------------------------------СЛОВА ПАМЯТИ---------------------------------------><!-------------------------------СЛОВА ПАМЯТИ--------------------------------------->
+
+
+                                 <div class="grid grid-cols-1">
+                                    <div class="mt-5">
+
+                                        <label class="form-label font-medium">Слова памяти : </label>
+
+                                        <textarea 
+                                        name="comments" 
+                                        id="comments" 
+                                        class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
+                                        outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
+                                        placeholder="Слова памяти :">
+                                        </textarea>
+
+                                    </div>
+                                </div><!--end row-->
+                                    <br><br> 
+
+
+
+
+                                                                <!------------------------------КНОПКА СОХРАНИТЬ--------------------------------------->
+
+
+
+
+
+                                <input 
+                                type="submit" 
+                                id="submit" 
+                                name="send" 
+                                class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 
+                                hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5" 
+                                value="Зарегестрировать усопшего">
+
+
+
+
+
+
+
+                        </div>                        
+                    </div>
+                </div><!--end grid-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- End Hero -->
+
+
+
+<% include!("../footer.stpl"); %>
+
+
