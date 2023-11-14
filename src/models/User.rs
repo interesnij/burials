@@ -30,6 +30,101 @@ pub struct User {
 }
 
 impl User {
+
+    //     // Метод для создания нового объекта структуры.
+    //     pub fn new( place_id: i32, first_name: String, last_name: String, 
+    //         middle_name: Option<String>, birth_date: NaiveDate, death_date: NaiveDate, 
+    //         photo_link: Option<String>, data: Option<String>, memory_words: Option<String>, user_id: i32) -> Self {
+    // User {
+    //     place_id,
+    //     first_name,
+    //     last_name,
+    //     middle_name,
+    //     birth_date,
+    //     death_date,
+    //     photo_link,
+    //     data,
+    //     memory_words,
+    //     user_id,
+    // }
+    // }
+
+    // Метод для поиска объекта по идентификатору.
+    pub fn find_by_id(id: i32, connection: &PgConnection) -> Option<Self> {
+    use crate::schema::user::dsl::*;
+
+    let result = user.filter(id.eq(id))
+        .first(connection)
+        .optional()
+        .expect("Failed to retrieve User by ID");
+
+    result
+    }
+
+
+
+    // Метод для обновления существующего объекта.
+    pub fn update(&self, connection: &PgConnection) -> Result<(), diesel::result::Error> {
+        use crate::schema::user::dsl::*;
+
+        diesel::update(user.filter(id.eq(self.id)))
+            .set(self)
+            .execute(connection)?;
+
+        Ok(())
+    }
+
+    // Метод для удаления объекта.
+    pub fn delete(&self, connection: &PgConnection) -> Result<(), diesel::result::Error> {
+        use crate::schema::user::dsl::*;
+
+        diesel::delete(user.filter(id.eq(self.id)))
+            .execute(connection)?;
+
+        Ok(())
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     pub fn is_superuser(&self) -> bool {
         return self.perm > 59;
     }
@@ -225,142 +320,4 @@ pub struct HistoryResponse {
     pub height:   f64,
     pub seconds:  i32,
     pub template: String,
-}
-
-impl CookieStat {
-    pub fn get_stat_list(user_id: i32, page: i32, limit: i32) -> Result<(Vec<CookieStat>, i32), Error> {
-        let mut next_page_number = 0;
-        let have_next: i32;
-        let object_list: Vec<CookieStat>;
-
-        if page > 1 {
-            let step = (page - 1) * 20;
-            have_next = page * limit + 1;
-            object_list = CookieStat::get_stat_items(user_id, limit.into(), step.into())?;
-        }
-        else {
-            have_next = limit + 1;
-            object_list = CookieStat::get_stat_items(user_id, limit.into(), 0)?;
-        }
-        if CookieStat::get_stat_items(user_id, 1, have_next.into())?.len() > 0 {
-            next_page_number = page + 1;
-        }
-        let _tuple = (object_list, next_page_number);
-        Ok(_tuple)
-    }
-    pub fn get_stat_items(user_id: i32, limit: i64, offset: i64) -> Result<Vec<CookieStat>, Error> {
-        use crate::schema::cookie_stats::dsl::cookie_stats;
-
-        let _connection = establish_connection();
-        let list = cookie_stats
-            .filter(schema::cookie_stats::user_id.eq(user_id))
-            .order(schema::cookie_stats::created.desc())
-            .limit(limit)
-            .offset(offset)
-            .load::<CookieStat>(&_connection)
-            .expect("E");
-        Ok(list)
-    }
-    pub fn create (
-        user_id:  i32, 
-        page:     i16, 
-        link:     String,
-        title:    String, 
-        height:   f64, 
-        seconds:  i32,
-        template: String
-    ) -> Result<CookieStat, Error> {
-        use chrono::Duration;
-
-        let _connection = establish_connection();
-        let _h = NewCookieStat {
-            user_id:  user_id,
-            page:     page,
-            link:     link.clone(),
-            title:    title.clone(),
-            height:   height,
-            seconds:  seconds,
-            created:  chrono::Local::now().naive_utc() + Duration::hours(3),
-            template: template.clone(),
-        };
-        let new = diesel::insert_into(schema::cookie_stats::table)
-            .values(&_h)
-            .get_result::<CookieStat>(&_connection)?;
-        Ok(new)
-    }
-}
-
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="cookie_stats"]
-pub struct NewCookieStat {
-    pub user_id:  i32,
-    pub page:     i16,
-    pub link:     String,
-    pub title:    String,
-    pub height:   f64,
-    pub seconds:  i32,
-    pub created:  chrono::NaiveDateTime,
-    pub template: String,
-}
-
-
-////////////////////
-// Шифры посещаемых страниц
-// 1 - главная
-// 2 - о сайте
-// 3 - контакты
-// 4 - команда
-// 5 - сотрудничество
-// 6 - вход
-// 7 - регитрация
-// 8 - выход
-// 9 - вопросы ответы
-// 10 - инфо
-
-// 11 - профиль
-// 12 - заказы
-// 13 - история
-// 14 - статистика
-
-// 21 - общий поиск
-// 22 - поиск статей блога
-// 23 - поиск услуг
-// 24 - поиск товаров
-// 25 - поиск статей обучающих
-// 26 - поиск работ
-
-// 31 - теги
-// 32 - тег
-// 33 - тег - статьи блога
-// 34 - тег - услуги
-// 35 - тег - товары
-// 36 - тег - статьи обучающие
-// 37 - тег - работы
-
-// 41 - категории блога
-// 51 - категории опций
-// 53 - технологии опций
-// 61 - категории услуг
-// 71 - категории товаров
-// 81 - категории обучения
-// 91 - категории работ
-
-#[derive(Debug, Queryable, Serialize, Identifiable)]
-pub struct StatPage {
-    pub id:      i32,
-    pub types:   i16,
-    pub view:    i32,
-    pub height:  f64,
-    pub seconds: i32,
-    pub now_u:   i16,
-}
-////////////////////
-#[derive(Debug, Deserialize, Insertable)]
-#[table_name="stat_pages"]
-pub struct NewStatPage {
-    pub types:   i16,
-    pub view:    i32,
-    pub height:  f64,
-    pub seconds: i32,
-    pub now_u:   i16,
 }

@@ -9,78 +9,141 @@
 
 
 
-        
-        <section class="md:h-screen w-full" style="background: linear-gradient(45deg, #ff6600, #0066ff);">
-            <div>
-                <div class="grid grid-cols-1">
-                    
-                    <div class="md:flex justify-center fixed top-2/4 -translate-y-2/4 md:-translate-x-2/4 md:left-2/4 left-3 md:right-auto right-3 m-auto">
-                        <div class="max-w-[400px] w-full bg-white dark:bg-slate-900 rounded-md shadow-xl dark:shadow-gray-800 px-6 py-8">
-                            <a href="index.html"><img src="static/images/main/logo-icon.png" class="mx-auto" alt=""></a>
-                            <h3 class="my-6 text-2xl leading-normal font-medium text-center">Запрос на регистрацию организации в агрегаторе !</h3>
+      
 
-                            <form method="post" name="myForm" id="myForm" onsubmit="return validateForm()">
-                                <p class="mb-0" id="error-msg"></p>
-                                <div id="simple-msg"></div>
-                                <div class="grid lg:grid-cols-12 lg:gap-6">
-                                    <div class="lg:col-span-6 mb-5">
-                                        <div class="text-left">
-                                            <label for="name" class="font-semibold"> Ваше имя:</label>
-                                            <div class="form-icon relative mt-2">
-                                                <i data-feather="user" class="w-4 h-4 absolute top-3 left-4"></i>
-                                                <input name="name" id="name" type="text" class="form-input pl-11" placeholder="введите имя :">
-                                            </div>
-                                        </div>
-                                    </div>
-    
-                                    <div class="lg:col-span-6 mb-5">
-                                        <div class="text-left">
-                                            <label for="email" class="font-semibold">Ваш Email:</label>
-                                            <div class="form-icon relative mt-2">
-                                                <i data-feather="mail" class="w-4 h-4 absolute top-3 left-4"></i>
-                                                <input name="email" id="email" type="email" class="form-input pl-11" placeholder=" введите Email :">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <!-- Start Hero -->
+        <section class="relative table w-full py-36 bg-[url('../../static/images/main/01.jpg')] bg-center bg-no-repeat">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="container">
+                <div class="grid grid-cols-1 pb-8 text-center mt-10">
+                    <h3 class="md:text-4xl text-3xl md:leading-normal tracking-wide leading-normal font-medium text-white">Карта сайта</h3>
 
-                                <div class="grid grid-cols-1">
-                                    <div class="mb-5">
-                                        <div class="text-left">
-                                            <label for="subject" class="font-semibold"> Название услуги:</label>
-                                            <div class="form-icon relative mt-2">
-                                                <i data-feather="book" class="w-4 h-4 absolute top-3 left-4"></i>
-                                                <input name="subject" id="subject" class="form-input pl-11" placeholder="введите название :">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-5">
-                                        <div class="text-left">
-                                            <label for="comments" class="font-semibold">Комментарий :</label>
-                                            <div class="form-icon relative mt-2">
-                                                <i data-feather="message-circle" class="w-4 h-4 absolute top-3 left-4"></i>
-                                                <textarea name="comments" id="comments" class="form-input pl-11 h-28" placeholder="введите сообщение :"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" id="submit" name="send" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full justify-center flex items-center">Отправить</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                </div><!--end grid-->
+            </div><!--end container-->
+            
+           
+        </section><!--end section-->
+        <div class="relative">
+            <div class="shape absolute right-0 sm:-bottom-px -bottom-[2px] left-0 overflow-hidden z-1 text-white dark:text-slate-900">
+                <svg class="w-full h-auto" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+                </svg>
             </div>
-        </section>
-
-        <div class="fixed bottom-3 right-3">
-            <a href="" class="back-button btn btn-icon bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-full"><i data-feather="arrow-left" class="h-4 w-4"></i></a>
         </div>
+        <!-- End Hero -->
+
+        <!-- Start Section-->
+        <section class="relative md:py-24 py-16">
+            <div class="container">
+                <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[30px]">
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Захоронения</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="deceased_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница захоронения</a></li>
+                            <li class="mt-2"><a href="deceased_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация усопшего</a></li>
+                            <li class="mt-2"><a href="deceased_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации захоронения</a></li>
+                            <li class="mt-2"><a href="deceased_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Поиск захоронения</a></li>
+    
+                        </ul>
+                    </div>
+                    
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Кладбища</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="place_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница кладбища</a></li>
+                            <li class="mt-2"><a href="place_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация кладбища</a></li>
+                            <li class="mt-2"><a href="place_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации</a></li>
+                            <li class="mt-2"><a href="organization_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все организации кладбища</a></li>
+                            <li class="mt-2"><a href="deceased_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все захоронения кладбища</a></li>
 
 
+                        </ul>
+                    </div>
+                    
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Организации</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="organization_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница организации</a></li>
+                            <li class="mt-2"><a href="organization_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация организации</a></li>
+                            <li class="mt-2"><a href="organization_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации</a></li>
+                            <li class="mt-2"><a href="service_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все услуги организации</a></li>
+                            <li class="mt-2"><a href="organization_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все организации</a></li>
+           
+                        </ul>
+                    </div>
+                    
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Услуги</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="service_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница услуги</a></li>
+                            <li class="mt-2"><a href="service_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Создание услуги</a></li>
+                            <li class="mt-2"><a href="service_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации</a></li>
+                            <li class="mt-2"><a href="service_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все услуги</a></li>
 
+                        </ul>
+                    </div>
+                    
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Мемориалы</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="deceased_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница мемориала</a></li>
+                            <li class="mt-2"><a href="deceased_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все мемориалы города</a></li>
+                            <li class="mt-2"><a href="place_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Братские могилы</a></li>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Города и регионы</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="place_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница города</a></li>
+                            <li class="mt-2"><a href="city_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница региона</a></li>
+                         </ul>
+                    </div>
+                    
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Учетная запись</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="user-profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница пользователя</a></li>
+                            <li class="mt-2"><a href="auth-signup.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация на сайте</a></li>
+                            <li class="mt-2"><a href="auth-login.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница входа</a></li>
+                            <li class="mt-2"><a href="user-setting.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Профиль и настройки</a></li>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Обратная связь, заказы, поиск</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="city_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Поиск</a></li>
+                            <li class="mt-2"><a href="index.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Обратная связь</a></li>
+                            <li class="mt-2"><a href="service_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Заказать услугу</a></li>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <h5 class="font-semibold text-xl">Документы</h5>
+                        <ul class="list-none mt-4">
+                            <li class="mt-2"><a href="info_3.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Часто задаваемые вопросы</a></li>
+                            <li class="mt-2"><a href="info_4" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>О нас, контакты</a></li>
+                            <li class="mt-2"><a href="info_1" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Партнерство</a></li>
+                            <li class="mt-2"><a href="info_5" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Политика конфиденциальности</a></li>
+                            <li class="mt-2"><a href="info_6" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Пользовательское соглашение</a></li>
+                        </ul>
+                    </div>
+                </div><!--end grid-->
+            </div><!--end container-->
 
+            <div class="container md:mt-24 mt-16">
+                <div class="grid grid-cols-1 text-center">
+                    <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Если у вас возник вопрос, свяжитесь с нами!</h3>
 
+                    <p class="text-slate-400 max-w-xl mx-auto">Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений</p>
+                
+                    <div class="mt-6">
+                        <a href="helpcenter-support.html" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mr-2 mt-2"><i class="uil uil-phone"></i> Позвоните нам </a>
+                    </div>
+                </div><!--end grid-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- End Section-->
+
+       
 
 
 

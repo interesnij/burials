@@ -13,7 +13,10 @@ pub struct Deceased {
     pub photo_link: Option<String>, // Ссылка на фото усопшего (может быть отсутствовать)
     pub data: Option<String>,       // Дополнительные данные (description) (может быть отсутствовать)
     pub memory_words: Option<String>,// Слова памяти (комментарии) (может быть отсутствовать)
-    pub user_id:  i32
+    pub user_id:  i32,
+    pub coordinate: Option<String>,
+    pub adress: Option<String>
+
 
 }
 
@@ -28,7 +31,9 @@ pub struct NewDeceased {
     pub photo_link: Option<String>,
     pub data: Option<String>,
     pub memory_words: Option<String>
-    pub user_id:  i32
+    pub user_id:  i32,
+    pub coordinate: Option<String>,
+    pub adress: Option<String>
 
 }
 
@@ -195,6 +200,8 @@ impl Deceased {
             data,
             memory_words,
             user_id,
+            coordinate,
+            adress,
         }
     }
 

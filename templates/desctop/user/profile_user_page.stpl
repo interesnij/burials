@@ -1,0 +1,50 @@
+<% include!("../header.stpl"); %>
+
+<% include!("block/banner.stpl"); %>
+
+<% include!("block/button.stpl"); %>
+
+<% include!("block/card.stpl"); %>
+
+<!---------------------------------------------------------------------------------------- Профиль -->
+
+                    <div class="lg:w-3/4 md:w-2/3 md:px-3 mt-[30px] md:mt-0">
+                        <div class="pb-6 border-b border-gray-100 dark:border-gray-700">
+                            <h5 class="text-xl font-semibold">Иванова Анна </h5>
+                        
+                            <p class="text-slate-400 mt-3">Я - человек, который стремится к развитию в различных сферах жизни. Исследование мира и культур, забота о физическом и духовном здоровье, а также обучение и личностный рост играют важную роль в моей жизни.</p>
+                        </div>
+
+                        <div class="grid lg:grid-cols-2 grid-cols-1 gap-[30px] pt-6">
+                            <div>
+                                <h5 class="text-xl font-semibold">Данные :</h5>
+                                <div class="mt-6">
+                                    <div class="flex items-center">
+                                        <i data-feather="mail" class="fea icon-ex-md text-slate-400 mr-3"></i>
+                                        <div class="flex-1">
+                                            <h6 class="text-indigo-600 dark:text-white font-medium mb-0">Почта :</h6>
+                                            <a href="" class="text-slate-400">ivanova@yandex.ru</a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+
+
+
+
+
+
+
+<% include!("../footer.stpl"); %>
+
+

@@ -1,8 +1,22 @@
 
-                          <!-- Login --><!-- Login --><!-- Login -->
+<% include!("../header.stpl"); %>
 
 
-    <section class="md:h-screen py-36 flex items-center" style="background: linear-gradient(45deg, #ff6600, #0066ff);">
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------------------------------------ Login -->
+    <section 
+    class="md:h-screen py-36 flex items-center" 
+    style="background: linear-gradient(45deg, #ff6600, #0066ff);">
 
       <div
         class="absolute inset-0 bg-gradient-to-b from-transparent to-black"
@@ -22,25 +36,42 @@
                   <label class="font-semibold" for="LoginEmail"
                     >Email адрес:</label
                   >
+
                   <input
+
                     id="LoginEmail"
                     type="email"
                     class="form-input mt-3"
-                    placeholder="name@yandex.ru"
-                  />
+
+                    placeholder="<%= category.name %>"
+
+                    />
+                    
+                   
+
+
                 </div>
 
                 <div class="mb-4">
                   <label class="font-semibold" for="LoginPassword"
                     >Пароль:</label
                   >
+
+
                   <input
                     id="LoginPassword"
                     type="password"
                     class="form-input mt-3"
                     placeholder="Ваш пароль:"
+                 
                   />
                 </div>
+
+
+
+
+
+
 
                 <div class="flex justify-between mb-4">
                   <div class="form-checkbox flex items-center mb-0">
@@ -64,10 +95,13 @@
                 <div class="mb-4">
                   <input
                     type="submit"
-                    class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full"
+                    class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 
+                    text-white rounded-md w-full"
                     value="Войти"
                   />
                 </div>
+
+
 
                 <div class="text-center">
                   <span class="text-slate-400 me-2"
@@ -85,4 +119,6 @@
         </div>
       </div>
     </section>
-    <!--end section -->
+
+
+<% include!("../footer.stpl"); %>

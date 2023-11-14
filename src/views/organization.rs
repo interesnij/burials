@@ -418,7 +418,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
 }
 //-------------------------------------------------------------------------
 
-//Получение кладбища 
+//Получение организации 
 pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
     let _organization = block(move || Organization::find_by_id(*_id)).await?;

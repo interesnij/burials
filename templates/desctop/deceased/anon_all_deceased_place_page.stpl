@@ -40,7 +40,7 @@
                             <input
                               type="text"
                               name="keywords"
-                              placeholder="Что вы хотите найти?"/>
+                              placeholder="<%= q %>"/>
 
                           </div>
                         </div>
@@ -136,14 +136,15 @@
                            
                             </div>
                             <h3>
+                            
                               <a href="deceased_profile.html">
-                              Олег Янковский
-                              
+                              <%= deceased.first_name %>                            
                               </a>
+
                             </h3>
                             
                             <p>
-                            Москва
+                            <%= deceased.place_id %>
                             </p>
 
                             <br>
@@ -153,7 +154,7 @@
 
                                 <li>
                                   <span class=""></span>
-                                  23.02.1944 г. - 20.05.2009 г.
+                                  <%= deceased.birth_date %> - <%= deceased.death_date %> 
 
                                 </li>
 

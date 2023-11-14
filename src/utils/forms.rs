@@ -22,6 +22,8 @@ pub struct DeceasedForms {
     pub slug:          String,
     pub position:      i16,
     pub types:         i16,
+    pub coordinate: Option<String>,
+    pub adress: Option<String>,
 }
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
@@ -37,6 +39,8 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
         slug:          "".to_string(),
         position:      0,
         types:         0,
+        coordinate: None
+        adress: "".to_string(),
     };
 
    
@@ -44,7 +48,7 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["first_name", "last_name","middle_name", "birth_date", "death_date", "description", "memory_words", "slug"];
+        let string_list = ["first_name", "last_name","middle_name", "birth_date", "death_date", "description", "memory_words", "slug", "coordinate", "adress"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
@@ -67,6 +71,10 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
                     } else if field.name() == "memory_words" {
                         form.memory_words = (data_string);
                     } else if field.name() == "slug" {
+                        form.slug = data_string;
+                    } else if field.name() == "coordinate" {
+                        form.slug = Some(data_string);
+                    } else if field.name() == "adress" {
                         form.slug = data_string;
                     }
                 }

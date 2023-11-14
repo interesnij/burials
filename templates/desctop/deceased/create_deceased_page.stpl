@@ -65,7 +65,7 @@
 
 
 
-                                                                            <!-------------ОСНОВНЫЕ ДАННЫЕ ------------------->
+<!-----------------------------------------------------------------------ОСНОВНЫЕ ДАННЫЕ ------------------->
 
                     <div class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
 
@@ -86,7 +86,12 @@
                                     dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
                                     placeholder="Имя" 
                                     id="firstname"
-                                    name="name" required="">
+                                    name="name" 
+                                    required=""
+
+                                    value="<%= deceased.first_name %>"
+                                    
+                                    >
                                
                                 </div>
 
@@ -101,7 +106,10 @@
                                     class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900
                                      dark:text-slate-200 rounded outline-none border border-gray-200 
                                      focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
-                                     placeholder="Фамилия:">
+                                     placeholder="Фамилия:"
+
+                                     value="<%= deceased.last_name %>">
+                                     
                                
                                 </div>
 
@@ -117,14 +125,17 @@
                                     class="form-input w-full py-2 px-3 h-10 bg-transparent 
                                     dark:bg-slate-900 dark:text-slate-200 rounded outline-none border 
                                     border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
-                                    placeholder="Отчество:">
+                                    placeholder="Отчество:"
+
+                                    value="<%= deceased.middle_name %>"
+                                    >
                                 
                                 </div>
 
                                
                             </div>      
                             
-                            <!-------------------------------Годы жизни--------------------------------------->
+<!-----------------------------------------------------------------------------------Годы жизни----->
                             <br>
                                 <div class="md:col-span-3 col-span-12 text-start">
 
@@ -137,7 +148,10 @@
                                         class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
                                         rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
                                         placeholder="Введите дату рождения" 
-                                        name="minsalary">
+                                        name="minsalary"
+
+                                        value="<%= deceased.birth_date %>"
+                                        >
                                     
                                     </div>
 
@@ -155,12 +169,15 @@
                                         class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
                                         rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
                                         placeholder="Введите дату смерти" 
-                                        name="maxsalary">
+                                        name="maxsalary"
+
+                                        value="<%= deceased.death_date %>"
+                                        >
                                    
                                     </div>
                                 </div> <br>      
                                 
-                                 <!-------------------------------Дополнительные данные--------------------------------------->
+<!----------------------------------------------------------------------Дополнительные данные--->
 
                                 <div class="grid grid-cols-1">
 
@@ -169,17 +186,21 @@
                                         <label class="form-label font-medium">Информация : </label>
                                         
                                         <textarea 
+
                                         name="comments" 
                                         id="comments" 
                                         class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent 
                                         dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 
                                         dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
-                                        placeholder="Введите информацию :">
+                                        placeholder="Введите информацию :"
+
+                                        value="<%= deceased.data %>">
+
                                         </textarea>
                                 
                                     </div>
 
-                                </div><!--end row-->
+                                </div>
 
 
 <!------------------------------ЗАГРУЗКА ФОТО---------------------------------------><!------------------------------ЗАГРУЗКА ФОТО--------------------------------------->
@@ -229,20 +250,50 @@
                                         type="text" 
                                         class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
                                         outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                        placeholder="Введите адрес">
+                                        placeholder="Введите адрес"
+                                        value="<%= deceased.adress %>"
+                                        
+                                        >
 
                                         <input 
                                         id="Address" 
                                         type="text" 
                                         class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
                                         outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                        placeholder="Введите координаты">
+                                        placeholder="Введите координаты"
+                                        value="<%= deceased.coordinate %>">
 
                                         <label class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white 
-                                        rounded-md w-full mt-6 cursor-pointer" for="input-file">
-                                        Отправить из буфера обмена
+                                            rounded-md w-full mt-6 cursor-pointer" for="input-file">
+                                            Отправить из буфера обмена
                                         </label>
+
+                                        <!-- Добавьте скрытое поле ввода для вставки текста из буфера обмена -->
+                                        <input type="text" id="clipboard-input" style="display: none;">
+
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            // Находим метку и скрытое поле ввода
+                                            const label = document.querySelector('.btn-upload');
+                                            const clipboardInput = document.getElementById('clipboard-input');
+
+                                            // Добавляем обработчик события на клик по метке
+                                            label.addEventListener('click', function () {
+                                                // Получаем текст из буфера обмена
+                                                navigator.clipboard.readText().then(function (clipboardText) {
+                                                    // Вставляем текст из буфера обмена в скрытое поле ввода
+                                                    clipboardInput.value = clipboardText;
+
+                                                    // Теперь вы можете использовать значение из скрытого поля ввода по вашему усмотрению
+                                                    // Например, отправить его на сервер или использовать в других местах
+                                                    console.log('Текст из буфера обмена:', clipboardText);
+                                                });
+                                            });
+                                        });
+                                        </script>
+
                                         
+
                                         <label class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white 
                                         rounded-md w-full mt-6 cursor-pointer" for="input-file">
                                         Отправить координаты с места захоронения
@@ -255,7 +306,7 @@
     
 
 
-                             <!-------------------------------ID ГОРОДА--------------------------------------->
+<!-----------------------------------------------------------------------------------ID ГОРОДА---->
 
                                         <div class="md:col-span-6 col-span-12 text-start">
                                             <label class="font-semibold">Страна:</label>
@@ -263,9 +314,7 @@
                                             <select class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
                                             rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                                 
-                                                <option value="WD">
-                                                Россия
-                                                </option>
+                                                <option value="WD">Россия</option>
 
                                             </select>
 
@@ -317,7 +366,10 @@
                                         id="comments" 
                                         class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
                                         outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
-                                        placeholder="Слова памяти :">
+                                        placeholder="Слова памяти :"
+                                        value="<%= deceased.memory_words %>"                                        
+                                        >
+
                                         </textarea>
 
                                     </div>
@@ -325,9 +377,7 @@
                                     <br><br> 
 
 
-
-
-                                                                <!------------------------------КНОПКА СОХРАНИТЬ--------------------------------------->
+<!--------------------------------------------------------------------------------------КНОПКА СОХРАНИТЬ---->
 
 
 
