@@ -1,0 +1,187 @@
+<% include!("../header.stpl"); %>
+
+<% include!("block/banner.stpl"); %>
+
+<% include!("block/button.stpl"); %>
+
+<% include!("block/card.stpl"); %>
+
+
+                            <div class="lg:w-3/4 md:w-2/3 md:px-3 mt-[30px] md:mt-0">
+                                <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900">
+                                    <h5 class="text-lg font-semibold mb-4">Персональные данные:</h5>
+                                    <form>
+                                        <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
+                                            <div>
+                                                <label class="form-label font-medium">Имя : <span class="text-red-600">*</span></label>
+                                                <div class="form-icon relative mt-2">
+                                                    
+                                                    <input 
+                                                    type="text" 
+                                                    class="form-input pl-12" 
+                                                    placeholder="Имя:" 
+                                                    id="firstname" 
+                                                    name="name" 
+                                                    required="">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="form-label font-medium"> Фамилия : <span class="text-red-600">*</span></label>
+                                                <div class="form-icon relative mt-2">
+                                                    
+                                                    <input 
+                                                    type="text" 
+                                                    class="form-input pl-12" 
+                                                    placeholder="Фамилия:" 
+                                                    id="lastname" 
+                                                    name="name" 
+                                                    required="">
+                                            
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="form-label font-medium">Ваш Email : <span class="text-red-600">*</span></label>
+                                                <div class="form-icon relative mt-2">
+                                                    
+                                                    <input 
+                                                    type="email" 
+                                                    class="form-input pl-12" 
+                                                    placeholder="введите Email" 
+                                                    name="email" 
+                                                    required="">
+
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="grid grid-cols-1">
+                                            <div class="mt-5">
+                                                <label class="form-label font-medium">О себе : </label>
+                                                <div class="form-icon relative mt-2">
+
+                                                    <textarea 
+                                                    name="comments" 
+                                                    id="comments" 
+                                                    class="form-input pl-11 h-28" 
+                                                    placeholder="расскажите о себе :"></textarea>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <input type="submit" id="submit" name="send" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5" value="Сохранить">
+                                    </form>
+                                </div>
+
+                                <div class="p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]">
+                                    <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
+                                        <div>
+                                            <h5 class="text-lg font-semibold mb-4">Телефон :</h5>
+
+                                            <form>
+                                                <div class="grid grid-cols-1 gap-5">
+                                                    <div>
+                                                        <label class="form-label font-medium">Номер :</label>
+                                                        <div class="form-icon relative mt-2">
+                                                            <i data-feather="phone" class="w-4 h-4 absolute top-3 left-4"></i>
+
+                                                            <input name="number" 
+                                                            id="number" 
+                                                            type="number" 
+                                                            class="form-input pl-12" 
+                                                            placeholder="Введите телефон :">
+
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                </div>
+
+                                                <button class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">
+                                                Сохранить</button>
+                                        
+                                            </form>
+                                        </div>
+                                        
+                                        <div> 
+                                            <h5 class="text-lg font-semibold mb-4">Изменить пароль :</h5>
+                                            <form>
+                                                <div class="grid grid-cols-1 gap-5">
+                                                    <div>
+                                                        <label class="form-label font-medium">Старый пароль :</label>
+                                                        <div class="form-icon relative mt-2">
+                                                            <i data-feather="key" class="w-4 h-4 absolute top-3 left-4"></i>
+
+                                                            <input 
+                                                            type="password" 
+                                                            class="form-input pl-12" 
+                                                            placeholder="Старый пароль" 
+                                                            required="">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label class="form-label font-medium">Новый пароль :</label>
+                                                        <div class="form-icon relative mt-2">
+                                                            <i data-feather="key" class="w-4 h-4 absolute top-3 left-4"></i>
+
+                                                            <input 
+                                                            type="password" 
+                                                            class="form-input pl-12" 
+                                                            placeholder="Новый пароль" 
+                                                            required="">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <label class="form-label font-medium">Повторите новый пароль :</label>
+                                                        <div class="form-icon relative mt-2">
+                                                            <i data-feather="key" class="w-4 h-4 absolute top-3 left-4"></i>
+                                                        
+                                                            <input type="password" 
+                                                            class="form-input pl-12" 
+                                                            placeholder="Повторите новый пароль" 
+                                                            required="">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button 
+                                                class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">
+                                                Сохранить пароль</button>
+                                                
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% include!("../footer.stpl"); %>
+
+
