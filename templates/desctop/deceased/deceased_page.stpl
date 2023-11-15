@@ -1,21 +1,29 @@
 <% include!("../header.stpl"); %>
 
 
-        <!-- Start Hero -->
+<!------------------------------------------------------- Start Hero -->
         <section class="relative table w-full md:pb-24 pb-16 mt-28">
             <div class="container">
                 <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                     <div class="lg:col-span-6 md:col-span-5">
                         <div class="sticky top-20">
-                            <img src="static/images/deceased/1/1.jpg" class="rounded-md shadow-md dark:shadow-gray-800" alt="">
+
+                            <img src="<%= deceased.photo_link %>" 
+                            class="rounded-md shadow-md dark:shadow-gray-800" 
+                            alt="">
+
                         </div>
-                    </div><!--end col-->
+                    </div>
+
+
 
                     <div class="lg:col-span-6 md:col-span-7">
                         <div class="">
                             <h5 class="lg:text-4xl lg:leading-relaxed text-2xl font-semibold">
                             
-                            Иванов Иван Алексеевич 
+                            <%= deceased.first_name %>
+                            <%= deceased.last_name %>
+                            <%= deceased.middle_name %>                            
                             
                             </h5>
 
@@ -28,7 +36,9 @@
                                     </h6>
                                     <h6 class="text-2xl font-semibold mt-2">
                                     
-                                    2.02.1945 - 21.07.2007
+                                    <%= deceased.birth_date %> 
+                                    -
+                                    <%= deceased.death_date %>
                                     
                                     </h6>
                                 </div>
@@ -37,28 +47,58 @@
                             </div>
 
                             <div class="mt-6">
-                                <a href="" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mr-2">
+                                <a href="" 
+                                class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 
+                                hover:border-indigo-700 text-white rounded-md mr-2">
                                 
-                                Новосильское кладбище
+                                <%= deceased.place_id %>
                                 
                                 </a>
-                                <a href="" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">
+
+                                <a href="" 
+                                class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 
+                                hover:border-indigo-700 text-white rounded-md">
                                 
-                                 г.Сочи
+                                <%= deceased.adress %>
                                  
                                  </a>
                             </div>
 
                             <div class="grid grid-cols-1 mt-8">
-                                <ul class="md:w-fit w-full flex-wrap justify-center text-center p-3 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md" id="myTab" data-tabs-toggle="#StarterContent" role="tablist">
+                                <ul class="md:w-fit w-full flex-wrap justify-center text-center p-3 bg-white dark:bg-slate-900 shadow 
+                                dark:shadow-gray-800 rounded-md" 
+                                id="myTab" data-tabs-toggle="#StarterContent" role="tablist">
                                    
-                                    <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                        <button class="px-6 py-2 font-semibold rounded-md w-full transition-all duration-500 ease-in-out" id="wednesday-tab" data-tabs-target="#wednesday" type="button" role="tab" aria-controls="wednesday" aria-selected="false">Место</button>
+                                    <li role="presentation" 
+                                    class="md:inline-block block md:w-fit w-full">
+                                        <button 
+                                        class="px-6 py-2 font-semibold rounded-md w-full 
+                                        transition-all duration-500 ease-in-out" 
+                                        id="wednesday-tab" 
+                                        data-tabs-target="#wednesday" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="wednesday" 
+                                        aria-selected="false">Место</button>
+
                                     </li>
-                                    <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                        <button class="px-6 py-2 font-semibold rounded-md w-full transition-all duration-500 ease-in-out" id="thursday-tab" data-tabs-target="#thursday" type="button" role="tab" aria-controls="thursday" aria-selected="false">Фото</button>
+
+                                    <li role="presentation" 
+                                    class="md:inline-block block md:w-fit w-full">
+
+                                        <button 
+                                        class="px-6 py-2 font-semibold rounded-md w-full 
+                                        transition-all duration-500 ease-in-out" 
+                                        id="thursday-tab" 
+                                        data-tabs-target="#thursday" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="thursday" 
+                                        aria-selected="false">Фото</button>
+
                                     </li>
                                 </ul>
+
 
                                 <div id="StarterContent" class="mt-6">
                                     
@@ -71,36 +111,19 @@
                     
                                                     <ul class="list-none mt-4">
                                                         <li class="flex justify-between items-center">
-                                                            <span class="text-slate-400 text-sm">Страна</span>
+                                                            <span class="text-slate-400 text-sm">Адрес</span>
                                                             <span class="font-medium text-sm">
                                                             
-                                                            Россия
+                                                            <%= deceased.adress %>
                                                             
                                                             </span>
                                                         </li>
                     
-                                                        <li class="flex justify-between items-center mt-2">
-                                                            <span class="text-slate-400 text-sm">Регион</span>
-                                                            <span class="font-medium text-sm">
-                                                            
-                                                            Краснодарский край
-                                                            
-                                                            </span>
-                                                        </li>
-                    
-                                                        <li class="flex justify-between items-center mt-2">
-                                                            <span class="text-slate-400 text-sm">Населенный пункт</span>
-                                                            <span class="font-medium text-sm">
-                                                            
-                                                            Сочи
-                                                            
-                                                            </span>
-                                                        </li>
                                                         <li class="flex justify-between items-center mt-2">
                                                             <span class="text-slate-400 text-sm">Кладбище</span>
                                                             <span class="font-medium text-sm">
                                                             
-                                                            Новосильское
+                                                            <%= deceased.place_id %>
                                                             
                                                             </span>
                                                         </li>
@@ -108,19 +131,27 @@
                                                             <span class="text-slate-400 text-sm">Координаты</span>
                                                             <span class="font-medium text-sm">
                                                             
-                                                            43.578984, 39.763483
+                                                            <%= deceased.coordinate %>
                                                             
                                                             </span>
                                                         </li>
                                                     </ul>
                                                 </div>
                     
+
+
+
+
                                                 <div class="flex">
                                                     <div class="p-1 w-1/2">
-                                                        <a href="marshrut.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">Маршрут</a>
+                                                        <a href="marshrut.html" 
+                                                        class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">
+                                                        Маршрут</a>
                                                     </div>
                                                     <div class="p-1 w-1/2">
-                                                        <a href="marshrut.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">На карте</a>
+                                                        <a href="marshrut.html" 
+                                                        class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">
+                                                        На карте</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -147,11 +178,22 @@
                                                         <a href="static/images/deceased/1/2.jpg" class="lightbox transition-all duration-500 group-hover:scale-105 tobii-zoom" title="">
                                                             
                                                             
-                                                            <img src="static/images/deceased/1/2.jpg" class="" alt="Gym Images">
+                                                            <img src="<%= deceased.photo_link %>" 
+                                                            class="" 
+                                                            alt="">
 
 
 
-                                                        <div class="tobii-zoom__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 16v5h-5"></path><path d="M8 21H3v-5"></path><path d="M16 3h5v5"></path><path d="M3 8V3h5"></path></svg></div></a>
+                                                        <div class="tobii-zoom__icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" 
+                                                        width="24" 
+                                                        height="24" 
+                                                        viewBox="0 0 24 24" 
+                                                        aria-hidden="true" 
+                                                        focusable="false">
+                                                        <path d="M21 16v5h-5"></path>
+                                                        <path d="M8 21H3v-5"></path><path d="M16 3h5v5"></path>
+                                                        <path d="M3 8V3h5"></path></svg></div></a>
                                                     </div>
                                                     
 
@@ -164,7 +206,10 @@
                                             <br>
 
                                                 <div class="p-1 w-1/2">
-                                                    <a href="load_img.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">Загрузить еще</a>
+
+                                                    <a href="load_img.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">
+                                                    Загрузить еще</a>
+                                                    
                                                 </div>  
 
                                             </div>
@@ -173,12 +218,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div><!--end col-->
-
-
-                   
-
-                </div><!--end grid-->
+                    </div>
+                </div>
 
 
 
@@ -202,22 +243,31 @@
     
                     <div class="lg:col-span-9 md:col-span-7">
                         <div id="myTabContent" class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md">
-                            <div class="" id="description" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="" 
+                            id="description" 
+                            role="tabpanel" 
+                            aria-labelledby="profile-tab">
+                               
                                 <p class="text-slate-400">
-                                
-                                Родился 17 января 1925 года в селе Брыковка Духовницкого района Саратовской области в семье служащего. Окончил семилетнюю школу и школу фабрично-заводского обучения. 7 августа 1941 года был зачислен в Балаковское ремесленное училище. С января 1943 года (по другим данным, с июня 1944-го) призван в Красную Армию. Сражался на 1-м Прибалтийском фронте. Принимал участие в освобождении Литвы и Латвии. Погиб 16 октября 1944 года недалеко от латвийского посёлка Вайнёде. Грибанов закрыл своим телом вражеский пулемёт, чтобы обеспечить разгром роты противника. Указом Президиума Верховного Совета СССР от 24 марта 1945 года за мужество, отвагу и героизм, проявленные на фронте борьбы с немецко-фашистскими захватчиками, Грибанову Николаю Васильевичу присвоено звание Героя Советского Союза (посмертно).
-                                
+
+                                <%= deceased.data %>
+
                                 </p>
                             </div>
     
-                            <div class="hidden" id="addinfo" role="tabpanel" aria-labelledby="addinfo-tab">
+                            <div class="hidden" 
+                            id="addinfo" 
+                            role="tabpanel" 
+                            aria-labelledby="addinfo-tab">
+
                                 <table class="w-full text-start">
                                     <tbody>
                                         <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
                                             <td class="font-semibold py-4" style="width: 100px;">Имя</td>
                                             <td class="text-slate-400 py-4">
-                                            
-                                            Иван
+
+                                            <%= deceased.first_name %>
+                                           
                                             
                                             </td>
                                         </tr>
@@ -225,8 +275,9 @@
                                         <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
                                             <td class="font-semibold py-4">Фамилия</td>
                                             <td class="text-slate-400 py-4">
+
+                                            <%= deceased.last_name %>
                                             
-                                            Иванов
                                             
                                             </td>
                                         </tr>
@@ -234,8 +285,9 @@
                                         <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
                                             <td class="font-semibold py-4">Отчество</td>
                                             <td class="text-slate-400 py-4">
+
+                                            <%= deceased.middle_name %>
                                             
-                                            Алексеевич
                                             
                                             </td>
                                         </tr>
@@ -243,99 +295,47 @@
                                             <td class="font-semibold py-4">Дата рождения</td>
                                             <td class="text-slate-400 py-4">
                                             
-                                            2 января 1945 года
+                                            <%= deceased.birth_date %>
                                             
                                             </td>
                                         </tr>
                                         <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
                                             <td class="font-semibold py-4">Дата смерти</td>
                                             <td class="text-slate-400 py-4">
-                                            
-                                            21 июля 2007 года
+
+                                            <%= deceased.death_date %>
                                             
                                             </td>
                                         </tr>
                                         <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
                                             <td class="font-semibold py-4">Захоронение</td>
                                             <td class="text-slate-400 py-4">
-                                            
-                                            Новосильское кладбище
+
+                                            <%= deceased.place_id %>
                                             
                                             </td>
                                         </tr>
                                         <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
                                             <td class="font-semibold py-4">Город </td>
                                             <td class="text-slate-400 py-4">
-                                            
-                                            Сочи
+
+                                            <%= deceased.adress %>                                            
                                             
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+
                             </div>
     
-                            <div class="hidden" id="review" role="tabpanel" aria-labelledby="review-tab">
-                                
-    
-                                <div class="p-6 rounded-md shadow dark:shadow-gray-800 mt-8">
-                                    <h5 class="text-lg font-semibold">Оставить комментарий:</h5>
-        
-                                    <form class="mt-8">
-                                        <div class="grid lg:grid-cols-12 lg:gap-6">
-                                            <div class="lg:col-span-6 mb-5">
-                                                <div class="text-start">
-                                                    <label for="name" class="font-semibold">Ваше имя:</label>
-                                                    <div class="form-icon relative mt-2">
-                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                        <input name="name" id="name" type="text" class="form-input ps-11 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Имя :">
-                                                    </div>
-                                                </div>
-                                            </div>
-            
-                                            <div class="lg:col-span-6 mb-5">
-                                                <div class="text-start">
-                                                    <label for="email" class="font-semibold">Ваш Email:</label>
-                                                    <div class="form-icon relative mt-2">
-                                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                                        <input name="email" id="email" type="email" class="form-input ps-11 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="почта Email :">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-        
-                                        <div class="grid grid-cols-1">
-                                            <div class="mb-5">
-                                                <div class="text-start">
-                                                    <label for="comments" class="font-semibold">Слова памяти:</label>
-                                                    <div class="form-icon relative mt-2">
-                                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                                        <textarea name="comments" id="comments" class="form-input ps-11 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Сообщение :"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" id="submit" name="send" class="py-2 px-5 inline-block tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full">Отправить комментарий</button>
-                                    </form>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-
-
-
-
-
-
-
-
-
-            </div><!--end container-->
-
-                <!-- Start -->
+                <%# <!-- Start -->
                 <section class="relative md:py-24 py-16 overflow-hidden">
                     <div class="container">
                         <div class="grid grid-cols-1 pb-8 text-center">
@@ -466,7 +466,7 @@
                 </section><!--end section-->
                 <!-- End -->
         
-
+ %>
 
 
 

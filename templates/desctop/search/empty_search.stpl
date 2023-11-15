@@ -1,5 +1,0 @@
-<% include!("../header.stpl"); %>
-
-<% include!("1/empty_search.stpl"); %>
-
-<% include!("../footer.stpl"); %>

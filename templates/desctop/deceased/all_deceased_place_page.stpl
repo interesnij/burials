@@ -136,10 +136,11 @@
                            
                             </div>
                             <h3>
+                            
                               <a href="deceased_profile.html">
-                              <%= deceased.first_name %>
-                              
+                              <%= deceased.first_name %>                            
                               </a>
+
                             </h3>
                             
                             <p>

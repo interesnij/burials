@@ -1,7 +1,0 @@
-<% include!("../anon_header.stpl"); %>
-
-
-<% include!("1/anon_service.stpl"); %>
-
-
-<% include!("../anon_footer.stpl"); %>
