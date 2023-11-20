@@ -26,7 +26,10 @@ use crate::errors::AuthError;
 use sailfish::TemplateOnce;
 use std::cell::Cell;
 use std::sync::{Arc, Mutex};
-use crate::models::{User, Deceased, Organization, Service, Place};
+use crate::models::{
+    User, Deceased, Organization, 
+    Service, Place, Review
+};
 
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -143,6 +146,13 @@ pub fn get_service(pk: i32) -> Result<Service, Error> {
     return Ok(services
         .filter(schema::services::id.eq(pk))
         .first::<Service>(&_connection)?);
+}
+pub fn get_review(pk: i32) -> Result<Review, Error> {
+    use crate::schema::reviews::dsl::reviews;
+    let _connection = establish_connection();
+    return Ok(reviews
+        .filter(schema::reviews::id.eq(pk))
+        .first::<Review>(&_connection)?);
 }
 
 pub fn get_limit_offset (

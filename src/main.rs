@@ -9,7 +9,6 @@ use dotenv::dotenv;
 use env_logger;
 
 pub mod schema;
-pub mod models;
 pub mod routes;
 mod errors;
 
@@ -34,6 +33,8 @@ use crate::routes::routes;
 mod utils;
 #[macro_use]
 mod views;
+#[macro_use]
+mod models;
 
 //use crate::utils::AppState;
 use crate::views::not_found;

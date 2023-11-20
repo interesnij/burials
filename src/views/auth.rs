@@ -137,7 +137,7 @@ fn find_user(data: LoginUser2) -> Result<User, AuthError> {
 
 async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     let _connection = establish_connection();
-    let result = find_user(data);
+    let result = find_user(data.clone());
 
     match result {  
         Ok(_user) => {  
