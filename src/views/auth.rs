@@ -9,10 +9,9 @@ use actix_web::{
 use serde::{Deserialize, Serialize};
 use crate::utils::{
     establish_connection,
-    is_signed_in,
     verify,
-    get_first_load_page,
-    get_template,
+    get_request_user,
+    gen_jwt,
 };
 use crate::diesel::{
     RunQueryDsl,
@@ -21,12 +20,9 @@ use crate::diesel::{
 };
 use crate::schema;
 use futures::StreamExt;
-use crate::models::{User, NewUser, SessionUser};
-use actix_session::Session;
+use crate::models::{User, NewUser};
 use crate::errors::AuthError;
 use actix_multipart::{Field, Multipart};
-use std::borrow::BorrowMut;
-//use futures_util::stream::StreamExt as _;
 use sailfish::TemplateOnce;
 
 
@@ -43,226 +39,20 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
 }
 
 
-pub async fn signup_page(req: HttpRequest, session: Session) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
+pub async fn signup_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if get_request_user.is_some(&req) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        use crate::utils::get_device_and_ajax;
-
-        let (is_desctop, is_ajax) = get_device_and_ajax(&req);
-        let template_types = get_template(&req);
-        if is_ajax == 0 {
-            get_first_load_page (
-                &session,
-                is_desctop,
-                "Регистрация".to_string(),
-                "вебсервисы.рф: Регистрация".to_string(),
-                "/signup/".to_string(),
-                "/static/images/dark/store.jpg".to_string(),
-                template_types,
-            ).await
-        }
-        else {
-            use crate::schema::stat_pages::dsl::stat_pages;
-            use crate::models::StatPage;
-
-            let _connection = establish_connection();
-            let _stat: StatPage;
-
-            let _stats = stat_pages
-                .filter(schema::stat_pages::types.eq(7))
-                .limit(1)
-                .load::<StatPage>(&_connection)
-                .expect("E");
-            if _stats.len() > 0 {
-                _stat = _stats.into_iter().nth(0).unwrap();
-            }
-            else {
-                use crate::models::NewStatPage;
-                let form = NewStatPage {
-                    types:   7,
-                    view:    0,
-                    height:  0.0,
-                    seconds: 0,
-                    now_u:   0,
-                };
-                _stat = diesel::insert_into(schema::stat_pages::table)
-                    .values(&form)
-                    .get_result::<StatPage>(&_connection)
-                    .expect("Error.");
-            }
-
-            if is_desctop {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/auth/signup.stpl")]
-                struct Template {
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-            else {
-                #[derive(TemplateOnce)]
-                #[template(path = "mobile/auth/signup.stpl")]
-                struct Template {
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-        }
-    }
-}
-pub async fn login_page(req: HttpRequest, session: Session) -> actix_web::Result<HttpResponse> {
-    if is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-    else {
-        use crate::utils::get_device_and_ajax;
-
-        let (is_desctop, is_ajax) = get_device_and_ajax(&req);
-        let template_types = get_template(&req);
-        if is_ajax == 0 {
-            get_first_load_page (
-                &session,
-                is_desctop,
-                "Вход".to_string(),
-                "вебсервисы.рф: Вход".to_string(),
-                "/login/".to_string(),
-                "/static/images/dark/store.jpg".to_string(),
-                template_types
-            ).await
-        }
-        else {
-            use crate::schema::stat_pages::dsl::stat_pages;
-            use crate::models::StatPage;
-
-            let _connection = establish_connection();
-            let _stat: StatPage;
-
-            let _stats = stat_pages
-                .filter(schema::stat_pages::types.eq(6))
-                .first::<StatPage>(&_connection);
-            if _stats.is_ok() {
-                _stat = _stats.expect("E");
-            }
-            else {
-                use crate::models::NewStatPage;
-                let form = NewStatPage {
-                    types:   6,
-                    view:    0,
-                    height:  0.0,
-                    seconds: 0,
-                    now_u:   0,
-                };
-                _stat = diesel::insert_into(schema::stat_pages::table)
-                    .values(&form)
-                    .get_result::<StatPage>(&_connection)
-                    .expect("Error.");
-            }
-
-            if is_desctop {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/auth/login.stpl")]
-                struct Template {
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-            else {
-                #[derive(TemplateOnce)]
-                #[template(path = "mobile/auth/login.stpl")]
-                struct Template {
-                    is_ajax:        i32,
-                    stat:           StatPage,
-                    template_types: i16,
-                }
-                let body = Template {
-                    is_ajax:        is_ajax,
-                    stat:           _stat,
-                    template_types: template_types,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-        }
-    }
-}
-
-pub async fn logout_page(req: HttpRequest, session: Session) -> actix_web::Result<HttpResponse> {
-    if !is_signed_in(&session) {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-    }
-    else {
-        use crate::utils::is_desctop;
-        use crate::schema::stat_pages::dsl::stat_pages;
-        use crate::models::StatPage;
-
-        let _connection = establish_connection();
-        let _stat: StatPage;
-
-        let _stats = stat_pages
-            .filter(schema::stat_pages::types.eq(8))
-            .first::<StatPage>(&_connection);
-        if _stats.is_ok() {
-            _stat = _stats.expect("E");
-        }
-        else {
-            use crate::models::NewStatPage;
-            let form = NewStatPage {
-                types:   8,
-                view:    0,
-                height:  0.0,
-                seconds: 0,
-                now_u:   0,
-            };
-            _stat = diesel::insert_into(schema::stat_pages::table)
-                .values(&form)
-                .get_result::<StatPage>(&_connection)
-                .expect("Error.");
-        }
-
-        session.clear();
-        let template_types = get_template(&req);
-        if is_desctop(&req) {
+        let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+        if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/auth/logout.stpl")]
+            #[template(path = "desctop/auth/signup.stpl")]
             struct Template {
-                is_ajax:        i32,
-                stat:           StatPage,
-                template_types: i16,
+                is_ajax: i32,
             }
             let body = Template {
-                is_ajax:        0,
-                stat:           _stat,
-                template_types: template_types,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -270,16 +60,46 @@ pub async fn logout_page(req: HttpRequest, session: Session) -> actix_web::Resul
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/auth/logout.stpl")]
+            #[template(path = "mobile/auth/signup.stpl")]
             struct Template {
-                is_ajax:        i32,
-                stat:           StatPage,
-                template_types: i16,
+                is_ajax: i32,
             }
             let body = Template {
-                is_ajax:        0,
-                stat:           _stat,
-                template_types: template_types,
+                is_ajax: is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
+pub async fn login_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if get_request_user.is_some(&req) {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/auth/login.stpl")]
+            struct Template {
+                is_ajax: i32,
+            }
+            let body = Template {
+                is_ajax: is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/auth/login.stpl")]
+            struct Template {
+                is_ajax: i32,
+                }
+            let body = Template {
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -288,54 +108,50 @@ pub async fn logout_page(req: HttpRequest, session: Session) -> actix_web::Resul
     }
 }
 
-fn find_user(data: LoginUser2) -> Result<SessionUser, AuthError> {
-    use crate::schema::users::dsl::users;
+pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    if get_request_user(&req).is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        crate::utils::remove_token();
+        crate::viwes::index_page(req).await;
+    }
+}
 
+fn find_user(data: LoginUser2) -> Result<User, AuthError> {
     let _connection = establish_connection();
-    let mut items = users
+    let item = schema::users::table
         .filter(schema::users::username.eq(&data.username))
-        .load::<User>(&_connection)
+        .first::<User>(&_connection)
         .expect("Error.");
 
-    if let Some(user) = items.pop() {
-        if let Ok(matching) = verify(&user.password, &data.password) {
-            if matching {
-                let __user = SessionUser {
-                    id:       user.id,
-                    username: user.username,
-                };
-                return Ok(__user.into());
-            }
+    if let Ok(matching) = verify(&item.password, &data.password) {
+        if matching {
+            return Ok(item);
         }
     }
+    
     Err(AuthError::NotFound(String::from("User not found")))
 }
 
-fn handle_sign_in(data: LoginUser2,
-                session: &Session,
-                req: &HttpRequest) -> Result<HttpResponse, AuthError> {
-    use crate::utils::{is_json_request, set_current_user};
-
+fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     let _connection = establish_connection();
     let result = find_user(data);
-    let is_json = is_json_request(req);
 
-    match result {
-        Ok(user) => {
-            set_current_user(&session, &user);
-            if is_json {
-                Ok(HttpResponse::Ok().json(user))
-            } else {
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    match result {  
+        Ok(_user) => { 
+            if verify(data.password.as_str(), _user.password.as_str()).unwrap() {
+                let token = gen_jwt(_user.id, "MY_SECRET").await;
+            } 
+            match token {
+                Ok(token_str) => {
+                    crate::utils::set_token(&token_str, &_user.id.to_string());
+                    1
+                },
+                Err(err) => 0,
             }
         },
-        Err(err) => {
-            if is_json {
-                Ok(HttpResponse::Unauthorized().json(err.to_string()))
-            } else {
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-            }
-        },
+        Err(err) => 0,
     }
 }
 
@@ -367,15 +183,16 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
     form
 }
 
-pub async fn login(mut payload: Multipart, session: Session, req: HttpRequest) -> impl Responder {
-    if is_signed_in(&session) {
+pub async fn login(mut payload: Multipart, req: HttpRequest) -> impl Responder {
+    if get_request_user(&req).is_some() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
         let form = login_form(payload.borrow_mut()).await;
         println!("{:?}", form.username.clone());
         println!("{:?}", form.password.clone());
-        handle_sign_in(form, &session, &req)
+        handle_sign_in(form, &req);
+        crate::viwes::index_page(req).await;
     }
 }
 
@@ -412,24 +229,25 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
     }
     form
 }
-pub async fn process_signup(session: Session, mut payload: Multipart) -> impl Responder {
-    use crate::utils::{hash_password, set_current_user};
+pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    use crate::utils::hash_password; 
 
     // Если пользователь не аноним, то отправляем его на страницу новостей
-    if is_signed_in(&session) {
+    if get_request_user(&req).is_some() {
         HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
     }
-    else {
+    else { 
         let form = signup_form(payload.borrow_mut()).await;
         let _connection = establish_connection();
+        let _password = hash(form.password.as_deref().unwrap(), 8).unwrap();
         let form_user = NewUser {
             username: form.username.clone(),
             email:    form.email.clone(),
-            password: hash_password(&form.password.clone()),
+            password: _password.clone(),
             bio:      None,
             image:    None,
             perm:     1,
-        };
+        }; 
         println!("{:?}", form.username.clone());
         println!("{:?}", form.email.clone());
         println!("{:?}", form.password.clone());
@@ -439,12 +257,7 @@ pub async fn process_signup(session: Session, mut payload: Multipart) -> impl Re
             .get_result::<User>(&_connection)
             .expect("Error saving user.");
 
-        let _session_user = SessionUser {
-            id:       _new_user.id,
-            username: _new_user.username,
-        };
-
-        set_current_user(&session, &_session_user);
+        //set_current_user(&_user);
         HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
     }
 }

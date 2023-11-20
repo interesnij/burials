@@ -7,7 +7,6 @@ use actix_web::{
     http::StatusCode,
 };
 use crate::errors::Error;
-use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 use crate::models::{
     Deceased,
     Geo,
@@ -15,7 +14,6 @@ use crate::models::{
     Places,
     Reiew,
     Service,
-    Words,
     User,
 };
 use sailfish::TemplateOnce;
@@ -26,89 +24,70 @@ use diesel::{
     PgConnection,
     Connection,
 };
-use actix_multipart::{Field, Multipart};
+use actix_multipart::Multipart;
 use futures::StreamExt;
 use serde::{Deserialize, Serialize};
-use std::{
-    io::Write,
-    fs::create_dir_all,
-    str,
-};
 use crate::schema;
-use crate::utils::establish_connection;
-
-
-
-//-------------------------------------------------------------------------
-
+use crate::utils::{
+    establish_connection,
+    get_request_user,
+};
 
 pub fn deceased_routes(config: &mut web::ServiceConfig) {
-    config.route("/all_deceased_place/{id}/", web::get().to(all_deceased_place_page));
+    config.route("/places/{id}/deceased_list/", web::get().to(all_deceased_place_page));
     config.route("/deceased/{id}/", web::get().to(deceased_page));
-    config.route("/delete_deceased/{id}/", web::post().to(delete_deceased_page));
-    config.route("/edit_deceased/{id}/", web::post().to(edit_deceased_page));
-    config.route("/create_deceased/", web::post().to(create_deceased_page));
+    config.route("/create_deceased/{id}/", web::get().to(create_deceased_page));
+    config.route("/edit_deceased/{id}/", web::get().to(edit_deceased_page));
+
+    config.route("/create_deceased/{id}/", web::post().to(create_deceased));
+    config.route("/edit_deceased/{id}/", web::post().to(edit_deceased));
+    config.route("/delete_deceased/{id}/", web::post().to(delete_deceased));
 }
 
-//-------------------------------------------------------------------------
-
-
-
-
-async fn get_request_user_id(req: &HttpRequest) -> Option<i32> { 
-    match Authorization::<Bearer>::parse(req) {
-        Ok(ok) => {
-            let token = ok.as_ref().token().to_string();
-            return match verify_jwt(token, "MYSECRETKEY").await {
-                Ok(ok) => ok.id,
-                Err(_) => None,
-            }
-        },
-        Err(_) => return None,
-    }
-}
-
-fn get_user(pk: i32) -> User {
-    use crate::schema::users::dsl::users;
-    let _connection = establish_connection();
-    return users
-        .filter(schema::users::id.eq(pk))
-        .first::<User>(&_connection)
-        .expect("E");
-}
-
-fn get_content_type<'a>(req: &'a HttpRequest) -> Option<&'a str> {
-    return req.headers().get("user-agent")?.to_str().ok();
-}
-pub fn is_desctop(req: &HttpRequest) -> bool {
-    if get_content_type(req).unwrap().contains("Mobile") {
-        return false;
-    };
-    return true;
-} 
-
-//-------------------------------------------------------------------------
-//Получение всех покойников одного кладбища
 
 pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
-    let _place = block(move || Place::find_by_id(*_id)).await?;
-    let _deceased = block(move || Deceased::get_all_deceased()).await?;
-    let user_id = get_request_user_id(&req);
-    if user_id.is_some() {
-        let _request_user = get_user(user_id.unwrap());
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+
+    let _place = get_place(*_id).expect("E.");
+    let user_id = get_request_user(&req);
+    let page = crate::utils::get_page(&req);
+    let count = Deceased::count(*_id);
+
+    let mut next_page_number = 0;
+    let have_next: i32;
+    let object_list: Vec<Deceased>;
+
+    if page > 1 {
+        let step = (page - 1) * 20;
+        have_next = page * limit + 1;
+        object_list = Deceased::list(*_id, limit.into(), step.into());
+    }
+    else {
+        have_next = limit + 1;
+        object_list = Deceased::list(*_id, limit.into(), 0);
+    }
+    if count > (have_next as usize) {
+        next_page_number = page + 1;
+    }
+
+    if user_id.is_some() { 
+        let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/deceased/all_deceased_place_page.stpl")]
+            #[template(path = "desctop/deceased/all_deceased_place.stpl")]
             struct Template {
-                request_user:   User,
-                place:          Vec<Place>,
-                all_deceaseds:  Vec<Deceased>,
+                request_user:     User,
+                place:            Place,
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:           _place,
-                all_deceaseds:   _deceaseds,
+                request_user:     _request_user,
+                place:            _place,
+                object_list:      _deceaseds,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -116,16 +95,20 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/all_deceased_place_page.stpl")]
+            #[template(path = "mobile/deceased/all_deceased_place.stpl")]
             struct Template {
-                request_user:   User,
-                place:          Vec<Place>,
-                all_deceaseds:  Vec<Deceased>,
+                request_user:     User,
+                place:            Place,
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:           _place,
-                all_deceaseds:   _deceaseds,
+                request_user:     _request_user,
+                place:            _place,
+                object_list:      _deceaseds,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -135,16 +118,18 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/deceased/anon_all_deceased_place_page.stpl")]
+            #[template(path = "desctop/deceased/anon_all_deceased_place.stpl")]
             struct Template {
-                request_user:   User,
-                place:          Vec<Place>,
-                all_deceaseds:  Vec<Deceased>,
+                place:            Place,
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:           _place,
-                all_deceaseds:   _deceaseds,
+                place:            _place,
+                object_list:      _deceaseds,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -152,16 +137,18 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/anon_all_deceased_place_page.stpl")]
+            #[template(path = "mobile/deceased/anon_all_deceased_place.stpl")]
             struct Template {
-                request_user:   User,
-                place:           Vec<Place>,
-                all_deceaseds:       Vec<Deceased>,
+                place:            Place,
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:          _place,
-                all_deceaseds:  _deceaseds,
+                place:            _place,
+                object_list:      _deceaseds,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -169,27 +156,25 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         }
     }
 }
-
-//-------------------------------------------------------------------------
-//Получение покойника 
-
 
 pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
-    let _deceased = block(move || Deceased::find_by_id(*_id)).await?;
-    let user_id = get_request_user_id(&req);
-    if user_id.is_some() {
-        let _request_user = get_user(user_id.unwrap());
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _deceased = crate::utils::get_deceased(*_id).expect("E.");
+    let user_id = get_request_user(&req);
+    if user_id.is_some() { 
+        let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/deceased/deceased_page.stpl")]
+            #[template(path = "desctop/deceased/deceased.stpl")]
             struct Template {
-                request_user:   User,
-                deceased:       Deceased,
+                request_user: User,
+                object:       Deceased,
+                is_ajax:      i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                deceased:      _deceased,
+                request_user: _request_user,
+                object:       _deceased,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -197,14 +182,16 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/deceased_page.stpl")]
+            #[template(path = "mobile/deceased/deceased.stpl")]
             struct Template {
-                request_user:   User,
-                deceased:       Deceased,
+                request_user: User,
+                object:       Deceased,
+                is_ajax:      i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                deceased:       _deceased,
+                request_user: _request_user,
+                object:       _deceased,
+                is_ajax:      is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -214,14 +201,14 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/deceased/anon_deceased_page.stpl")]
+            #[template(path = "desctop/deceased/anon_deceased.stpl")]
             struct Template {
-                request_user:   User,
-                deceased:       Deceased,
+                object:  Deceased,
+                is_ajax: i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                deceased:       _deceased,
+                object:  _deceased,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -229,14 +216,14 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/anon_deceased_page.stpl")]
+            #[template(path = "mobile/deceased/anon_deceased.stpl")]
             struct Template {
-                request_user:   User,
-                deceased:       Deceased,
+                object:  Deceased,
+                is_ajax: i32,
             }
             let body = Template {
-                request_user:   _request_user,
-                deceased:       _deceased,
+                object:  _deceased,
+                is_ajax: is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -245,74 +232,164 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
     }
 }
 
-pub async fn create_deceased_page(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let user_id = get_request_user_id(&req);
-    if user_id.is_some() {
-        let _request_user = get_user(user_id.unwrap());
-        if _request_user.is_admin() {
-            let form = deceased_form(payload.borrow_mut(), _request_user.id).await;
-            Deceased::create_deceased(form);
+pub async fn create_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _place = crate::utils::get_place(*_id).expect("E.");
+    let user_id = get_request_user(&req);
+    if user_id.is_some() { 
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"))
         }
-    };
-    HttpResponse::Ok()
-}
-
-
-
-pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user_id(&req);
-    if user_id.is_some() {
-        let _request_user = get_user(user_id.unwrap());
-        let _deceased = block(move || Deceased::find_by_id(*_id)).await?; 
-        if _request_user.id == deceased.user_id {
-            let form = deceased_form(payload.borrow_mut(), _request_user.id).await;
-            Deceased.edit_deceased(form);
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/deceased/create_deceased.stpl")]
+            struct Template {
+                request_user: User,
+                place:        Place,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                place:        _place,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
-    };
-    HttpResponse::Ok()
-}
-pub async fn delete_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user_id(&req);
-    if user_id.is_some() {
-        let _request_user = get_user(user_id.unwrap());
-        let _deceased = block(move || Deceased::find_by_id(*_id)).await?; 
-        if _request_user.id == deceased.user_id {
-            let form = deceased_form(payload.borrow_mut(), _request_user.id).await;
-            Deceased.delete_deceased();
-        }
-    };
-    HttpResponse::Ok()
-}
-
-//---------------------------------------------------------------------------------------
-
-#[derive(Debug, Clone)]
-pub struct UploadedFiles {
-    pub name: String,
-    pub path: String,
-}
-impl UploadedFiles {
-    fn new(filename: String, owner_id: i32) -> UploadedFiles {
-        use chrono::Datelike;
-
-        let now = chrono::Local::now().naive_utc();
-        let format_folder = format!(
-            "./media/{}/{}/{}/{}/",
-            owner_id.to_string(),
-            now.year().to_string(),
-            now.month().to_string(),
-            now.day().to_string(),
-        );
-        let format_path = format_folder.clone() + &filename.to_string();
-        // вариант для https
-        let create_path = format_folder.replace("./", "/my/");
-        // вариант для debug
-        //let create_path = format_folder.replace("./", "/");
-        create_dir_all(create_path).unwrap();
-
-        UploadedFiles {
-            name: filename.to_string(),
-            path: format_path.to_string(),
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/deceased/create_deceased.stpl")]
+            struct Template {
+                request_user: User,
+                place:        Place,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                place:        _place,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
     }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
+    }
+}
+
+pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _deceased = crate::utils::get_deceased(*_id).expect("E.");
+    let _place = crate::utils::get_place(_deceased.place_id).expect("E.");
+    let user_id = get_request_user(&req);
+    if user_id.is_some() { 
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"))
+        }
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/deceased/edit_deceased.stpl")]
+            struct Template {
+                request_user: User,
+                object:       Deceased,
+                place:        Place,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object:       _deceased,
+                place:        _place,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/deceased/edit_deceased.stpl")]
+            struct Template {
+                request_user: User,
+                object:       Deceased,
+                place:        Place,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object:       _deceased,
+                place:        _place,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
+    }
+}
+
+pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let _user = get_request_user(&req);
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
+        if _request_user.is_admin() {
+            let form = crate::utils::deceased_form(payload.borrow_mut()).await;
+            Deceased::create (
+                _request_user.id,
+                form.first_name.clone(),
+                form.middle_name.clone(),
+                form.last_name.clone(),
+                form.birth_date.clone(),
+                form.death_date.clone(),
+                form.image.clone(),
+                form.memory_words.clone(),
+                form.lat.clone(),
+                form.lon.clone(),
+            );
+        }
+    }; 
+    HttpResponse::Ok()
+}
+
+pub async fn edit_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req);
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _deceased = crate::utils::get_deceased(*_id).expect("E."); 
+        if _request_user.id == deceased.user_id || _request_user.is_admin() {
+            let form = crate::utils::deceased_form(payload.borrow_mut()).await;
+            _deceased.edit (
+                _request_user.id,
+                form.first_name.clone(),
+                form.middle_name.clone(),
+                form.last_name.clone(),
+                form.birth_date.clone(),
+                form.death_date.clone(),
+                form.image.clone(),
+                form.memory_words.clone(),
+                form.lat.clone(),
+                form.lon.clone(),
+            );
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req);
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _deceased = crate::utils::get_deceased(*_id).expect("E.");
+        if _request_user.id == deceased.user_id || _request_user.is_admin() {
+            let form = deceased_form(payload.borrow_mut()).await;
+            _deceased.delete();
+        }
+    };
+    HttpResponse::Ok()
 }

@@ -1,0 +1,3 @@
+<div id="fullscreens_container"></div>
+
+<% include!("generic/base/footer.stpl"); %>

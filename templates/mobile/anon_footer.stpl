@@ -1,0 +1,4 @@
+<div id="fullscreens_container"></div>
+
+<% include!("generic/base/anon_footer.stpl"); %>
+   

@@ -7,13 +7,9 @@ use actix_web::{
     http::StatusCode,
 };
 
-use actix_session::Session;
 use crate::utils::{
     establish_connection,
-    is_signed_in,
-    get_request_user_data,
-    get_first_load_page,
-    get_template,
+    get_request_user,
 };
 
 use sailfish::TemplateOnce;
@@ -21,134 +17,28 @@ use crate::models::User;
 
 
 pub fn search_routes(config: &mut web::PlaceConfig) {
-    config.route("/search/", web::get().to(empty_search_page));
-    config.route("/search/{q}/", web::get().to(search_page));
-
-
-
     config.route("/search_city/{q}/", web::get().to(search_city_page));
     config.route("/search_place/{q}/", web::get().to(search_place_page));
     config.route("/search_organization/{q}/", web::get().to(search_organization_page));
     config.route("/search_service/{q}/", web::get().to(search_service_page));
     config.route("/search_deceased/{q}/", web::get().to(search_deceased_page));
-
-
-
 }
 
-
-pub async fn empty_search_page(req: HttpRequest, session: Session) -> actix_web::Result<HttpResponse> {
+pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::get_device_and_ajax;
-
-    let (is_desctop, is_ajax) = get_device_and_ajax(&req);
-    let template_types = get_template(&req);
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Общий поиск".to_string(),
-            "вебсервисы.рф: Общий поиск".to_string(),
-            "/search/".to_string(),
-            "/static/images/dark/organization.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else if is_signed_in(&session) {
-        let _request_user = get_request_user_data(&session);
-        if is_desctop {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/search/empty_search.stpl")]
-            struct Template {
-                request_user:   User,
-                is_ajax:        i32,
-                template_types: i16,
-            }
-            let body = Template {
-                request_user:   _request_user,
-                is_ajax:        is_ajax,
-                template_types: template_types,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-        }
-        else {
-            #[derive(TemplateOnce)]
-            #[template(path = "mobile/search/empty_search.stpl")]
-            struct Template {
-                is_ajax:        i32,
-                template_types: i16,
-            }
-            let body = Template {
-                is_ajax:        is_ajax,
-                template_types: template_types,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-        }
-    }
-    else {
-        if is_desctop {
-            #[derive(TemplateOnce)]
-            #[template(path = "desctop/search/anon_empty_search.stpl")]
-            struct Template {
-                is_ajax:        i32,
-                template_types: i16,
-            }
-            let body = Template {
-                is_ajax:        is_ajax,
-                template_types: template_types,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-        }
-        else {
-            #[derive(TemplateOnce)]
-            #[template(path = "mobile/search/anon_empty_search.stpl")]
-            struct Template {
-                is_ajax:        i32,
-                template_types: i16,
-            }
-            let body = Template {
-                is_ajax:        is_ajax,
-                template_types: template_types,
-            }
-            .render_once()
-            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-        }
-    }
-}
-
-pub async fn search_page(session: Session, req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
-    use crate::utils::get_device_and_ajax;
-
 
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _q = q.clone();
     let _q_standalone = "%".to_owned() + &_q + "%";
     let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Общий поиск по фрагменту ".to_string() + &q,
-            "вебсервисы.рф: Общий поиск по фрагменту ".to_string() + &q,
-            "/search/".to_string() + &q + &"/".to_string(),
-            "/static/images/dark/organization.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else {
+    
         use crate::models::{Deceased, City, Place, Organization, Service, Deceased};
 
         let _connection = establish_connection();
 
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
+        if get_request_user(&req).is_some() {
+            let _request_user = get_request_user(&req).unwrap();
             let is_admin = _request_user.is_superuser();
 
             let deceased_list = Deceased::search_deceased(&_q_standalone, 3, 0, is_admin);
@@ -335,32 +225,20 @@ pub async fn search_page(session: Session, req: HttpRequest, q: web::Path<String
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
             }
-        }
+        
     }
 }
 
 
 
 
-pub async fn search_city_page(session: Session, req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
+pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::{get_device_and_ajax, get_page};
 
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _q = q.clone();
     let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Поиск города ".to_string() + &q,
-            "кладбища.рф: Поиск города ".to_string() + &q,
-            "/search_city/".to_string() + &q + &"/".to_string(),
-            "/static/images/main/01.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else {
         use crate::models::{City};
 
         let page = get_page(&req);
@@ -380,8 +258,8 @@ pub async fn search_city_page(session: Session, req: HttpRequest, q: web::Path<S
             next_item = 21;
         }
 
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
+        if get_request_user(&req).is_some() {
+            let _request_user = get_request_user(&req).unwrap();
             let is_admin = _request_user.is_superuser();
             let city_list = City::search_city(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -495,28 +373,15 @@ pub async fn search_city_page(session: Session, req: HttpRequest, q: web::Path<S
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
             }
         }
-    }
+    
 }
 
-pub async fn search_place_page(session: Session, req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
+pub async fn search_place_page(req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::{get_device_and_ajax, get_page};
 
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _q = q.clone();
-    let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Поиск кладбища ".to_string() + &q,
-            "кладбища.рф: Поиск кладбища ".to_string() + &q,
-            "/search_place/".to_string() + &q + &"/".to_string(),
-            "/static/images/main/01.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else {
         use crate::models::{Place};
 
         let page = get_page(&req);
@@ -536,8 +401,8 @@ pub async fn search_place_page(session: Session, req: HttpRequest, q: web::Path<
             next_item = 21;
         }
 
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
+        if get_request_user(&req).is_some() {
+            let _request_user = get_request_user(&req).unwrap();
             let is_admin = _request_user.is_superuser();
             let place_list = Place::search_place(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -651,28 +516,15 @@ pub async fn search_place_page(session: Session, req: HttpRequest, q: web::Path<
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
             }
         }
-    }
+    
 }
 
-pub async fn search_organization_page(session: Session, req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
+pub async fn search_organization_page(req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::{get_device_and_ajax, get_page};
 
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _q = q.clone();
-    let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Поиск товаров по фрагменту ".to_string() + &q,
-            "вебсервисы.рф: Поиск товаров по фрагменту ".to_string() + &q,
-            "/search_organization/".to_string() + &q + &"/".to_string(),
-            "/static/images/dark/organization.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else {
         use crate::models::{Organization};
 
         let page = get_page(&req);
@@ -692,8 +544,8 @@ pub async fn search_organization_page(session: Session, req: HttpRequest, q: web
             next_item = 21;
         }
 
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
+        if get_request_user(&req).is_some() {
+            let _request_user = get_request_user(&req).unwrap();
             let is_admin = _request_user.is_superuser();
             let organization_list = Organization::search_organization(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -809,28 +661,15 @@ pub async fn search_organization_page(session: Session, req: HttpRequest, q: web
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
             }
         }
-    }
+    
 }
 
-pub async fn search_service_page(session: Session, req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
+pub async fn search_service_page(req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::{get_device_and_ajax, get_page};
 
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _q = q.clone();
-    let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Поиск услуг ".to_string() + &q,
-            "кладбища.рф: Поиск услуг ".to_string() + &q,
-            "/search_service/".to_string() + &q + &"/".to_string(),
-            "/static/images/main/01.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else {
         use crate::models::{Service};
 
         let page = get_page(&req);
@@ -849,8 +688,8 @@ pub async fn search_service_page(session: Session, req: HttpRequest, q: web::Pat
             next_item = 21;
         }
 
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
+        if get_request_user(&req).is_some() {
+            let _request_user = get_request_user(&req).unwrap();
             let is_admin = _request_user.is_superuser();
             let service_list = Service::search_service(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -965,28 +804,15 @@ pub async fn search_service_page(session: Session, req: HttpRequest, q: web::Pat
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
             }
         }
-    }
+    
 }
 
-pub async fn search_deceased_page(session: Session, req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
+pub async fn search_deceased_page(req: HttpRequest, q: web::Path<String>) -> actix_web::Result<HttpResponse> {
     use crate::utils::{get_device_and_ajax, get_page};
 
     let (is_desctop, is_ajax) = get_device_and_ajax(&req);
     let _q = q.clone();
-    let template_types = get_template(&req);
 
-    if is_ajax == 0 {
-        get_first_load_page (
-            &session,
-            is_desctop,
-            "Поиск работ по фрагменту ".to_string() + &q,
-            "вебсервисы.рф: Поиск работ по фрагменту ".to_string() + &q,
-            "/search_deceased/".to_string() + &q + &"/".to_string(),
-            "/static/images/dark/organization.jpg".to_string(),
-            template_types,
-        ).await
-    }
-    else {
         use crate::models::{Deceased};
 
         let page = get_page(&req);
@@ -1005,8 +831,8 @@ pub async fn search_deceased_page(session: Session, req: HttpRequest, q: web::Pa
             next_item = 21;
         }
 
-        if is_signed_in(&session) {
-            let _request_user = get_request_user_data(&session);
+        if get_request_user(&req).is_some() {
+            let _request_user = get_request_user(&req).unwrap();
 
             let is_admin = _request_user.is_superuser();
             let deceased_list = Deceased::search_deceased(&_q_standalone, 20, offset.into(), is_admin);
@@ -1122,7 +948,7 @@ pub async fn search_deceased_page(session: Session, req: HttpRequest, q: web::Pa
                 Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
             }
         }
-    }
+    
 }
 
 

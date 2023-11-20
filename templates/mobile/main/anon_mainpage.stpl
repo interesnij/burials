@@ -1,0 +1,1194 @@
+<% include!("../anon_header.stpl"); %>
+
+<!-- Hero Start -->
+<section class="relative mt-20">
+  <div class="container-fluid md:mx-4 mx-2">
+    <div class="relative pt-48 pb-60 table w-full rounded-2xl shadow-md overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="image-wrap absolute -top-[350px] -bottom-[350px] -left-[100px] -right-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto" id="home">
+        
+        </div>
+      </div>
+      <div class="absolute inset-0 bg-black/60"></div>
+      <div class="container">
+        <div class="grid grid-cols-1">
+          <div class="md:text-left text-center">
+            <div class="d-flex flex-row align-items-center">
+              <div>
+                <h1 class="font-bold text-white lg:leading-normal leading-normal text-4xl lg:text-5xl mb-6">Оцифровка и поиск  <br> Захоронений</h1>
+                <p class="text-white/70 text-xl max-w-xl">Этот сайт - агрегатор ритуальных услуг, а так же цифровой архив захоронений.</p>
+              </div>
+            </div>
+          </div>
+        </div><!--end grid-->
+      </div><!--end container-->
+    </div>
+  </div><!--end Container-->
+</section><!--end section-->
+<!-- Hero End -->
+
+
+      <!-- Start -->
+      <section class="relative md:pb-24 pb-16">
+          <div class="container">
+              <div class="grid grid-cols-1 justify-center">
+                  <div class="relative -mt-32">
+                      <div class="grid grid-cols-1">
+                          <div class="p-6 bg-white dark:bg-slate-900 rounded-md shadow-md dark:shadow-gray-800">
+                              <form action="#">
+                                  <div class="registration-form text-dark text-start">
+                                      <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6">
+                                          <div class="filter-search-form relative filter-border">
+                                              <i class="uil uil-search icons"></i>
+                                              <input name="name" type="text" id="job-keyword" class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0" placeholder="слова для поиска">
+                                          </div>
+
+                                          <div class="filter-search-form relative filter-border">
+                                              
+                                              <select class="form-select z-2" data-trigger name="choices-catagory" id="choices-catagory" aria-label="Default select example">
+                                                  <option>Захоронение</option>
+                                                  <option>Кладбище</option>
+                                                  <option>Услугу</option>
+                                                  <option>Организацию</option>
+                                              </select>
+                                          </div>
+                                      
+                                          <div class="filter-search-form relative filter-border">
+                                              
+                                              <select class="form-select" data-trigger name="choices-min-price" id="choices-min-price" aria-label="Default select example">
+                                                  <option>Дата рождения</option>
+                                                  <option>1900-1950</option>
+                                                  <option>1950-2000</option>
+                                                  <option>2000-2023</option>
+                                                
+                                              </select>
+                                          </div>
+                                      
+                                          <div class="filter-search-form relative">
+                                              
+                                              <select class="form-select" data-trigger name="choices-max-price" id="choices-max-price" aria-label="Default select example">
+                                                  <option>Дата смерти</option>
+                                                  <option>1900-1950</option>
+                                                  <option>1950-2000</option>
+                                                  <option>2000-2023</option>
+                                              </select>
+                                          </div>
+
+                                          <div class="lg:mt-6">
+                                              <input type="submit" id="search" name="search" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white searchbtn submit-btn w-full !h-12 rounded" value="Поиск">
+                                          </div>
+                                      </div><!--end grid-->
+                                  </div><!--end container-->
+                              </form>
+                          </div>
+                      </div><!--end grid-->
+                  </div>
+              </div><!--end grid-->
+          </div><!--end container-->
+        </section>  
+
+
+
+
+
+    <!-- Start -->
+    <section class="relative md:pb-24 pb-16">
+      <div class="container">
+        <div class="grid grid-cols-1 pb-8 text-center">
+          <h3
+            class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-black dark:text-white"
+          >
+            Предоставляем услуги
+          </h3>
+
+          <p class="text-slate-400 max-w-xl mx-auto">
+            Этот сайт является агрегатором ритуальных услуг со всех городов, а
+            так же предоставляет электронную регистрацию мест захоронений.
+          </p>
+        </div>
+        <!--end grid-->
+
+        <div
+          class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 gap-[30px]"
+        >
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <img src="static/icons/cemetery.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Оцифровка кладбищ</a
+              >
+              <p class="text-slate-400 mt-2">
+                Поможем найти зарегестрированное на сайте кладбище
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <img src="static/icons/cemeteryPlace.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Стены памяти</a
+              >
+              <p class="text-slate-400 mt-2">
+                Список организаций и у слуг в вашем городе и регионе
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <!-- <i class="uil uil-airplay"></i> -->
+              <img src="static/icons/searchOrg.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Поиск организации</a
+              >
+              <p class="text-slate-400 mt-2">
+                One advantage everything you need to generate
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+
+
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <img src="static/icons/flower.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Возложение цветов</a
+              >
+              <p class="text-slate-400 mt-2">
+                One advantage everything you need to generate
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <!-- <i class="uil uil-money-bill"></i> -->
+              <img src="static/icons/search.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Поиск захоронений</a
+              >
+              <p class="text-slate-400 mt-2">
+                Поможем найти зарегестрированного на сайте усопшего
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <img src="static/icons/tombstone.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Братские могилы</a
+              >
+              <p class="text-slate-400 mt-2">
+                Навигация по карте до памятных мест
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <img src="static/icons/searchTwo.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Поиск услуг</a
+              >
+              <p class="text-slate-400 mt-2">
+                Обзор организаций и услуг в вашем городе
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+
+          <!-- Content -->
+          <div
+            class="group transition-all duration-500 ease-in-out text-center"
+          >
+            <div
+              class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out"
+            >
+              <img src="static/icons/cleaning.png" alt="" srcset="" />
+            </div>
+            <div class="mt-4">
+              <a
+                href=""
+                class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out"
+                >Уборка могил</a
+              >
+              <p class="text-slate-400 mt-2">
+                One advantage everything you need to generate
+              </p>
+            </div>
+          </div>
+          <!-- Content -->
+        </div>
+      </div>
+      <!--end container-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Start Section-->
+      <section class="relative md:py-24 py-16">
+          <div class="container">
+              <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-[30px]">
+                  <div class="lg:col-span-5 md:col-span-6">
+                      <img src="static/images/main/place.jpg" class="rounded-md shadow dark:shadow-gray-800" alt="">
+                  </div>
+
+                  <div class="lg:col-span-7 md:col-span-6">
+                      <div class="lg:ml-6">
+                          <p class="text-slate-400 text-lg mb-0">Скорбь и утрата требуют особого внимания и заботы. Наш веб-сервис предоставляет уникальную услугу по поиску кладбища и электронной регистрации захоронений</p>
+                      
+                          <h4 class="my-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Сервис памяти</h4>
+
+                          <p class="text-slate-400">Мы предоставляем вам возможность создать электронную стену памяти, посвященную ушедшим близким. Здесь вы можете разместить фотографии, истории и воспоминания о них, чтобы сохранить их память вечной.</p>
+                      
+                      
+                      </div>
+                  </div>
+              </div><!--grid-->
+          </div><!--end container-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="container lg:mt-24 mt-16 lg:pt-24 pt-16">
+        <div
+          class="absolute inset-0 opacity-25 dark:opacity-50 bg-[url('../../static/images/map.png')] bg-no-repeat bg-center"
+        ></div>
+        <div class="relative grid grid-cols-1 pb-8 text-center z-1">
+          <h3
+            class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-black dark:text-white"
+          >
+            Не знающий своего прошлого, не имеет будущего
+          </h3>
+
+          <p class="text-slate-400 max-w-xl mx-auto">
+            База для поиска захоронений постоянно расширяется. Наша цель в том,
+            чтобы каждое место погребения могло быть найдено в этой базе быстро,
+            а главное - абсолютно бесплатно. Как Вы понимаете, пока не все
+            кладбища внесены в базу, но общими усилиями мы сможем заполнить этот
+            пробел!
+          </p>
+        </div>
+        <!--end grid-->
+
+        <div
+          class="relative grid md:grid-cols-3 grid-cols-1 items-center mt-8 gap-[30px] z-1"
+        >
+          <div class="counter-box text-center">
+            <h1
+              class="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white"
+            >
+              <span class="counter-value" data-target="1548">1010</span>+
+            </h1>
+            <h5 class="counter-head text-lg font-medium">Захоронений</h5>
+          </div>
+          <!--end counter box-->
+
+          <div class="counter-box text-center">
+            <h1
+              class="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white"
+            >
+              <span class="counter-value" data-target="900">2</span>+
+            </h1>
+            <h5 class="counter-head text-lg font-medium">Кладбищ</h5>
+          </div>
+          <!--end counter box-->
+
+          <div class="counter-box text-center">
+            <h1
+              class="lg:text-5xl text-4xl font-semibold mb-2 text-slate-400 dark:text-white"
+            >
+              <span class="counter-value" data-target="100">0</span>+
+            </h1>
+            <h5 class="counter-head text-lg font-medium">Населенных пунктов</h5>
+          </div>
+          <!--end counter box-->
+        </div>
+      </div>
+      <!--end container-->
+
+<br><br><br>
+        <!-- Start -->
+        <section class="relative md:py-24 py-16 md:pt-0 pt-0">
+          <div class="container">
+              <div class="grid grid-cols-1 justify-center wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                  <div class="relative z-1">
+                      <div class="grid grid-cols-1 md:text-left text-center justify-center">
+                          <div class="relative">
+                              <img src="static/images/main/place1.jpg" alt="">
+                              <div class="absolute bottom-2/4 translate-y-2/4 right-0 left-0 text-center">
+                                  
+                              </div>
+                          </div>
+                      </div>
+                      <div class="content md:mt-8">
+                          <div class="grid lg:grid-cols-12 grid-cols-1 md:text-left text-center justify-center">
+                              <div class="lg:col-start-2 lg:col-span-10">
+                                  <div class="grid md:grid-cols-2 grid-cols-1 items-center">
+                                      <div class="mt-8">
+                                          <div class="section-title text-md-start">
+                                              
+                                              <h3 class="md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-white mt-2">Связь через времена</h3>
+                                          </div>
+                                      </div>
+
+                                      <div class="mt-8">
+                                          <div class="section-title text-md-start">
+                                              <p class="text-white/50 max-w-xl mx-auto mb-2">  Легко найти местоположение захоронения ваших близких, провести генеалогические исследования и осуществитьпоиск записей о ушедших в цифровом архиве. Восстановить связь с вашими предками и членами семьи, сохраняя их наследие и историю.</p>
+                                              <a href="" class="text-white">Поиск<i class="uil uil-angle-right-b align-middle"></i></a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div><!--end row -->
+          </div><!--end container-->
+          
+          <div class="absolute bottom-0 left-0 right-0 sm:h-2/3 h-4/5 bg-gradient-to-b from-indigo-500 to-indigo-600"></div>
+      </section><!--end section-->
+      <!-- End -->
+
+
+
+      <div class="container md:mt-24 mt-16">
+        <div class="grid grid-cols-1 pb-8 text-center">
+          <h3
+            class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold"
+          >
+            Часто задаваемые вопросы
+          </h3>
+
+          <p class="text-slate-400 max-w-xl mx-auto">
+            Этот сайт является агрегатором ритуальных услуг со всех городов, а
+            так же предоставляет электронную регистрацию захоронений.
+          </p>
+        </div>
+        <!--end grid-->
+
+        <div
+          id="accordion-collapse"
+          data-accordion="collapse"
+          class="grid md:grid-cols-2 grid-cols-1 mt-8 md:gap-[30px]"
+        >
+          <div>
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-1"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-1"
+                  aria-expanded="true"
+                  aria-controls="accordion-collapse-body-1"
+                >
+                  <span>Как можно воспользоваться сайтом ?</span>
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 rotate-180 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-1"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-1"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    Наш сайт предназначен для создания общей базы данных кладбищ
+                    по всей стране. Мы позволяем пользователям регистрировать
+                    информацию о своих умерших родственниках и обеспечиваем
+                    доступ к данным об уже существующих кладбищах
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-2"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-2"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-2"
+                >
+                  <span
+                    >Как мне зарегистрировать информацию о своем умершем
+                    родственнике ?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-2"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-2"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    Для регистрации информации о родственнике, перейдите на
+                    страницу "Регистрация усопшего" и заполните необходимые поля
+                    с данными, а затем следуйте инструкциям нашей системы.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-3"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-3"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-3"
+                >
+                  <span
+                    >Как я могу найти кладбище, где похоронен мой родственник
+                    ?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-3"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-3"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    Воспользуйтесь поиском кладбищ на главной странице. Введите
+                    имя и другие доступные данные родственника, и наш сайт
+                    поможет вам найти соответствующее кладбище.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-4"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-4"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-4"
+                >
+                  <span
+                    >Могу ли я добавить фотографии и историческую информацию о
+                    кладбище ?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-4"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-4"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    Да, вы можете добавить фотографии и исторические сведения о
+                    кладбище на соответствующей странице кладбища.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden md:mt-0 mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-5"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-5"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-5"
+                >
+                  <span
+                    >Какие организации могут зарегистрировать свои услуги на
+                    вашем сайте ?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 rotate-180 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-5"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-5"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    Любые организации, предоставляющие услуги, связанные с
+                    кладбищами (например, ритуальные агентства, мастера на
+                    могилах, производители надгробных памятников), могут
+                    зарегистрировать свои услуги у нас.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-6"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-6"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-6"
+                >
+                  <span
+                    >Как пользователи могут выбирать услуги, доступные в их
+                    городе ?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-6"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-6"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    На главной странице сайта у вас есть возможность ввести свой
+                    город или местоположение, и наш сайт предоставит вам список
+                    доступных услуг и организаций в этом районе.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-7"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-7"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-7"
+                >
+                  <span
+                    >Как я могу связаться с администратором сайта, если у меня
+                    есть вопросы или проблемы ?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-7"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-7"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    На странице "Контакты" вы найдете информацию для связи с
+                    нашей службой поддержки. Мы всегда готовы помочь вам.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            >
+              <h2
+                class="text-base font-semibold"
+                id="accordion-collapse-heading-8"
+              >
+                <button
+                  type="button"
+                  class="flex justify-between items-center p-5 w-full font-medium text-left"
+                  data-accordion-target="#accordion-collapse-body-8"
+                  aria-expanded="false"
+                  aria-controls="accordion-collapse-body-8"
+                >
+                  <span
+                    >Как я могу помочь в развитии проекта и добавлении новых
+                    кладбищ в базу данных?</span
+                  >
+                  <svg
+                    data-accordion-icon
+                    class="w-4 h-4 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </h2>
+              <div
+                id="accordion-collapse-body-8"
+                class="hidden"
+                aria-labelledby="accordion-collapse-heading-8"
+              >
+                <div class="p-5">
+                  <p class="text-slate-400 dark:text-gray-400">
+                    Мы ценим активное участие пользователей. Вы можете
+                    предложить новые кладбища для добавления, делиться
+                    информацией о проекте с другими и даже присоединиться к
+                    нашей команде волонтеров. Свяжитесь с нами для
+                    дополнительных подробностей.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end grid-->
+      </div>
+      <!--end container-->
+
+
+
+      <div class="container md:mt-24 mt-16">
+        <div class="grid md:grid-cols-2 grid-cols-1 items-center mt-16 gap-[30px]">
+            <div class="relative">
+                <div class="md:mr-10">
+                    <img src="static/images/main/map1.jpg" class="rounded-lg shadow-md dark:shadow-gray-800" alt="">
+                </div>
+                <div class="absolute -bottom-10 right-0 p-6 rounded-lg shadow-md dark:shadow-gray-800 bg-white dark:bg-slate-900 md:w-80 w-60">
+                    <h5 class="text-lg font-semibold mb-3">Проложить маршрут</h5>
+                    <p class="text-slate-400">Составим маршрут до места захоронения </p>
+                </div>
+            </div>
+
+            <div class="lg:ml-8 mt-8 md:mt-0">
+                <h4 class="mb-4 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Прокладывайте <br> маршрут на карте:</h4>
+                <p class="text-slate-400">С легкостью найдите путь к кладбищу, используя удобную карту. Предоставляем детальные инструкции, чтобы облегчить вам путь.</p>
+
+                <div class="mt-4">
+                    <a href="deceased_all.html" class="btn btn-link text-indigo-600 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Проложить маршрут<i class="uil uil-angle-right-b align-middle"></i></a>
+                </div>
+            </div>
+        </div><!--end grid-->
+    </div><!--end container-->
+
+    <div class="container md:mt-24 mt-16">
+        <div class="grid md:grid-cols-2 grid-cols-1 items-center gap-[30px]">
+            <div class="relative order-1 md:order-2">
+                <img src="static/images/main/visitki.png" alt="">
+            </div>
+
+            <div class="lg:mr-8 order-2 md:order-1">
+                <h4 class="mb-4 text-2xl leading-normal font-medium">Объединение ритуальных услуг в одном месте:</h4>
+                <p class="text-slate-400">Наш веб-сервис - это агрегатор ритуальных услуг, предоставляемых профессионалами из разных городов. Мы предоставляем вам возможность выбрать именно то, что вам нужно в этот трудный момент. У нас вы можете:</p>
+                <ul class="list-none text-slate-400 mt-4">
+                    <li class="mb-1 flex"><i class="uil uil-check-circle text-indigo-600 text-xl mr-2"></i> Выбирать из широкого спектра услуг</li>
+                    <li class="mb-1 flex"><i class="uil uil-check-circle text-indigo-600 text-xl mr-2"></i> Сравнивать цены</li>
+                    <li class="mb-1 flex"><i class="uil uil-check-circle text-indigo-600 text-xl mr-2"></i> Читать отзывы</li>
+                </ul>
+
+                <div class="mt-4">
+                    <a href="service_all.html" class="btn btn-link text-indigo-600 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Найти организацию или услугу <i class="uil uil-angle-right-b align-middle"></i></a>
+                </div>
+            </div>
+        </div>
+    </div><!--end container-->
+</section><!--end section-->
+<!-- End  -->
+
+
+
+<div class="container lg:mt-24 mt-16">
+  <div class="grid grid-cols-1 pb-8 text-center">
+    <h3
+      class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-black dark:text-white"
+    >
+      Что говорят о нас пользователи ?
+    </h3>
+
+    <p class="text-slate-400 max-w-xl mx-auto">
+      Этот сайт является агрегатором ритуальных услуг со всех городов, а
+      так же предоставляет электронную регистрацию захоронений и оцифровку
+      кладбищь.
+    </p>
+  </div>
+  <!--end grid-->
+
+  <div class="flex justify-center relative mt-16">
+    <div class="relative lg:w-1/3 md:w-1/2 w-full">
+      <div class="absolute -top-20 md:-left-24 -left-0">
+        <i class="mdi mdi-format-quote-open text-9xl opacity-5"></i>
+      </div>
+
+      <div class="absolute bottom-28 md:-right-24 -right-0">
+        <i class="mdi mdi-format-quote-close text-9xl opacity-5"></i>
+      </div>
+
+      <div class="tiny-single-item">
+        <div class="tiny-slide">
+          <div class="text-center">
+            <p class="text-lg text-slate-400 italic">
+              " Заказывал услуги ухода за захоронением во Владивостоке.
+              Сделали быстро, и качественно. А также, приятно удивила
+              стоимость. На кладбище, за тот же спектр услуг, ломили в 2-3
+              раза больше. Я доволен. "
+            </p>
+
+            <div class="text-center mt-5">
+              <ul
+                class="text-xl font-medium text-amber-400 list-none mb-2"
+              >
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+              </ul>
+
+              <img
+                src="static/images/user/01.jpg"
+                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                alt=""
+              />
+              <h6 class="mt-2 font-semibold">Иванов Иван</h6>
+              <span class="text-slate-400 text-sm">Пользователь</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiny-slide">
+          <div class="text-center">
+            <p class="text-lg text-slate-400 italic">
+              " Сервисом очень доволен! Решил найти свою бабку. Спрашивал
+              у родственников - не помнят, звонил в архивы - без
+              свидетельства не говорят, в общем результаты были
+              неутешительны. Обратился , думал и тут не найдут. Как
+              оказалось, позвонили на следующий день, сообщили что так и
+              так по вашему запросу все нашли, но сначала оплатите. "
+            </p>
+
+            <div class="text-center mt-5">
+              <ul
+                class="text-xl font-medium text-amber-400 list-none mb-2"
+              >
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+              </ul>
+
+              <img
+                src="static/images/user/02.jpg"
+                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                alt=""
+              />
+              <h6 class="mt-2 font-semibold">Иванова Анна</h6>
+              <span class="text-slate-400 text-sm">Пользователь</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiny-slide">
+          <div class="text-center">
+            <p class="text-lg text-slate-400 italic">
+              " Оформила услугу "мемориал". Сделали все красиво и
+              аккуратно. Надеюсь, что организация и дальше продолжит свою
+              работу. "
+            </p>
+
+            <div class="text-center mt-5">
+              <ul
+                class="text-xl font-medium text-amber-400 list-none mb-2"
+              >
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+              </ul>
+
+              <img
+                src="static/images/user/03.jpg"
+                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                alt=""
+              />
+              <h6 class="mt-2 font-semibold">Иванова Анна</h6>
+              <span class="text-slate-400 text-sm">Пользователь</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiny-slide">
+          <div class="text-center">
+            <p class="text-lg text-slate-400 italic">
+              " Заказал уборку захоронения, оказали услугу качественно, и
+              в кротчайший срок. Получил скидку. В целом всем доволен. "
+            </p>
+
+            <div class="text-center mt-5">
+              <ul
+                class="text-xl font-medium text-amber-400 list-none mb-2"
+              >
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+              </ul>
+
+              <img
+                src="static/images/user/04.jpg"
+                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                alt=""
+              />
+              <h6 class="mt-2 font-semibold">Иванов Иван</h6>
+              <span class="text-slate-400 text-sm">Пользователь</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiny-slide">
+          <div class="text-center">
+            <p class="text-lg text-slate-400 italic">
+              "Прислали фотографию четырех захоронений из которых я
+              выбрала то что искала. Хочется выразить особую благодарность
+              менеджеру Дмитрию, который постоянно был со мной на связи и
+              узнавал разные мелочи про человека. Хороший и качественный
+              сервис, который заботится о своих клиентах. Спасибо! "
+            </p>
+
+            <div class="text-center mt-5">
+              <ul
+                class="text-xl font-medium text-amber-400 list-none mb-2"
+              >
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+              </ul>
+
+              <img
+                src="static/images/user/05.jpg"
+                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                alt=""
+              />
+              <h6 class="mt-2 font-semibold">Иванова Анна</h6>
+              <span class="text-slate-400 text-sm">Пользователь</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiny-slide">
+          <div class="text-center">
+            <p class="text-lg text-slate-400 italic">
+              " Обратилась в эту компанию в первый раз, доверившись
+              отзывам, а также просмотрев сайт. Результатом довольна,
+              очень выручили. Спасибо за оперативность! "
+            </p>
+
+            <div class="text-center mt-5">
+              <ul
+                class="text-xl font-medium text-amber-400 list-none mb-2"
+              >
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+                <li class="inline"><i class="mdi mdi-star"></i></li>
+              </ul>
+
+              <img
+                src="static/images/user/06.jpg"
+                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                alt=""
+              />
+              <h6 class="mt-2 font-semibold">Иванов Иван</h6>
+              <span class="text-slate-400 text-sm">Пользователь</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end grid-->
+</div>
+<!--end container-->
+
+
+
+
+      <div class="container lg:mt-24 mt-16">
+        <div class="grid grid-cols-1 text-center">
+          <h3
+            class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold"
+          >
+            Если у вас возник вопрос, свяжитесь с нами
+          </h3>
+
+          <p class="text-slate-400 max-w-xl mx-auto">
+            Этот сайт является агрегатором ритуальных услуг со всех городов, а
+            так же предоставляет электронную регистрацию захоронений.
+          </p>
+
+          <div class="mt-6">
+            <a
+              href="0.index.html"
+              class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md"
+              ><i class="uil uil-phone align-middle mr-2"></i> Whats App</a
+            >
+          </div>
+        </div>
+        <!--end grid-->
+      </div>
+      <!--end container-->
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <br><br><br><br>
+
+<% include!("../anon_footer.stpl"); %>

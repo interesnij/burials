@@ -1,0 +1,116 @@
+<% include!("../anon_header.stpl"); %>
+
+
+
+
+
+
+
+
+
+        <!-- Start Hero -->
+        <section class="relative table w-full py-36 lg:py-44 bg-no-repeat bg-center"  style="background: linear-gradient(45deg, #ff6600, #0066ff);">
+            <div class="absolute inset-0 bg-black opacity-80"></div>
+            <div class="container">
+                <div class="grid grid-cols-1 pb-8 text-center mt-12">
+                    <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white">Пользовательское соглашение</h3>
+
+                   
+                </div><!--end grid-->
+            </div><!--end container-->
+
+            <div class="absolute text-center z-10 bottom-5 right-0 left-0 mx-3">
+                <ul class="breadcrumb tracking-[0.5px] breadcrumb-light mb-0 inline-block">
+                   <li class="inline breadcrumb-item uppercase text-[13px] font-bold duration-500 ease-in-out text-white/50 hover:text-white"><a href="index.html">Главная</a></li>
+                   <li class="inline breadcrumb-item uppercase text-[13px] font-bold duration-500 ease-in-out text-white/50 hover:text-white"><a href="">Сервисы</a></li>
+                    <li class="inline breadcrumb-item uppercase text-[13px] font-bold duration-500 ease-in-out text-white" aria-current="page">Пользовательское соглашение</li>
+                </ul>
+            </div>
+        </section><!--end section-->
+        <div class="relative">
+            <div class="shape absolute right-0 sm:-bottom-px -bottom-[2px] left-0 overflow-hidden text-white dark:text-slate-900">
+                <svg class="w-full h-auto" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+                </svg>
+            </div>
+        </div>
+        <!-- End Hero -->
+
+        <!-- Start Section-->
+        <section class="relative md:py-24 py-16">
+            <div class="container">
+                <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
+                    <div class="lg:col-start-2 lg:col-span-10">
+
+
+                        <p class="text-slate-400 mb-4">Этот сайт является агрегатором ритуальных услуг со всех городов, а также предоставляет электронную регистрацию захоронений.</p>
+
+
+
+                        <h5 class="mb-4 font-medium text-xl">Соглашение:</h5>
+
+                    
+
+                        <p class="text-slate-400 mb-4">Пожалуйста, внимательно ознакомьтесь с нашим пользовательским соглашением перед использованием сайта.</p>
+
+
+                        <h5 class="mb-4 mt-6 font-medium text-xl">Условия:</h5>
+
+                        <ul class="list-none mb-0">
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i> Используя данный сайт, вы соглашаетесь с условиями настоящего пользовательского соглашения.</li>
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i>Если вы не согласны с какими-либо из условий, пожалуйста, не используйте данный сайт</li> </ul>
+
+                        <h5 class="mb-4 mt-6 font-medium text-xl">Описание сайта</h5>
+                        
+                        <ul class="list-none mb-0">
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i>  Наш сайт является агрегатором ритуальных услуг, предоставляемых в различных городах.</li>
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i> Мы также предоставляем возможность электронной регистрации захоронений.</li>
+                        </ul>
+
+                        <h5 class="mb-4 mt-6 font-medium text-xl"> Права и обязанности пользователя</h5>
+                        
+                        <ul class="list-none mb-0">                        
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i> Вы соглашаетесь не предоставлять ложные или недостоверные сведения при регистрации на сайте.                            </li>
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i> Вы несете ответственность за безопасность вашей учетной записи и пароля.</li>
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i>  Вы обязуетесь не использовать сайт для незаконных целей или вредоносных действий.</li>
+                        </ul>
+
+                        <h5 class="mb-4 mt-6 font-medium text-xl">Конфиденциальность и безопасность</h5>
+                        <p class="text-slate-400 mb-4"> Мы обязуемся защищать ваши персональные данные в соответствии с нашей политикой конфиденциальности</p>
+
+                        <p class="text-slate-400 mb-4"> Ограничение ответственности:</p>
+
+
+                        <ul class="list-none mb-4">
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i>  Мы не несем ответственности за действия третьих лиц, предоставляющих ритуальные услуги.</li>
+                            <li class="text-slate-400 flex mt-2"><i class="uil uil-arrow-right text-indigo-600 h5 mb-0 mr-2"></i>  Мы не несем ответственности за неправильное использование сайта пользователями.</li>
+                        </ul>
+
+                        <p class="text-slate-400 mb-4">Мы оставляем за собой право вносить изменения в настоящее соглашение без предварительного уведомления.</p>
+
+                        <p class="text-slate-400 mb-4">Пожалуйста, следите за обновлениями пользовательского соглашения. Ваше использование сайта после внесения изменений означает ваше согласие с изменениями.</p>
+
+                        <div class="mt-6">
+                            <a href="page-job-apply.html" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">Принять</a>
+                        </div>
+                    </div>
+                </div><!--end grid-->
+            </div><!--end container-->
+
+           
+        </section><!--end section-->
+        <!-- End Section-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% include!("../anon_footer.stpl"); %>

@@ -1,122 +1,97 @@
-use argonautica::{Hasher, Verifier}; 
-use actix_session::Session;
 use actix_web::{
-  http::header::CONTENT_TYPE,
   HttpRequest,
+  web::block,
 };
-//use crate::schema;
-use crate::{errors::AuthError, vars};
-use crate::models::SessionUser;
-use actix_web::dev::ConnectionInfo;
+use std::{result::Result, env};
+use chrono::{Duration, Utc};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
+use serde::{Deserialize, Serialize};
+use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
+use crate::models::User;
 
 
-pub fn hash_password(password: &str) -> String {
-  Hasher::default()
-      .with_password(password)
-      .with_secret_key(vars::secret_key().as_str())
-      .hash()
-      .expect("E.")
-      //.map_err(|_| AuthError::AuthenticationError(String::from("Не удалось хэшировать пароль")))
+pub fn is_authenticate(token: &String)-> bool {
+    return web_local_storage_api::get_item(token).expect("E.").is_some();
+}  
+
+pub fn set_token(token: &String, id: &String) {
+    let _local_token = web_local_storage_api::set_item(token, id);
 }
 
-pub fn verify(hash: &str, password: &str) -> Result<bool, AuthError> {
-  Verifier::default()
-      .with_hash(hash)
-      .with_password(password)
-      .with_secret_key(vars::secret_key().as_str())
-      .verify()
-      .map_err(|_| AuthError::AuthenticationError(String::from("Не удалось подтвердить пароль")))
-}
-
-pub fn is_json_request(req: &HttpRequest) -> bool {
-    req
-      .headers()
-      .get(CONTENT_TYPE)
-      .map_or(
-        false,
-        |header| header.to_str().map_or(false, |content_type| "application/json" == content_type)
-      )
-}
-
-pub fn is_signed_in(session: &Session) -> bool {
-  match get_current_user(session) {
-      Ok(_) => true,
-      _ => false,
+pub async fn remove_token(req: &HttpRequest) -> i16 { 
+    match Authorization::<Bearer>::parse(req) {
+      Ok(ok) => {
+        let token = ok.as_ref().token();
+        web_local_storage_api::remove_item(token);
+        HttpResponse::Unauthorized().finish();
+        return 1;
+      },
+      Err(_) => 0,
+    }
   }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Claims {
+    pub id: i32,
+    pub exp: i64,
 }
 
-pub fn set_current_user(session: &Session, user: &SessionUser) -> () {
-    // сериализация в строку подходит для этого случая,
-    // но двоичный код был бы предпочтительнее в производственных вариантах использования.
-    session.insert("user", serde_json::to_string(user).unwrap()).unwrap();
+pub async fn gen_jwt (
+    id: i32,
+    secret: &String
+) -> Result<String, jsonwebtoken::errors::Error> {
+    block(move || {
+        let header = Header::default();
+        let encoding_key = EncodingKey::from_secret("MY_SECRET".as_bytes());
+        let exp = Utc::now()
+            + Duration::days (
+                env::var("COOKIE_MAX_AGE")
+                .unwrap()
+                .parse::<i64>()
+                .unwrap()
+            );
+
+        let claim = Claims {
+            id:  id,
+            exp: exp.timestamp(),
+        };
+
+        encode(&header, &claim, &encoding_key)
+    })
+    .await
+    .unwrap()
 }
 
-pub fn check_auth(session: &Session) -> bool {
-    match session.get::<String>("id").unwrap() {
-        Some(_) => true,
-        None => false,
+pub async fn verify_jwt(_token: String)-> Result<Claims, u16>{
+    let claims = block(move || {
+        let decoding_key = DecodingKey::from_secret("MY_SECRET");
+        decode::<Claims>(&_token, &decoding_key, &Validation::default())
+    })
+    .await
+    .unwrap();
+    if let Err(_) = claims {
+        return Err(403);
     }
-} 
- 
-pub fn get_current_user(session: &Session) -> Result<SessionUser, AuthError> {
-    let msg = "Не удалось извлечь пользователя из сеанса";
 
-    session
-        .get::<String>("user")
-        .map_err(|_| AuthError::AuthenticationError(String::from(msg)))
-        .unwrap() 
-        .map_or(
-          Err(AuthError::AuthenticationError(String::from(msg))),
-          |user| serde_json::from_str(&user).or_else(|_| Err(AuthError::AuthenticationError(String::from(msg))))
-        )
+    //log::info!("Headers: {:?}", claims.as_ref().unwrap().header);
+    let claims = claims.unwrap().claims;
+
+    if claims.exp < Utc::now().timestamp(){
+        return Err(419);
+    }
+
+    Ok(claims)
 }
 
-
-pub async fn get_cookie_user_id(req: &HttpRequest) -> i32 {
-    let mut user_id = 0;
-    for header in req.headers().into_iter() {
-        if header.0 == "cookie" {
-            let str_cookie = header.1.to_str().unwrap();
-            let _cookie: Vec<&str> = str_cookie.split(";").collect();
-            for c in _cookie.iter() {
-                let split_c: Vec<&str> = c.split("=").collect();
-                if split_c[0] == "user" {
-                    user_id = split_c[1].parse().unwrap();
-                }
-                println!("name {:?}", split_c[0].trim());
-                println!("value {:?}", split_c[1]);
-            }
-        }
-    };
-    user_id
-}
-pub async fn get_or_create_cookie_user_id(conn: ConnectionInfo, req: &HttpRequest) -> i32 {
-    let mut user_id = 0;
-    for header in req.headers().into_iter() {
-        if header.0 == "cookie" {
-            let str_cookie = header.1.to_str().unwrap();
-            let _cookie: Vec<&str> = str_cookie.split(";").collect();
-            for c in _cookie.iter() {
-                let split_c: Vec<&str> = c.split("=").collect();
-                if split_c[0] == "user" {
-                    user_id = split_c[1].parse().unwrap();
-                }
-                println!("name {:?}", split_c[0].trim());
-                println!("value {:?}", split_c[1]);
-            }
-        }
-    };
-    if user_id == 0 {
-        use crate::views::create_c_user;
-
-        let user = create_c_user(conn, &req).await;
-        user_id = user.id;
-    }
-    else {
-        use crate::views::get_c_user;
-
-        let user = get_c_user(conn, user_id, &req).await;
-        user_id = user.id;
-    }
-    user_id
+pub async fn get_request_user(req: &HttpRequest) -> Option<User> { 
+  match Authorization::<Bearer>::parse(req) {
+    Ok(ok) => {
+      let token = ok.as_ref().token().to_string();
+      return match verify_jwt(token).await {
+        Ok(ok) => Some(crate::utils::get_user(ok.id).expect("E.")),
+        Err(_) => None,
+      }
+    },
+    Err(_) => None,
+  }
 }

@@ -1,22 +1,17 @@
-mod deceased;
+mod deceaseds;
 mod geo;
-mod organization;
-mod place;
-mod progs;
-mod reiew;
-mod service;
-mod user;
-mod words;
+mod organizations;
+mod places;
+mod reiews;
+mod services;
+mod users;
 
 pub use self::{
-    deceased::*,
+    deceaseds::*,
     geo::*,
-    organization::*,
-    place::*,
-    progs::*,
-    reiew::*,
-    service::*,
-    user::*,
-    words::*,
-
+    organizations::*,
+    places::*,
+    reiews::*,
+    services::*,
+    users::*,
 };

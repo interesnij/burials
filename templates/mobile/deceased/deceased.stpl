@@ -1,0 +1,478 @@
+<% include!("../header.stpl"); %>
+
+
+<!------------------------------------------------------- Start Hero -->
+        <section class="relative table w-full md:pb-24 pb-16 mt-28">
+            <div class="container">
+                <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+                    <div class="lg:col-span-6 md:col-span-5">
+                        <div class="sticky top-20">
+
+                            <img src="<%= deceased.photo_link %>" 
+                            class="rounded-md shadow-md dark:shadow-gray-800" 
+                            alt="">
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="lg:col-span-6 md:col-span-7">
+                        <div class="">
+                            <h5 class="lg:text-4xl lg:leading-relaxed text-2xl font-semibold">
+                            
+                            <%= deceased.first_name %>
+                            <%= deceased.last_name %>
+                            <%= deceased.middle_name %>                            
+                            
+                            </h5>
+
+                            <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                                <div>
+                                    <h6 class="text-lg font-semibold">
+
+                                    Годы жизни
+                                    
+                                    </h6>
+                                    <h6 class="text-2xl font-semibold mt-2">
+                                    
+                                    <%= deceased.birth_date %> 
+                                    -
+                                    <%= deceased.death_date %>
+                                    
+                                    </h6>
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="mt-6">
+                                <a href="" 
+                                class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 
+                                hover:border-indigo-700 text-white rounded-md mr-2">
+                                
+                                <%= deceased.place_id %>
+                                
+                                </a>
+
+                                <a href="" 
+                                class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 
+                                hover:border-indigo-700 text-white rounded-md">
+                                
+                                <%= deceased.adress %>
+                                 
+                                 </a>
+                            </div>
+
+                            <div class="grid grid-cols-1 mt-8">
+                                <ul class="md:w-fit w-full flex-wrap justify-center text-center p-3 bg-white dark:bg-slate-900 shadow 
+                                dark:shadow-gray-800 rounded-md" 
+                                id="myTab" data-tabs-toggle="#StarterContent" role="tablist">
+                                   
+                                    <li role="presentation" 
+                                    class="md:inline-block block md:w-fit w-full">
+                                        <button 
+                                        class="px-6 py-2 font-semibold rounded-md w-full 
+                                        transition-all duration-500 ease-in-out" 
+                                        id="wednesday-tab" 
+                                        data-tabs-target="#wednesday" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="wednesday" 
+                                        aria-selected="false">Место</button>
+
+                                    </li>
+
+                                    <li role="presentation" 
+                                    class="md:inline-block block md:w-fit w-full">
+
+                                        <button 
+                                        class="px-6 py-2 font-semibold rounded-md w-full 
+                                        transition-all duration-500 ease-in-out" 
+                                        id="thursday-tab" 
+                                        data-tabs-target="#thursday" 
+                                        type="button" 
+                                        role="tab" 
+                                        aria-controls="thursday" 
+                                        aria-selected="false">Фото</button>
+
+                                    </li>
+                                </ul>
+
+
+                                <div id="StarterContent" class="mt-6">
+                                    
+            
+                                    <div class="hidden" id="wednesday" role="tabpanel" aria-labelledby="wednesday-tab">
+                                        <div class="grid grid-cols-1">                                      
+                                            <div class="rounded-md bg-slate-50 dark:bg-slate-800 shadow dark:shadow-gray-800">
+                                                <div class="p-6">
+                                                    <h5 class="text-2xl font-medium">Место захоронения:</h5>
+                    
+                                                    <ul class="list-none mt-4">
+                                                        <li class="flex justify-between items-center">
+                                                            <span class="text-slate-400 text-sm">Адрес</span>
+                                                            <span class="font-medium text-sm">
+                                                            
+                                                            <%= deceased.adress %>
+                                                            
+                                                            </span>
+                                                        </li>
+                    
+                                                        <li class="flex justify-between items-center mt-2">
+                                                            <span class="text-slate-400 text-sm">Кладбище</span>
+                                                            <span class="font-medium text-sm">
+                                                            
+                                                            <%= deceased.place_id %>
+                                                            
+                                                            </span>
+                                                        </li>
+                                                        <li class="flex justify-between items-center mt-2">
+                                                            <span class="text-slate-400 text-sm">Координаты</span>
+                                                            <span class="font-medium text-sm">
+                                                            
+                                                            <%= deceased.coordinate %>
+                                                            
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                    
+
+
+
+
+                                                <div class="flex">
+                                                    <div class="p-1 w-1/2">
+                                                        <a href="marshrut.html" 
+                                                        class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">
+                                                        Маршрут</a>
+                                                    </div>
+                                                    <div class="p-1 w-1/2">
+                                                        <a href="marshrut.html" 
+                                                        class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">
+                                                        На карте</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+            
+
+
+
+
+
+
+
+
+                                    <div class="hidden" id="thursday" role="tabpanel" aria-labelledby="thursday-tab">
+                                        <div class="grid grid-cols-1">
+                                            <div class="rounded-md shadow dark:shadow-gray-800 p-6">
+                                                <div class="grid md:grid-cols-5 grid-cols-2 justify-center mx-auto mt-8">
+
+
+                                                    <div class="group relative block overflow-hidden transition-all duration-500">
+                                                        <a href="static/images/deceased/1/2.jpg" class="lightbox transition-all duration-500 group-hover:scale-105 tobii-zoom" title="">
+                                                            
+                                                            
+                                                            <img src="<%= deceased.photo_link %>" 
+                                                            class="" 
+                                                            alt="">
+
+
+
+                                                        <div class="tobii-zoom__icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" 
+                                                        width="24" 
+                                                        height="24" 
+                                                        viewBox="0 0 24 24" 
+                                                        aria-hidden="true" 
+                                                        focusable="false">
+                                                        <path d="M21 16v5h-5"></path>
+                                                        <path d="M8 21H3v-5"></path><path d="M16 3h5v5"></path>
+                                                        <path d="M3 8V3h5"></path></svg></div></a>
+                                                    </div>
+                                                    
+
+                                                    
+
+
+
+
+                                                </div>
+                                            <br>
+
+                                                <div class="p-1 w-1/2">
+
+                                                    <a href="load_img.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">
+                                                    Загрузить еще</a>
+                                                    
+                                                </div>  
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="grid md:grid-cols-12 grid-cols-1 mt-10 gap-[30px]">
+                    <div class="lg:col-span-3 md:col-span-5">
+                        <div class="sticky top-20">
+                            <ul class="flex-column p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                                <li role="presentation">
+                                    <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full duration-500 text-white bg-indigo-600" id="description-tab" data-tabs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">История жизни</button>
+                                </li>
+                                <li role="presentation">
+                                    <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500 hover:text-indigo-600 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800" id="addinfo-tab" data-tabs-target="#addinfo" type="button" role="tab" aria-controls="addinfo" aria-selected="false">Подробная информация</button>
+                                </li>
+                                <li role="presentation">
+                                    <button class="px-4 py-2 text-start text-base font-semibold rounded-md w-full mt-3 duration-500 hover:text-indigo-600 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800" id="review-tab" data-tabs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Слова памяти</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+    
+                    <div class="lg:col-span-9 md:col-span-7">
+                        <div id="myTabContent" class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md">
+                            <div class="" 
+                            id="description" 
+                            role="tabpanel" 
+                            aria-labelledby="profile-tab">
+                               
+                                <p class="text-slate-400">
+
+                                <%= deceased.data %>
+
+                                </p>
+                            </div>
+    
+                            <div class="hidden" 
+                            id="addinfo" 
+                            role="tabpanel" 
+                            aria-labelledby="addinfo-tab">
+
+                                <table class="w-full text-start">
+                                    <tbody>
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4" style="width: 100px;">Имя</td>
+                                            <td class="text-slate-400 py-4">
+
+                                            <%= deceased.first_name %>
+                                           
+                                            
+                                            </td>
+                                        </tr>
+    
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4">Фамилия</td>
+                                            <td class="text-slate-400 py-4">
+
+                                            <%= deceased.last_name %>
+                                            
+                                            
+                                            </td>
+                                        </tr>
+    
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4">Отчество</td>
+                                            <td class="text-slate-400 py-4">
+
+                                            <%= deceased.middle_name %>
+                                            
+                                            
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4">Дата рождения</td>
+                                            <td class="text-slate-400 py-4">
+                                            
+                                            <%= deceased.birth_date %>
+                                            
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4">Дата смерти</td>
+                                            <td class="text-slate-400 py-4">
+
+                                            <%= deceased.death_date %>
+                                            
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4">Захоронение</td>
+                                            <td class="text-slate-400 py-4">
+
+                                            <%= deceased.place_id %>
+                                            
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-gray-700">
+                                            <td class="font-semibold py-4">Город </td>
+                                            <td class="text-slate-400 py-4">
+
+                                            <%= deceased.adress %>                                            
+                                            
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+    
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                <%# <!-- Start -->
+                <section class="relative md:py-24 py-16 overflow-hidden">
+                    <div class="container">
+                        <div class="grid grid-cols-1 pb-8 text-center">
+                            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Слова памяти!</h3>
+        
+                            <p class="text-slate-400 max-w-xl mx-auto">Если вы знали этого человека можете оставить слова памяти о нем!</p>
+                        </div><!--end grid-->
+                    </div><!--end container-->
+        
+                    <div class="container-fluid">
+                        <div class="grid grid-cols-1 mt-8">
+                            <div class="slider relative overflow-hidden m-auto mb-4 before:content-[''] before:absolute before:top-0 before:left-0 before:z-2 after:content-[''] after:absolute after:top-0 after:right-0 after:z-2">
+                                <div class="slide-track flex items-center">
+                                    <div class="slide h-auto md:w-[360px] w-72 m-2">
+
+
+
+                                        <ul class="space-y-4">
+                                            <li class="rounded-lg shadow dark:shadow-gray-800 p-6">
+                                                <div class="flex items-center pb-6 border-b border-gray-100 dark:border-gray-800">
+                                                    <img src="static/images/user/01.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
+                    
+                                                    <div class="pl-4">
+                                                        <a href="" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
+                                                        
+                                                        
+                                                        >Иванов Иван
+                                                        
+                                                        </a>
+                                                        <p class="text-slate-400">Пользователь</p>
+                                                    </div>
+                                                </div>
+                    
+                                                <div class="mt-6">
+                                                    <p class="text-slate-400">
+                                                    
+                                                    "Дорогой , ты всегда был в наших сердцах и теперь твоя память живет и в виртуальном мире. Ты оставил незабываемый след в нашей жизни.
+                                                    
+                                                    </p>
+                                                    
+                                                </div>
+                                            </li>
+                    
+                                            <li class="rounded-lg shadow dark:shadow-gray-800 p-6">
+                                                <div class="flex items-center pb-6 border-b border-gray-100 dark:border-gray-800">
+                                                    <img src="static/images/user/05.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
+                    
+                                                    <div class="pl-4">
+                                                        <a href="" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
+                                                        
+                                                        >Сидорова Анна
+                                                        
+                                                        </a>
+                                                        <p class="text-slate-400">Пользователь</p>
+                                                    </div>
+                                                </div>
+                    
+                                                <div class="mt-6">
+                                                    <p class="text-slate-400">
+                                                    
+                                                    "В память о нашем дорогом друге. Ты был с нами в радости и горе, и мы никогда не забудем твою улыбку и доброту"
+                                                    
+                                                    </p>
+                                                    
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+
+
+
+
+
+                                    </div>
+                                  </div>
+                            </div>
+                        </div><!--end grid-->
+                    </div><!--end container-->
+        
+        
+                    <div class="container md:mt-24 mt-16">
+                        <div class="grid grid-cols-1 pb-8 text-center">
+                            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Организации работающие в вашем городе</h3>
+        
+                            <p class="text-slate-400 max-w-xl mx-auto">Найдите организацию или услугу действующую в вашем районе</p>
+                        </div><!--end grid-->
+        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
+                            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden">
+
+
+
+
+
+                                <img src="static/images/service/service1.jpg" alt="">
+        
+                                <div class="content p-6">
+                                    <a href="service_all.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                                    
+                                    Памятники/Надгробия
+                                    
+                                    </a>
+                                    <p class="text-slate-400 mt-3"> 
+                                    
+                                    создание и установка монументов, сохраняющих память о ушедших и служащих в качестве места для вечной памяти
+                                    
+                                    </p>
+                                    
+                                    <div class="mt-4">
+                                        <a 
+                                        
+                                        href="service_all.html" 
+                                        
+                                        class="btn btn-link font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Подробнее <i class="uil uil-arrow-right"></i></a>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                        </div><!--end grid-->
+                    </div><!--end container-->
+                </section><!--end section-->
+                <!-- End -->
+        
+ %>
+
+
+
+
+
+
+
+
+<% include!("../footer.stpl"); %>
