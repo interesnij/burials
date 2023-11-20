@@ -13,15 +13,10 @@ pub struct Claims {
     pub exp: i64,
 }
 
-pub async fn gen_jwt (
-    id: i32,
-    secret: &String
-) -> Result<String, jsonwebtoken::errors::Error> {
-    let jwt_key = secret.clone();
-
+pub async fn gen_jwt (id: i32) -> Result<String, jsonwebtoken::errors::Error> {
     block(move || {
         let header = Header::default();
-        let encoding_key = EncodingKey::from_secret(jwt_key.as_bytes());
+        let encoding_key = EncodingKey::from_secret("MYSECRETKEY".as_bytes());
         let exp = Utc::now()
             + Duration::days (
                 env::var("COOKIE_MAX_AGE")

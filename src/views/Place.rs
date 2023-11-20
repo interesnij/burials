@@ -50,42 +50,6 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 
 }
 
-//-------------------------------------------------------------------------
-
-async fn get_request_user_id(req: &HttpRequest) -> Option<i32> { 
-    match Authorization::<Bearer>::parse(req) {
-        Ok(ok) => {
-            let token = ok.as_ref().token().to_string();
-            return match verify_jwt(token, "MYSECRETKEY").await {
-                Ok(ok) => ok.id,
-                Err(_) => None,
-            }
-        },
-        Err(_) => return None,
-    }
-}
-
-fn get_user(pk: i32) -> User {
-    use crate::schema::users::dsl::users;
-    let _connection = establish_connection();
-    return users
-        .filter(schema::users::id.eq(pk))
-        .first::<User>(&_connection)
-        .expect("E");
-}
-
-fn get_content_type<'a>(req: &'a HttpRequest) -> Option<&'a str> {
-    return req.headers().get("user-agent")?.to_str().ok();
-}
-pub fn is_desctop(req: &HttpRequest) -> bool {
-    if get_content_type(req).unwrap().contains("Mobile") {
-        return false;
-    };
-    return true;
-} 
-
-//-------------------------------------------------------------------------
-//Получение всех кладбищ одного города
 
 pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
