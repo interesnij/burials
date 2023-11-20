@@ -2,14 +2,15 @@ use actix_web::{
   HttpRequest,
   web::block,
   HttpResponse,
+  http::header::Header,
 };
 use std::{result::Result, env};
 use chrono::{Duration, Utc};
-use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
+//use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Validation};
 use serde::{Deserialize, Serialize};
 use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 use crate::models::User;
-
+ 
 
 pub fn is_authenticate(token: &String)-> bool {
     return web_local_storage_api::get_item(token).expect("E.").is_some();

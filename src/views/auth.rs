@@ -126,7 +126,7 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
         .first::<User>(&_connection)
         .expect("Error.");
 
-    if let Ok(matching) = bcrypt::verify(&item.password, password) {
+    if let Ok(matching) = bcrypt::verify(&item.password, &password) {
         if matching {
             return Ok(item);
         }
