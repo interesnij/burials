@@ -1,10 +1,10 @@
-pub mod deceaseds;
-pub mod geo;
-pub mod organizations;
-pub mod places;
-pub mod reviews;
-pub mod services;
-pub mod users;
+mod deceaseds;
+mod geo;
+mod organizations;
+mod places;
+mod reviews;
+mod services;
+mod users;
 
 pub use self::{
     deceaseds::*,
