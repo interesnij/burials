@@ -34,7 +34,7 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
   match Authorization::<Bearer>::parse(req) {
     Ok(ok) => {
       let token = ok.as_ref().token().to_string();
-      return match verify_jwt(token).await {
+      return match crate::utils::verify_jwt(token).await {
         Ok(ok) => Some(crate::utils::get_user(ok.id).expect("E.")),
         Err(_) => None,
       }

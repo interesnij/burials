@@ -36,10 +36,9 @@ pub async fn gen_jwt (id: i32) -> Result<String, jsonwebtoken::errors::Error> {
     .unwrap()
 }
 
-pub async fn verify_jwt(_token: String, _secret: &String)-> Result<Claims, u16>{
-    let jwt_key = _secret.clone();
+pub async fn verify_jwt(_token: String)-> Result<Claims, u16>{
     let claims = block(move || {
-        let decoding_key = DecodingKey::from_secret(jwt_key.as_bytes());
+        let decoding_key = DecodingKey::from_secret("MYSECRETKEY".as_bytes());
 
         decode::<Claims>(&_token, &decoding_key, &Validation::default())
     })
