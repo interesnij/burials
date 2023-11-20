@@ -126,7 +126,7 @@ fn find_user(data: LoginUser2) -> Result<User, AuthError> {
         .first::<User>(&_connection)
         .expect("Error.");
 
-    if let Ok(matching) = verify(&item.password, &data.password) {
+    if let Ok(matching) = jsonwebtoken::crypto::verify(&item.password, &data.password) {
         if matching {
             return Ok(item);
         }
@@ -141,7 +141,7 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
 
     match result {  
         Ok(_user) => { 
-            if verify(data.password.as_str(), _user.password.as_str()).unwrap() {
+            if jsonwebtoken::crypto::verify(data.password.as_str(), _user.password.as_str()).unwrap() {
                 let token = gen_jwt(_user.id, &"MY_SECRET".to_string()).await;
                 match token {
                     Ok(token_str) => {
@@ -234,8 +234,8 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
 pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     // Если пользователь не аноним, то отправляем его на страницу новостей
     if get_request_user(&req).await.is_some() {
-        HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
-    }
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    } 
     else { 
         let form = signup_form(payload.borrow_mut()).await;
         let _connection = establish_connection();
