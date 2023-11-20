@@ -25,7 +25,7 @@ pub struct Review {
 }
 
 // Структура для создания нового отзыва
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "reviews"]
 pub struct NewReview {
     pub service_id: i32,

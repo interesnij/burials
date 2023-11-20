@@ -27,7 +27,7 @@ pub struct Service {
 }
 
 // Структура NewService используется для создания новых объектов Service
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "services"]
 pub struct NewService {
     pub user_id:         i32,

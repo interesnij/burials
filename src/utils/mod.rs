@@ -29,6 +29,7 @@ use std::sync::{Arc, Mutex};
 use crate::models::{User, Deceased, Organization, Service, Place};
 
 
+#[derive(Debug, Deserialize, Serialize)]
 pub struct DataOrganizationsPlace {
     pub city_id:    Option<i32>,
     pub region_id:  Option<i32>,

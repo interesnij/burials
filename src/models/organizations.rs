@@ -31,7 +31,7 @@ pub struct Organization {
 }
 
 // Структура для создания новой организации
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "organizations"]
 pub struct NewOrganization {
     pub name:        String,                // Название организации
@@ -221,7 +221,7 @@ pub struct OrganizationsPlace {
 }
 
 // Структура для создания новой организации
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "organizations_places"]
 pub struct NewOrganizationsPlace {
     pub organization_id: i32,

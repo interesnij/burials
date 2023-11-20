@@ -22,7 +22,7 @@ pub struct Deceased {
     pub place_id:     i32,
     pub first_name:   String,
     pub middle_name:  Option<String>,
-    pub last_name:    String,
+    pub last_name:    String, 
     pub birth_date:   NaiveDate,
     pub death_date:   NaiveDate,
     pub image:        Option<String>,
@@ -33,7 +33,7 @@ pub struct Deceased {
 }
 
 // Структура для создания новых записей об усопших
-#[derive(Deserialize)]
+#[derive(Deserialize, Insertable)]
 #[table_name="deceaseds"]
 pub struct NewDeceased {
     pub user_id:      i32,
