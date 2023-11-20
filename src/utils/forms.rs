@@ -50,8 +50,8 @@ pub struct DeceasedForms {
     pub death_date:   NaiveDate,
     pub image:        Option<String>,
     pub memory_words: Option<String>
-    pub lat           f64,
-    pub lon           f64,
+    pub lat:          f64,
+    pub lon:          f64,
 }
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
@@ -143,8 +143,8 @@ pub struct PlaceForms {
     pub address:     Option<String>,
     pub director:    Option<String>,
     pub phone:       Option<String>,
-    pub lat          f64,
-    pub lon          f64,
+    pub lat:         f64,
+    pub lon:         f64,
 }
 // форма для элементов 
 pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> PlaceForms {
@@ -249,7 +249,7 @@ pub struct OrganizationForms {
     pub phone:       String,
     pub hours:       String,
     pub website:     Option<String>,
-    pub image:       Option<String>,
+    pub image:       Option<String>, 
     pub places:      Vec<DataOrganizationsPlace>
 }
 // форма для элементов 
@@ -315,8 +315,14 @@ pub async fn organization_form(payload: &mut Multipart, owner_id: i32) -> Organi
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
-                    form.places.push(s);
-                }
+                    form.places.push(DataOrganizationsPlace {
+                        city_id:    None,
+                        region_id:  None, 
+                        country_id: None,
+                        lat:        None,
+                        lon:        None, 
+                    });
+                } 
             }
         }
     }
@@ -420,7 +426,7 @@ pub async fn files_form(payload: &mut Multipart) -> FilesForm {
         if field.name() == "files[]" {
             let _new_path = field.content_disposition().get_filename().unwrap();
             if _new_path != "" {
-                let file = UploadedFiles::new(_new_path.to_string(), owner_id);
+                let file = UploadedFiles::new(_new_path.to_string());
                 let file_path = file.path.clone();
                 let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
                     .await
