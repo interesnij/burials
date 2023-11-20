@@ -119,7 +119,7 @@ pub fn get_user(pk: i32) -> Result<User, Error> {
 pub fn get_organization(pk: i32) -> Result<Organization, Error> {
     use crate::schema::organizations::dsl::organizations;
     let _connection = establish_connection();
-    return Ok(usorganizationsers
+    return Ok(organizations
         .filter(schema::organizations::id.eq(pk))
         .first::<Organization>(&_connection)?);
 }

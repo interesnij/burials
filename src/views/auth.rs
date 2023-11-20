@@ -144,14 +144,15 @@ fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
         Ok(_user) => { 
             if verify(data.password.as_str(), _user.password.as_str()).unwrap() {
                 let token = gen_jwt(_user.id, &"MY_SECRET".to_string());
-            } 
-            match token {
-                Ok(token_str) => {
-                    crate::utils::set_token(&token_str, &_user.id.to_string());
-                    1
-                },
-                Err(err) => 0,
+                match token {
+                    Ok(token_str) => {
+                        crate::utils::set_token(&token_str, &_user.id.to_string());
+                        1
+                    },
+                    Err(err) => 0,
+                }
             }
+            0
         },
         Err(err) => 0,
     }

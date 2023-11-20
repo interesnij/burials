@@ -1,5 +1,5 @@
 use crate::schema;
-use crate::schema::organizations;
+use crate::schema::{organizations, organizations_places};
 use diesel::{
     Queryable,
     Insertable,
@@ -78,7 +78,7 @@ impl Organization {
                 .expect("Error.");
 
             for i in places.into_iter() {
-                OrganizationsPlace.create (
+                OrganizationsPlace::create (
                     _new.id, 
                     i.city_id, 
                     i.region_id,
@@ -93,6 +93,7 @@ impl Organization {
     }
     pub fn edit (
         user_id:     i32,
+        object_id:   i32,
         name:        String,
         description: String,
         director:    String,
@@ -110,24 +111,24 @@ impl Organization {
         if _user.perm > 10 {
 
             diesel::update(&_organization)
-                .set((
-                    schema::organizations::first_name.eq(first_name.clone()),
-                    schema::organizations::middle_name.eq(middle_name.clone()),
-                    schema::organizations::last_name.eq(last_name.clone()),
-                    schema::organizations::birth_date.eq(birth_date.clone()),
-                    schema::organizations::death_date.eq(death_date.clone()),
-                    schema::organizations::image.eq(image.clone()),
-                    schema::organizations::memory_words.eq(memory_words.clone()),
+                .set(( 
+                    schema::organizations::name.eq(name),
+                    schema::organizations::description.eq(description),
+                    schema::organizations::director.eq(director),
+                    schema::organizations::phone.eq(phone),
+                    schema::organizations::hours.eq(hours),
+                    schema::organizations::hours.eq(website),
+                    schema::organizations::image.eq(image),
                 ))
                 .execute(&_connection)
                 .expect("Error.");
 
-            diesel::delete(organizations_places.filter(schema::organizations_places::organization_id.eq(_organization.id)))
+            diesel::delete(schema::organizations_places::table.filter(schema::organizations_places::organization_id.eq(_organization.id)))
                 .execute(&_connection)
                 .expect("E");
 
             for i in places.into_iter() {
-                OrganizationsPlace.create (
+                OrganizationsPlace::create (
                     _organization.id, 
                     i.city_id, 
                     i.region_id,
@@ -234,16 +235,17 @@ pub struct NewOrganizationsPlace {
 
 impl OrganizationsPlace {
     pub fn create (
-        _organization_id: i32, 
-        city_id:          Option<i32>, 
-        region_id:        Option<i32>,
-        country_id:       Option<i32>, 
-        lat:              Option<f64>,
-        lon:              Option<f64>,
+        organization_id: i32, 
+        city_id:         Option<i32>, 
+        region_id:       Option<i32>,
+        country_id:      Option<i32>, 
+        lat:             Option<f64>,
+        lon:             Option<f64>,
     ) -> i16 {
         if city_id.is_none() || country_id.is_none() {
             return 0;
         }
+        let _connection = establish_connection();
         let new_form = NewOrganizationsPlace {
             organization_id: organization_id,
             city_id:         city_id.unwrap(),
