@@ -69,7 +69,7 @@ impl Organization {
                 phone:       phone,
                 hours:       hours,
                 website:     website,
-                image        image,
+                image:       image,
                 user_id:     user_id,
             };
             let _new = diesel::insert_into(schema::organizations::table)

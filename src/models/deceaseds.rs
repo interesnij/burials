@@ -27,8 +27,8 @@ pub struct Deceased {
     pub death_date:   NaiveDate,
     pub image:        Option<String>,
     pub memory_words: Option<String>,
-    pub lat           f64,
-    pub lon           f64,
+    pub lat:          f64,
+    pub lon:          f64,
 
 }
 
@@ -45,8 +45,8 @@ pub struct NewDeceased {
     pub death_date:   NaiveDate,
     pub image:        Option<String>,
     pub memory_words: Option<String>,
-    pub lat           f64,
-    pub lon           f64,
+    pub lat:          f64,
+    pub lon:          f64,
 }
 
 impl Deceased {
