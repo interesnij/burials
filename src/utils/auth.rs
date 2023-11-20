@@ -64,7 +64,7 @@ pub async fn gen_jwt (
 
 pub async fn verify_jwt(_token: String)-> Result<Claims, u16>{
     let claims = block(move || {
-        let decoding_key = DecodingKey::from_secret("MY_SECRET");
+        let decoding_key = DecodingKey::from_secret(b"MY_SECRET");
         decode::<Claims>(&_token, &decoding_key, &Validation::default())
     })
     .await

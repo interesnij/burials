@@ -25,6 +25,7 @@ use crate::errors::AuthError;
 use actix_multipart::{Field, Multipart};
 use sailfish::TemplateOnce;
 use std::borrow::BorrowMut;
+use actix_web::http::header::Header;
 
 
 pub fn auth_routes(config: &mut web::ServiceConfig) {
@@ -41,7 +42,7 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
 
 
 pub async fn signup_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    if get_request_user.await.is_some(&req) {
+    if get_request_user(&req).await.is_some() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
@@ -75,7 +76,7 @@ pub async fn signup_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     }
 }
 pub async fn login_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    if get_request_user.await.is_some(&req) {
+    if get_request_user(&req).await.is_some() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {

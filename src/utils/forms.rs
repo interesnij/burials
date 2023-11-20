@@ -156,7 +156,7 @@ pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> PlaceForms {
         description: None,
         hours:       None,
         image:       None,
-        address:     "".to_string(),
+        address:     None,
         director:    None,
         phone:       None,
         lat:         0.0,
@@ -377,8 +377,8 @@ pub async fn service_form(payload: &mut Multipart, owner_id: i32) -> ServiceForm
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.region_id = _int;
+                    let _int: i32 = s.parse().unwrap();
+                    form.price = _int;
                 }
             }
         }
