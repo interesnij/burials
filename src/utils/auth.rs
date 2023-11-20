@@ -6,11 +6,10 @@ use actix_web::{
 };
 use std::{result::Result, env};
 use chrono::{Duration, Utc};
-//use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Validation};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Validation};
 use serde::{Deserialize, Serialize};
 use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 use crate::models::User;
- 
 
 pub fn is_authenticate(token: &String)-> bool {
     return web_local_storage_api::get_item(token).expect("E.").is_some();
@@ -31,12 +30,6 @@ pub async fn remove_token(req: &HttpRequest) -> i16 {
       Err(_) => 0,
     }
   }
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Claims {
-    pub id: i32,
-    pub exp: i64,
-}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Claims {
