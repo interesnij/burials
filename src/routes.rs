@@ -4,7 +4,7 @@ use crate::views::{
     auth,
     deceased,
     //organization,
-    //page,
+    page,
     //place,
     //progs,
     //service,
@@ -16,7 +16,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(auth::auth_routes)
     .configure(deceased::deceased_routes)
     //.configure(organization::organization_routes)
-    //.configure(page::page_routes)
+    .configure(page::page_routes)
     //.configure(place::place_routes)
     //.configure(progs::progs_routes)
     //.configure(service::service_routes)

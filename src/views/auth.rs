@@ -114,8 +114,8 @@ pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        crate::utils::remove_token();
-        crate::viwes::index_page(req).await;
+        crate::utils::remove_token(&req);
+        crate::viwes::index_page(req).await
     }
 }
 
@@ -193,7 +193,7 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> impl Responder {
         println!("{:?}", form.username.clone());
         println!("{:?}", form.password.clone());
         handle_sign_in(form, &req);
-        crate::viwes::index_page(req).await;
+        crate::viwes::index_page(req).await
     }
 }
 
@@ -259,6 +259,6 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> impl Re
             .expect("Error saving user.");
 
         //set_current_user(&_user);
-        HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
+        crate::viwes::index_page(req).await
     }
 }
