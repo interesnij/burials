@@ -73,13 +73,12 @@ CREATE INDEX cities_region_idx ON cities (region_id);
 --______________________________________________________________________________________
 
 -- Создание таблицы "organizations" для хранения данных об организации
-CREATE TABLE organizations (
+CREATE TABLE organizations ( 
     id          SERIAL PRIMARY KEY,     -- Уникальный идентификатор организации
     name        VARCHAR(100) NOT NULL,  -- Название организации
     description VARCHAR(500) NOT NULL,  -- Описание организации
     director    VARCHAR(255) NOT NULL,  -- Руководитель организации
     phone       VARCHAR(15) NOT NULL,   -- Номер телефона организации
-    place_id    INT NOT NULL,           -- Идентификатор места организации
     hours       VARCHAR(100) NOT NULL,  -- Время работы организации
     website     VARCHAR(100),           -- Веб-сайт организации (может быть пустым)
     image       VARCHAR(100),           -- Ссылка на фотографию организации (может быть пустой)
