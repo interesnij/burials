@@ -17,7 +17,7 @@ use crate::schema::places;
 // Структура для таблицы Places 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Place {
-    pub id:          i32,
+    pub id:          i32, 
     pub user_id:     i32,
     pub city_id:     i32,
     pub region_id:   Option<i32>,
@@ -27,7 +27,7 @@ pub struct Place {
     pub hours:       Option<String>,
     pub image:       Option<String>,
     pub address:     Option<String>,
-    pub count:       i32,
+    pub count:       i16,
     pub director:    Option<String>,
     pub phone:       Option<String>,
     pub lat:         f64,
@@ -47,7 +47,7 @@ pub struct NewPlace {
     pub hours:       Option<String>,
     pub image:       Option<String>,
     pub address:     Option<String>,
-    pub count:       i32,
+    pub count:       i16,
     pub director:    Option<String>,
     pub phone:       Option<String>,
     pub lat:         f64,
@@ -56,14 +56,14 @@ pub struct NewPlace {
 
 // Реализация методов для структуры Place
 impl Place {
-    pub fn plus(&self, count: i32) -> () {
+    pub fn plus(&self, count: i16) -> () {
         let _connection = establish_connection();
         diesel::update(&self)
             .set(schema::places::count.eq(self.count + count))
             .execute(&_connection)
             .expect("Error."),
     }
-    pub fn minus(&self, count: i32) -> () {
+    pub fn minus(&self, count: i16) -> () {
         let _connection = establish_connection();
         if self.count > 0 {
             diesel::update(&self)

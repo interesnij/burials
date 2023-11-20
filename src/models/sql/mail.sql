@@ -16,8 +16,8 @@ CREATE TABLE deceaseds (
     user_id       INT NOT NULL,
     place_id      INT NOT NULL,           -- Идентификатор места
     first_name    VARCHAR(100) NOT NULL,  -- Имя усопшего (обязательное поле)
-    last_name     VARCHAR(100) NOT NULL,  -- Фамилия усопшего (обязательное поле)
     middle_name   VARCHAR(100),           -- Отчество усопшего
+    last_name     VARCHAR(100) NOT NULL,  -- Фамилия усопшего (обязательное поле)
     birth_date    DATE NOT NULL,     -- Дата рождения (обязательное поле)
     death_date    DATE NOT NULL,     -- Дата смерти (обязательное поле)
     image         VARCHAR(100),           -- Ссылка на фотографию усопшего
