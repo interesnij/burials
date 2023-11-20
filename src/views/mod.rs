@@ -1,5 +1,5 @@
 pub mod auth;
-pub mod deceased;
+pub mod deceaseds;
 //pub mod organization;
 pub mod page;
 //pub mod place;
@@ -10,7 +10,7 @@ pub mod page;
 
 pub use self::{
     auth::*,
-    deceased::*,
+    deceaseds::*,
     //organization::*,
     page::*,
     //place::*,

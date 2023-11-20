@@ -2,7 +2,7 @@ use actix_web::web;
 
 use crate::views::{
     auth,
-    deceased,
+    deceaseds,
     //organization,
     page,
     //place,
@@ -14,7 +14,7 @@ use crate::views::{
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg
     .configure(auth::auth_routes)
-    .configure(deceased::deceased_routes)
+    .configure(deceaseds::deceased_routes)
     //.configure(organization::organization_routes)
     .configure(page::page_routes)
     //.configure(place::place_routes)
