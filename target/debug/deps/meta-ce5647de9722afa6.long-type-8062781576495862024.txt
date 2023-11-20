@@ -1,0 +1,1 @@
+for<'a> fn(&'a HttpRequest) -> impl futures::Future<Output = std::option::Option<models::users::User>> {utils::auth::get_request_user}
