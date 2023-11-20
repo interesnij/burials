@@ -119,14 +119,14 @@ pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     }
 }
 
-fn find_user(data: LoginUser2) -> Result<User, AuthError> {
+fn find_user(username: String, password: String) -> Result<User, AuthError> {
     let _connection = establish_connection();
     let item = schema::users::table
-        .filter(schema::users::username.eq(&data.username))
+        .filter(schema::users::username.eq(username))
         .first::<User>(&_connection)
         .expect("Error.");
 
-    if let Ok(matching) = bcrypt::verify(&item.password, &data.password) {
+    if let Ok(matching) = bcrypt::verify(&item.password, password) {
         if matching {
             return Ok(item);
         }
@@ -137,7 +137,7 @@ fn find_user(data: LoginUser2) -> Result<User, AuthError> {
 
 async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     let _connection = establish_connection();
-    let result = find_user(data.clone());
+    let result = find_user(data.username.clone(), data.password.clone());
 
     match result {  
         Ok(_user) => {  
