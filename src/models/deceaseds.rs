@@ -12,6 +12,8 @@ use chrono::NaiveDate;
 use crate::utils::{
     establish_connection,
 };
+use crate::schema::deceaseds;
+use serde::{Serialize, Deserialize};
 
 
 // Структура для хранения данных об усопшем

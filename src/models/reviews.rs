@@ -13,7 +13,8 @@ use crate::utils::{
     establish_connection,
 };
 use crate::schema::reviews;
- 
+use serde::{Serialize, Deserialize};
+
 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Review {

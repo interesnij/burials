@@ -12,6 +12,7 @@ use crate::schema::services;
 use crate::utils::{
     establish_connection,
 };
+use serde::{Serialize, Deserialize};
 
 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]

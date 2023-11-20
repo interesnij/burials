@@ -116,7 +116,7 @@ pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     }
     else {
         crate::utils::remove_token(&req);
-        crate::viwes::index_page(req).await
+        crate::views::index_page(req).await
     }
 }
 
@@ -136,18 +136,18 @@ fn find_user(data: LoginUser2) -> Result<User, AuthError> {
     Err(AuthError::NotFound(String::from("User not found")))
 }
 
-fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
+async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     let _connection = establish_connection();
     let result = find_user(data);
 
     match result {  
         Ok(_user) => { 
             if verify(data.password.as_str(), _user.password.as_str()).unwrap() {
-                let token = gen_jwt(_user.id, &"MY_SECRET".to_string());
+                let token = gen_jwt(_user.id, &"MY_SECRET".to_string()).await;
                 match token {
                     Ok(token_str) => {
                         crate::utils::set_token(&token_str, &_user.id.to_string());
-                        1
+                        return 1;
                     },
                     Err(err) => 0,
                 }
@@ -194,8 +194,8 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> impl Responder {
         let form = login_form(payload.borrow_mut()).await;
         println!("{:?}", form.username.clone());
         println!("{:?}", form.password.clone());
-        handle_sign_in(form, &req);
-        crate::viwes::index_page(req).await
+        handle_sign_in(form, &req).await;
+        crate::views::index_page(req).await
     }
 }
 
@@ -261,6 +261,6 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> impl Re
             .expect("Error saving user.");
 
         //set_current_user(&_user);
-        crate::viwes::index_page(req).await
+        crate::views::index_page(req).await
     }
 }

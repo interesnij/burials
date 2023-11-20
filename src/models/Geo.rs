@@ -10,6 +10,7 @@ use crate::schema::{
 use crate::utils::{
     establish_connection,
 };
+use serde::{Serialize, Deserialize};
 
 
 #[derive(Queryable, Serialize, Deserialize, Identifiable)]

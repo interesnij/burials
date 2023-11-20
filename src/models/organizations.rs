@@ -85,7 +85,7 @@ impl Organization {
                     i.country_id, 
                     i.lat,
                     i.lon,
-                )
+                );
             }
         }
 
@@ -117,8 +117,8 @@ impl Organization {
                     schema::organizations::director.eq(director),
                     schema::organizations::phone.eq(phone),
                     schema::organizations::hours.eq(hours),
-                    schema::organizations::hours.eq(website),
-                    schema::organizations::image.eq(image),
+                    schema::organizations::website.eq(website.nullable()),
+                    schema::organizations::image.eq(image.nullable()),
                 ))
                 .execute(&_connection)
                 .expect("Error.");
@@ -135,7 +135,7 @@ impl Organization {
                     i.country_id, 
                     i.lat,
                     i.lon,
-                )
+                );
             }
         }
         return 1;

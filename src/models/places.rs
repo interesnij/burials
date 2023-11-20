@@ -12,6 +12,7 @@ use crate::utils::{
     establish_connection,
 };
 use crate::schema::places;
+use serde::{Serialize, Deserialize};
 
 
 // Структура для таблицы Places 
