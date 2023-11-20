@@ -8,7 +8,7 @@ CREATE TABLE users (
     description TEXT,
     image       VARCHAR(100),
     perm        SMALLINT NOT NULL
-);
+); 
 
 -- Создание таблицы для хранения существующих записей об усопших
 CREATE TABLE deceaseds (

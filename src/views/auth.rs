@@ -241,12 +241,12 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> impl Re
     else { 
         let form = signup_form(payload.borrow_mut()).await;
         let _connection = establish_connection();
-        let _password = hash(form.password, 8).unwrap();
+        let _password = bcrypt::hash(form.password, 8).unwrap();
         let form_user = NewUser {
             username: form.username.clone(),
             email:    form.email.clone(),
             password: _password.clone(),
-            bio:      None,
+            description:      None,
             image:    None,
             perm:     1,
         }; 

@@ -115,7 +115,7 @@ impl Review {
         let _connection = establish_connection();
         return reviews
             .filter(schema::reviews::service_id.eq(service_id))
-            .filter(schema::reviews::content.ilike(&content))
+            .filter(schema::reviews::content.ilike(&q))
             .order(schema::reviews::created.desc())
             .limit(limit)
             .offset(offset)

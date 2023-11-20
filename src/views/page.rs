@@ -32,7 +32,7 @@ pub fn page_routes(config: &mut web::ServiceConfig) {
 }
 
 pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -69,12 +69,8 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/anon_mainpage.stpl")]
-            struct Template {
-                request_user:   User,
-            }
-            let body = Template {
-                request_user:   _request_user,
-            }
+            struct Template {}
+            let body = Template {}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -82,12 +78,8 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         else {
             #[derive(TemplateOnce)]
             #[template(path = "mobile/main/anon_mainpage.stpl")]
-            struct Template {
-                request_user:   User,
-            }
-            let body = Template {
-                request_user:   _request_user,
-            }
+            struct Template {}
+            let body = Template {}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -97,7 +89,7 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
 
 pub async fn info_1_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -134,12 +126,8 @@ pub async fn info_1_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Re
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/anon_info_1.stpl")]
-            struct Template {
-                request_user:   User,
-            }
-            let body = Template {
-                request_user:   _request_user,
-            }
+            struct Template {}
+            let body = Template {}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -147,12 +135,8 @@ pub async fn info_1_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Re
         else {
             #[derive(TemplateOnce)]
             #[template(path = "mobile/main/anon_info_1.stpl")]
-            struct Template {
-                request_user:   User,
-            }
-            let body = Template {
-                request_user:   _request_user,
-            }
+            struct Template {}
+            let body = Template {}
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))

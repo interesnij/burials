@@ -12,7 +12,7 @@ use actix_web::{
     error::InternalError,
     http::StatusCode,
 };
-
+use crate::errors::Error;
 use crate::schema;
 use serde::{Deserialize, Serialize};
 use crate::diesel::{

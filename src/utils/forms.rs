@@ -95,7 +95,7 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: f64 = s.parse().unwrap();
-                    form.lat = Some(_int);
+                    form.lat = _int;
                 }
             }
         }
@@ -104,7 +104,7 @@ pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedFo
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: f64 = s.parse().unwrap();
-                    form.lon = Some(_int);
+                    form.lon = _int;
                 }
             }
         }

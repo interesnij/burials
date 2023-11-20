@@ -19,7 +19,7 @@ pub struct User {
     pub username: String,
     pub email:    String,
     pub password: String,
-    pub bio:      Option<String>,
+    pub description: Option<String>,
     pub image:    Option<String>,
     pub perm:     i16,
 }
@@ -43,7 +43,7 @@ pub struct NewUser {
     pub username: String,
     pub email:    String,
     pub password: String,
-    pub bio:      Option<String>,
+    pub description:      Option<String>,
     pub image:    Option<String>,
     pub perm:     i16,
 }
