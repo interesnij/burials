@@ -126,7 +126,7 @@ fn find_user(data: LoginUser2) -> Result<User, AuthError> {
         .first::<User>(&_connection)
         .expect("Error.");
 
-    if let Ok(matching) = jsonwebtoken::crypto::verify(&item.password, &data.password) {
+    if let Ok(matching) = bcrypt::verify(&item.password, &data.password) {
         if matching {
             return Ok(item);
         }
@@ -140,8 +140,8 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     let result = find_user(data);
 
     match result {  
-        Ok(_user) => { 
-            if jsonwebtoken::crypto::verify(data.password.as_str(), _user.password.as_str()).unwrap() {
+        Ok(_user) => {  
+            if bcrypt::verify(data.password.as_str(), _user.password.as_str()).unwrap() {
                 let token = gen_jwt(_user.id, &"MY_SECRET".to_string()).await;
                 match token {
                     Ok(token_str) => {
@@ -239,7 +239,7 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
     else { 
         let form = signup_form(payload.borrow_mut()).await;
         let _connection = establish_connection();
-        let _password = bcrypt::hash(form.password, 8).unwrap();
+        let _password = bcrypt::hash(form.password.clone(), 8).unwrap();
         let form_user = NewUser {
             username: form.username.clone(),
             email:    form.email.clone(),
