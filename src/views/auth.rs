@@ -24,6 +24,7 @@ use crate::models::{User, NewUser};
 use crate::errors::AuthError;
 use actix_multipart::{Field, Multipart};
 use sailfish::TemplateOnce;
+use std::borrow::BorrowMut;
 
 
 pub fn auth_routes(config: &mut web::ServiceConfig) {
@@ -40,7 +41,7 @@ pub fn auth_routes(config: &mut web::ServiceConfig) {
 
 
 pub async fn signup_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    if get_request_user.is_some(&req) {
+    if get_request_user.await.is_some(&req) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
@@ -74,7 +75,7 @@ pub async fn signup_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     }
 }
 pub async fn login_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    if get_request_user.is_some(&req) {
+    if get_request_user.await.is_some(&req) {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
@@ -109,7 +110,7 @@ pub async fn login_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 }
 
 pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
-    if get_request_user(&req).is_none() {
+    if get_request_user(&req).await.is_none() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
@@ -184,7 +185,7 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
 }
 
 pub async fn login(mut payload: Multipart, req: HttpRequest) -> impl Responder {
-    if get_request_user(&req).is_some() {
+    if get_request_user(&req).await.is_some() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
@@ -233,13 +234,13 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> impl Re
     use crate::utils::hash_password; 
 
     // Если пользователь не аноним, то отправляем его на страницу новостей
-    if get_request_user(&req).is_some() {
+    if get_request_user(&req).await.is_some() {
         HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")
     }
     else { 
         let form = signup_form(payload.borrow_mut()).await;
         let _connection = establish_connection();
-        let _password = hash(form.password.as_deref().unwrap(), 8).unwrap();
+        let _password = hash(form.password, 8).unwrap();
         let form_user = NewUser {
             username: form.username.clone(),
             email:    form.email.clone(),

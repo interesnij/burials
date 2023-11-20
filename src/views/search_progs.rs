@@ -37,8 +37,8 @@ pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::R
 
         let _connection = establish_connection();
 
-        if get_request_user(&req).is_some() {
-            let _request_user = get_request_user(&req).unwrap();
+        if get_request_user(&req).await.is_some() {
+            let _request_user = get_request_user(&req).await.unwrap();
             let is_admin = _request_user.is_superuser();
 
             let deceased_list = Deceased::search_deceased(&_q_standalone, 3, 0, is_admin);
@@ -258,8 +258,8 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
             next_item = 21;
         }
 
-        if get_request_user(&req).is_some() {
-            let _request_user = get_request_user(&req).unwrap();
+        if get_request_user(&req).await.is_some() {
+            let _request_user = get_request_user(&req).await.unwrap();
             let is_admin = _request_user.is_superuser();
             let city_list = City::search_city(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -401,8 +401,8 @@ pub async fn search_place_page(req: HttpRequest, q: web::Path<String>) -> actix_
             next_item = 21;
         }
 
-        if get_request_user(&req).is_some() {
-            let _request_user = get_request_user(&req).unwrap();
+        if get_request_user(&req).await.is_some() {
+            let _request_user = get_request_user(&req).await.unwrap();
             let is_admin = _request_user.is_superuser();
             let place_list = Place::search_place(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -544,8 +544,8 @@ pub async fn search_organization_page(req: HttpRequest, q: web::Path<String>) ->
             next_item = 21;
         }
 
-        if get_request_user(&req).is_some() {
-            let _request_user = get_request_user(&req).unwrap();
+        if get_request_user(&req).await.is_some() {
+            let _request_user = get_request_user(&req).await.unwrap();
             let is_admin = _request_user.is_superuser();
             let organization_list = Organization::search_organization(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -688,8 +688,8 @@ pub async fn search_service_page(req: HttpRequest, q: web::Path<String>) -> acti
             next_item = 21;
         }
 
-        if get_request_user(&req).is_some() {
-            let _request_user = get_request_user(&req).unwrap();
+        if get_request_user(&req).await.is_some() {
+            let _request_user = get_request_user(&req).await.unwrap();
             let is_admin = _request_user.is_superuser();
             let service_list = Service::search_service(&_q_standalone, 20, offset.into(), is_admin);
 
@@ -831,8 +831,8 @@ pub async fn search_deceased_page(req: HttpRequest, q: web::Path<String>) -> act
             next_item = 21;
         }
 
-        if get_request_user(&req).is_some() {
-            let _request_user = get_request_user(&req).unwrap();
+        if get_request_user(&req).await.is_some() {
+            let _request_user = get_request_user(&req).await.unwrap();
 
             let is_admin = _request_user.is_superuser();
             let deceased_list = Deceased::search_deceased(&_q_standalone, 20, offset.into(), is_admin);

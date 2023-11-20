@@ -53,7 +53,7 @@ pub async fn all_organization_place_page(req: HttpRequest, _id: web::Path<i32>) 
     let is_desctop = is_desctop(&req);
     let _place = block(move || Place::find_by_id(*_id)).await?;
     let _organization = block(move || Organization::get_all_organization()).await?;
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -134,7 +134,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
     let is_desctop = is_desctop(&req);
     let _city = block(move || City::find_by_id(*_id)).await?;
     let _organization = block(move || Organization::get_all_organization()).await?;
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -215,7 +215,7 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
     let is_desctop = is_desctop(&req);
     let _region = block(move || Region::find_by_id(*_id)).await?;
     let _organization = block(move || Organization::get_all_organization()).await?;
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -296,7 +296,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
     let is_desctop = is_desctop(&req);
     let _countries = block(move || Countries::find_by_id(*_id)).await?;
     let _organization = block(move || Organization::get_all_organization()).await?;
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -377,7 +377,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
 pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
     let _organization = block(move || Organization::find_by_id(*_id)).await?;
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -448,7 +448,7 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
 //-------------------------------------------------------------------------
 
 pub async fn create_organization_page(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if _request_user.is_admin() {
@@ -460,7 +460,7 @@ pub async fn create_organization_page(req: HttpRequest, mut payload: Multipart) 
 }
 
 pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _organization = block(move || Organization::find_by_id(*_id)).await?; 
@@ -472,7 +472,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> im
     HttpResponse::Ok()
 }
 pub async fn delete_organization_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _organization = block(move || Organization::find_by_id(*_id)).await?; 

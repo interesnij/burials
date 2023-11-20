@@ -49,7 +49,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
 
     let _place = get_place(*_id).expect("E.");
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     let page = crate::utils::get_page(&req);
     let count = Deceased::count(*_id);
 
@@ -160,7 +160,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
 pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -235,7 +235,7 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
 pub async fn create_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _place = crate::utils::get_place(*_id).expect("E.");
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
@@ -285,7 +285,7 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
     let _place = crate::utils::get_place(_deceased.place_id).expect("E.");
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
@@ -336,7 +336,7 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
 }
 
 pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
-    let _user = get_request_user(&req);
+    let _user = get_request_user(&req).await;
     if _user.is_some() {
         let _request_user = _user.unwrap();
         if _request_user.is_admin() {
@@ -359,7 +359,7 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web:
 }
 
 pub async fn edit_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _deceased = crate::utils::get_deceased(*_id).expect("E."); 
@@ -382,7 +382,7 @@ pub async fn edit_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Respon
     HttpResponse::Ok()
 }
 pub async fn delete_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _deceased = crate::utils::get_deceased(*_id).expect("E.");

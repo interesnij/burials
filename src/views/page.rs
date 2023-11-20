@@ -33,7 +33,7 @@ pub fn page_routes(config: &mut web::ServiceConfig) {
 
 pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {
@@ -98,7 +98,7 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
 pub async fn info_1_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
-    let user_id = get_request_user(&req);
+    let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {

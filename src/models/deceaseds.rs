@@ -70,7 +70,6 @@ impl Deceased {
         let new_form = NewDeceased {
             user_id:       user_id,
             place_id:      place_id,
-            user_id:       user_id,
             first_name:    first_name,
             middle_name:   middle_name,
             last_name:     last_name,
