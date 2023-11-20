@@ -35,7 +35,7 @@ pub struct Place {
 }
 
 // Структура для создания новой записи Place
-#[derive(Insertable, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 #[table_name = "places"]
 pub struct NewPlace {
     pub user_id:     i32,

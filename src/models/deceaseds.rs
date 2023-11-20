@@ -33,7 +33,7 @@ pub struct Deceased {
 }
 
 // Структура для создания новых записей об усопших
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize)]
 #[table_name="deceaseds"]
 pub struct NewDeceased {
     pub user_id:      i32,

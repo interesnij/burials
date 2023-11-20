@@ -25,7 +25,7 @@ pub struct Countrie {
     pub lon:          Option<f64>,
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize)]
 #[table_name="countries"]
 pub struct NewCountrie { 
     pub name:         String,
@@ -50,7 +50,7 @@ pub struct Region {
     pub lon:         Option<f64>, 
 }
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize)]
 #[table_name="regions"]
 pub struct NewRegion { 
     pub name:        String,
@@ -74,7 +74,7 @@ pub struct Citie {
     pub lon:        Option<f64>,
 } 
 
-#[derive(Deserialize, Insertable)]
+#[derive(Deserialize)]
 #[table_name="cities"]
 pub struct NewCitie { 
     pub name:       String,

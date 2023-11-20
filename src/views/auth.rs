@@ -141,7 +141,7 @@ fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     match result {  
         Ok(_user) => { 
             if verify(data.password.as_str(), _user.password.as_str()).unwrap() {
-                let token = gen_jwt(_user.id, "MY_SECRET").await;
+                let token = gen_jwt(_user.id, "MY_SECRET");
             } 
             match token {
                 Ok(token_str) => {
