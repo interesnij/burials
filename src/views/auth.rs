@@ -142,7 +142,7 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
     match result {  
         Ok(_user) => {  
             if bcrypt::verify(data.password.as_str(), _user.password.as_str()).unwrap() {
-                let token = gen_jwt(_user.id, &"MY_SECRET".to_string()).await;
+                let token = gen_jwt(_user.id).await;
                 match token {
                     Ok(token_str) => {
                         crate::utils::set_token(&token_str, &_user.id.to_string());

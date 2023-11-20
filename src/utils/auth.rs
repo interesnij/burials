@@ -38,6 +38,12 @@ pub struct Claims {
     pub exp: i64,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Claims {
+    pub id: i32,
+    pub exp: i64,
+}
+
 pub async fn gen_jwt (
     id: i32,
     secret: &String
