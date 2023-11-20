@@ -21,7 +21,7 @@ use crate::utils::{
 pub struct Organization {
     pub id:          i32,                     // Уникальный идентификатор организации
     pub name:        String,                // Название организации
-    pub description: Option<String>,         // Описание организации
+    pub description: String,          // Описание организации
     pub director:    String,            // Руководитель организации
     pub phone:       String,        // Номер телефона организации
     pub hours:       String,       // Время работы организации
@@ -35,7 +35,7 @@ pub struct Organization {
 #[table_name = "organizations"]
 pub struct NewOrganization {
     pub name:        String,                // Название организации
-    pub description: Option<String>,         // Описание организации
+    pub description: String,         // Описание организации
     pub director:    String,            // Руководитель организации
     pub phone:       String,        // Номер телефона организации
     pub hours:       String,       // Время работы организации
@@ -49,7 +49,7 @@ impl Organization {
     pub fn create (
         user_id:     i32,
         name:        String,
-        description: Option<String>,
+        description: String,
         director:    String,
         phone:       String,
         hours:       String, 
@@ -94,7 +94,7 @@ impl Organization {
     pub fn edit (
         user_id:     i32,
         name:        String,
-        description: Option<String>,
+        description: String,
         director:    String,
         phone:       String,
         hours:       String,
@@ -195,7 +195,7 @@ impl Organization {
             .load::<Organization>(&_connection)
             .expect("E.");
     }
-    pub fn count_all() -> Vec<Organization> {
+    pub fn count_all() -> usize {
         use crate::schema::organizations::dsl::organizations;
 
         let _connection = establish_connection();

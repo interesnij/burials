@@ -58,7 +58,7 @@ pub struct NewPlace {
 impl Place {
     pub fn plus(&self, count: i16) -> () {
         let _connection = establish_connection();
-        diesel::update(&self)
+        diesel::update(self)
             .set(schema::places::count.eq(self.count + count))
             .execute(&_connection)
             .expect("Error."),
@@ -66,7 +66,7 @@ impl Place {
     pub fn minus(&self, count: i16) -> () {
         let _connection = establish_connection();
         if self.count > 0 {
-            diesel::update(&self)
+            diesel::update(self)
                 .set(schema::places::count.eq(self.count - count))
                 .execute(&_connection)
                 .expect("Error.");
