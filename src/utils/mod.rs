@@ -1,9 +1,11 @@
 mod forms;
 mod auth;
+mod crypto;
 
 pub use self::{
     forms::*,
     auth::*,
+    crypto::*,
 };
 use actix_web::{
     HttpRequest,
