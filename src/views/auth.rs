@@ -9,7 +9,6 @@ use actix_web::{
 use serde::{Deserialize, Serialize};
 use crate::utils::{
     establish_connection,
-    verify,
     get_request_user,
     gen_jwt,
 };
@@ -149,12 +148,12 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
                         crate::utils::set_token(&token_str, &_user.id.to_string());
                         return 1;
                     },
-                    Err(err) => 0,
+                    Err(err) => return 0,
                 }
-            }
-            0
+            };
+            return 0
         },
-        Err(err) => 0,
+        Err(err) => return 0,
     }
 }
 
@@ -186,7 +185,7 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
     form
 }
 
-pub async fn login(mut payload: Multipart, req: HttpRequest) -> impl Responder {
+pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if get_request_user(&req).await.is_some() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
@@ -232,9 +231,7 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
     }
     form
 }
-pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    use crate::utils::hash_password; 
-
+pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     // Если пользователь не аноним, то отправляем его на страницу новостей
     if get_request_user(&req).await.is_some() {
         HttpResponse::Ok().content_type("text/html; charset=utf-8").body("")

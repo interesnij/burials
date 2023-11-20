@@ -62,7 +62,7 @@ impl Place {
         diesel::update(self)
             .set(schema::places::count.eq(self.count + count))
             .execute(&_connection)
-            .expect("Error."),
+            .expect("Error.");
     }
     pub fn minus(&self, count: i16) -> () {
         let _connection = establish_connection();

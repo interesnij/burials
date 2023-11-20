@@ -2,7 +2,7 @@ use actix_multipart::{Field, Multipart};
 use actix_web::web;
 use futures::StreamExt;
 use serde::{Deserialize, Serialize};
-use chrano::NaiveDate;
+use chrono::NaiveDate;
 use std::{
     io::Write,
     fs::create_dir_all,
@@ -49,7 +49,7 @@ pub struct DeceasedForms {
     pub birth_date:   NaiveDate,
     pub death_date:   NaiveDate,
     pub image:        Option<String>,
-    pub memory_words: Option<String>
+    pub memory_words: Option<String>,
     pub lat:          f64,
     pub lon:          f64,
 }

@@ -9,7 +9,6 @@ use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation}
 use serde::{Deserialize, Serialize};
 use actix_web_httpauth::headers::authorization::{Authorization, Bearer};
 use crate::models::User;
-use actix_web::http::header::Header;
 
 
 pub fn is_authenticate(token: &String)-> bool {

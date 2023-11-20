@@ -117,8 +117,8 @@ impl Organization {
                     schema::organizations::director.eq(director),
                     schema::organizations::phone.eq(phone),
                     schema::organizations::hours.eq(hours),
-                    schema::organizations::website.eq(website.nullable()),
-                    schema::organizations::image.eq(image.nullable()),
+                    schema::organizations::website.eq(website),
+                    schema::organizations::image.eq(image),
                 ))
                 .execute(&_connection)
                 .expect("Error.");
