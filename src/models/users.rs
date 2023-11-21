@@ -24,6 +24,9 @@ pub struct User {
     pub perm:     i16,
 }
 impl User {
+    pub fn admin(&self) -> bool {
+        return self.perm > 10 && self.perm < 10;
+    }
     pub fn is_superuser(&self) -> bool {
         return self.perm > 59;
     }

@@ -54,7 +54,7 @@ pub struct DeceasedForms {
     pub lon:          f64,
 }
 // форма для элементов 
-pub async fn deceased_form(payload: &mut Multipart, owner_id: i32) -> DeceasedForms {
+pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
     let mut form: DeceasedForms = DeceasedForms {
         first_name:   "".to_string(),
         middle_name:  None,
@@ -147,7 +147,7 @@ pub struct PlaceForms {
     pub lon:         f64,
 }
 // форма для элементов 
-pub async fn place_form(payload: &mut Multipart, owner_id: i32) -> PlaceForms {
+pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
     let mut form: PlaceForms = PlaceForms {
         city_id:     0,
         region_id:   None,
@@ -253,7 +253,7 @@ pub struct OrganizationForms {
     pub places:      Vec<DataOrganizationsPlace>
 }
 // форма для элементов 
-pub async fn organization_form(payload: &mut Multipart, owner_id: i32) -> OrganizationForms {
+pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
     let mut form: OrganizationForms = OrganizationForms {
         name:        "".to_string(),
         description: "".to_string(),
@@ -339,7 +339,7 @@ pub struct ServiceForms {
     pub price:       i32,
 }
 // форма для элементов 
-pub async fn service_form(payload: &mut Multipart, owner_id: i32) -> ServiceForms {
+pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
     let mut form: ServiceForms = ServiceForms {
         city_id:     0,
         title:       "".to_string(),

@@ -52,8 +52,16 @@ pub struct NewDeceased {
 }
 
 impl Deceased {
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return self.image.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/img.jpg".to_string();
+        }
+    }
     pub fn create ( 
-        user_id:      i32,
+        user_id:      i32, 
         place_id:     i32,
         first_name:   String,
         middle_name:  Option<String>,

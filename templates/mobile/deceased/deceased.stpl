@@ -8,7 +8,7 @@
                     <div class="lg:col-span-6 md:col-span-5">
                         <div class="sticky top-20">
 
-                            <img src="<%= deceased.photo_link %>" 
+                            <img src="<%= deceased.get_image() %>" 
                             class="rounded-md shadow-md dark:shadow-gray-800" 
                             alt="">
 
@@ -23,7 +23,12 @@
                             
                             <%= deceased.first_name %>
                             <%= deceased.last_name %>
-                            <%= deceased.middle_name %>                            
+
+                            <% if deceased.middle_name.is_some() { %>
+                                <%= deceased.middle_name.as_deref().unwrap() %>  
+                            <% } else { %>   
+                                                
+                            <% } %>                            
                             
                             </h5>
 
@@ -36,9 +41,9 @@
                                     </h6>
                                     <h6 class="text-2xl font-semibold mt-2">
                                     
-                                    <%= deceased.birth_date %> 
+                                    <%= deceased.birth_date.format("%d-%m-%Y %H:%M").to_string() %> 
                                     -
-                                    <%= deceased.death_date %>
+                                    <%= deceased.death_date.format("%d-%m-%Y %H:%M").to_string() %>
                                     
                                     </h6>
                                 </div>
@@ -59,7 +64,6 @@
                                 class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 
                                 hover:border-indigo-700 text-white rounded-md">
                                 
-                                <%= deceased.adress %>
                                  
                                  </a>
                             </div>
@@ -114,7 +118,6 @@
                                                             <span class="text-slate-400 text-sm">Адрес</span>
                                                             <span class="font-medium text-sm">
                                                             
-                                                            <%= deceased.adress %>
                                                             
                                                             </span>
                                                         </li>
@@ -127,20 +130,8 @@
                                                             
                                                             </span>
                                                         </li>
-                                                        <li class="flex justify-between items-center mt-2">
-                                                            <span class="text-slate-400 text-sm">Координаты</span>
-                                                            <span class="font-medium text-sm">
-                                                            
-                                                            <%= deceased.coordinate %>
-                                                            
-                                                            </span>
-                                                        </li>
                                                     </ul>
                                                 </div>
-                    
-
-
-
 
                                                 <div class="flex">
                                                     <div class="p-1 w-1/2">
@@ -178,7 +169,7 @@
                                                         <a href="static/images/deceased/1/2.jpg" class="lightbox transition-all duration-500 group-hover:scale-105 tobii-zoom" title="">
                                                             
                                                             
-                                                            <img src="<%= deceased.photo_link %>" 
+                                                            <img src="<%= deceased.get_image() %>" 
                                                             class="" 
                                                             alt="">
 
@@ -250,7 +241,7 @@
                                
                                 <p class="text-slate-400">
 
-                                <%= deceased.data %>
+                                <%= deceased.memory_words %>
 
                                 </p>
                             </div>
@@ -286,7 +277,11 @@
                                             <td class="font-semibold py-4">Отчество</td>
                                             <td class="text-slate-400 py-4">
 
-                                            <%= deceased.middle_name %>
+                                            <% if deceased.middle_name.is_some() { %>
+                                                <%= deceased.middle_name.as_deref().unwrap() %>  
+                                            <% } else { %>   
+                                                                
+                                            <% } %> 
                                             
                                             
                                             </td>
@@ -295,7 +290,7 @@
                                             <td class="font-semibold py-4">Дата рождения</td>
                                             <td class="text-slate-400 py-4">
                                             
-                                            <%= deceased.birth_date %>
+                                            <%= deceased.birth_date.format("%d-%m-%Y %H:%M").to_string() %>
                                             
                                             </td>
                                         </tr>
@@ -303,7 +298,7 @@
                                             <td class="font-semibold py-4">Дата смерти</td>
                                             <td class="text-slate-400 py-4">
 
-                                            <%= deceased.death_date %>
+                                            <%= deceased.death_date.format("%d-%m-%Y %H:%M").to_string() %>
                                             
                                             </td>
                                         </tr>
@@ -319,7 +314,6 @@
                                             <td class="font-semibold py-4">Город </td>
                                             <td class="text-slate-400 py-4">
 
-                                            <%= deceased.adress %>                                            
                                             
                                             </td>
                                         </tr>

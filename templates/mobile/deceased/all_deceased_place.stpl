@@ -154,7 +154,7 @@
 
                                 <li>
                                   <span class=""></span>
-                                  <%= deceased.birth_date %> - <%= deceased.death_date %> 
+                                  <%= deceased.birth_date.format("%d-%m-%Y %H:%M").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y %H:%M").to_string() %> 
 
                                 </li>
 

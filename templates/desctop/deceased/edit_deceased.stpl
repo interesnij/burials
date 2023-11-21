@@ -127,7 +127,9 @@
                                     border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
                                     placeholder="Отчество:"
 
-                                    value="<%= deceased.middle_name %>"
+                                    <% if deceased.middle_name.is_some() { %>
+                                        value="<%= deceased.middle_name.as_deref().unwrap() %>"           
+                                    <% } %> 
                                     >
                                 
                                 </div>
@@ -150,7 +152,7 @@
                                         placeholder="Введите дату рождения" 
                                         name="minsalary"
 
-                                        value="<%= deceased.birth_date %>"
+                                        value="<%= deceased.birth_date.format("%d-%m-%Y %H:%M").to_string() %>"
                                         >
                                     
                                     </div>
@@ -171,7 +173,7 @@
                                         placeholder="Введите дату смерти" 
                                         name="maxsalary"
 
-                                        value="<%= deceased.death_date %>"
+                                        value="<%= deceased.death_date.format("%d-%m-%Y %H:%M").to_string() %>"
                                         >
                                    
                                     </div>
@@ -194,7 +196,7 @@
                                         dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
                                         placeholder="Введите информацию :"
 
-                                        value="<%= deceased.data %>">
+                                        value="<%= deceased.memory_words %>">
 
                                         </textarea>
                                 
@@ -243,26 +245,6 @@
             
                                 <div class="grid grid-cols-12 gap-4 mt-4">
                                     <div class="col-span-12 text-start">
-                                        <label class="font-semibold" for="Address">Адрес захоронения:</label>
-
-                                        <input 
-                                        id="Address" 
-                                        type="text" 
-                                        class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
-                                        outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                        placeholder="Введите адрес"
-                                        value="<%= deceased.adress %>"
-                                        
-                                        >
-
-                                        <input 
-                                        id="Address" 
-                                        type="text" 
-                                        class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
-                                        outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                        placeholder="Введите координаты"
-                                        value="<%= deceased.coordinate %>">
-
                                         <label class="btn-upload btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white 
                                             rounded-md w-full mt-6 cursor-pointer" for="input-file">
                                             Отправить из буфера обмена

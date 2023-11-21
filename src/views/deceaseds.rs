@@ -33,6 +33,8 @@ use crate::utils::{
     establish_connection,
     get_request_user,
 };
+use std::borrow::BorrowMut;
+
 
 pub fn deceased_routes(config: &mut web::ServiceConfig) {
     config.route("/places/{id}/deceased_list/", web::get().to(all_deceased_place_page));
@@ -240,7 +242,7 @@ pub async fn create_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> acti
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"))
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -290,7 +292,7 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"))
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -342,8 +344,9 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web:
         let _request_user = _user.unwrap();
         if _request_user.is_admin() {
             let form = crate::utils::deceased_form(payload.borrow_mut()).await;
-            Deceased::create (
+            Deceased::create ( 
                 _request_user.id,
+                *_id,
                 form.first_name.clone(),
                 form.middle_name.clone(),
                 form.last_name.clone(),
