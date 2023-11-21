@@ -52,7 +52,7 @@ pub fn deceased_routes(config: &mut web::ServiceConfig) {
 pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
 
-    let _place = get_place(*_id).expect("E.");
+    let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
     let page = crate::utils::get_page(&req);
     let count = Deceased::count(*_id);

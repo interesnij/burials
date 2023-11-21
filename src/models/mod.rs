@@ -1,5 +1,4 @@
 mod deceaseds;
-mod geo;
 mod organizations;
 mod places;
 mod reviews;
@@ -8,7 +7,6 @@ mod users;
 
 pub use self::{
     deceaseds::*,
-    geo::*,
     organizations::*,
     places::*,
     reviews::*,

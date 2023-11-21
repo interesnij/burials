@@ -171,7 +171,7 @@ pub fn get_region(pk: i32) -> Result<Region, Error> {
         .filter(schema::regions::id.eq(pk))
         .first::<Region>(&_connection)?);
 }
-pub fn get_region(pk: i32) -> Result<Citie, Error> {
+pub fn get_city(pk: i32) -> Result<Citie, Error> {
     use crate::schema::cities::dsl::cities;
     let _connection = establish_connection();
     return Ok(cities
