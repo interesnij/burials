@@ -115,18 +115,11 @@
                       <!-- Start Single Properties Box Style1-->
 
                       <div class="col-xl-6 col-lg-6">
+                        <% for deceased in object_list.iter() { %>
                         <div class="single-properties-box-style1">
                           <div class="img-holder">
-
-                            <img
-
-                              src="static/images/deceased/deceased1.jpg"
-                              
-                              alt=""
-                            />
-
+                            <img src="static/images/deceased/deceased1.jpg" alt="" />
                           </div>
-
 
                           <div class="text-holder">
                             <div class="top">
@@ -163,8 +156,8 @@
                             </div>
                           </div>
                         </div>
+                        <% } %>
                       </div>
-                    </div>
                   </div>
                 </div>
 

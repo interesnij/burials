@@ -300,13 +300,13 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
             #[template(path = "desctop/deceased/edit_deceased.stpl")]
             struct Template {
                 request_user: User,
-                object:       Deceased,
+                deceased:     Deceased,
                 place:        Place,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                object:       _deceased,
+                deceased:     _deceased,
                 place:        _place,
                 is_ajax:      is_ajax,
             }
@@ -319,13 +319,13 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
             #[template(path = "mobile/deceased/edit_deceased.stpl")]
             struct Template {
                 request_user: User,
-                object:       Deceased,
+                deceased:     Deceased,
                 place:        Place,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                object:       _deceased,
+                deceased:     _deceased,
                 place:        _place,
                 is_ajax:      is_ajax,
             }
