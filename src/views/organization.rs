@@ -9,12 +9,12 @@ use actix_web::{
 use crate::errors::Error;
 use crate::models::{
     Deceased,
-    Geo,
     Organization,
-    Places,
-    Reiew,
+    Place,
+    Rewiew,
     Service,
     User,
+    Place,
 };
 use sailfish::TemplateOnce;
 use diesel::{

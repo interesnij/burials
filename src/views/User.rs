@@ -8,13 +8,12 @@ use actix_web::{
 };
 use crate::errors::Error;
 use crate::models::{
-    User,
-    Geo,
+    Deceased,
     Organization,
-    Places,
-    Reiew,
+    Place,
+    Rewiew,
     Service,
-    User,
+    Place,
 };
 use sailfish::TemplateOnce;
 use diesel::{
