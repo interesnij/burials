@@ -241,7 +241,11 @@
                                
                                 <p class="text-slate-400">
 
-                                <%= deceased.memory_words %>
+                                <% if deceased.memory_words.is_some() { %>
+                                    <%= deceased.memory_words.as_deref().unwrap() %>  
+                                <% } else { %>   
+                                                    
+                                <% } %>
 
                                 </p>
                             </div>

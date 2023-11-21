@@ -94,9 +94,7 @@
                                     </li>
                                 </ul>
 
-
                                 <div id="StarterContent" class="mt-6">
-                                    
             
                                     <div class="hidden" id="wednesday" role="tabpanel" aria-labelledby="wednesday-tab">
                                         <div class="grid grid-cols-1">                                      
@@ -108,9 +106,7 @@
                                                         <li class="flex justify-between items-center">
                                                             <span class="text-slate-400 text-sm">Адрес</span>
                                                             <span class="font-medium text-sm">
-                                                            
-                                                            
-                                                            
+                                                                           
                                                             </span>
                                                         </li>
                     
@@ -124,11 +120,7 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                    
-
-
-
-
+           
                                                 <div class="flex">
                                                     <div class="p-1 w-1/2">
                                                         <a href="marshrut.html" 
@@ -146,15 +138,7 @@
 
                                         </div>
                                     </div>
-            
-
-
-
-
-
-
-
-
+      
                                     <div class="hidden" id="thursday" role="tabpanel" aria-labelledby="thursday-tab">
                                         <div class="grid grid-cols-1">
                                             <div class="rounded-md shadow dark:shadow-gray-800 p-6">
@@ -179,12 +163,6 @@
                                                             </div>
                                                         </a>
                                                     </div>
-                                                    
-
-                                                    
-
-
-
 
                                                 </div>
                                             <br>
@@ -233,8 +211,11 @@
                             aria-labelledby="profile-tab">
                                
                                 <p class="text-slate-400">
-
-                                <%= deceased.memory_words %>
+                                    <% if deceased.memory_words.is_some() { %>
+                                        <%= deceased.memory_words.as_deref().unwrap() %>  
+                                    <% } else { %>   
+                                                        
+                                    <% } %>
 
                                 </p>
                             </div>
@@ -270,8 +251,11 @@
                                             <td class="font-semibold py-4">Отчество</td>
                                             <td class="text-slate-400 py-4">
 
-                                            <%= deceased.middle_name.as_deref().unwrap() %>
-                                            
+                                            <% if deceased.middle_name.is_some() { %>
+                                                <%= deceased.middle_name.as_deref().unwrap() %>  
+                                            <% } else { %>   
+                                                                
+                                            <% } %>
                                             
                                             </td>
                                         </tr>
@@ -317,146 +301,6 @@
                     </div>
                 </div>
             </div>
-
-
-                <%# <!-- Start -->
-                <section class="relative md:py-24 py-16 overflow-hidden">
-                    <div class="container">
-                        <div class="grid grid-cols-1 pb-8 text-center">
-                            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Слова памяти!</h3>
-        
-                            <p class="text-slate-400 max-w-xl mx-auto">Если вы знали этого человека можете оставить слова памяти о нем!</p>
-                        </div><!--end grid-->
-                    </div><!--end container-->
-        
-                    <div class="container-fluid">
-                        <div class="grid grid-cols-1 mt-8">
-                            <div class="slider relative overflow-hidden m-auto mb-4 before:content-[''] before:absolute before:top-0 before:left-0 before:z-2 after:content-[''] after:absolute after:top-0 after:right-0 after:z-2">
-                                <div class="slide-track flex items-center">
-                                    <div class="slide h-auto md:w-[360px] w-72 m-2">
-
-
-
-                                        <ul class="space-y-4">
-                                            <li class="rounded-lg shadow dark:shadow-gray-800 p-6">
-                                                <div class="flex items-center pb-6 border-b border-gray-100 dark:border-gray-800">
-                                                    <img src="static/images/user/01.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
-                    
-                                                    <div class="pl-4">
-                                                        <a href="" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
-                                                        
-                                                        
-                                                        >Иванов Иван
-                                                        
-                                                        </a>
-                                                        <p class="text-slate-400">Пользователь</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <div class="mt-6">
-                                                    <p class="text-slate-400">
-                                                    
-                                                    "Дорогой , ты всегда был в наших сердцах и теперь твоя память живет и в виртуальном мире. Ты оставил незабываемый след в нашей жизни.
-                                                    
-                                                    </p>
-                                                    
-                                                </div>
-                                            </li>
-                    
-                                            <li class="rounded-lg shadow dark:shadow-gray-800 p-6">
-                                                <div class="flex items-center pb-6 border-b border-gray-100 dark:border-gray-800">
-                                                    <img src="static/images/user/05.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
-                    
-                                                    <div class="pl-4">
-                                                        <a href="" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
-                                                        
-                                                        >Сидорова Анна
-                                                        
-                                                        </a>
-                                                        <p class="text-slate-400">Пользователь</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <div class="mt-6">
-                                                    <p class="text-slate-400">
-                                                    
-                                                    "В память о нашем дорогом друге. Ты был с нами в радости и горе, и мы никогда не забудем твою улыбку и доброту"
-                                                    
-                                                    </p>
-                                                    
-                                                </div>
-                                            </li>
-
-                                        </ul>
-
-
-
-
-
-
-                                    </div>
-                                  </div>
-                            </div>
-                        </div><!--end grid-->
-                    </div><!--end container-->
-        
-        
-                    <div class="container md:mt-24 mt-16">
-                        <div class="grid grid-cols-1 pb-8 text-center">
-                            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Организации работающие в вашем городе</h3>
-        
-                            <p class="text-slate-400 max-w-xl mx-auto">Найдите организацию или услугу действующую в вашем районе</p>
-                        </div><!--end grid-->
-        
-                        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
-                            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden">
-
-
-
-
-
-                                <img src="static/images/service/service1.jpg" alt="">
-        
-                                <div class="content p-6">
-                                    <a href="service_all.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
-                                    
-                                    Памятники/Надгробия
-                                    
-                                    </a>
-                                    <p class="text-slate-400 mt-3"> 
-                                    
-                                    создание и установка монументов, сохраняющих память о ушедших и служащих в качестве места для вечной памяти
-                                    
-                                    </p>
-                                    
-                                    <div class="mt-4">
-                                        <a 
-                                        
-                                        href="service_all.html" 
-                                        
-                                        class="btn btn-link font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Подробнее <i class="uil uil-arrow-right"></i></a>
-                                    </div>
-                                </div>
-
-
-
-
-
-
-
-                            </div>
-                        </div><!--end grid-->
-                    </div><!--end container-->
-                </section><!--end section-->
-                <!-- End -->
-        
- %>
-
-
-
-
-
-
 
 
 <% include!("../footer.stpl"); %>

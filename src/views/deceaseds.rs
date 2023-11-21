@@ -16,6 +16,7 @@ use crate::models::{
     Reiew,
     Service,
     User,
+    Place,
 };
 use sailfish::TemplateOnce;
 use diesel::{
@@ -221,8 +222,8 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "mobile/deceased/anon_deceased.stpl")]
             struct Template {
-                object:  Deceased,
-                is_ajax: i32,
+                deceased: Deceased,
+                is_ajax:  i32,
             }
             let body = Template {
                 deceased: _deceased,
