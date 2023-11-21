@@ -63,12 +63,12 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
 
     if page > 1 {
         let step = (page - 1) * 20;
-        have_next = page * limit + 1;
-        object_list = Deceased::list(*_id, limit.into(), step.into());
+        have_next = page * 20 + 1;
+        object_list = Deceased::list(*_id, 20, step.into());
     }
     else {
-        have_next = limit + 1;
-        object_list = Deceased::list(*_id, limit.into(), 0);
+        have_next = 20 + 1;
+        object_list = Deceased::list(*_id, 20, 0);
     }
     if count > (have_next as usize) {
         next_page_number = page + 1;
@@ -89,7 +89,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
             let body = Template {
                 request_user:     _request_user,
                 place:            _place,
-                object_list:      _deceaseds,
+                object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
             }
@@ -110,7 +110,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
             let body = Template {
                 request_user:     _request_user,
                 place:            _place,
-                object_list:      _deceaseds,
+                object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
             }
@@ -131,7 +131,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
             }
             let body = Template {
                 place:            _place,
-                object_list:      _deceaseds,
+                object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
             }
@@ -150,7 +150,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
             }
             let body = Template {
                 place:            _place,
-                object_list:      _deceaseds,
+                object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
             }

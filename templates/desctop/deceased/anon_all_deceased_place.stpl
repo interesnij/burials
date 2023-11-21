@@ -40,7 +40,7 @@
                             <input
                               type="text"
                               name="keywords"
-                              placeholder="<%= q %>"/>
+                              placeholder=""/>
 
                           </div>
                         </div>
