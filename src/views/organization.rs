@@ -10,7 +10,6 @@ use crate::errors::Error;
 use crate::models::{
     Deceased,
     Organization,
-    Place,
     Rewiew,
     Service,
     User,
