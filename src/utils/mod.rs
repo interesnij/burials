@@ -30,7 +30,8 @@ use std::cell::Cell;
 use std::sync::{Arc, Mutex};
 use crate::models::{
     User, Deceased, Organization, 
-    Service, Place, Review
+    Service, Place, Review,
+    Countrie, Region, Citie,
 };
 
 
@@ -155,6 +156,27 @@ pub fn get_review(pk: i32) -> Result<Review, Error> {
     return Ok(reviews
         .filter(schema::reviews::id.eq(pk))
         .first::<Review>(&_connection)?);
+}
+pub fn get_country(pk: i32) -> Result<Countrie, Error> {
+    use crate::schema::countries::dsl::countries;
+    let _connection = establish_connection();
+    return Ok(countries
+        .filter(schema::countries::id.eq(pk))
+        .first::<Countrie>(&_connection)?);
+}
+pub fn get_region(pk: i32) -> Result<Region, Error> {
+    use crate::schema::regions::dsl::regions;
+    let _connection = establish_connection();
+    return Ok(regions
+        .filter(schema::regions::id.eq(pk))
+        .first::<Region>(&_connection)?);
+}
+pub fn get_region(pk: i32) -> Result<Citie, Error> {
+    use crate::schema::cities::dsl::cities;
+    let _connection = establish_connection();
+    return Ok(cities
+        .filter(schema::cities::id.eq(pk))
+        .first::<Citie>(&_connection)?);
 }
 
 pub fn get_limit_offset (

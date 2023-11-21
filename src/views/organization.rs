@@ -222,14 +222,14 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/all_organization_region_page.stpl")]
             struct Template {
-                request_user:   User,
-                region:          Vec<Region>,
-                all_organization:  Vec<Organization>,
+                request_user:     User,
+                region:           Vec<Region>,
+                all_organization: Vec<Organization>,
             }
             let body = Template {
-                request_user:   _request_user,
+                request_user:     _request_user,
                 region:           _region,
-                all_organization:   _organization,
+                all_organization: _organization,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -239,14 +239,14 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
             #[derive(TemplateOnce)]
             #[template(path = "mobile/organization/all_organization_region_page.stpl")]
             struct Template {
-                request_user:   User,
-                region:          Vec<Region>,
-                all_organization:  Vec<Organization>,
+                request_user:     User,
+                region:           Vec<Region>,
+                all_organization: Vec<Organization>,
             }
             let body = Template {
-                request_user:   _request_user,
+                request_user:     _request_user,
                 region:           _region,
-                all_organization:   _organization,
+                all_organization: _organization,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -258,14 +258,14 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_region_page.stpl")]
             struct Template {
-                request_user:   User,
-                region:          Vec<Region>,
-                all_organization:  Vec<Organization>,
+                request_user:     User,
+                region:           Vec<Region>,
+                all_organization: Vec<Organization>,
             }
             let body = Template {
-                request_user:   _request_user,
+                request_user:     _request_user,
                 region:           _region,
-                all_organization:   _organization,
+                all_organization: _organization,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
