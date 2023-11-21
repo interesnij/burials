@@ -3,6 +3,7 @@ use actix_web::{
     web::block,
     HttpRequest,
     HttpResponse,
+    Responder,
     error::InternalError,
     http::StatusCode,
 };
@@ -168,12 +169,12 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[template(path = "desctop/deceased/deceased.stpl")]
             struct Template {
                 request_user: User,
-                object:       Deceased,
+                deceased:     Deceased,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                object:       _deceased,
+                deceased:     _deceased,
                 is_ajax:      is_ajax,
             }
             .render_once()
@@ -185,12 +186,12 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[template(path = "mobile/deceased/deceased.stpl")]
             struct Template {
                 request_user: User,
-                object:       Deceased,
+                deceased:     Deceased,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                object:       _deceased,
+                deceased:     _deceased,
                 is_ajax:      is_ajax,
             }
             .render_once()
@@ -203,11 +204,11 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/anon_deceased.stpl")]
             struct Template {
-                object:  Deceased,
-                is_ajax: i32,
+                deceased: Deceased,
+                is_ajax:  i32,
             }
             let body = Template {
-                object:  _deceased,
+                deceased: _deceased,
                 is_ajax: is_ajax,
             }
             .render_once()
@@ -222,8 +223,8 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                 is_ajax: i32,
             }
             let body = Template {
-                object:  _deceased,
-                is_ajax: is_ajax,
+                deceased: _deceased,
+                is_ajax:  is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -358,12 +359,12 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web:
     HttpResponse::Ok()
 }
 
-pub async fn edit_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn edit_deceased(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _deceased = crate::utils::get_deceased(*_id).expect("E."); 
-        if _request_user.id == deceased.user_id || _request_user.is_admin() {
+        if _request_user.id == _deceased.user_id || _request_user.is_admin() {
             let form = crate::utils::deceased_form(payload.borrow_mut()).await;
             _deceased.edit (
                 _request_user.id,
@@ -382,12 +383,11 @@ pub async fn edit_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Respon
     HttpResponse::Ok()
 }
 pub async fn delete_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
-    let user_id = get_request_user(&req).await;
+    let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _deceased = crate::utils::get_deceased(*_id).expect("E.");
-        if _request_user.id == deceased.user_id || _request_user.is_admin() {
-            let form = deceased_form(payload.borrow_mut()).await;
+        if _request_user.id == _deceased.user_id || _request_user.is_admin() {
             _deceased.delete();
         }
     };
