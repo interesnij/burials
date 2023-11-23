@@ -133,7 +133,8 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
 //---------------------------------ФОРМА КЛАДБИЩЬ-----------------
 #[derive(Deserialize, Serialize, Debug)] 
 pub struct PlaceForms {
-    pub city_id:     i32,
+    pub city_id:     Option<i32>,
+    pub district_id: Option<i32>,
     pub region_id:   Option<i32>,
     pub country_id:  i32,
     pub title:       String,
@@ -149,7 +150,8 @@ pub struct PlaceForms {
 // форма для элементов 
 pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
     let mut form: PlaceForms = PlaceForms {
-        city_id:     0,
+        city_id:     None,
+        district_id: None,
         region_id:   None,
         country_id:  0,
         title:       "".to_string(),
@@ -195,7 +197,16 @@ pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: i32 = s.parse().unwrap();
-                    form.city_id = _int;
+                    form.city_id = Some(_int);
+                }
+            }
+        }
+        else if name == "district_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.district_id = Some(_int);
                 }
             }
         }

@@ -2,10 +2,10 @@ pub mod auth;
 pub mod deceaseds;
 //pub mod organization;
 pub mod page;
-//pub mod place;
+pub mod place;
 //pub mod progs;
 //pub mod service;
-//pub mod user;
+pub mod user;
 
 
 pub use self::{
@@ -13,8 +13,8 @@ pub use self::{
     deceaseds::*,
     //organization::*,
     page::*,
-    //place::*,
+    place::*,
     //progs::*,
     //service::*,
-    //user::*,
+    user::*,
 };

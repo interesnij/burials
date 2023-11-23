@@ -58,7 +58,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/all_place_city_page.stpl")]
+            #[template(path = "desctop/place/all_place_city.stpl")]
             struct Template {
                 request_user:   User,
                 city:          Vec<City>,
@@ -75,7 +75,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/all_place_city_page.stpl")]
+            #[template(path = "mobile/place/all_place_city.stpl")]
             struct Template {
                 request_user:   User,
                 city:          Vec<City>,
@@ -94,7 +94,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/anon_all_place_city_page.stpl")]
+            #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
                 request_user:   User,
                 city:          Vec<City>,
@@ -111,7 +111,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_all_place_city_page.stpl")]
+            #[template(path = "mobile/place/anon_all_place_city.stpl")]
             struct Template {
                 request_user:   User,
                 city:           Vec<City>,
@@ -139,7 +139,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/all_place_region_page.stpl")]
+            #[template(path = "desctop/place/all_place_region.stpl")]
             struct Template {
                 request_user:   User,
                 region:          Vec<Region>,
@@ -156,7 +156,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/all_place_region_page.stpl")]
+            #[template(path = "mobile/place/all_place_region.stpl")]
             struct Template {
                 request_user:   User,
                 region:          Vec<Region>,
@@ -175,7 +175,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/anon_all_place_region_page.stpl")]
+            #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
                 request_user:   User,
                 region:          Vec<Region>,
@@ -192,7 +192,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_all_place_region_page.stpl")]
+            #[template(path = "mobile/place/anon_all_place_region.stpl")]
             struct Template {
                 request_user:   User,
                 region:           Vec<Region>,
@@ -220,7 +220,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/all_place_countries_page.stpl")]
+            #[template(path = "desctop/place/all_place_countrieы.stpl")]
             struct Template {
                 request_user:   User,
                 countries:          Vec<Countries>,
@@ -237,7 +237,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/all_place_countries_page.stpl")]
+            #[template(path = "mobile/place/all_place_countries.stpl")]
             struct Template {
                 request_user:   User,
                 countries:          Vec<Countries>,
@@ -256,7 +256,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/anon_all_place_countries_page.stpl")]
+            #[template(path = "desctop/place/anon_all_place_countries.stpl")]
             struct Template {
                 request_user:   User,
                 countries:          Vec<Countries>,
@@ -273,7 +273,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_all_place_countries_page.stpl")]
+            #[template(path = "mobile/place/anon_all_place_countries.stpl")]
             struct Template {
                 request_user:   User,
                 countries:           Vec<Countries>,
@@ -302,7 +302,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/place_page.stpl")]
+            #[template(path = "desctop/place/place.stpl")]
             struct Template {
                 request_user:   User,
                 place:       Place,
@@ -317,7 +317,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/place_page.stpl")]
+            #[template(path = "mobile/place/place_page")]
             struct Template {
                 request_user:   User,
                 place:       Place,
@@ -334,7 +334,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/anon_place_page.stpl")]
+            #[template(path = "desctop/place/anon_place.stpl")]
             struct Template {
                 request_user:   User,
                 place:       Place,
@@ -349,7 +349,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_place_page.stpl")]
+            #[template(path = "mobile/place/anon_place.stpl")]
             struct Template {
                 request_user:   User,
                 place:       Place,
@@ -365,41 +365,164 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
     }
 }
 
-pub async fn create_place_page(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let user_id = get_request_user(&req).await;
-    if user_id.is_some() {
-        let _request_user = user_id.unwrap();
+
+pub async fn create_place(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let _user = get_request_user(&req).await;
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
         if _request_user.is_admin() {
-            let form = place_form(payload.borrow_mut(), _request_user.id).await;
-            Place::create_place(form);
+            let form = crate::utils::place_form(payload.borrow_mut()).await;
+            Place::create ( 
+                _request_user.id,
+                form.city_id,
+                form.district_id,
+                form.region_id,
+                form.country_id,
+                form.title.clone(),
+                form.description.clone(),
+                form.hours.clone(),
+                form.image.clone(),
+                form.address.clone(),
+                form.director.clone(),
+                form.phone.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    }; 
+    HttpResponse::Ok()
+}
+
+pub async fn edit_place(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _place = crate::utils::get_place(*_id).expect("E."); 
+        if _request_user.id == _place.user_id || _request_user.is_admin() {
+            let form = crate::utils::place_form(payload.borrow_mut()).await;
+            _place.edit (
+                _request_user.id,
+                *_id,
+                form.city_id,
+                form.district_id,
+                form.region_id,
+                form.country_id,
+                form.title.clone(),
+                form.description.clone(),
+                form.hours.clone(),
+                form.image.clone(),
+                form.address.clone(),
+                form.director.clone(),
+                form.phone.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_place(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _place = crate::utils::get_place(*_id).expect("E.");
+        if _request_user.id == _place.user_id || _request_user.is_admin() {
+            _place.delete();
         }
     };
     HttpResponse::Ok()
 }
 
 
-
-pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn create_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let user_id = get_request_user(&req).await;
-    if user_id.is_some() {
+    if user_id.is_some() { 
         let _request_user = user_id.unwrap();
-        let _place = block(move || Place::find_by_id(*_id)).await?; 
-        if _request_user.id == place.user_id {
-            let form = place_form(payload.borrow_mut(), _request_user.id).await;
-            Place.edit_place(form);
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-    };
-    HttpResponse::Ok()
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/place/create_place.stpl")]
+            struct Template {
+                request_user: User,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/place/create_place.stpl")]
+            struct Template {
+                request_user: User,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
+    }
 }
-pub async fn delete_place_page(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+
+pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
-    if user_id.is_some() {
+    if user_id.is_some() { 
         let _request_user = user_id.unwrap();
-        let _place = block(move || Place::find_by_id(*_id)).await?; 
-        if _request_user.id == place.user_id {
-            let form = place_form(payload.borrow_mut(), _request_user.id).await;
-            Place.delete_place();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-    };
-    HttpResponse::Ok()
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/place/edit_place.stpl")]
+            struct Template {
+                request_user: User,
+                place:        Place,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                place:        _place,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/deceased/edit_deceased.stpl")]
+            struct Template {
+                request_user: User,
+                place:        Place,
+                is_ajax:      i32,
+            }
+            let body = Template {
+                request_user: _request_user,
+                place:        _place,
+                is_ajax:      is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
+    }
 }
