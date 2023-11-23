@@ -146,8 +146,8 @@ pub struct District {
 } 
 
 #[derive(Deserialize, Insertable)]
-#[table_name="cities"]
-pub struct NewCitie { 
+#[table_name="districts"]
+pub struct NewDistrict { 
     pub name:       String,
     pub region_id:  Option<i32>,
     pub country_id: i32,
