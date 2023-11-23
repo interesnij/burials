@@ -20,7 +20,8 @@ use serde::{Serialize, Deserialize};
 pub struct Place {
     pub id:          i32, 
     pub user_id:     i32,
-    pub city_id:     i32,
+    pub city_id:     Option<i32>,
+    pub district_id: Option<i32>,
     pub region_id:   Option<i32>,
     pub country_id:  i32,
     pub title:       String,
@@ -40,7 +41,8 @@ pub struct Place {
 #[table_name = "places"]
 pub struct NewPlace {
     pub user_id:     i32,
-    pub city_id:     i32,
+    pub city_id:     Option<i32>,
+    pub district_id: Option<i32>,
     pub region_id:   Option<i32>,
     pub country_id:  i32,
     pub title:       String,
@@ -75,7 +77,8 @@ impl Place {
     }
     pub fn create (
         user_id:     i32,
-        city_id:     i32,
+        city_id:     Option<i32>,
+        district_id: Option<i32>,
         region_id:   Option<i32>,
         country_id:  i32,
         title:       String,
@@ -96,6 +99,7 @@ impl Place {
             let new_form = NewPlace {
                 user_id:     user_id,
                 city_id:     city_id,
+                district_id: district_id,
                 region_id:   region_id,
                 country_id:  country_id,
                 title:       title,
@@ -117,9 +121,10 @@ impl Place {
         return 1;
     }
     pub fn edit (
-        user_id:      i32,
-        object_id:    i32,
-        city_id:     i32,
+        user_id:     i32,
+        object_id:   i32,
+        city_id:     Option<i32>,
+        district_id: Option<i32>,
         region_id:   Option<i32>,
         country_id:  i32,
         title:       String,
@@ -139,6 +144,7 @@ impl Place {
             diesel::update(&_place)
                 .set((
                     schema::places::city_id.eq(city_id),
+                    schema::places::district_id.eq(district_id),
                     schema::places::region_id.eq(region_id),
                     schema::places::country_id.eq(country_id),
                     schema::places::title.eq(title),

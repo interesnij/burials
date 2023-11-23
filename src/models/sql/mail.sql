@@ -31,7 +31,6 @@ CREATE TABLE deceaseds (
 CREATE TABLE countries (
     id           SERIAL PRIMARY KEY,
     name         VARCHAR(100) NOT NULL,
-    name_ru      VARCHAR(100),
     geo_id       INT,
     continent_id INT, 
     timezone_id  INT,
@@ -45,7 +44,6 @@ CREATE INDEX countries_continent_idx ON countries (continent_id);
 CREATE TABLE regions (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(100) NOT NULL,
-    name_ru     VARCHAR(100),
     geo_id      INT,
     country_id  INT NOT NULL,
     timezone_id INT,
@@ -58,7 +56,6 @@ CREATE INDEX regions_country_idx ON regions (country_id);
 CREATE TABLE cities (
     id         SERIAL PRIMARY KEY,
     name       VARCHAR(100) NOT NULL,
-    name_ru    VARCHAR(100),
     geo_id     INT,
     region_id  INT, 
     country_id INT NOT NULL,
@@ -68,7 +65,14 @@ CREATE TABLE cities (
 CREATE INDEX cities_country_idx ON cities (country_id);
 CREATE INDEX cities_region_idx ON cities (region_id);
 
-
+CREATE TABLE  (
+    id         SERIAL PRIMARY KEY,
+    name       VARCHAR(100) NOT NULL,
+    region_id  INT, 
+    country_id INT NOT NULL,
+    lat        FLOAT,
+    lon        FLOAT
+); 
 
 --______________________________________________________________________________________
 
@@ -92,7 +96,8 @@ CREATE INDEX idx_organization_id ON organizations (id);
 CREATE TABLE organizations_places (
     id              SERIAL PRIMARY KEY,
     organization_id INT NOT NULL,
-    city_id         INT NOT NULL,
+    city_id         INT,
+    district_id     INT,
     region_id       INT,
     country_id      INT NOT NULL,
     lat             FLOAT,
@@ -103,19 +108,20 @@ CREATE TABLE organizations_places (
 
 -- Создание таблицы "Places" для хранения данных о местах
 CREATE TABLE places (
-    id           SERIAL PRIMARY KEY,    -- Уникальный идентификатор места
+    id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,
-    city_id      INT NOT NULL,          -- Идентификатор города, в котором находится место
-    region_id    INT,                   -- Идентификатор региона, к которому принадлежит место
-    country_id   INT NOT NULL,          -- Идентификатор страны, к которой принадлежит место
-    title        VARCHAR(100) NOT NULL, -- Название кладбища (места)
-    description  VARCHAR(500),          -- Описание кладбища
-    hours        VARCHAR(100),          -- Часы работы
-    image        VARCHAR(100),          -- Ссылки на фотографии кладбища
-    address      VARCHAR(255),          -- Адрес кладбища
-    count        SMALLINT NOT NULL,     -- Количество захоронений
-    director     VARCHAR(255),          -- Руководитель кладбища
-    phone        VARCHAR(15),           -- Номер телефона кладбища
+    city_id      INT,
+    district_id  INT,
+    region_id    INT,
+    country_id   INT NOT NULL,
+    title        VARCHAR(100) NOT NULL,
+    description  VARCHAR(500),
+    hours        VARCHAR(100),
+    image        VARCHAR(100),
+    address      VARCHAR(255),
+    count        SMALLINT NOT NULL,
+    director     VARCHAR(255),
+    phone        VARCHAR(15),
     lat          FLOAT NOT NULL,
     lon          FLOAT NOT NULL
 );

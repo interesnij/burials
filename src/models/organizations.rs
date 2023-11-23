@@ -80,7 +80,8 @@ impl Organization {
             for i in places.into_iter() {
                 OrganizationsPlace::create (
                     _new.id, 
-                    i.city_id, 
+                    i.city_id,
+                    i.district_id,
                     i.region_id,
                     i.country_id, 
                     i.lat,
@@ -130,9 +131,10 @@ impl Organization {
             for i in places.into_iter() {
                 OrganizationsPlace::create (
                     _organization.id, 
-                    i.city_id, 
+                    i.city_id,
+                    i.district_id,
                     i.region_id,
-                    i.country_id, 
+                    i.country_id,
                     i.lat,
                     i.lon,
                 );
@@ -214,7 +216,8 @@ impl Organization {
 pub struct OrganizationsPlace {
     pub id:              i32,
     pub organization_id: i32,
-    pub city_id:         i32,
+    pub city_id:         Option<i32>,
+    pub district_id:     Option<i32>,
     pub region_id:       Option<i32>,
     pub country_id:      i32,
     pub lat:             Option<f64>,
@@ -226,7 +229,8 @@ pub struct OrganizationsPlace {
 #[table_name = "organizations_places"]
 pub struct NewOrganizationsPlace {
     pub organization_id: i32,
-    pub city_id:         i32,
+    pub city_id:         Option<i32>,
+    pub district_id:     Option<i32>,
     pub region_id:       Option<i32>,
     pub country_id:      i32,
     pub lat:             Option<f64>,
@@ -236,7 +240,8 @@ pub struct NewOrganizationsPlace {
 impl OrganizationsPlace {
     pub fn create (
         organization_id: i32, 
-        city_id:         Option<i32>, 
+        city_id:         Option<i32>,
+        district_id:     Option<i32>,
         region_id:       Option<i32>,
         country_id:      Option<i32>, 
         lat:             Option<f64>,
@@ -248,7 +253,8 @@ impl OrganizationsPlace {
         let _connection = establish_connection();
         let new_form = NewOrganizationsPlace {
             organization_id: organization_id,
-            city_id:         city_id.unwrap(),
+            city_id:         city_id,
+            district_id:     district_id,
             region_id:       region_id,
             country_id:      country_id.unwrap(),
             lat:             lat,

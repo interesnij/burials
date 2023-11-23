@@ -316,11 +316,12 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     form.places.push(DataOrganizationsPlace {
-                        city_id:    None,
-                        region_id:  None, 
-                        country_id: None,
-                        lat:        None,
-                        lon:        None, 
+                        city_id:     None,
+                        district_id: None,
+                        region_id:   None, 
+                        country_id:  None,
+                        lat:         None,
+                        lon:         None, 
                     });
                 } 
             }

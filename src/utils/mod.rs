@@ -37,11 +37,12 @@ use crate::models::{
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DataOrganizationsPlace {
-    pub city_id:    Option<i32>,
-    pub region_id:  Option<i32>, 
-    pub country_id: Option<i32>,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>, 
+    pub city_id:     Option<i32>,
+    pub district_id: Option<i32>,
+    pub region_id:   Option<i32>, 
+    pub country_id:  Option<i32>,
+    pub lat:         Option<f64>,
+    pub lon:         Option<f64>, 
 }
 
 
