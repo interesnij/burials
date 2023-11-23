@@ -179,7 +179,7 @@ impl Place {
 
         let _connection = establish_connection();
         return places
-            .filter(schema::places::country_id.eq(country_id)
+            .filter(schema::places::country_id.eq(country_id))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -188,7 +188,7 @@ impl Place {
 
         let _connection = establish_connection();
         return places
-            .filter(schema::places::region_id.eq(region_id)
+            .filter(schema::places::region_id.eq(region_id))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -197,7 +197,7 @@ impl Place {
 
         let _connection = establish_connection();
         return places
-            .filter(schema::places::city_id.eq(city_id)
+            .filter(schema::places::city_id.eq(city_id))
             .load::<Place>(&_connection)
             .expect("E.");
     }
