@@ -3,6 +3,7 @@ use actix_web::{
     web::block,
     HttpRequest,
     HttpResponse,
+    Responder,
     error::InternalError,
     http::StatusCode,
 };
@@ -30,6 +31,9 @@ use crate::utils::{
     get_request_user,
 };
 use std::borrow::BorrowMut;
+use crate::models::{
+    Place, District, Citie, Region,
+};
 
 
 //-------------------------------------------------------------------------
