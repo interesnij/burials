@@ -138,8 +138,6 @@ impl Place {
         lon:         f64,
     ) -> i16 {
         let _connection = establish_connection();
-        let _user = crate::utils::get_user(user_id).expect("E.");
-        if _user.perm > 10 {
             diesel::update(self)
                 .set((
                     schema::places::city_id.eq(city_id),
@@ -158,14 +156,13 @@ impl Place {
                 ))
                 .execute(&_connection)
                 .expect("Error.");
-        }
+        
         return 1;
     }
     pub fn delete(&self) -> i16 {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
-        let _user = crate::utils::get_user(user_id).expect("E.");
         diesel::delete(places.filter(schema::places::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");

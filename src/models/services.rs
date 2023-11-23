@@ -93,7 +93,6 @@ impl Service {
             ))
             .execute(&_connection)
             .expect("Error.");
-        }
         return 1;
     }
     pub fn delete(&self) -> i16 {
