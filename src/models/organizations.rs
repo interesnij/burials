@@ -142,16 +142,13 @@ impl Organization {
         }
         return 1;
     }
-    pub fn delete(user_id: i32, object_id: i32) -> i16 {
+    pub fn delete(&self) -> i16 {
         use crate::schema::organizations::dsl::organizations;
 
         let _connection = establish_connection();
-        let _user = crate::utils::get_user(user_id).expect("E.");
-        if _user.perm > 10 {
-            diesel::delete(organizations.filter(schema::organizations::id.eq(object_id)))
-                .execute(&_connection)
-                .expect("E");
-        }
+        diesel::delete(organizations.filter(schema::organizations::id.eq(self.id)))
+            .execute(&_connection)
+            .expect("E");
         return 1;
     }
 

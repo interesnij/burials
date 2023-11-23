@@ -162,16 +162,15 @@ impl Place {
         }
         return 1;
     }
-    pub fn delete(user_id: i32, object_id: i32) -> i16 {
+    pub fn delete(&self) -> i16 {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
-        if _user.perm > 10 {
-            diesel::delete(places.filter(schema::places::id.eq(object_id)))
-                .execute(&_connection)
-                .expect("E");
-        }
+        diesel::delete(places.filter(schema::places::id.eq(self.id)))
+            .execute(&_connection)
+            .expect("E");
+        
         return 1;
     }
     pub fn country_list(country_id: i32) -> Vec<Place> {
