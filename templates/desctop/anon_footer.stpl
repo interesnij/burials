@@ -60,6 +60,21 @@
               </div><!--end grid-->
           </div><!--end container-->
       </div>
-  </footer><!--end footer-->
-  <!-- Footer End -->
-   
+  </footer>
+        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 h-9 w-9 text-center bg-indigo-600 text-white leading-9"><i class="uil uil-arrow-up"></i></a>
+            <script src="/static/libs/tiny-slider/min/tiny-slider.js"></script>
+            <script src="/static/libs/feather-icons/feather.min.js"></script>
+            <script src="/static/js/plugins.init.js"></script>
+            <script src="/static/js/app.js"></script>
+            <script src="/static/js/easy_background.js"></script>
+
+            <script>
+              easy_background("#home",
+                  {
+                      slide: ["static/images/main/01.jpg", "static/images/main/02.jpg", "static/images/main/03.jpg"],
+                      delay: [4000, 4000, 4000]
+                  }
+              );
+          </script>
+
+</div>

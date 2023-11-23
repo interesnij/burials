@@ -17,11 +17,8 @@
         <link rel="shortcut icon" href="/static/images/main/favicon.ico">
 
         <!-- Css -->
-        <link href="/static/libs/tobii/css/tobii.min.css" rel="stylesheet">
         <link href="/static/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-        <!-- Main Css -->
-        <link href="/static/libs/@iconscout/unicons/css/line.css" type="text/css" rel="stylesheet">
-        <link href="/static/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+        <link href="/static/libs/@iconscout/unicons/css/line.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/styles/tailwind.min.css">
 
     </head>
