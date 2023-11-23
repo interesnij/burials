@@ -309,7 +309,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/place_page.stpl")]
+            #[template(path = "mobile/place/place.stpl")]
             struct Template {
                 request_user: User,
                 place:        Place,
