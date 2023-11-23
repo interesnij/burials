@@ -65,7 +65,7 @@ CREATE TABLE cities (
 CREATE INDEX cities_country_idx ON cities (country_id);
 CREATE INDEX cities_region_idx ON cities (region_id);
 
-CREATE TABLE  (
+CREATE TABLE districts (
     id         SERIAL PRIMARY KEY,
     name       VARCHAR(100) NOT NULL,
     region_id  INT, 
