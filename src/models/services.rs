@@ -72,8 +72,8 @@ impl Service {
         return 1;
     }
     pub fn edit (
+        &self,
         user_id:     i32,
-        object_id:   i32,
         city_id:     i32,
         title:       String,
         description: String,
@@ -83,20 +83,16 @@ impl Service {
         use crate::schema::services::dsl::services;
 
         let _connection = establish_connection();
-        let _service = crate::utils::get_service(object_id).expect("E.");
-        let _user = crate::utils::get_user(user_id).expect("E.");
-        let _organization = crate::utils::get_organization(_service.organization_id).expect("E.");
-        if _user.perm > 10 || _organization.user_id == user_id {
-            diesel::update(&_service)
-                .set((
-                    schema::services::city_id.eq(city_id),
-                    schema::services::title.eq(title),
-                    schema::services::description.eq(description),
-                    schema::services::image.eq(image),
-                    schema::services::price.eq(price),
-                ))
-                .execute(&_connection)
-                .expect("Error.");
+        diesel::update(self)
+            .set((
+                schema::services::city_id.eq(city_id),
+                schema::services::title.eq(title),
+                schema::services::description.eq(description),
+                schema::services::image.eq(image),
+                schema::services::price.eq(price),
+            ))
+            .execute(&_connection)
+            .expect("Error.");
         }
         return 1;
     }

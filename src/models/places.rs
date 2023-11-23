@@ -121,8 +121,8 @@ impl Place {
         return 1;
     }
     pub fn edit (
+        &self,
         user_id:     i32,
-        object_id:   i32,
         city_id:     Option<i32>,
         district_id: Option<i32>,
         region_id:   Option<i32>,
@@ -138,10 +138,9 @@ impl Place {
         lon:         f64,
     ) -> i16 {
         let _connection = establish_connection();
-        let _place = crate::utils::get_place(object_id).expect("E.");
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 10 {
-            diesel::update(&_place)
+            diesel::update(self)
                 .set((
                     schema::places::city_id.eq(city_id),
                     schema::places::district_id.eq(district_id),

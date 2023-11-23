@@ -58,21 +58,16 @@ impl Review {
         return 1;
     }
     pub fn edit (
-        user_id:   i32,
-        object_id: i32,
-        content:   String,
+        &self, content:   String,
     ) -> i16 {
         use crate::schema::reviews::dsl::reviews;
 
         let _connection = establish_connection();
-        let _review = crate::utils::get_review(object_id).expect("E.");
-        let _user = crate::utils::get_user(user_id).expect("E.");
-        if _user.perm > 10 || _review.user_id == user_id {
-            diesel::update(&_review)
-                .set(schema::reviews::content.eq(content))
-                .execute(&_connection)
-                .expect("Error.");
-        }
+        diesel::update(self)
+            .set(schema::reviews::content.eq(content))
+            .execute(&_connection)
+            .expect("Error.");
+        
         return 1;
     }
     pub fn delete(&self) -> i16 {

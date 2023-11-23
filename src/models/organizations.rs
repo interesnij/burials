@@ -93,6 +93,7 @@ impl Organization {
         return 1;
     }
     pub fn edit (
+        &self,
         user_id:     i32,
         object_id:   i32,
         name:        String,
@@ -107,11 +108,7 @@ impl Organization {
         use crate::schema::organizations::dsl::organizations;
 
         let _connection = establish_connection();
-        let _user = crate::utils::get_user(user_id).expect("E.");
-        let _organization = crate::utils::get_organization(object_id).expect("E.");
-        if _user.perm > 10 {
-
-            diesel::update(&_organization)
+            diesel::update(self)
                 .set(( 
                     schema::organizations::name.eq(name),
                     schema::organizations::description.eq(description),
@@ -124,7 +121,7 @@ impl Organization {
                 .execute(&_connection)
                 .expect("Error.");
 
-            diesel::delete(schema::organizations_places::table.filter(schema::organizations_places::organization_id.eq(_organization.id)))
+            diesel::delete(schema::organizations_places::table.filter(schema::organizations_places::organization_id.eq(self.id)))
                 .execute(&_connection)
                 .expect("E");
 
@@ -139,7 +136,7 @@ impl Organization {
                     i.lon,
                 );
             }
-        }
+        
         return 1;
     }
     pub fn delete(&self) -> i16 {
