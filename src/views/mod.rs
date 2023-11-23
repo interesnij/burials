@@ -1,11 +1,11 @@
 pub mod auth;
 pub mod deceaseds;
-//pub mod organization;
+//pub mod organizations;
 pub mod page;
-pub mod place;
+pub mod places;
 //pub mod progs;
-//pub mod service;
-pub mod user;
+//pub mod services;
+pub mod users;
 
 
 pub use self::{
