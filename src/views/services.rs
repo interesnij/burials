@@ -219,7 +219,7 @@ pub async fn all_service_place_page(req: HttpRequest, _id: web::Path<i32>) -> ac
 //Получение всех Услуг одного города
 pub async fn all_service_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
-    let _city = block(move || City::find_by_id(*_id)).await?;
+    let _city = block(move || Citie::find_by_id(*_id)).await?;
     let _organization = block(move || Service::get_all_service()).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {

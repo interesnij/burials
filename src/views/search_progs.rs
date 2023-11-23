@@ -261,9 +261,9 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
         if get_request_user(&req).await.is_some() {
             let _request_user = get_request_user(&req).await.unwrap();
             let is_admin = _request_user.is_superuser();
-            let city_list = City::search_city(&_q_standalone, 20, offset.into(), is_admin);
+            let city_list = Citie::search_city(&_q_standalone, 20, offset.into(), is_admin);
 
-            if City::search_city(&_q_standalone, 1, next_item.into(), is_admin).len() > 0 {
+            if Citie::search_city(&_q_standalone, 1, next_item.into(), is_admin).len() > 0 {
                 next_page_number = page + 1;
             }
 
@@ -319,9 +319,9 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
         }
         else {
             let is_admin = false;
-            let city_list = City::search_city(&_q_standalone, 20, offset.into(), is_admin);
+            let city_list = Citie::search_city(&_q_standalone, 20, offset.into(), is_admin);
 
-            if City::search_city(&_q_standalone, 1, next_item.into(), is_admin).len() > 0 {
+            if Citie::search_city(&_q_standalone, 1, next_item.into(), is_admin).len() > 0 {
                 next_page_number = page + 1;
             }
 

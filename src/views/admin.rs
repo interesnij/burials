@@ -264,7 +264,7 @@ pub async fn create_region_page(req: HttpRequest) -> actix_web::Result<HttpRespo
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let country_list = Country::get_all();
+        let country_list = Countrie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_region.stpl")]
@@ -292,7 +292,7 @@ pub async fn edit_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_we
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let object = crate::utils::get_region(*_id).expect("E.");
-        let country_list = Country::get_all();
+        let country_list = Countrie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_region.stpl")]
@@ -322,7 +322,7 @@ pub async fn create_district_page(req: HttpRequest) -> actix_web::Result<HttpRes
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let country_list = Country::get_all();
+        let country_list = Countrie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_district.stpl")]
@@ -350,7 +350,7 @@ pub async fn edit_district_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let object = crate::utils::get_district(*_id).expect("E.");
-        let country_list = Country::get_all();
+        let country_list = Countrie::get_all();
         let region_list = Region::get_country_all(object.country_id);
 
         #[derive(TemplateOnce)]
@@ -383,7 +383,7 @@ pub async fn create_city_page(req: HttpRequest) -> actix_web::Result<HttpRespons
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let country_list = Country::get_all();
+        let country_list = Countrie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_city.stpl")]
@@ -411,7 +411,7 @@ pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web:
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let object = crate::utils::get_city(*_id).expect("E.");
-        let country_list = Country::get_all();
+        let country_list = Countrie::get_all();
         let region_list = Region::get_country_all(object.country_id);
 
         #[derive(TemplateOnce)]
@@ -489,7 +489,7 @@ pub async fn create_city(req: HttpRequest, mut payload: Multipart) -> impl Respo
         let _request_user = _user.unwrap();
         if _request_user.is_admin() {
             let form = crate::utils::district_form(payload.borrow_mut()).await;
-            City::create (  
+            Citie::create (  
                 form.region_id,
                 form.country_id,
                 form.name.clone(),
@@ -583,7 +583,7 @@ pub async fn create_country(req: HttpRequest, mut payload: Multipart) -> impl Re
         let _request_user = _user.unwrap();
         if _request_user.is_admin() {
             let form = crate::utils::country_form(payload.borrow_mut()).await;
-            Country::create (  
+            Countrie::create (  
                 form.name.clone(),
                 form.lat,
                 form.lon,
@@ -600,7 +600,6 @@ pub async fn edit_country(req: HttpRequest, mut payload: Multipart, _id: web::Pa
         if _request_user.is_admin() {
             let form = crate::utils::country_form(payload.borrow_mut()).await;
             _country.edit (
-                form.country_id,
                 form.name.clone(),
                 form.lat,
                 form.lon,

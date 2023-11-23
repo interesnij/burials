@@ -597,7 +597,7 @@ pub struct RegionForms {
     pub lon:        Option<f64>,
 }
 // форма для элементов 
-pub async fn district_form(payload: &mut Multipart) -> RegionForms {
+pub async fn region_form(payload: &mut Multipart) -> RegionForms {
     let mut form: RegionForms = RegionForms {
         name:       "".to_string(),
         country_id: 0,
