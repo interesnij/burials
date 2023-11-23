@@ -32,7 +32,7 @@ use crate::utils::{
 };
 use std::borrow::BorrowMut;
 use crate::models::{
-    Place, District, Citie, Region,
+    Place, District, Citie, Region, Countrie,
 };
 
 
@@ -216,7 +216,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/place/all_place_countrieы.stpl")]
+            #[template(path = "desctop/place/all_place_countries.stpl")]
             struct Template {
                 request_user: User,
                 country:      Countrie,
@@ -309,7 +309,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/place_page")]
+            #[template(path = "mobile/place/place_page.stpl")]
             struct Template {
                 request_user: User,
                 place:        Place,

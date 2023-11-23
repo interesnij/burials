@@ -11,10 +11,10 @@ pub mod users;
 pub use self::{
     auth::*,
     deceaseds::*,
-    //organization::*,
+    //organizations::*,
     page::*,
-    place::*,
+    places::*,
     //progs::*,
-    //service::*,
-    user::*,
+    //services::*,
+    users::*,
 };
