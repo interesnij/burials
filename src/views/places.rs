@@ -494,7 +494,7 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/edit_deceased.stpl")]
+            #[template(path = "mobile/place/edit_place.stpl")]
             struct Template {
                 request_user: User,
                 place:        Place,
