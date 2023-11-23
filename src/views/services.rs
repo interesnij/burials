@@ -229,7 +229,7 @@ pub async fn all_service_city_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[template(path = "desctop/service/all_service_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<City>,
+                city:          Vec<Citie>,
                 all_service:  Vec<Service>,
             }
             let body = Template {
@@ -246,7 +246,7 @@ pub async fn all_service_city_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[template(path = "mobile/service/all_service_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<City>,
+                city:          Vec<Citie>,
                 all_service:  Vec<Service>,
             }
             let body = Template {
@@ -265,7 +265,7 @@ pub async fn all_service_city_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[template(path = "desctop/service/anon_all_service_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<City>,
+                city:          Vec<Citie>,
                 all_service:  Vec<Service>,
             }
             let body = Template {
@@ -282,7 +282,7 @@ pub async fn all_service_city_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[template(path = "mobile/service/anon_all_service_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:           Vec<City>,
+                city:           Vec<Citie>,
                 all_service:       Vec<Service>,
             }
             let body = Template {

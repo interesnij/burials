@@ -33,7 +33,7 @@ pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::R
     let template_types = get_template(&req);
 
     
-        use crate::models::{Deceased, City, Place, Organization, Service, Deceased};
+        use crate::models::{Deceased, Citie, Place, Organization, Service, Deceased};
 
         let _connection = establish_connection();
 
@@ -61,7 +61,7 @@ pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::R
                     deceased_list:     Vec<Deceased>,
                     place_list:  Vec<Place>,
                     service_list:     Vec<Service>,
-                    city_list:     Vec<City>,
+                    city_list:     Vec<Citie>,
                     organization_list:    Vec<Organization>,
 
                     deceased_count:    usize,
@@ -101,7 +101,7 @@ pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::R
                     deceased_list:     Vec<Deceased>,
                     place_list:  Vec<Place>,
                     service_list:     Vec<Service>,
-                    city_list:     Vec<City>,
+                    city_list:     Vec<Citie>,
                     organization_list:    Vec<Organization>,
 
                     deceased_count:    usize,
@@ -154,7 +154,7 @@ pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::R
                     deceased_list:     Vec<Deceased>,
                     place_list:  Vec<Place>,
                     service_list:     Vec<Service>,
-                    city_list:     Vec<City>,
+                    city_list:     Vec<Citie>,
                     organization_list:    Vec<Organization>,
 
                     deceased_count:    usize,
@@ -193,7 +193,7 @@ pub async fn search_page(req: HttpRequest, q: web::Path<String>) -> actix_web::R
                     deceased_list:     Vec<Deceased>,
                     place_list:  Vec<Place>,
                     service_list:     Vec<Service>,
-                    city_list:     Vec<City>,
+                    city_list:     Vec<Citie>,
                     organization_list:    Vec<Organization>,
 
                     deceased_count:    usize,
@@ -273,7 +273,7 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
                 #[template(path = "desctop/search/city.stpl")]
                 struct Template {
                     request_user:     User,
-                    city_list:       Vec<City>,
+                    city_list:       Vec<Citie>,
                     city_count:      usize,
                     is_ajax:          i32,
                     q:                String,
@@ -297,7 +297,7 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
                 #[derive(TemplateOnce)]
                 #[template(path = "mobile/search/city.stpl")]
                 struct Template {
-                    city_list:       Vec<City>,
+                    city_list:       Vec<Citie>,
                     city_count:      usize,
                     is_ajax:          i32,
                     q:                String,
@@ -330,7 +330,7 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
                 #[derive(TemplateOnce)]
                 #[template(path = "desctop/search/anon_city.stpl")]
                 struct Template {
-                    city_list:       Vec<City>,
+                    city_list:       Vec<Citie>,
                     city_count:      usize,
                     is_ajax:          i32,
                     q:                String,
@@ -353,7 +353,7 @@ pub async fn search_city_page(req: HttpRequest, q: web::Path<String>) -> actix_w
                 #[derive(TemplateOnce)]
                 #[template(path = "mobile/search/anon_city.stpl")]
                 struct Template {
-                    city_list:       Vec<City>,
+                    city_list:       Vec<Citie>,
                     city_count:      usize,
                     is_ajax:          i32,
                     q:                String,

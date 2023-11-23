@@ -142,7 +142,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[template(path = "desctop/organization/all_organization_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<City>,
+                city:          Vec<Citie>,
                 all_organization:  Vec<Organization>,
             }
             let body = Template {
@@ -159,7 +159,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[template(path = "mobile/organization/all_organization_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<City>,
+                city:          Vec<Citie>,
                 all_organization:  Vec<Organization>,
             }
             let body = Template {
@@ -178,7 +178,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[template(path = "desctop/organization/anon_all_organization_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:          Vec<City>,
+                city:          Vec<Citie>,
                 all_organization:  Vec<Organization>,
             }
             let body = Template {
@@ -195,7 +195,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[template(path = "mobile/organization/anon_all_organization_city_page.stpl")]
             struct Template {
                 request_user:   User,
-                city:           Vec<City>,
+                city:           Vec<Citie>,
                 all_organization:       Vec<Organization>,
             }
             let body = Template {

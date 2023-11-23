@@ -123,7 +123,7 @@ pub async fn load_region_districts(req: HttpRequest, _id: web::Path<i32>) -> act
         #[derive(TemplateOnce)]
         #[template(path = "desctop/load/load_region_districts.stpl")]
         struct Template { 
-            object_list: Vec<Region>,
+            object_list: Vec<District>,
         }
         let body = Template {
             object_list: object_list,
@@ -242,7 +242,7 @@ pub async fn edit_country_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         #[template(path = "desctop/admin/edit_country.stpl")]
         struct Template { 
             request_user: User,
-            object:       Country,
+            object:       Countrie,
         }
         let body = Template {
             request_user: _request_user,
@@ -270,7 +270,7 @@ pub async fn create_region_page(req: HttpRequest) -> actix_web::Result<HttpRespo
         #[template(path = "desctop/admin/create_region.stpl")]
         struct Template { 
             request_user: User,
-            country_list: Vec<Country>,
+            country_list: Vec<Countrie>,
         }
         let body = Template {
             request_user: _request_user,
@@ -299,7 +299,7 @@ pub async fn edit_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_we
         struct Template { 
             request_user: User,
             object:       Region,
-            country_list: Vec<Country>,
+            country_list: Vec<Countrie>,
         }
         let body = Template {
             request_user: _request_user,
@@ -328,7 +328,7 @@ pub async fn create_district_page(req: HttpRequest) -> actix_web::Result<HttpRes
         #[template(path = "desctop/admin/create_district.stpl")]
         struct Template { 
             request_user: User,
-            country_list: Vec<Country>,
+            country_list: Vec<Countrie>,
         }
         let body = Template {
             request_user: _request_user,
@@ -358,7 +358,7 @@ pub async fn edit_district_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
         struct Template { 
             request_user: User,
             object:       District,
-            country_list: Vec<Country>,
+            country_list: Vec<Countrie>,
             region_list:  Vec<Region>,
         }
         let body = Template {
@@ -389,7 +389,7 @@ pub async fn create_city_page(req: HttpRequest) -> actix_web::Result<HttpRespons
         #[template(path = "desctop/admin/create_city.stpl")]
         struct Template { 
             request_user: User,
-            country_list: Vec<Country>,
+            country_list: Vec<Countrie>,
         }
         let body = Template {
             request_user: _request_user,
@@ -418,8 +418,8 @@ pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web:
         #[template(path = "desctop/admin/edit_city.stpl")]
         struct Template { 
             request_user: User,
-            object:       City,
-            country_list: Vec<Country>,
+            object:       Citie,
+            country_list: Vec<Countrie>,
             region_list:  Vec<Region>,
         }
         let body = Template {
