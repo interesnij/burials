@@ -308,6 +308,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
         else {
+            
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/place.stpl")]
             struct Template {
