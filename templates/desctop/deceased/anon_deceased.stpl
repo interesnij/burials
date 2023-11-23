@@ -37,15 +37,11 @@
                             </div>
 
                             <div class="mt-6">
-                                <a href="" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mr-2">
-                                
-                                Новосильское кладбище
-                                
+                                <a href="/place/{id}/" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mr-2">
+                                    Новосильское кладбище
                                 </a>
-                                <a href="" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">
-                                
-                                 г.Сочи
-                                 
+                                <a href="/city/{id}/" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md">
+                                    г.Сочи
                                  </a>
                             </div>
 
@@ -61,8 +57,6 @@
                                 </ul>
 
                                 <div id="StarterContent" class="mt-6">
-                                    
-            
                                     <div class="hidden" id="wednesday" role="tabpanel" aria-labelledby="wednesday-tab">
                                         <div class="grid grid-cols-1">                                      
                                             <div class="rounded-md bg-slate-50 dark:bg-slate-800 shadow dark:shadow-gray-800">
@@ -117,10 +111,10 @@
                     
                                                 <div class="flex">
                                                     <div class="p-1 w-1/2">
-                                                        <a href="marshrut.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">Маршрут</a>
+                                                        <a class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">Маршрут</a>
                                                     </div>
                                                     <div class="p-1 w-1/2">
-                                                        <a href="marshrut.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">На карте</a>
+                                                        <a class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">На карте</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,44 +135,31 @@
                                         <div class="grid grid-cols-1">
                                             <div class="rounded-md shadow dark:shadow-gray-800 p-6">
                                                 <div class="grid md:grid-cols-5 grid-cols-2 justify-center mx-auto mt-8">
-
-
                                                     <div class="group relative block overflow-hidden transition-all duration-500">
-                                                        <a href="static/images/deceased/1/2.jpg" class="lightbox transition-all duration-500 group-hover:scale-105 tobii-zoom" title="">
-                                                            
-                                                            
-                                                            <img src="static/images/deceased/1/2.jpg" class="" alt="Gym Images">
-
-
-
-                                                        <div class="tobii-zoom__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 16v5h-5"></path><path d="M8 21H3v-5"></path><path d="M16 3h5v5"></path><path d="M3 8V3h5"></path></svg></div></a>
+                                                        <a href="/static/images/deceased/1/2.jpg" class="lightbox transition-all duration-500 group-hover:scale-105 tobii-zoom" title="">
+                                                            <img src="static/images/deceased/1/2.jpg" class="" alt="Image">
+                                                            <div class="tobii-zoom__icon">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                                                    <path d="M21 16v5h-5"></path><path d="M8 21H3v-5"></path><path d="M16 3h5v5"></path><path d="M3 8V3h5"></path>
+                                                                </svg>
+                                                            </div>
+                                                        </a>
                                                     </div>
-                                                    
-
-                                                    
-
-
-
 
                                                 </div>
                                             <br>
-
                                                 <div class="p-1 w-1/2">
-                                                    <a href="load_img.html" class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">Загрузить еще</a>
+                                                    <a class="btn bg-indigo-600 hover:bg-indigo-700 text-white rounded-md w-full">Загрузить еще</a>
                                                 </div>  
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div><!--end col-->
+                    </div>
 
-
-                   
-
-                </div><!--end grid-->
+                </div>
 
 
 
@@ -359,7 +340,7 @@
                                                     <img src="static/images/user/01.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
                     
                                                     <div class="pl-4">
-                                                        <a href="" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
+                                                        <a href="/user/{id}/" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
                                                         
                                                         
                                                         >Иванов Иван
@@ -378,37 +359,7 @@
                                                     
                                                 </div>
                                             </li>
-                    
-                                            <li class="rounded-lg shadow dark:shadow-gray-800 p-6">
-                                                <div class="flex items-center pb-6 border-b border-gray-100 dark:border-gray-800">
-                                                    <img src="static/images/user/05.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
-                    
-                                                    <div class="pl-4">
-                                                        <a href="" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
-                                                        
-                                                        >Сидорова Анна
-                                                        
-                                                        </a>
-                                                        <p class="text-slate-400">Пользователь</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <div class="mt-6">
-                                                    <p class="text-slate-400">
-                                                    
-                                                    "В память о нашем дорогом друге. Ты был с нами в радости и горе, и мы никогда не забудем твою улыбку и доброту"
-                                                    
-                                                    </p>
-                                                    
-                                                </div>
-                                            </li>
-
                                         </ul>
-
-
-
-
-
 
                                     </div>
                                   </div>
@@ -431,10 +382,10 @@
 
 
 
-                                <img src="static/images/service/service1.jpg" alt="">
+                                <img src="/static/images/service/service1.jpg" alt="">
         
                                 <div class="content p-6">
-                                    <a href="service_all.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                                    <a href="/organization/{id}/services/" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
                                     
                                     Памятники/Надгробия
                                     
@@ -448,7 +399,7 @@
                                     <div class="mt-4">
                                         <a 
                                         
-                                        href="service_all.html" 
+                                        href="/organization/{id}/services/" 
                                         
                                         class="btn btn-link font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Подробнее <i class="uil uil-arrow-right"></i></a>
                                     </div>

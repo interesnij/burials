@@ -14,11 +14,11 @@
             <div class="absolute text-center z-10 bottom-5 start-0 end-0 mx-3">
                 <ul class="tracking-[0.5px] mb-0 inline-block">
                     <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600">
-                    <a href="index.html">Главная</a></li>
+                    <a href="/">Главная</a></li>
                     <li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
                     
                     <li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600">
-                    <a href="">Усопшие</a></li>
+                    <a>Усопшие</a></li>
                     <li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
                     
                     <li class="inline-block uppercase text-[13px] font-bold text-indigo-600" aria-current="page">Регистрация усопшего</li>

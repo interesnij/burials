@@ -120,7 +120,7 @@ impl Place {
         }
         return 1;
     }
-    pub fn edit (
+    pub fn edit ( 
         &self,
         user_id:     i32,
         city_id:     Option<i32>,

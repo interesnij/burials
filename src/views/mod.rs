@@ -6,6 +6,7 @@ pub mod places;
 //pub mod progs;
 //pub mod services;
 pub mod users;
+pub mod admin;
 
 
 pub use self::{
@@ -17,4 +18,5 @@ pub use self::{
     //progs::*,
     //services::*,
     users::*,
+    admin::*,
 };

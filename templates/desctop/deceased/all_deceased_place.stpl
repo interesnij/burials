@@ -118,19 +118,19 @@
                         <% for deceased in object_list.iter() { %>
                         <div class="single-properties-box-style1">
                           <div class="img-holder">
-                            <img src="static/images/deceased/deceased1.jpg" alt="" />
+                            <img src="/static/images/deceased/deceased1.jpg" alt="" />
                           </div>
 
                           <div class="text-holder">
                             <div class="top">
                               <div class="dot"></div>
 
-                              <p><a href="deceased_profile.html">Усопший</a></p>
+                              <p><a href="/deceased/{id}/">Усопший</a></p>
                            
                             </div>
                             <h3>
                             
-                              <a href="deceased_profile.html">
+                              <a href="/deceased/{id}/">
                               <%= deceased.first_name %>                            
                               </a>
 
@@ -161,29 +161,6 @@
                     </div>
                   </div>
                 </div>
-
-<!-----------------------------------------------ПАГИНАЦИЯ--->
-
-               <div class="row">
-                  <div class="col-xl-12">
-                    <ul class="styled-pagination clearfix">
-                      <li class="arrow prev">
-                        <a href="#">
-                          <span class="icon-left-arrow left"></span>Назад
-                        </a>
-                      </li>
-                      <li class="active"><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li class="arrow next">
-                        <a href="#">
-                          Вперед<span class="icon-right-arrow-1 right"></span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
               </div>
             </div>
  

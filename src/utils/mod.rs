@@ -31,7 +31,7 @@ use std::sync::{Arc, Mutex};
 use crate::models::{
     User, Deceased, Organization, 
     Service, Place, Review,
-    Countrie, Region, Citie,
+    Countrie, Region, Citie, District,
 };
 
 
@@ -178,6 +178,13 @@ pub fn get_city(pk: i32) -> Result<Citie, Error> {
     return Ok(cities
         .filter(schema::cities::id.eq(pk))
         .first::<Citie>(&_connection)?);
+}
+pub fn get_district(pk: i32) -> Result<District, Error> {
+    use crate::schema::districts::dsl::districts;
+    let _connection = establish_connection();
+    return Ok(districts
+        .filter(schema::districts::id.eq(pk))
+        .first::<District>(&_connection)?);
 }
 
 pub fn get_limit_offset (

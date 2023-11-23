@@ -1,0 +1,622 @@
+use actix_web::{
+    web,
+    web::block,
+    HttpRequest,
+    HttpResponse,
+    Responder,
+    error::InternalError,
+    http::StatusCode,
+};
+use crate::errors::Error;
+use crate::models::{
+    Deceased,
+    Organization,
+    Review,
+    Service,
+    User,
+};
+use sailfish::TemplateOnce;
+use diesel::{
+    RunQueryDsl,
+    ExpressionMethods,
+    QueryDsl,
+    PgConnection,
+    Connection,
+};
+use actix_multipart::Multipart;
+use serde::{Deserialize, Serialize};
+use crate::schema;
+use crate::utils::{
+    establish_connection,
+    get_request_user,
+};
+use std::borrow::BorrowMut;
+use crate::models::{
+    District, Citie, Region, Countrie,
+};
+
+pub fn admin_routes(config: &mut web::ServiceConfig) {
+    config.route("/load_countries/", web::get().to(load_countries));
+    config.route("/load_regions/{id}/", web::get().to(load_regions));
+    config.route("/load_region_districts/{id}/", web::get().to(load_region_districts));
+    config.route("/load_country_districts/{id}/", web::get().to(load_country_districts));
+    config.route("/load_region_cities/{id}/", web::get().to(load_region_cities));
+    config.route("/load_country_cities/{id}/", web::get().to(load_country_cities));
+
+    config.route("/create_country/", web::get().to(create_country_page));
+    config.route("/edit_country/{id}/", web::get().to(edit_country_page));
+    config.route("/create_region/", web::get().to(create_region_page));
+    config.route("/edit_region/{id}/", web::get().to(edit_region_page));
+    config.route("/create_district/", web::get().to(create_district_page));
+    config.route("/edit_district/{id}/", web::get().to(edit_district_page));
+    config.route("/create_city/", web::get().to(create_city_page));
+    config.route("/edit_city/{id}/", web::get().to(edit_city_page));
+
+    config.route("/create_country/", web::post().to(create_country));
+    config.route("/edit_country/{id}/", web::post().to(edit_country));
+    config.route("/delete_country/{id}/", web::post().to(delete_country));
+    config.route("/create_region/", web::post().to(create_region));
+    config.route("/edit_region/{id}/", web::post().to(edit_region));
+    config.route("/delete_region/{id}/", web::post().to(delete_region));
+    config.route("/create_district/", web::post().to(create_district));
+    config.route("/edit_district/{id}/", web::post().to(edit_district));
+    config.route("/delete_district/{id}/", web::post().to(delete_district));
+    config.route("/create_city/", web::post().to(create_city));
+    config.route("/edit_city/{id}/", web::post().to(edit_city));
+    config.route("/delete_region/{id}/", web::post().to(delete_city));
+}
+
+
+pub async fn load_countries(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let object_list = Countrie::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/load/load_countries.stpl")]
+        struct Template { 
+            object_list: Vec<Countrie>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn load_regions(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let object_list = Region::get_country_all(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/load/load_regions.stpl")]
+        struct Template { 
+            object_list: Vec<Region>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn load_region_districts(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let object_list = District::get_region_all(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/load/load_region_districts.stpl")]
+        struct Template { 
+            object_list: Vec<Region>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn load_country_districts(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let object_list = District::get_country_all(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/load/load_country_districts.stpl")]
+        struct Template { 
+            object_list: Vec<Region>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+
+pub async fn load_region_cities(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let object_list = Citie::get_region_all(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/load/load_region_cities.stpl")]
+        struct Template { 
+            object_list: Vec<Citie>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn load_country_cities(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let object_list = Citie::get_country_all(*_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/load/load_country_cities.stpl")]
+        struct Template { 
+            object_list: Vec<Citie>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn create_country_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/create_country.stpl")]
+        struct Template { 
+            request_user: User,
+        }
+        let body = Template {
+            request_user: _request_user,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn edit_country_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let object = crate::utils::get_country(*_id).expect("E.");
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/edit_country.stpl")]
+        struct Template { 
+            request_user: User,
+            object:       Country,
+        }
+        let body = Template {
+            request_user: _request_user,
+            object:       object,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn create_region_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let country_list = Country::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/create_region.stpl")]
+        struct Template { 
+            request_user: User,
+            country_list: Vec<Country>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            country_list: country_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn edit_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let object = crate::utils::get_region(*_id).expect("E.");
+        let country_list = Country::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/edit_region.stpl")]
+        struct Template { 
+            request_user: User,
+            object:       Region,
+            country_list: Vec<Country>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            object:       object,
+            country_list: country_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn create_district_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let country_list = Country::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/create_district.stpl")]
+        struct Template { 
+            request_user: User,
+            country_list: Vec<Country>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            country_list: country_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn edit_district_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let object = crate::utils::get_district(*_id).expect("E.");
+        let country_list = Country::get_all();
+        let region_list = Region::get_country_all(object.country_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/edit_district.stpl")]
+        struct Template { 
+            request_user: User,
+            object:       District,
+            country_list: Vec<Country>,
+            region_list:  Vec<Region>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            object:       object,
+            country_list: country_list,
+            region_list:  region_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn create_city_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let country_list = Country::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/create_city.stpl")]
+        struct Template { 
+            request_user: User,
+            country_list: Vec<Country>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            country_list: country_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let object = crate::utils::get_city(*_id).expect("E.");
+        let country_list = Country::get_all();
+        let region_list = Region::get_country_all(object.country_id);
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/edit_city.stpl")]
+        struct Template { 
+            request_user: User,
+            object:       City,
+            country_list: Vec<Country>,
+            region_list:  Vec<Region>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            object:       object,
+            country_list: country_list,
+            region_list:  region_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+
+pub async fn create_district(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let _user = get_request_user(&req).await;
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
+        if _request_user.is_admin() {
+            let form = crate::utils::district_form(payload.borrow_mut()).await;
+            District::create (  
+                form.region_id,
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    }; 
+    HttpResponse::Ok()
+}
+pub async fn edit_district(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _district = crate::utils::get_district(*_id).expect("E."); 
+        if _request_user.is_admin() {
+            let form = crate::utils::district_form(payload.borrow_mut()).await;
+            _district.edit (
+                form.region_id,
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_district(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _district = crate::utils::get_district(*_id).expect("E.");
+        if _request_user.is_admin() {
+            _district.delete();
+        }
+    };
+    HttpResponse::Ok()
+}
+
+
+pub async fn create_city(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let _user = get_request_user(&req).await;
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
+        if _request_user.is_admin() {
+            let form = crate::utils::district_form(payload.borrow_mut()).await;
+            City::create (  
+                form.region_id,
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    }; 
+    HttpResponse::Ok()
+}
+pub async fn edit_city(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _city = crate::utils::get_city(*_id).expect("E."); 
+        if _request_user.is_admin() {
+            let form = crate::utils::district_form(payload.borrow_mut()).await;
+            _city.edit (
+                form.region_id,
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_city(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _city = crate::utils::get_city(*_id).expect("E.");
+        if _request_user.is_admin() {
+            _city.delete();
+        }
+    };
+    HttpResponse::Ok()
+}
+
+
+pub async fn create_region(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let _user = get_request_user(&req).await;
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
+        if _request_user.is_admin() {
+            let form = crate::utils::region_form(payload.borrow_mut()).await;
+            Region::create (  
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    }; 
+    HttpResponse::Ok()
+}
+pub async fn edit_region(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _region = crate::utils::get_region(*_id).expect("E."); 
+        if _request_user.is_admin() {
+            let form = crate::utils::region_form(payload.borrow_mut()).await;
+            _region.edit (
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_region(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _region = crate::utils::get_region(*_id).expect("E.");
+        if _request_user.is_admin() {
+            _region.delete();
+        }
+    };
+    HttpResponse::Ok()
+}
+
+
+pub async fn create_country(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let _user = get_request_user(&req).await;
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
+        if _request_user.is_admin() {
+            let form = crate::utils::country_form(payload.borrow_mut()).await;
+            Country::create (  
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    }; 
+    HttpResponse::Ok()
+}
+pub async fn edit_country(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _country = crate::utils::get_country(*_id).expect("E."); 
+        if _request_user.is_admin() {
+            let form = crate::utils::country_form(payload.borrow_mut()).await;
+            _country.edit (
+                form.country_id,
+                form.name.clone(),
+                form.lat,
+                form.lon,
+            );
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_country(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _country = crate::utils::get_country(*_id).expect("E.");
+        if _request_user.is_admin() {
+            _country.delete();
+        }
+    };
+    HttpResponse::Ok()
+}

@@ -5,7 +5,7 @@
             <div class="container">
                 <div class="flex justify-center">
                     <div class="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
-                        <a href="index.html"><img src="/static/images/main/logo-icon.png" class="mx-auto" alt=""></a>
+                        <a href="/"><img src="/static/images/main/logo-icon.png" class="mx-auto" alt=""></a>
                         <h5 class="my-6 text-xl font-semibold">Регистрация</h5>
                         <form class="text-left">
                             <div class="grid grid-cols-1">
@@ -27,7 +27,7 @@
                                     <div class="form-checkbox flex items-center mb-0">
                                         <input class="mr-2 border border-inherit w-[14px] h-[14px]" type="checkbox" value="" id="AcceptT&C">
                                         <label class="form-check-label text-slate-400 ms-2" for="AcceptT&C">Я принимаю 
-                                            <a href="" class="text-primary">Условия</a>
+                                            <a href="/terms/" class="text-primary">Условия</a>
                                         </label>
                                     </div>
                                 </div>
