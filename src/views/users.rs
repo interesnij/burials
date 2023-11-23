@@ -34,7 +34,7 @@ pub fn user_routes(config: &mut web::ServiceConfig) {
 pub async fn user_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _user = crate::utils::get_user(*_id).expect("R.");
-    let user_id = get_request_user(&req).await;
+    let user_id = crate::utils::get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if is_desctop {

@@ -127,7 +127,7 @@ impl Organization {
 
             for i in places.into_iter() {
                 OrganizationsPlace::create (
-                    _organization.id, 
+                    self.id,
                     i.city_id,
                     i.district_id,
                     i.region_id,

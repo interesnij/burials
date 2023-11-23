@@ -219,7 +219,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[template(path = "desctop/place/all_place_countrieы.stpl")]
             struct Template {
                 request_user: User,
-                country:      Countries,
+                country:      Countrie,
                 all_places:   Vec<Place>,
             }
             let body = Template {
@@ -236,7 +236,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[template(path = "mobile/place/all_place_countries.stpl")]
             struct Template {
                 request_user: User,
-                country:      Countries,
+                country:      Countrie,
                 all_places:   Vec<Place>,
             }
             let body = Template {
@@ -254,7 +254,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_countries.stpl")]
             struct Template {
-                country:      Countries,
+                country:      Countrie,
                 all_places:   Vec<Place>,
             }
             let body = Template {
@@ -269,7 +269,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/anon_all_place_countries.stpl")]
             struct Template {
-                country:      Countries,
+                country:      Countrie,
                 all_places:   Vec<Place>,
             }
             let body = Template {
@@ -287,7 +287,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
 
 
 pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _place = crate::utils::get_place(*_id).expect("E."); 
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
@@ -328,11 +328,9 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_place.stpl")]
             struct Template {
-                request_user: User,
                 place:        Place,
             }
             let body = Template {
-                request_user: _request_user,
                 place:        _place,
             }
             .render_once()
@@ -343,11 +341,9 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/anon_place.stpl")]
             struct Template {
-                request_user: User,
                 place:        Place,
             }
             let body = Template {
-                request_user: _request_user,
                 place:        _place,
             }
             .render_once()
