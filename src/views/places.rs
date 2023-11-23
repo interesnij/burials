@@ -392,9 +392,8 @@ pub async fn edit_place(req: HttpRequest, mut payload: Multipart, _id: web::Path
         let _place = crate::utils::get_place(*_id).expect("E."); 
         if _request_user.id == _place.user_id || _request_user.is_admin() {
             let form = crate::utils::place_form(payload.borrow_mut()).await;
-            _place.edit (
+            _place.edit ( 
                 _request_user.id,
-                *_id,
                 form.city_id,
                 form.district_id,
                 form.region_id,
