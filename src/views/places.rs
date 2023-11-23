@@ -50,9 +50,9 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 
 
 pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
-    let _city = block(move || City::find_by_id(*_id)).await?;
-    let _place = block(move || Deceased::get_all_place()).await?;
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _city = crate::utils::get_city(*_id).expect("E."); 
+    let _places = block(move || Place::city_list(*_id)).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -60,13 +60,13 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_city.stpl")]
             struct Template {
-                request_user:   User,
-                city:          Vec<City>,
-                all_places:  Vec<Place>,
+                request_user: User,
+                city:         Citie,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                city:           _city,
+                request_user: _request_user,
+                city:         _city,
                 all_places:   _places,
             }
             .render_once()
@@ -77,13 +77,13 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/all_place_city.stpl")]
             struct Template {
-                request_user:   User,
-                city:          Vec<City>,
-                all_places:  Vec<Place>,
+                request_user: User,
+                city:         Citie,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                city:           _city,
+                request_user: _request_user,
+                city:         _city,
                 all_places:   _places,
             }
             .render_once()
@@ -96,13 +96,11 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
-                request_user:   User,
-                city:          Vec<City>,
-                all_places:  Vec<Place>,
+                city:         Citie,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                city:           _city,
+                city:         _city,
                 all_places:   _places,
             }
             .render_once()
@@ -113,14 +111,12 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/anon_all_place_city.stpl")]
             struct Template {
-                request_user:   User,
-                city:           Vec<City>,
-                all_places:       Vec<Place>,
+                city:         Citie,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                city:          _city,
-                all_places:  _places,
+                city:         _city,
+                all_places:   _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -131,23 +127,23 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
 //Получение всех кладбищ одного региона
 
 pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
-    let _region = block(move || Region::find_by_id(*_id)).await?;
-    let _place = block(move || Deceased::get_all_place()).await?;
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _region = crate::utils::get_region(*_id).expect("E."); 
+    let _places = block(move || Place::region_list(*_id)).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        if is_desctop {
+        if is_desctop { 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_region.stpl")]
             struct Template {
-                request_user:   User,
-                region:          Vec<Region>,
-                all_places:  Vec<Place>,
+                request_user: User,
+                region:       Region,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                region:           _region,
+                request_user: _request_user,
+                region:       _region,
                 all_places:   _places,
             }
             .render_once()
@@ -158,13 +154,13 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/all_place_region.stpl")]
             struct Template {
-                request_user:   User,
-                region:          Vec<Region>,
-                all_places:  Vec<Place>,
+                request_user: User,
+                region:       Region,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                region:           _region,
+                request_user: _request_user,
+                region:       _region,
                 all_places:   _places,
             }
             .render_once()
@@ -177,13 +173,11 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
-                request_user:   User,
-                region:          Vec<Region>,
-                all_places:  Vec<Place>,
+                region:       Region,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                region:           _region,
+                region:       _region,
                 all_places:   _places,
             }
             .render_once()
@@ -194,14 +188,12 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/anon_all_place_region.stpl")]
             struct Template {
-                request_user:   User,
-                region:           Vec<Region>,
-                all_places:       Vec<Place>,
+                region:       Region,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                region:          _region,
-                all_places:  _places,
+                region:       _region,
+                all_places:   _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -212,9 +204,9 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
 //Получение всех кладбищ одной страны
 
 pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
-    let _countries = block(move || Countries::find_by_id(*_id)).await?;
-    let _place = block(move || Deceased::get_all_place()).await?;
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _country = crate::utils::get_country(*_id).expect("E."); 
+    let _places = block(move || Place::country_list(*_id)).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -222,13 +214,13 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_countrieы.stpl")]
             struct Template {
-                request_user:   User,
-                countries:          Vec<Countries>,
-                all_places:  Vec<Place>,
+                request_user: User,
+                country:      Countries,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                countries:           _countries,
+                request_user: _request_user,
+                country:      _country,
                 all_places:   _places,
             }
             .render_once()
@@ -239,13 +231,13 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/all_place_countries.stpl")]
             struct Template {
-                request_user:   User,
-                countries:          Vec<Countries>,
-                all_places:  Vec<Place>,
+                request_user: User,
+                country:      Countries,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                countries:           _countries,
+                request_user: _request_user,
+                country:      _country,
                 all_places:   _places,
             }
             .render_once()
@@ -258,13 +250,11 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_countries.stpl")]
             struct Template {
-                request_user:   User,
-                countries:          Vec<Countries>,
-                all_places:  Vec<Place>,
+                country:      Countries,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                countries:           _countries,
+                country:      _country,
                 all_places:   _places,
             }
             .render_once()
@@ -275,14 +265,12 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/anon_all_place_countries.stpl")]
             struct Template {
-                request_user:   User,
-                countries:           Vec<Countries>,
-                all_places:       Vec<Place>,
+                country:      Countries,
+                all_places:   Vec<Place>,
             }
             let body = Template {
-                request_user:   _request_user,
-                countries:          _countries,
-                all_places:  _places,
+                country:      _country,
+                all_places:   _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -296,7 +284,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
 
 pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let is_desctop = is_desctop(&req);
-    let _place = block(move || Place::find_by_id(*_id)).await?;
+    let _place = crate::utils::get_place(*_id).expect("E."); 
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -304,12 +292,12 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/place.stpl")]
             struct Template {
-                request_user:   User,
-                place:       Place,
+                request_user: User,
+                place:        Place,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:      _place,
+                request_user: _request_user,
+                place:        _place,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -319,12 +307,12 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/place_page")]
             struct Template {
-                request_user:   User,
-                place:       Place,
+                request_user: User,
+                place:        Place,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:       _place,
+                request_user: _request_user,
+                place:        _place,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -336,12 +324,12 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_place.stpl")]
             struct Template {
-                request_user:   User,
-                place:       Place,
+                request_user: User,
+                place:        Place,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:       _place,
+                request_user: _request_user,
+                place:        _place,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -351,12 +339,12 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "mobile/place/anon_place.stpl")]
             struct Template {
-                request_user:   User,
-                place:       Place,
+                request_user: User,
+                place:        Place,
             }
             let body = Template {
-                request_user:   _request_user,
-                place:       _place,
+                request_user: _request_user,
+                place:        _place,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

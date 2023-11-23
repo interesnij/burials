@@ -174,17 +174,30 @@ impl Place {
         }
         return 1;
     }
-    pub fn list (
-        limit:    i64,
-        offset:   i64,
-    ) -> Vec<Place> {
+    pub fn country_list(country_id: i32) -> Vec<Place> {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
         return places
-            .order(schema::places::title.desc())
-            .limit(limit)
-            .offset(offset)
+            .filter(schema::places::country_id.eq(country_id)
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
+    pub fn region_list(region_id: i32) -> Vec<Place> {
+        use crate::schema::places::dsl::places;
+
+        let _connection = establish_connection();
+        return places
+            .filter(schema::places::region_id.eq(region_id)
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
+    pub fn city_list(city_id: i32) -> Vec<Place> {
+        use crate::schema::places::dsl::places;
+
+        let _connection = establish_connection();
+        return places
+            .filter(schema::places::city_id.eq(city_id)
             .load::<Place>(&_connection)
             .expect("E.");
     }
