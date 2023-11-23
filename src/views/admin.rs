@@ -145,7 +145,7 @@ pub async fn load_country_districts(req: HttpRequest, _id: web::Path<i32>) -> ac
         #[derive(TemplateOnce)]
         #[template(path = "desctop/load/load_country_districts.stpl")]
         struct Template { 
-            object_list: Vec<Region>,
+            object_list: Vec<District>,
         }
         let body = Template {
             object_list: object_list,
