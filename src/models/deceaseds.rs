@@ -166,8 +166,8 @@ impl Deceased {
         first_name:  String,
         middle_name: Option<String>,
         last_name:   String,
-        birth_date:  Option<String>,
-        death_date:  Option<String>,
+        birth_date:  Option<chrono::NaiveDate>,
+        death_date:  Option<chrono::NaiveDate>,
         location:    Option<String>,
         //limit:       i64,
         //offset:      i64,
@@ -179,7 +179,7 @@ impl Deceased {
         if middle_name.is_some() {
             middle = "%".to_owned() + middle_name.as_deref().unwrap() + "%";
         }
-        else {
+        else { 
             middle = "%".to_owned() + "" + "%";
         }
         if location.is_some() {
