@@ -16,11 +16,11 @@ pub fn is_authenticate(token: &String)-> bool {
 
 pub fn set_token(token: &String, id: &String) {
     let _local_token = web_local_storage_api::set_item(token, id);
-    Authorization::<Bearer>::token(token);
+    Authorization::<Bearer>::new(token);
 }
 
 pub async fn remove_token(req: &HttpRequest) -> i16 { 
-    match Authorization::<Bearer>::new(req) {
+    match Authorization::<Bearer>::parse(req) {
       Ok(ok) => {
         let token = ok.as_ref().token();
         web_local_storage_api::remove_item(token);
