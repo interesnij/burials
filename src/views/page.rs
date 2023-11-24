@@ -213,10 +213,10 @@ struct SeacrhData {
     pub first_name:  Option<String>,
     pub middle_name: Option<String>,
     pub last_name:   Option<String>,
-    pub birth_date:  Option<NaiveDate>,
-    pub death_date:  Option<NaiveDate>,
+    pub birth_date:  Option<chrono::NaiveDate>,
+    pub death_date:  Option<chrono::NaiveDate>,
     pub location:    Option<String>,
-}
+} 
 pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
@@ -226,13 +226,13 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
-            params.first_name.as_deref().unwrap(),
+            params.first_name.as_deref().unwrap().to_string(),
             params.middle_name.clone(),
-            params.last_name.as_deref().unwrap(),
+            params.last_name.as_deref().unwrap().to_string(),
             params.birth_date,
             params.death_date,
             params.location.clone(),
-        )
+        );
         if user_id.is_some() {
             let _request_user = user_id.unwrap();
 
