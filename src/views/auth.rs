@@ -130,10 +130,8 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
     println!("password {:?}", &password);
     println!("item_id {:?}", item.id);
 
-    if let Ok(matching) = &item.password == &password {
-        if matching {
-            return Ok(item);
-        }
+    if &item.password == &password {
+        return Ok(item);
     }
     println!("AuthError");
     Err(AuthError::NotFound(String::from("User not found")))
