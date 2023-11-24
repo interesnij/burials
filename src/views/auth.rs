@@ -146,7 +146,7 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i32 {
                 let token = gen_jwt(_user.id).await;
                 match token {
                     Ok(token_str) => {
-                        //crate::utils::set_token(&token_str, &_user.id.to_string());
+                        crate::utils::set_token(&token_str, &_user.id.to_string());
                         return _user.id;
                     },
                     Err(err) => return -10,
