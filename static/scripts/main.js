@@ -108,7 +108,7 @@ on('body', 'click', '.open_child_serves', function(event) {
 
 on('body', 'click', '#logg', function() {
     _this = this; 
-    form = _this.parentElement.parentElement.parentElement.parentElement;
+    form = _this.parentElement.parentElement.parentElement;
     response = form.querySelector(".api_response");
   
     if (!form.querySelector("#id_username").value){
