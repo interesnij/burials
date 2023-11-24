@@ -55,13 +55,12 @@
                     <li class="has-submenu parent-menu-item">
                         <a href="javascript:void(0)">Админ</a><span class="menu-arrow"></span>
                         <ul class="submenu">
-                            <li><a href="/create_country/" class="sub-menu-item">Создать страну</a></li>
-                            <li><a href="/create_region/" class="sub-menu-item">Создать регион</a></li>
-                            <li><a href="/create_district/" class="sub-menu-item">Создать округ</a></li>
-                            <li><a href="/create_city/" class="sub-menu-item">Создать город</a></li>
-                            <li><a href="/create_place/" class="sub-menu-item">Создать кладбище</a></li>
+                            <li><a href="/create_country/" class="sub-menu-item">Добавить страну</a></li>
+                            <li><a href="/create_region/" class="sub-menu-item">Добавить регион</a></li>
+                            <li><a href="/create_district/" class="sub-menu-item">Добавить округ</a></li>
+                            <li><a href="/create_city/" class="sub-menu-item">Добавить город</a></li>
+                            <li><a href="/create_place/" class="sub-menu-item">Добавить кладбище</a></li>
                             <li><a href="/create_deceased/" class="sub-menu-item">Добавить покойника</a></li>
-                            <li><a href="/create_country/" class="sub-menu-item">Создать страну</a></li>
                         </ul>
                     </li>
                     <% } %>

@@ -38,9 +38,7 @@
 				</form>
 			</div>
 		</div>
-	</div>
-
-	    <div class="">
+		<div class="">
             <% for object in country_list.iter() { %>
             <p><%= object.name %>
                 | <a class="ajax" href="/edit_country/<%= object.id %>/">~</a>
@@ -48,6 +46,8 @@
             </p>
             <% } %>
         </div>
+	</div>
+
 </section>
 
 <% include!("../footer.stpl"); %>

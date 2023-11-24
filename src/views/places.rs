@@ -430,16 +430,21 @@ pub async fn create_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
+
+        let country_list = crate::models::Countrie::get_all();
+
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/create_place.stpl")]
             struct Template {
                 request_user: User,
                 is_ajax:      i32,
+                country_list: Vec<Countrie>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
+                country_list: country_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -447,14 +452,16 @@ pub async fn create_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/create_place.stpl")]
+            #[template(path = "desctop/place/create_place.stpl")]
             struct Template {
                 request_user: User,
                 is_ajax:      i32,
+                country_list: Vec<Countrie>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
+                country_list: country_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
