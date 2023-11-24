@@ -249,27 +249,16 @@ on('body', 'click', '.search_deceaseds', function() {
     return 
   } 
 
-  url = "/main_search/?first_name=" +
-        form.querySelector("#id_first_name").value +
-        "&middle_name=" +
-        form.querySelector("#id_middle_name").value +
-        "&last_name=" +
-        form.querySelector("#id_last_name").value +
-        "&birth_date=" +
-        form.querySelector("#id_birth_date").value +
-        "&death_date=" +
-        form.querySelector("#id_death_date").value +
-        "&location=" +
-        form.querySelector("#id_location").value;
+  
 
   console.log("url!", url);
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', url, true );
+  link.open( 'GET', "/main_search/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
-            console.log("success!");
-            block.innerHTML = link.responseText;
+        console.log("success!");
+        block.innerHTML = link.responseText;
     } else { console.log("status", this.status);  };
     link.send( null );
   };
