@@ -6,7 +6,7 @@ use crate::views::{
     admin,
     //organization,
     page,
-    //place,
+    place,
     //progs,
     //service,
     //user,
@@ -19,7 +19,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     //.configure(organization::organization_routes)
     .configure(page::page_routes)
     .configure(admin::admin_routes)
-    //.configure(place::place_routes)
+    .configure(place::place_routes)
     //.configure(progs::progs_routes)
     //.configure(service::service_routes)
     //.configure(user::user_routes)
