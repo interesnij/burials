@@ -221,8 +221,8 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        if params.last_name.is_none() {
-            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        if params.last_name.is_none() || params.first_name.is_none() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no last_name"));
         }
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
@@ -265,6 +265,6 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
     }
     else {
-        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no params"));
     }
 }
