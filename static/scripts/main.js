@@ -263,15 +263,15 @@ on('body', 'click', '.search_deceaseds', function() {
         form.querySelector("#id_location").value;
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-  link.open( 'GET', "/main_search/", true );
+  link.open( 'GET', url, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
         console.log("success!");
         block.innerHTML = link.responseText;
     } else { console.log("status", this.status);  };
-    link.send( null );
   };
+  link.send( null );
 });
 
 
