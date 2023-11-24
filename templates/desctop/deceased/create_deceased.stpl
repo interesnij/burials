@@ -25,7 +25,9 @@
 <!-- Start -->
 <section class="relative md:py-24 py-16">
 	<div class="container">
+		
 		<div class="grid md:grid-cols-12 gap-[30px]">
+		<form>
 			<div class="lg:col-span-3 md:col-span-4">
 				<div class="group profile-pic w-[112px]">
 					<input id="pro-img" name="image" type="file" class="hidden" onchange="loadFile(event)" />
@@ -41,7 +43,7 @@
 			<div class="lg:col-span-9 md:col-span-8">
 				<div class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
 					<h5 class="text-lg font-semibold mb-4">Данные усопшего:</h5>
-					<form>
+					
 						<div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
 							<div>
 								<label class="form-label font-medium">Имя : <span class="text-red-600">*</span></label>
@@ -118,6 +120,7 @@
                         </button>
 				</div>
 			</div>
+			</form>
 		</div>
 		<div class="">
             <% for i in deceased_list.iter() { %>

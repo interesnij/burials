@@ -172,7 +172,7 @@ on('body', 'click', '.remove_district', function() {
 
 
 on('body', 'click', '#create_place', function() {
-  let form = this.parentElement;
+  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
@@ -189,11 +189,11 @@ on('body', 'click', '#create_place', function() {
 });
 on('body', 'click', '#edit_place', function() {
   _this = this;
-  form = _this.parentElement;
+  form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
-    }
+    } 
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -212,7 +212,7 @@ on('body', 'click', '.remove_place', function() {
 
 
 on('body', 'click', '#create_deceased', function() {
-  let form = this.parentElement;
+  let form = this.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
@@ -229,7 +229,7 @@ on('body', 'click', '#create_deceased', function() {
 });
 on('body', 'click', '#edit_deceased', function() {
   _this = this;
-  form = _this.parentElement;
+  form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
