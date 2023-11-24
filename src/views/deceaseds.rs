@@ -354,7 +354,7 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
     }
 }
 
-pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn create_deceased(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let _user = get_request_user(&req).await;
     if _user.is_some() {
         let _request_user = _user.unwrap();
