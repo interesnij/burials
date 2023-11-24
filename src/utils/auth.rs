@@ -49,6 +49,7 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
         for c in _cookie.unwrap().split("; ").collect::<Vec<&str>>().iter() {
           println!("c {:?}", c.clone());
             let split_c: Vec<&str> = c.split("=").collect();
+            println!("c[0] {:?}", split_c[0]);
             if split_c[0] == "userrr" {
                 let user_id = split_c[1].parse().unwrap();
                 println!("user_id {:?}", user_id);
