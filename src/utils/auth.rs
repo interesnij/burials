@@ -30,12 +30,17 @@ pub async fn remove_token(req: &HttpRequest) -> i16 {
     }
   }
 
-pub async fn get_request_user(req: &HttpRequest) -> Option<User> { 
+pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
+
   match Authorization::<Bearer>::parse(req) {
     Ok(ok) => {
       let token = ok.as_ref().token().to_string();
+      println!("token {:?}", token.clone());
       return match crate::utils::verify_jwt(token).await {
-        Ok(ok) => Some(crate::utils::get_user(ok.id).expect("E.")),
+        Ok(ok) => {
+          println!("id {:?}", ok.id);
+          Some(crate::utils::get_user(ok.id).expect("E."))
+        },
         Err(_) => None,
       }
     },
