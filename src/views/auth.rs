@@ -148,12 +148,12 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i32 {
                         //crate::utils::set_token(&token_str, &_user.id.to_string());
                         return _user.id;
                     },
-                    Err(err) => return 0,
+                    Err(err) => return -10,
                 }
             };
             return 0
         },
-        Err(err) => return 0,
+        Err(err) => return -20,
     }
 }
 
