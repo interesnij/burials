@@ -126,6 +126,8 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
         .first::<User>(&_connection)
         .expect("Error.");
     
+    println!("item.password {:?}", &item.password);
+    println!("password {:?}", &password);
     println!("item_id {:?}", item.id);
 
     if let Ok(matching) = bcrypt::verify(&item.password, &password) {
@@ -133,7 +135,7 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
             return Ok(item);
         }
     }
-    
+    println!("AuthError");
     Err(AuthError::NotFound(String::from("User not found")))
 }
 
