@@ -40,6 +40,7 @@
                 | <a class="ajax" href="/edit_country/<%= country.id %>/">~</a>
                 | <a class="pointer remove_country" data-pk="<%= country.id %>">x</a>
             </p>
+            <% } %>
         </div>
     </div>
 </section>
