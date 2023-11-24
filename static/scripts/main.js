@@ -269,7 +269,7 @@ on('body', 'click', '.search_deceaseds', function() {
         "&death_date=" +
         form.querySelector("#id_death_date").value +
         "&location=" +
-        form.querySelector("#id_location").value
+        form.querySelector("#id_location").value;
 
   console.log("url!", url);
   link.open( 'GET', url, true );
