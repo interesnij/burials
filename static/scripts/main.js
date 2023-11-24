@@ -1,5 +1,28 @@
 function on(elSelector, eventName, selector, fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while (el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function getCookie(name) {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      let c = cookies[i].trim().split('=');
+      if (c[0] === name) {
+          return c[1];
+      }
+  }
+  return "";
+}
+function setCookie(name, value, days) {
+  let cookie = `${name}=${encodeURIComponent(value)}`;
+  if (days) {
+      const expiry = new Date();
+      expiry.setDate(expiry.getDate() + days);
+      cookie += `; expires=${expiry.toUTCString()}`;
+  }
+  document.cookie = cookie + "; path=/";
+};
+function eraseCookie(name) {   
+  document.cookie = name+'=; Max-Age=-99999999;';  
+}
+
 class ToastManager {
     constructor() {
         this.id = 0;
@@ -86,26 +109,6 @@ function toast_warning(text) {
     toasts.showWarning(text)
 }
 
-on('body', 'click', '.open_child_serves', function(event) {
-  if (event.target.classList.contains("get_serve_info")) {
-    return
-  };
-  parent_id = this.getAttribute("parent-pk");
-  check = this.querySelector(".icon_parent");
-  if (check.innerHTML == "▼") {
-    check.innerHTML = "▲"
-  }
-  else {
-    check.innerHTML = "▼"
-  }
-  childs = this.parentElement.querySelectorAll('[serve-pk=' + '"' + parent_id + '"' + ']');
-  for (var i = 0; i < childs.length; i++) {
-    if (childs[i].classList.contains("select_child_serve")) {
-      childs[i].classList.toggle("hide");
-    }
-  }
-});
-
 on('body', 'click', '#logg', function() {
     _this = this; 
     form = _this.parentElement.parentElement.parentElement;
@@ -134,6 +137,7 @@ on('body', 'click', '#logg', function() {
   
     link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
+      setCookie("userr", link.responseText, 300);
       window.location.href = "/"
       }
     else {
@@ -181,6 +185,7 @@ on('body', 'click', '#logg', function() {
   
     link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
+      setCookie("userr", link.responseText, 300);
       window.location.href = "/"
       }
     else {

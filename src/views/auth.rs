@@ -135,7 +135,7 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
     Err(AuthError::NotFound(String::from("User not found")))
 }
 
-async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
+async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i32 {
     let _connection = establish_connection();
     let result = find_user(data.username.clone(), data.password.clone());
 
@@ -146,7 +146,7 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i16 {
                 match token {
                     Ok(token_str) => {
                         //crate::utils::set_token(&token_str, &_user.id.to_string());
-                        return 1;
+                        return _user.id;
                     },
                     Err(err) => return 0,
                 }
@@ -185,7 +185,7 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
     form
 }
 
-pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn login(mut payload: Multipart, req: HttpRequest) -> i32 {
     if get_request_user(&req).await.is_some() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
@@ -193,9 +193,8 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Resul
         let form = login_form(payload.borrow_mut()).await;
         println!("{:?}", form.username.clone());
         println!("{:?}", form.password.clone());
-        handle_sign_in(form, &req).await;
-        crate::views::index_page(req).await
-    }
+        handle_sign_in(form, &req).await
+    }d
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -231,10 +230,10 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
     }
     form
 }
-pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
+pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> i32 {
     // Если пользователь не аноним, то отправляем его на страницу новостей
     if get_request_user(&req).await.is_some() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        0
     } 
     else { 
         let form = signup_form(payload.borrow_mut()).await;
@@ -258,6 +257,6 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
             .expect("Error saving user.");
 
         //set_current_user(&_user);
-        crate::views::index_page(req).await
+        _new_user.id
     }
 }
