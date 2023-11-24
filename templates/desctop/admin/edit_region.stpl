@@ -48,9 +48,8 @@
 		</div>
 	</div>
 </section>
-<section class="md:h-screen py-36 flex items-center">
-	<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
-	    <div class="container">
+
+<section class="md:h-screen py-36 flex items-center">	    <div class="container">
             <% for object in region_list.iter() { %>
             <p><%= object.name %>
                 | <a class="ajax" href="/edit_region/<%= object.id %>/">~</a>
@@ -58,7 +57,6 @@
             </p>
             <% } %>
         </div>
-    </div>
 </section>
 
 <% include!("../footer.stpl"); %>

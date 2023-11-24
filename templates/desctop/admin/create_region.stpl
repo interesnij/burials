@@ -40,7 +40,6 @@
 	</div>
 </section>
 <section class="md:h-screen py-36 flex items-center">
-	<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
 	    <div class="container">
             <% for object in region_list.iter() { %>
             <p><%= object.name %>
@@ -49,7 +48,6 @@
             </p>
             <% } %>
         </div>
-    </div>
 </section>
 
 <% include!("../footer.stpl"); %>
