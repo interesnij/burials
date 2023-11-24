@@ -177,13 +177,13 @@ impl Deceased {
         let _connection = establish_connection();
         let middle: String;
         if middle_name.is_some() {
-            middle = "%".to_owned() + middle_name.is_deref().unwrap() + "%";
+            middle = "%".to_owned() + middle_name.as_deref().unwrap() + "%";
         }
         else {
             middle = "%".to_owned() + "" + "%";
         }
         if location.is_some() {
-            let loc = "%".to_owned() + location.is_deref().unwrap() + "%"; 
+            let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
             let places_ids = Place::search_ids(&loc);
             if birth_date.is_some() && death_date.is_some() {
                 return deceaseds
