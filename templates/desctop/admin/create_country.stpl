@@ -37,8 +37,8 @@
 	    <div class="container">
             <% for object in country_list.iter() { %>
             <p><%= object.name %>
-                | <a class="ajax" href="/edit_country/<%= country.id %>/">~</a>
-                | <a class="pointer remove_country" data-pk="<%= country.id %>">x</a>
+                | <a class="ajax" href="/edit_country/<%= object.id %>/">~</a>
+                | <a class="pointer remove_country" data-pk="<%= object.id %>">x</a>
             </p>
             <% } %>
         </div>
