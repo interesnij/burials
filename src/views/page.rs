@@ -209,7 +209,7 @@ pub async fn not_found(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Resu
 
 
 #[derive(Deserialize)]
-struct SeacrhData {
+pub struct SeacrhData {
     pub first_name:  Option<String>,
     pub middle_name: Option<String>,
     pub last_name:   Option<String>,
