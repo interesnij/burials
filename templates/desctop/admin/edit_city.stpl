@@ -8,7 +8,7 @@
 				<h5 class="my-6 text-xl font-semibold api_response">Изменение города</h5> 
 				<form class="text-left">
 					<div class="grid grid-cols-1">
-						<div class="mb-4">
+						<div class="md:col-span-6 col-span-12 text-start">
 							<label class="font-semibold" for="id_username">Название:</label>
 							<input id="id_name" value="<%= object.name %>" name="name" type="text" class="form-input mt-3" placeholder="" />
 						</div>
@@ -21,7 +21,7 @@
                                 <% } %>
                             </select>
                         </div>
-						<div class="md:col-span-6 col-span-12 text-start no_load_items">
+						<div class="md:col-span-6 col-span-12 text-start load_items">
                             <label class="font-semibold">Регион:</label>
 							<select name="region_id" class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
 								<% for i in region_list.iter() { %>
@@ -30,7 +30,7 @@
 							</select> 
 						</div>
 						<span></span>
-						<div class="mb-4">
+						<div class="md:col-span-6 col-span-12 text-start">
 							<label class="font-semibold" for="id_lat">Широта:</label>
 							<input 
                             id="id_lat" name="lat" type="text" class="form-input mt-3" 
@@ -39,7 +39,7 @@
                             <% } %>
                         />
 						</div>
-						<div class="mb-4">
+						<div class="md:col-span-6 col-span-12 text-start">
 							<label class="font-semibold" for="id_lon">Долгота:</label>
 							<input id="id_lon" name="lon" type="text" class="form-input mt-3" 
                             <% if object.lon.is_some() { %>
@@ -47,7 +47,7 @@
                             <% } %>
                             />
 						</div>
-						<div class="mb-4">
+						<div class="md:col-span-6 col-span-12 text-start">
 							<button type="button" data-pk="<%= object.id %>" id="edit_city" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" >
 								Изменить
 							</button> 
