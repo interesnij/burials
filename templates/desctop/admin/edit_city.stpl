@@ -57,8 +57,7 @@
 			</div>
 		</div>
 	</div>
-</section>
-<section class="md:h-screen py-36 flex items-center">
+
 	    <div class="container">
             <% for i in city_list.iter() { %>
             <p><%= i.name %>

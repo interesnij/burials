@@ -48,9 +48,8 @@
 			</div>
 		</div>
 	</div>
-</section>
-
-<section class="md:h-screen py-36 flex items-center">	    <div class="container">
+	    
+<div class="container">
             <% for object in region_list.iter() { %>
             <p><%= object.name %>
                 | <a class="ajax" href="/edit_region/<%= object.id %>/">~</a>

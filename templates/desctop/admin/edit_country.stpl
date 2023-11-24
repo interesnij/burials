@@ -39,8 +39,7 @@
 			</div>
 		</div>
 	</div>
-</section>
-<section class="md:h-screen py-36 flex items-center">
+
 	    <div class="container">
             <% for object in country_list.iter() { %>
             <p><%= object.name %>

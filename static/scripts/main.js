@@ -25,7 +25,7 @@ function eraseCookie(name) {
 on('body', 'click', '.logout_hundler', function() {
   eraseCookie("userrr");
   location.reload();
-}
+})
 
 class ToastManager {
     constructor() {
