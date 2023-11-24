@@ -39,6 +39,7 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         if _request_user.id == 1 {
             User::create_superuser(_request_user.id);
         }
+        println!("_request_user {:?}", _request_user.username.clone());
         
         if is_desctop {
             #[derive(TemplateOnce)]
