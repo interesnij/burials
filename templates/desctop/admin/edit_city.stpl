@@ -58,7 +58,7 @@
 		</div>
 	</div>
 
-	    <div class="container">
+	    <div class="">
             <% for i in city_list.iter() { %>
             <p><%= i.name %>
                 | <a class="ajax" href="/edit_city/<%= i.id %>/">~</a>

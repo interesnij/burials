@@ -31,7 +31,7 @@
 		</div>
 	</div>
 
-	    <div class="container">
+	    <div class="">
             <% for object in country_list.iter() { %>
             <p><%= object.name %>
                 | <a class="ajax" href="/edit_country/<%= object.id %>/">~</a>
