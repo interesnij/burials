@@ -47,7 +47,7 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
     if _cookie.is_some() {
         for c in _cookie.unwrap().split("; ").collect::<Vec<&str>>().iter() {
             let split_c: Vec<&str> = c.split("=").collect();
-            if split_c[0] == "user" {
+            if split_c[0] == "userrr" {
                 let user_id = split_c[1].parse().unwrap();
                 let _user = crate::utils::get_user(user_id);
                 if _user.is_ok() {
