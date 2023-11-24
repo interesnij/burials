@@ -39,18 +39,28 @@ pub async fn remove_token(req: &HttpRequest) -> i16 {
 
 pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
   
-  match Authorization::<Bearer>::parse(req) {
-    Ok(ok) => {
-      let token = ok.as_ref().token().to_string();
-      println!("token {:?}", token.clone());
-      return match crate::utils::verify_jwt(token).await {
-        Ok(ok) => {
-          println!("id {:?}", ok.id);
-          Some(crate::utils::get_user(ok.id).expect("E."))
-        },
-        Err(_) => None,
-      }
-    },
-    Err(_) => None,
-  }
+  let _cookie_res = req.headers().get("cookie");
+
+    if _cookie_res.is_none() {
+      println!("cookie None");
+        return None;
+    }
+    let _cookie = _cookie_res.expect("E.").to_str().ok();
+    if _cookie.is_some() {
+        for c in _cookie.unwrap().split("; ").collect::<Vec<&str>>().iter() {
+          println!("c {:?}", c.clone());
+            let split_c: Vec<&str> = c.split("=").collect();
+            println!("c[0] {:?}", split_c[0]);
+            if split_c[0] == "userrr" {
+                let user_id = split_c[1].parse().unwrap();
+                let __user = crate::utils::get_user(user_id);
+                if __user.is_ok() {
+                    let _user = __user.expect("E.");
+                    println!("user_id {:?}", &_user.id);
+                    return Some(_user);
+                }
+            }
+        }
+    }
+    return None;
 }
