@@ -2,58 +2,39 @@
 	<div class="row">
 		<div class="col-md-12 col-lg-4">
 			<div class="form-group">
-                <input name="last_name" id="id_last_name" type="text" class="form-control">
                 <label for="id_last_name" class="">Искомая фамилия</label>
+                <input name="last_name" id="id_last_name" type="text" class="form-control">
             </div>
 		</div>
 		<div class="col-md-12 col-lg-4">
 			<div class="form-group">
-                <input name="first_name" id="id_first_name" type="text" class="form-control">
                 <label for="id_first_name" class="">Искомое имя</label>
+                <input name="first_name" id="id_first_name" type="text" class="form-control">
             </div>
 		</div>
         <div class="col-md-12 col-lg-4">
 			<div class="form-group">
-                <input name="middle_name" id="id_middle_name" type="text" class="form-control">
                 <label for="id_middle_name" class="">Искомое отчество</label>
+                <input name="middle_name" id="id_middle_name" type="text" class="form-control">
             </div>
 		</div>
 		<div class="col-sm-12 col-md-12 col-lg-4">
 			<div class="row">
 				<div class="col-sm-12 col-md-6">
 					<div class="form-group">
-						<div class="blur input-group">
-                            <input name="birth_date" type="number" class="form-control">
-							<div class="input-group-append">
-                                <button type="button" aria-haspopup="true" aria-expanded="false" class="btn-lg btn btn-outline-primary">
-                                    <span>=</span>
-                                </button> 
-								<div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
-                                    <button type="button" tabindex="0" role="menuitem" class="dropdown-item active">Точно</button>
-                                    <button type="button" tabindex="0" role="menuitem" class="dropdown-item">До</button>
-                                    <button type="button" tabindex="0" role="menuitem" class="dropdown-item">После</button>
-                                </div>
-							</div>
-						</div>
                         <label for="birth_date" class="">Год рождения</label>
+						<div class="blur input-group">
+                            <input name="birth_date" type="date" class="form-control">
+						</div>
+                        
 					</div>
 				</div>
 				<div class="col-sm-12 col-md-6">
 					<div class="form-group">
-						<div class="blur input-group">
-                            <input name="death_date" type="number" class="form-control">
-							<div class="input-group-append">
-                                <button type="button" aria-haspopup="true" aria-expanded="false" class="btn-lg btn btn-outline-primary">
-                                    <span>=</span>
-                                </button>
-								<div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu">
-                                    <button type="button" tabindex="0" role="menuitem" class="dropdown-item active">Точно</button>
-                                    <button type="button" tabindex="0" role="menuitem" class="dropdown-item">До</button>
-                                    <button type="button" tabindex="0" role="menuitem" class="dropdown-item">После</button>
-                                </div>
-							</div>
-						</div>
                         <label for="death_date" class="">Год смерти</label>
+						<div class="blur input-group">
+                            <input name="death_date" type="date" class="form-control">
+						</div>
 					</div>
 				</div>
 				<div class="col-sm-12">
@@ -63,16 +44,15 @@
 		</div>
 		<div class="d-flex col-md-12 col-lg-4">
 			<div class="flex-grow-1 form-group">
+                <label for="location-input" class="">Расположение</label>
 				<div class="blur flex-no-wrap flex-grow-1 input-group">
 					<input class="form-control" name="location" type="text">
 				</div> 
-                <label for="location-input" class="">Расположение</label>
-                <small>Впишите название района/области либо нажмите "+" и выберите из списка</small>
-			</div>
+                <small>Впишите название района/области</small>
+			</div> 
 		</div>
 		<div class="submit-col col-md-12 col-lg-2">
-            <button type="button" class="search search-form-button btn btn-primary">
-            <i class="icon-search"></i><span>Найти</span></button>
+            <button type="button" class="search search-form-button btn btn-primary">Искать</button>
         </div>
 	</div>
 </form>

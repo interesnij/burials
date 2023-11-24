@@ -221,13 +221,58 @@ impl Place {
             .offset(offset)
             .load::<Place>(&_connection)
             .expect("E.");
-        }
-        pub fn all() -> Vec<Place> {
-            use crate::schema::places::dsl::places;
+    }
+    pub fn all() -> Vec<Place> {
+        use crate::schema::places::dsl::places;
     
-            let _connection = establish_connection();
-            return places
-                .load::<Place>(&_connection)
+        let _connection = establish_connection();
+        return places
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
+    pub fn search_ids (
+        loc: &String,
+    ) -> Vec<i32> {
+        let _connection = establish_connection();
+
+        let cities_ids = schema::cities::table
+            .filter(schema::cities::name.ilike(&q))
+            .select(schema::places::id)
+            .load::<i32>(&_connection)
+            .expect("E.");
+        let districts_ids = schema::districts::table
+            .filter(schema::districts::name.ilike(&q))
+            .select(schema::districts::id)
+            .load::<i32>(&_connection)
+            .expect("E.");
+        let regions_ids = schema::regions::table
+            .filter(schema::regions::name.ilike(&q))
+            .select(schema::regions::id)
+            .load::<i32>(&_connection)
+            .expect("E.");
+        
+        if districts_ids.len() > 0 {
+            return schema::places::table
+                .filter(schema::places::district_id.eq_any(districts_ids))
+                .select(schema::places::id)
+                .load::<i32>(&_connection)
                 .expect("E.");
         }
+        if regions_ids.len() > 0 {
+            return schema::places::table
+                .filter(schema::places::region_id.eq_any(regions_ids))
+                .select(schema::places::id)
+                .load::<i32>(&_connection)
+                .expect("E.");
+        }
+        if cities_ids.len() > 0 {
+            return schema::places::table
+                .filter(schema::places::citie_id.eq_any(citie_id))
+                .select(schema::places::id)
+                .load::<i32>(&_connection)
+                .expect("E.");
+        }
+        
+        return Vec::new();
     }
+}

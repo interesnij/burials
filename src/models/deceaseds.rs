@@ -163,24 +163,116 @@ impl Deceased {
             .expect("E.");
     }
     pub fn search (
-        place_id: i32,
-        q:        &String,
-        limit:    i64,
-        offset:   i64,
+        first_name:  String,
+        middle_name: Option<String>,
+        last_name:   String,
+        birth_date:  Option<NaiveDate>,
+        death_date:  Option<NaiveDate>,
+        location:    Option<String>,
+        limit:       i64,
+        offset:      i64,
     ) -> Vec<Deceased> {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
-        return deceaseds
-            .filter(schema::deceaseds::place_id.eq(place_id))
-            .filter(schema::deceaseds::first_name.ilike(&q))
-            .or_filter(schema::deceaseds::middle_name.ilike(&q))
-            .or_filter(schema::deceaseds::last_name.ilike(&q))
-            .order(schema::deceaseds::death_date.desc())
-            .limit(limit)
-            .offset(offset)
-            .load::<Deceased>(&_connection)
-            .expect("E.");
+        if location.is_some() {
+            let loc = "%".to_owned() + location.is_deref().unwrap() + "%"; 
+            let places_ids = Place::search_ids(&loc);
+            if birth_date.is_some() && death_date.is_some() {
+                return deceaseds
+                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
+                    .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+            else if birth_date.is_some() && death_date.is_none() {
+                return deceaseds
+                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+            else if death_date.is_some() && birth_date.is_none() {
+                return deceaseds
+                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+            else {
+                return deceaseds
+                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+        }
+        else {
+            if birth_date.is_some() && death_date.is_some() {
+                return deceaseds
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
+                    .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+            else if birth_date.is_some() && death_date.is_none() {
+                return deceaseds
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+            else if death_date.is_some() && birth_date.is_none() {
+                return deceaseds
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+            else {
+                return deceaseds
+                    .filter(schema::deceaseds::first_name.ilike(first_name))
+                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    .or_filter(schema::deceaseds::last_name.ilike(last_name))
+                    .limit(limit)
+                    .offset(offset)
+                    .load::<Deceased>(&_connection)
+                    .expect("E.");
+            }
+        }
     }
 
     // Метод для получения всех объектов данной структуры.
