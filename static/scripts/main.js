@@ -271,11 +271,13 @@ on('body', 'click', '.search_deceaseds', function() {
         "&location=" +
         form.querySelector("#id_location").value
 
+  console.log("url!", url);
   link.open( 'GET', url, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 ) { 
         if ( link.status == 200 ) {
+            console.log("success!");
             block.innerHTML = link.responseText;
     }};
     link.send( null );
