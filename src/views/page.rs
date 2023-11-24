@@ -213,8 +213,8 @@ pub struct SeacrhData {
     pub first_name:  Option<String>,
     pub middle_name: Option<String>,
     pub last_name:   Option<String>,
-    pub birth_date:  Option<chrono::NaiveDate>,
-    pub death_date:  Option<chrono::NaiveDate>,
+    pub birth_date:  Option<String>,
+    pub death_date:  Option<String>,
     pub location:    Option<String>,
 }  
 pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
