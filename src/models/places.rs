@@ -230,23 +230,23 @@ impl Place {
             .load::<Place>(&_connection)
             .expect("E.");
     }
-    pub fn search_ids (
+    pub fn search_ids ( 
         loc: &String,
     ) -> Vec<i32> {
         let _connection = establish_connection();
 
         let cities_ids = schema::cities::table
-            .filter(schema::cities::name.ilike(&q))
+            .filter(schema::cities::name.ilike(loc))
             .select(schema::places::id)
             .load::<i32>(&_connection)
             .expect("E.");
         let districts_ids = schema::districts::table
-            .filter(schema::districts::name.ilike(&q))
+            .filter(schema::districts::name.ilike(loc))
             .select(schema::districts::id)
             .load::<i32>(&_connection)
             .expect("E.");
         let regions_ids = schema::regions::table
-            .filter(schema::regions::name.ilike(&q))
+            .filter(schema::regions::name.ilike(loc))
             .select(schema::regions::id)
             .load::<i32>(&_connection)
             .expect("E.");
@@ -272,7 +272,7 @@ impl Place {
                 .load::<i32>(&_connection)
                 .expect("E.");
         }
-        
+
         return Vec::new();
     }
 }
