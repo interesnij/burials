@@ -95,7 +95,7 @@
                                 <label class="font-semibold">Регион:</label>
                                 <select name="region_id" class="form-select form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     <% for i in region_list.iter() { %>
-                                        <option <% if object.region_id.is_some() && object.region_id.unwrap() == i.id { %>selected="selected"<% } %> value="<%= i.id %>"><%= i.name %></option>
+                                        <option <% if place.region_id.is_some() && place.region_id.unwrap() == i.id { %>selected="selected"<% } %> value="<%= i.id %>"><%= i.name %></option>
                                     <% } %>
                                 </select> 
 						    </div>
@@ -163,18 +163,14 @@
                             <div class="md:col-span-6 col-span-12 text-start">
                                 <label class="font-semibold" for="id_lat">Широта: <span class="text-red-600">*</span></label>
                                 <input id="id_lat" name="lat" type="text" 
-                                    <% if place.lat.is_some() { %>
-                                        value="<%= place.lat.as_deref().unwrap() %>" 
-                                    <% } %>
+                                    value="<%= place.lat %>" 
                                     class="form-input mt-3" 
                                 />
                             </div>
                             <div class="md:col-span-6 col-span-12 text-start">
                                 <label class="font-semibold" for="id_lon">Долгота: <span class="text-red-600">*</span></label>
                                 <input id="id_lon" name="lon" type="text" 
-                                    <% if place.lat.is_some() { %>
-                                        value="<%= place.lat.as_deref().unwrap() %>" 
-                                    <% } %>
+                                    value="<%= place.lon %>"
                                     class="form-input mt-3" />
                             </div>
 
