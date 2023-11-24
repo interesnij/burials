@@ -35,61 +35,13 @@
                   <div class="relative -mt-32">
                       <div class="grid grid-cols-1">
                           <div class="p-6 bg-white dark:bg-slate-900 rounded-md shadow-md dark:shadow-gray-800">
-                              <form action="#">
-                                  <div class="registration-form text-dark text-start">
-                                      <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-0 gap-6">
-                                          <div class="filter-search-form relative filter-border">
-                                              <i class="uil uil-search icons"></i>
-                                              <input name="name" type="text" id="job-keyword" class="form-input filter-input-box bg-gray-50 dark:bg-slate-800 border-0" placeholder="слова для поиска">
-                                          </div>
-
-                                          <div class="filter-search-form relative filter-border">
-                                              
-                                              <select class="form-select z-2" data-trigger name="choices-catagory" id="choices-catagory" aria-label="Default select example">
-                                                  <option>Захоронение</option>
-                                                  <option>Кладбище</option>
-                                                  <option>Услугу</option>
-                                                  <option>Организацию</option>
-                                              </select>
-                                          </div>
-                                      
-                                          <div class="filter-search-form relative filter-border">
-                                              
-                                              <select class="form-select" data-trigger name="choices-min-price" id="choices-min-price" aria-label="Default select example">
-                                                  <option>Дата рождения</option>
-                                                  <option>1900-1950</option>
-                                                  <option>1950-2000</option>
-                                                  <option>2000-2023</option>
-                                                
-                                              </select>
-                                          </div>
-                                      
-                                          <div class="filter-search-form relative">
-                                              
-                                              <select class="form-select" data-trigger name="choices-max-price" id="choices-max-price" aria-label="Default select example">
-                                                  <option>Дата смерти</option>
-                                                  <option>1900-1950</option>
-                                                  <option>1950-2000</option>
-                                                  <option>2000-2023</option>
-                                              </select>
-                                          </div>
-
-                                          <div class="lg:mt-6">
-                                              <input type="submit" id="search" name="search" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white searchbtn submit-btn w-full !h-12 rounded" value="Поиск">
-                                          </div>
-                                      </div><!--end grid-->
-                                  </div><!--end container-->
-                              </form>
+                              
                           </div>
-                      </div><!--end grid-->
+                      </div>
                   </div>
-              </div><!--end grid-->
-          </div><!--end container-->
-        </section>  
-
-
-
-
+              </div>
+          </div>
+      </section>  
 
     <!-- Start -->
     <section class="relative md:pb-24 pb-16">
@@ -1161,33 +1113,6 @@
       </div>
       <!--end container-->
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <br><br><br><br>
 
