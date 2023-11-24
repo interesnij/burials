@@ -247,8 +247,8 @@ on('body', 'click', '#logg', function() {
     ajax_link.send();
 });
 
-
-on('body', 'change', '.search_deceaseds', function() {
+ 
+on('body', 'click', '.search_deceaseds', function() {
   form = this.parentElement.parentElement.parentElement; 
   console.log("click!");
   block = form.nextElementSibling;
