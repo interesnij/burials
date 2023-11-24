@@ -22,7 +22,7 @@
                             </select>
                         </div>
 						<div class="md:col-span-6 col-span-12 text-start load_items"></div>
-						<span></span>
+						<span class="span"></span> 
 						<div class="md:col-span-6 col-span-12 text-start">
 							<label class="font-semibold" for="id_lat">Широта:</label>
 							<input id="id_lat" name="lat" type="text" class="form-input mt-3" />

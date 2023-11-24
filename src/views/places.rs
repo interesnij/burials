@@ -355,7 +355,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
 }
 
 
-pub async fn create_place(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn create_place(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let _user = get_request_user(&req).await;
     if _user.is_some() {
         let _request_user = _user.unwrap();

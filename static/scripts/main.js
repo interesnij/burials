@@ -255,7 +255,11 @@ on('body', 'change', '.load_regions', function() {
     return 
   }
   if (val == '' || block.classList.contains("no_load_items")) {
-    block.innerHTML = ""; 
+    block.innerHTML = "";
+    next = block.nextElementSibling;
+    if (next.classList.contains("span")) {
+      next.innerHTML = "";
+    }
   } else {
     var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'GET', "/load_regions/" + val + "/", true );

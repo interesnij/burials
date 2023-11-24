@@ -30,7 +30,7 @@
 							</select>
 						</div>
 
-						<span></span>
+						<span class="span"></span> 
 						<div class="md:col-span-6 col-span-12 text-start">
 							<label class="font-semibold" for="id_lat">Широта:</label>
 							<input 
