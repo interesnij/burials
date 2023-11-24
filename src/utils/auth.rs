@@ -48,8 +48,8 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
         for c in _cookie.unwrap().split("; ").collect::<Vec<&str>>().iter() {
             let split_c: Vec<&str> = c.split("=").collect();
             if split_c[0] == "user" {
-                user_id = split_c[1].parse().unwrap();
-                Some(crate::utils::get_user(user_id).expect("E."))
+                let user_id = split_c[1].parse().unwrap();
+                return Some(crate::utils::get_user(user_id).expect("E."));
             }
         }
     }
