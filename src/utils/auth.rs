@@ -41,17 +41,20 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
   let _cookie_res = req.headers().get("cookie");
 
     if _cookie_res.is_none() {
+      println!("cookie None");
         return None;
     }
     let _cookie = _cookie_res.expect("E.").to_str().ok();
     if _cookie.is_some() {
         for c in _cookie.unwrap().split("; ").collect::<Vec<&str>>().iter() {
+          println!("c {:?}", c.clone());
             let split_c: Vec<&str> = c.split("=").collect();
             if split_c[0] == "userrr" {
                 let user_id = split_c[1].parse().unwrap();
+                println!("user_id {:?}", user_id);
                 let _user = crate::utils::get_user(user_id);
                 if _user.is_ok() {
-                  return Some(_user.expect("E."));
+                    return Some(_user.expect("E."));
                 }
             }
         }
