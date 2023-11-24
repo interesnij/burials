@@ -233,15 +233,7 @@ on('body', 'click', '#logg', function() {
     ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     ajax_link.onreadystatechange = function () {
       if ( this.readyState == 4 && this.status == 200 ) {
-        elem_ = document.createElement('span');
-        elem_.innerHTML = ajax_link.responseText;
-
-        elem_.querySelector(".is_paginate") ?
-        (
-          search_section = elem_.querySelector(".is_paginate"),
-          search_block.innerHTML = search_section.innerHTML.replaceAll(new RegExp(value, 'ig'), "<span class='selected'>" + value + "</span>")
-        ) : search_block.innerHTML = "<div style='margin-top: 40px;'><div class='align-center'><span class='border' style='padding: 10px 15px;'>Искать пока не из чего...</div></div>";
-        content_block.classList.add("hidden")
+        
       }
     }
     ajax_link.send();
@@ -255,9 +247,8 @@ on('body', 'click', '.search_deceaseds', function() {
   if (!form.querySelector("#id_last_name").value) {
     console.log("no last_name!");
     return 
-  }
+  } 
 
-  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   url = "/main_search/?first_name=" +
         form.querySelector("#id_first_name").value +
         "&middle_name=" +
@@ -272,17 +263,28 @@ on('body', 'click', '.search_deceaseds', function() {
         form.querySelector("#id_location").value;
 
   console.log("url!", url);
-  link.open( 'GET', "/main_search/", true );
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', url, true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
-    if ( link.readyState == 4 ) { 
-        if ( link.status == 200 ) {
+    if ( this.readyState == 4 && this.status == 200 ) {
             console.log("success!");
             block.innerHTML = link.responseText;
-    }};
+    } else { console.log("status", this.status);  };
     link.send( null );
   };
 });
+
+var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url + "?ajax=1", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        
+      }
+    }
+    ajax_link.send();
+
 
 on('body', 'change', '.load_region_items', function() {
   var val = this.value; 
