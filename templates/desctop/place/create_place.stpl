@@ -81,9 +81,9 @@
                                     <option value="">Выберите страну</option>
                                     <% for i in country_list.iter() { %>
                                         <option value="<%= i.id %>"><%= i.name %></option>
-                                    <% } %>
-                                </select> 
-                            </div>
+                                    <% } %> 
+                                </select>  
+                            </div> 
                             <div class="md:col-span-6 col-span-12 text-start load_items"></div>
 						    <span></span>
                             
@@ -148,7 +148,7 @@
             </div>
             <div class="">
                 <% for i in place_list.iter() { %>
-                <p><%= i.name %>
+                <p><%= i.title %>
                     | <a class="ajax" href="/edit_place/<%= i.id %>/">~</a>
                     | <a class="pointer remove_place" data-pk="<%= i.id %>">x</a>
                 </p>
