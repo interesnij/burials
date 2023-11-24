@@ -129,9 +129,8 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
     println!("item.password {:?}", &item.password);
     println!("password {:?}", &password);
     println!("item_id {:?}", item.id);
-
-    if &item.password == &password {
-        return Ok(item);
+    if bcrypt::verify(item.password.as_str(), password.as_str()).unwrap() {
+        return Ok(item); 
     }
     println!("AuthError");
     Err(AuthError::NotFound(String::from("User not found")))
