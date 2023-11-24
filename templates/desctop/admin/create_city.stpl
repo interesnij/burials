@@ -43,10 +43,10 @@
 <section class="md:h-screen py-36 flex items-center">
 	<div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
 	    <div class="container">
-            <% for object in city_list.iter() { %>
-            <p><%= object.name %>
-                | <a class="ajax" href="/edit_city/<%= object.id %>/">~</a>
-                | <a class="pointer remove_city" data-pk="<%= object.id %>">x</a>
+            <% for i in city_list.iter() { %>
+            <p><%= i.name %>
+                | <a class="ajax" href="/edit_city/<%= i.id %>/">~</a>
+                | <a class="pointer remove_city" data-pk="<%= i.id %>">x</a>
             </p>
             <% } %>
         </div>
