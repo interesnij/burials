@@ -484,7 +484,7 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     let user_id = get_request_user(&req).await;
 
     let country_list = Countrie::get_all();
-    let region_list = Region::get_country_all(object.country_id);
+    let region_list = Region::get_country_all(_place.country_id);
     let city_list = Citie::get_all(); 
     let place_list = crate::models::Place::get_all();
 
