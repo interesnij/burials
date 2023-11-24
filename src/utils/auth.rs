@@ -21,7 +21,7 @@ pub fn set_token(token: &String, id: &String) {
     assert!(result.is_ok());
         assert_eq!(
             result.unwrap(),
-            HeaderValue::from_static("Bearer".to_string() + bearer)
+            HeaderValue::from_static(("Bearer".to_string() + token.as_str()))
         );
     //Bearer::new(t);
 }
