@@ -26,6 +26,7 @@
 								<% } %>
 							</select>
 						</div>
+						
 						<span></span>
 						<div class="mb-4">
 							<label class="font-semibold" for="id_lat">Широта:</label>
