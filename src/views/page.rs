@@ -8,7 +8,7 @@ use actix_web::{
 };
 use crate::errors::Error;
 use crate::models::{
-    User,
+    User, Deceased,
 };
 use sailfish::TemplateOnce;
 use diesel::{
@@ -28,6 +28,7 @@ use crate::utils::{
 
 pub fn page_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
+    config.route("/main_search/", web::get().to(main_search));
     config.route("/info_1/", web::get().to(info_1_page));
 }
 
@@ -203,5 +204,67 @@ pub async fn not_found(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Resu
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
         }
+    }
+}
+
+
+#[derive(Deserialize)]
+struct SeacrhData {
+    pub first_name:  Option<String>,
+    pub middle_name: Option<String>,
+    pub last_name:   Option<String>,
+    pub birth_date:  Option<NaiveDate>,
+    pub death_date:  Option<NaiveDate>,
+    pub location:    Option<String>,
+}
+pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.first_name.is_none() || params.last_name.is_none() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
+        }
+        let user_id = get_request_user(&req).await;
+        let object_list = Deceased::main_search (
+            params.first_name.as_deref().unwrap(),
+            params.middle_name.clone(),
+            params.last_name.as_deref().unwrap(),
+            params.birth_date,
+            params.death_date,
+            params.location.clone(),
+        )
+        if user_id.is_some() {
+            let _request_user = user_id.unwrap();
+
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/search.stpl")]
+            struct Template {
+                request_user: User,
+                object_list:  Vec<Deceased>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object_list:  object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/main/anon_search.stpl")]
+            struct Template {
+                object_list: Vec<Deceased>,
+            }
+            let body = Template {
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
     }
 }

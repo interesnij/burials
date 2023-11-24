@@ -248,32 +248,38 @@ on('body', 'click', '#logg', function() {
 });
 
 
-on('body', 'change', '.load_regions', function() {
-  var val = this.value; 
-  block = this.parentElement.nextElementSibling;
-  if (!block.classList.contains("load_items")) {
+on('body', 'change', '.search_deceaseds', function() {
+  form = this.parentElement.parentElement.parentElement; 
+  block = form.nextElementSibling;
+  if (!form.querySelector("#id_last_name").value) {
     return 
   }
-  if (val == '' || block.classList.contains("no_load_items")) {
-    block.innerHTML = "";
-    next = block.nextElementSibling;
-    if (next.classList.contains("span")) {
-      next.innerHTML = "";
-    }
-  } else {
-    var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'GET', "/load_regions/" + val + "/", true );
-    link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    link.onreadystatechange = function () {
-      if ( link.readyState == 4 ) { 
-          if ( link.status == 200 ) {
-              block.innerHTML = link.responseText;
-          }
-      }
-  };
-  link.send( null );
+
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  url = "/main_search/?first_name=" +
+        form.querySelector("#id_first_name").value +
+        "&middle_name=" +
+        form.querySelector("#id_middle_name").value +
+        "&last_name=" +
+        form.querySelector("#id_last_name").value +
+        "&birth_date=" +
+        form.querySelector("#id_birth_date").value +
+        "&death_date=" +
+        form.querySelector("#id_death_date").value +
+        "&location=" +
+        form.querySelector("#id_location").value
+
+  link.open( 'GET', url, true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( link.readyState == 4 ) { 
+        if ( link.status == 200 ) {
+            block.innerHTML = link.responseText;
+    }};
+    link.send( null );
   };
 });
+
 on('body', 'change', '.load_region_items', function() {
   var val = this.value; 
   block = this.parentElement.nextElementSibling;

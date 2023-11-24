@@ -46,13 +46,14 @@
 			<div class="flex-grow-1 form-group">
                 <label for="location-input" class="">Расположение</label>
 				<div class="blur flex-no-wrap flex-grow-1 input-group">
-					<input class="form-control" name="location" type="text">
+					<input id="id_location" class="form-control" name="location" type="text">
 				</div> 
                 <small>Впишите название района/области</small>
 			</div> 
 		</div>
-		<div class="submit-col col-md-12 col-lg-2">
+		<div class="submit-col col-md-12 col-lg-2"> 
             <button style="margin-top: 23px;" type="button" class="search search_deceaseds btn btn-primary">Искать</button>
         </div>
 	</div>
 </form>
+<div class="col-md-12 search_container"></div>

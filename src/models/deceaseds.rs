@@ -162,15 +162,15 @@ impl Deceased {
             .load::<Deceased>(&_connection)
             .expect("E.");
     }
-    pub fn search (
+    pub fn main_search ( 
         first_name:  String,
         middle_name: Option<String>,
         last_name:   String,
         birth_date:  Option<NaiveDate>,
         death_date:  Option<NaiveDate>,
         location:    Option<String>,
-        limit:       i64,
-        offset:      i64,
+        //limit:       i64,
+        //offset:      i64,
     ) -> Vec<Deceased> {
         use crate::schema::deceaseds::dsl::deceaseds;
 
@@ -193,8 +193,8 @@ impl Deceased {
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -205,8 +205,8 @@ impl Deceased {
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -217,8 +217,8 @@ impl Deceased {
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -228,8 +228,8 @@ impl Deceased {
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -242,8 +242,8 @@ impl Deceased {
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -253,8 +253,8 @@ impl Deceased {
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -264,8 +264,8 @@ impl Deceased {
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
@@ -274,8 +274,8 @@ impl Deceased {
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .limit(limit)
-                    .offset(offset)
+                    //.limit(limit)
+                    //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
