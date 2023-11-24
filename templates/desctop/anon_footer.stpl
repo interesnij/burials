@@ -14,19 +14,6 @@
                               
                           </div><!--end col-->
                   
-                          <div class="lg:col-span-2 md:col-span-4">
-                              <h5 class="tracking-[1px] text-gray-100 font-semibold">Захоронения</h5>
-                              <ul class="list-none footer-list mt-6">
-                                  <li><a href="/places/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> База захоронений</a></li>
-                                  <li class="mt-[10px]"><a href class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Стена памяти</a></li>
-                                  <li class="mt-[10px]"><a href class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Известные личности</a></li>
-                                  <li class="mt-[10px]"><a href="/create_place/{id}/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Регистрация захоронения</a></li>
-                                  <li class="mt-[10px]"><a href="/create_deceased/{id}/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Оцифровка кладбища</a></li>
-                                  <li class="mt-[10px]"><a href="/organizations/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Организации</a></li>
-                                  <li class="mt-[10px]"><a href="/services/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Услуги</a></li>
-                              </ul>
-                          </div><!--end col-->
-                  
                           <div class="lg:col-span-3 md:col-span-4">
                             <h5 class="tracking-[1px] text-gray-100 font-semibold">География</h5>
                              <ul class="list-none footer-list mt-6">
@@ -40,6 +27,7 @@
                               <ul class="list-none footer-list mt-6">
                                   <li><a href="/about/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Контакты</a></li>
                                   <li class="mt-[10px]"><a href="/terms/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Политика конфиденциальности</a></li>
+                                  <li class="mt-[10px]"><a href="/policy/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Условия использования</a></li>
                               </ul>
                           </div><!--end col-->
                          
@@ -53,7 +41,7 @@
           <div class="container text-center">
               <div class="grid md:grid-cols-2 items-center">
                   <div class="md:text-left text-center">
-                      <p class="mb-0">© <script>document.write(new Date().getFullYear())</script>  <i class="mdi mdi-heart text-red-600"></i> </p>
+                      <p class="mb-0">© напогосте.рф <script>document.write(new Date().getFullYear())</script>  <i class="mdi mdi-heart text-red-600"></i> </p>
                   </div>
 
                   
@@ -61,20 +49,20 @@
           </div><!--end container-->
       </div>
   </footer>
-        <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 h-9 w-9 text-center bg-indigo-600 text-white leading-9"><i class="uil uil-arrow-up"></i></a>
-            <script src="/static/libs/tiny-slider/min/tiny-slider.js"></script>
-            <script src="/static/libs/feather-icons/feather.min.js"></script>
-            <script src="/static/js/plugins.init.js"></script>
-            <script src="/static/js/app.js"></script>
-            <script src="/static/js/easy_background.js"></script>
-
-            <script>
-              easy_background("#home",
-                  {
-                      slide: ["static/images/main/01.jpg", "static/images/main/02.jpg", "static/images/main/03.jpg"],
-                      delay: [4000, 4000, 4000]
-                  }
-              );
-          </script>
-
+  <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 h-9 w-9 text-center bg-indigo-600 text-white leading-9"><i class="uil uil-arrow-up"></i></a>
+            
+    <script src="/static/libs/tiny-slider/min/tiny-slider.js"></script>
+    <script src="/static/libs/feather-icons/feather.min.js"></script>
+    <script src="/static/js/plugins.init.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/easy_background.js"></script>
+    <script src="/static/scripts/main.js"></script>
+    <script>
+        easy_background("#home",
+            {
+                slide: ["static/images/main/01.jpg", "static/images/main/02.jpg", "static/images/main/03.jpg"],
+                delay: [4000, 4000, 4000]
+            }
+        );
+    </script>
 </div>

@@ -38,10 +38,10 @@ use std::borrow::BorrowMut;
 pub fn deceased_routes(config: &mut web::ServiceConfig) {
     config.route("/places/{id}/deceased_list/", web::get().to(all_deceased_place_page));
     config.route("/deceased/{id}/", web::get().to(deceased_page));
-    config.route("/create_deceased/{id}/", web::get().to(create_deceased_page));
+    config.route("/create_deceased/", web::get().to(create_deceased_page));
     config.route("/edit_deceased/{id}/", web::get().to(edit_deceased_page));
 
-    config.route("/create_deceased/{id}/", web::post().to(create_deceased));
+    config.route("/create_deceased/", web::post().to(create_deceased));
     config.route("/edit_deceased/{id}/", web::post().to(edit_deceased));
     config.route("/delete_deceased/{id}/", web::post().to(delete_deceased));
 }
@@ -234,26 +234,27 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
     }
 }
 
-pub async fn create_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
-    let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
+        let places_list = Place::all();
+
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/create_deceased.stpl")]
             struct Template {
                 request_user: User,
-                place:        Place,
+                places_list:  Vec<Place>,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                place:        _place,
+                places_list:  places_list,
                 is_ajax:      is_ajax,
             }
             .render_once()
@@ -265,12 +266,12 @@ pub async fn create_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> acti
             #[template(path = "mobile/deceased/create_deceased.stpl")]
             struct Template {
                 request_user: User,
-                place:        Place,
+                places_list:  Vec<Place>,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                place:        _place,
+                places_list:  places_list,
                 is_ajax:      is_ajax,
             }
             .render_once()
@@ -344,8 +345,8 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart, _id: web:
         if _request_user.is_admin() {
             let form = crate::utils::deceased_form(payload.borrow_mut()).await;
             Deceased::create ( 
-                _request_user.id,
-                *_id,
+                _request_user.id, 
+                form.place_id,
                 form.first_name.clone(),
                 form.middle_name.clone(),
                 form.last_name.clone(),

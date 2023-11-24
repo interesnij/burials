@@ -43,6 +43,7 @@ impl UploadedFiles {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DeceasedForms {
+    pub place_id:     i32,
     pub first_name:   String,
     pub middle_name:  Option<String>,
     pub last_name:    String,
@@ -56,6 +57,7 @@ pub struct DeceasedForms {
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
     let mut form: DeceasedForms = DeceasedForms {
+        place_id:     0,
         first_name:   "".to_string(),
         middle_name:  None,
         last_name:    "".to_string(),
@@ -105,6 +107,15 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: f64 = s.parse().unwrap();
                     form.lon = _int;
+                }
+            }
+        }
+        else if name == "place_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.place_id = _int;
                 }
             }
         }

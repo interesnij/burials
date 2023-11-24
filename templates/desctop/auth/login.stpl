@@ -9,16 +9,16 @@
 				<a href="/">
           <img src="/static/images/main/logo-icon.png" class="mx-auto" alt="img" />
         </a>
-				<h5 class="my-6 text-xl font-semibold">Вход</h5>
+				<h5 class="my-6 text-xl font-semibold api_response">Вход</h5> 
 				<form class="text-left">
 					<div class="grid grid-cols-1">
 						<div class="mb-4">
-							<label class="font-semibold" for="LoginEmail">Логин:</label>
-							<input id="LoginEmail" name="username" type="email" class="form-input mt-3" placeholder="" />
+							<label class="font-semibold" for="id_username">Логин:</label>
+							<input id="id_username" name="username" type="text" class="form-input mt-3" placeholder="" />
 						</div>
 						<div class="mb-4">
-							<label class="font-semibold" for="LoginPassword">Пароль:</label>
-							<input id="LoginPassword" name="password" type="password" class="form-input mt-3" placeholder="Ваш пароль:" />
+							<label class="font-semibold" for="id_password">Пароль:</label>
+							<input id="id_password" name="password" type="password" class="form-input mt-3" placeholder="Ваш пароль:" />
 						</div>
 						<div class="flex justify-between mb-4">
 							<div class="form-checkbox flex items-center mb-0">
@@ -34,7 +34,7 @@
 						<div class="mb-4">
 							<button type="button" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" >
 								Войти
-							</button>
+							</button> 
 						</div>
 						<div class="text-center">
 							<span class="text-slate-400 me-2">Пока что нет аккаунта ?</span>

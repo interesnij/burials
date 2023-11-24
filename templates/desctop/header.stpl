@@ -1,3 +1,72 @@
 
-   
-<% include!("generic/base/header.stpl"); %>
+<!DOCTYPE html>
+<html lang="ru" class="light scroll-smooth" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title>ЗАХОРОНЕНИЯ | ОРГАНИЗАЦИИ</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений.">
+        <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css">
+        <meta name="author" content="Shreethemes">
+        <meta name="website" content="">
+        <meta name="email" content="support@shreethemes.in">
+        <meta name="version" content="2.0.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" href="/static/images/main/favicon.ico">
+        <link href="/static/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
+        <link href="/static/libs/@iconscout/unicons/css/line.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/styles/tailwind.min.css">
+
+    </head>
+    
+    <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900">
+    <nav id="topnav" class="defaultscroll is-sticky" style="background-color: aliceblue;">
+        <div class="container">
+            <a class="logo pl-0" href="/">
+                напогосте.рф
+            </a>
+            <div class="menu-extras">
+                <div class="menu-item">
+                    <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                        <div class="lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+    
+            <div id="navigation">
+                <!-- Navigation Menu-->   
+                <ul class="navigation-menu">
+                    <li><a href="/" class="sub-menu-item">Главная</a></li> 
+    
+                    <li class="has-submenu parent-parent-menu-item">
+                        <a href="/places/">Захоронения</a><span class="menu-arrow"></span>
+                    </li>
+                    <li class="has-submenu parent-parent-menu-item">
+                        <a href="/about/">О нас</a><span class="menu-arrow"></span>
+                    </li>
+                    <li class="has-submenu parent-parent-menu-item">
+                        <a href="/faq/">FAQ</a><span class="menu-arrow"></span>
+                    </li>
+                    <% if request_user.is_superuser() { %>
+                    <li class="has-submenu parent-menu-item">
+                        <a href="javascript:void(0)">Админ</a><span class="menu-arrow"></span>
+                        <ul class="submenu">
+                            <li><a href="/create_country/" class="sub-menu-item">Создать страну</a></li>
+                            <li><a href="/create_region/" class="sub-menu-item">Создать регион</a></li>
+                            <li><a href="/create_district/" class="sub-menu-item">Создать округ</a></li>
+                            <li><a href="/create_city/" class="sub-menu-item">Создать город</a></li>
+                            <li><a href="/create_place/" class="sub-menu-item">Создать кладбище</a></li>
+                            <li><a href="/create_deceased/" class="sub-menu-item">Добавить покойника</a></li>
+                            <li><a href="/create_country/" class="sub-menu-item">Создать страну</a></li>
+                        </ul>
+                    </li>
+                    <% } %>
+                    <li><a href="/logout/" class="sub-menu-item">Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
