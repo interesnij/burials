@@ -125,6 +125,8 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
         .filter(schema::users::username.eq(username))
         .first::<User>(&_connection)
         .expect("Error.");
+    
+    println!("item_id {:?}", item.id);
 
     if let Ok(matching) = bcrypt::verify(&item.password, &password) {
         if matching {
@@ -139,7 +141,7 @@ async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i32 {
     let _connection = establish_connection();
     let result = find_user(data.username.clone(), data.password.clone());
 
-    match result {  
+    match result {   
         Ok(_user) => {  
             if bcrypt::verify(data.password.as_str(), _user.password.as_str()).unwrap() {
                 let token = gen_jwt(_user.id).await;
