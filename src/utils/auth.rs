@@ -21,10 +21,6 @@ pub fn set_token(token: &String, id: &String) {
     let ne = &("Bearer".to_string() + &token.to_string());
     let result = bearer.try_into_value();
     assert!(result.is_ok());
-        assert_eq!(
-            result.unwrap()
-            //HeaderValue::from_static(ne)
-        );
     //Bearer::new(t);
 }
 
