@@ -189,7 +189,6 @@ impl Deceased {
 
         let _connection = establish_connection();
         return deceaseds
-            .order(schema::deceaseds::death_date.desc())
             .load::<Deceased>(&_connection)
             .expect("E.");
     }

@@ -47,7 +47,7 @@
                 | <a class="pointer remove_city" data-pk="<%= i.id %>">x</a>
             </p>
             <% } %>
-    </div>
+    	</div>
 	</div>
 </section>
 

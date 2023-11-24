@@ -169,3 +169,83 @@ on('body', 'click', '.remove_district', function() {
   delete_item("/delete_district/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
+
+
+on('body', 'click', '#create_place', function() {
+  let form = this.parentElement;
+  if (!form.querySelector("#id_title").value) {
+      form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+    } 
+    form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/create_place/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
+on('body', 'click', '#edit_place', function() {
+  _this = this;
+  form = _this.parentElement;
+  if (!form.querySelector("#id_title").value) {
+      form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+    }
+    form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/edit_place/" + _this.getAttribute("data-pk") + "/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
+
+on('body', 'click', '.remove_place', function() {
+  delete_item("/delete_place/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+});
+
+
+on('body', 'click', '#create_deceased', function() {
+  let form = this.parentElement;
+  if (!form.querySelector("#id_first_name").value) {
+      form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+    } 
+    form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/create_deceased/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
+on('body', 'click', '#edit_deceased', function() {
+  _this = this;
+  form = _this.parentElement;
+  if (!form.querySelector("#id_first_name").value) {
+      form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+    }
+    form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/edit_deceased/" + _this.getAttribute("data-pk") + "/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
+
+on('body', 'click', '.remove_deceased', function() {
+  delete_item("/delete_deceased/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+});

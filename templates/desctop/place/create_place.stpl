@@ -146,6 +146,14 @@
                     </div>
                 </div>
             </div>
+            <div class="">
+                <% for i in place_list.iter() { %>
+                <p><%= i.name %>
+                    | <a class="ajax" href="/edit_place/<%= i.id %>/">~</a>
+                    | <a class="pointer remove_place" data-pk="<%= i.id %>">x</a>
+                </p>
+                <% } %>
+    	    </div>
         </section>
 
 

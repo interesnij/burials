@@ -242,19 +242,20 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let places_list = Place::all();
+        let place_list = Place::get_all();
+        let deceased_list = Deceased::get_all(); 
 
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/create_deceased.stpl")]
             struct Template {
                 request_user: User,
-                places_list:  Vec<Place>,
+                place_list:   Vec<Place>,
                 is_ajax:      i32,
             }
             let body = Template {
                 request_user: _request_user,
-                places_list:  places_list,
+                place_list:   place_list,
                 is_ajax:      is_ajax,
             }
             .render_once()
@@ -265,14 +266,16 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
             #[derive(TemplateOnce)]
             #[template(path = "mobile/deceased/create_deceased.stpl")]
             struct Template {
-                request_user: User,
-                places_list:  Vec<Place>,
-                is_ajax:      i32,
+                request_user:  User,
+                place_list:    Vec<Place>,
+                is_ajax:       i32,
+                deceased_list: Vec<Deceased>,
             }
             let body = Template {
-                request_user: _request_user,
-                places_list:  places_list,
-                is_ajax:      is_ajax,
+                request_user:  _request_user,
+                place_list:    place_list,
+                is_ajax:       is_ajax,
+                deceased_list: deceased_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -289,6 +292,9 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
     let _place = crate::utils::get_place(_deceased.place_id).expect("E.");
     let user_id = get_request_user(&req).await;
+    let place_list = Place::get_all();
+    let deceased_list = Deceased::get_all(); 
+
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
@@ -298,16 +304,20 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/edit_deceased.stpl")]
             struct Template {
-                request_user: User,
-                deceased:     Deceased,
-                place:        Place,
-                is_ajax:      i32,
+                request_user:  User,
+                deceased:      Deceased,
+                place:         Place,
+                is_ajax:       i32,
+                place_list:    Vec<Place>,
+                deceased_list: Vec<Deceased>,
             }
             let body = Template {
-                request_user: _request_user,
-                deceased:     _deceased,
-                place:        _place,
-                is_ajax:      is_ajax,
+                request_user:  _request_user,
+                deceased:      _deceased,
+                place:         _place,
+                is_ajax:       is_ajax,
+                place_list:    place_list,
+                deceased_list: deceased_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -315,18 +325,22 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/edit_deceased.stpl")]
+            #[template(path = "desctop/deceased/edit_deceased.stpl")]
             struct Template {
-                request_user: User,
-                deceased:     Deceased,
-                place:        Place,
-                is_ajax:      i32,
+                request_user:  User,
+                deceased:      Deceased,
+                place:         Place,
+                is_ajax:       i32,
+                place_list:    Vec<Place>,
+                deceased_list: Vec<Deceased>,
             }
             let body = Template {
-                request_user: _request_user,
-                deceased:     _deceased,
-                place:        _place,
-                is_ajax:      is_ajax,
+                request_user:  _request_user,
+                deceased:      _deceased,
+                place:         _place,
+                is_ajax:       is_ajax,
+                place_list:    place_list,
+                deceased_list: deceased_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

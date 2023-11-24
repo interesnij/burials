@@ -196,6 +196,14 @@ impl Place {
             .load::<Place>(&_connection)
             .expect("E.");
     }
+    pub fn get_all() -> Vec<Place> {
+        use crate::schema::places::dsl::places;
+
+        let _connection = establish_connection();
+        return places
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
     pub fn search (
         q:        &String,
         limit:    i64,

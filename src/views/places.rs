@@ -432,6 +432,7 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
         }
 
         let country_list = crate::models::Countrie::get_all();
+        let place_list = crate::models::Place::get_all();
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -440,11 +441,13 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
                 request_user: User,
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
+                place_list:   Vec<Place>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
                 country_list: country_list,
+                place_list:   place_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -457,11 +460,13 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
                 request_user: User,
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
+                place_list:   Vec<Place>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
                 country_list: country_list,
+                place_list:   place_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -477,6 +482,12 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
+
+    let country_list = Countrie::get_all();
+    let region_list = Region::get_country_all(object.country_id);
+    let city_list = Citie::get_all(); 
+    let place_list = crate::models::Place::get_all();
+
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
@@ -489,11 +500,19 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                 request_user: User,
                 place:        Place,
                 is_ajax:      i32,
+                country_list: Vec<Countrie>,
+                region_list:  Vec<Region>,
+                city_list:    Vec<Citie>,
+                place_list:   Vec<Place>,
             }
             let body = Template {
                 request_user: _request_user,
                 place:        _place,
                 is_ajax:      is_ajax,
+                country_list: country_list,
+                region_list:  region_list,
+                city_list:    city_list,
+                place_list:   place_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -501,16 +520,24 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/edit_place.stpl")]
+            #[template(path = "desctop/place/edit_place.stpl")]
             struct Template {
                 request_user: User,
                 place:        Place,
                 is_ajax:      i32,
+                country_list: Vec<Countrie>,
+                region_list:  Vec<Region>,
+                city_list:    Vec<Citie>,
+                place_list:   Vec<Place>,
             }
             let body = Template {
                 request_user: _request_user,
                 place:        _place,
                 is_ajax:      is_ajax,
+                country_list: country_list,
+                region_list:  region_list,
+                city_list:    city_list,
+                place_list:   place_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
