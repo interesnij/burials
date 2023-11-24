@@ -2,7 +2,7 @@ use actix_web::{
   HttpRequest,
   web::block,
   HttpResponse,
-  http::header::{Header, HeaderValue},
+  http::header::{Header, HeaderValue, TryIntoHeaderValue},
 };
 use std::{result::Result, env};
 use chrono::{Duration, Utc};
