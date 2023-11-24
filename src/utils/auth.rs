@@ -2,7 +2,7 @@ use actix_web::{
   HttpRequest,
   web::block,
   HttpResponse,
-  http::header::Header,
+  http::header::{Header, HeaderValue},
 };
 use std::{result::Result, env};
 use chrono::{Duration, Utc};
@@ -21,7 +21,7 @@ pub fn set_token(token: &String, id: &String) {
     assert!(result.is_ok());
         assert_eq!(
             result.unwrap(),
-            HeaderValue::from_static("Bearer mF_9.B5f-4.1JqM")
+            HeaderValue::from_static("Bearer" + bearer)
         );
     //Bearer::new(t);
 }
