@@ -114,7 +114,7 @@ pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        crate::utils::remove_token(&req);
+        //crate::utils::remove_token(&req);
         crate::views::index_page(req).await
     }
 }

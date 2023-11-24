@@ -175,6 +175,12 @@ impl Region {
             .load::<Region>(&_connection)
             .expect("E");
     }
+    pub fn get_all() -> Vec<Region> {
+        let _connection = establish_connection();
+        return schema::regions::table
+            .load::<Region>(&_connection)
+            .expect("E");
+    }
     pub fn create (
         country_id: i32,
         name:       String,
@@ -357,6 +363,12 @@ impl District {
         let _connection = establish_connection();
         return schema::districts::table
             .filter(schema::districts::country_id.eq(id))
+            .load::<District>(&_connection)
+            .expect("E");
+    }
+    pub fn get_all() -> Vec<District> {
+        let _connection = establish_connection();
+        return schema::districts::table
             .load::<District>(&_connection)
             .expect("E");
     }

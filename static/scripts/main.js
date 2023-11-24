@@ -22,6 +22,10 @@ function setCookie(name, value, days) {
 function eraseCookie(name) {   
   document.cookie = name+'=; Max-Age=-99999999;';  
 }
+on('body', 'click', '.logout_hundler', function() {
+  eraseCookie("userrr");
+  location.reload();
+}
 
 class ToastManager {
     constructor() {

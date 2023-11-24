@@ -65,8 +65,8 @@
                         </ul>
                     </li>
                     <% } %>
-                    <li><a href="/logout/" class="sub-menu-item">Выйти</a></li>
-                </ul>
+                    <li><a class="sub-menu-item logout_hundler" style="cursor:pointer">Выйти</a></li>
+                </ul> 
             </div>
         </div>
     </nav>
