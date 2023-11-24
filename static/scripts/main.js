@@ -272,7 +272,7 @@ on('body', 'click', '.search_deceaseds', function() {
         form.querySelector("#id_location").value;
 
   console.log("url!", url);
-  link.open( 'GET', url, true );
+  link.open( 'GET', "/main_search/", true );
   link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   link.onreadystatechange = function () {
     if ( link.readyState == 4 ) { 
