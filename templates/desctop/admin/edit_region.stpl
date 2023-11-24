@@ -39,7 +39,7 @@
                             />
 						</div>
 						<div class="mb-4">
-							<button type="button" data-id="<%= object.id %>" id="edit_region" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" >
+							<button type="button" data-pk="<%= object.id %>" id="edit_region" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" >
 								Изменить
 							</button> 
 						</div>
