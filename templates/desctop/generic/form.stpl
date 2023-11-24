@@ -64,7 +64,7 @@
 		<div class="d-flex col-md-12 col-lg-4">
 			<div class="flex-grow-1 form-group">
 				<div class="blur flex-no-wrap flex-grow-1 input-group">
-					<input name="location" type="text">
+					<input class="form-control" name="location" type="text">
 				</div> 
                 <label for="location-input" class="">Расположение</label>
                 <small>Впишите название района/области либо нажмите "+" и выберите из списка</small>
