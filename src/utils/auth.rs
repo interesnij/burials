@@ -20,7 +20,7 @@ pub fn set_token(token: &String, id: &String) {
 }
 
 pub async fn remove_token(req: &HttpRequest) -> i16 { 
-    match Authorization::<Bearer>::parse(req) {
+    match Authorization::<Bearer>::new(req) {
       Ok(ok) => {
         let token = ok.as_ref().token();
         web_local_storage_api::remove_item(token);
