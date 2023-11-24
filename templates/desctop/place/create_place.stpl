@@ -21,7 +21,7 @@
                 <div class="grid md:grid-cols-12 gap-[30px]">
                     <div class="lg:col-span-3 md:col-span-4">
                         <div class="group profile-pic w-[112px]">
-                            <input id="pro-img" name="image" type="file" class="hidden" onchange="loadFile(event)" />
+                            <input id="pro-img" name="profile-image" type="file" class="hidden" onchange="loadFile(event)" />
                             <div>
                                 <div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
                                     <img src="/static/images/main/1111.png" class="rounded-full" id="profile-image" alt="">
