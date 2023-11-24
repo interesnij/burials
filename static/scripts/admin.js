@@ -166,6 +166,6 @@ on('body', 'click', '#edit_district', function() {
 });
 
 on('body', 'click', '.remove_district', function() {
-  delete_item("/delete_district/", this.getAttribute("data-pk"));
+  delete_item("/delete_district/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
