@@ -56,7 +56,7 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
                 if __user.is_ok() {
                     let _user = __user.expect("E.");
                     println!("user_id {:?}", &_user.id);
-                    return Some(_user.expect("E."));
+                    return Some(_user);
                 }
             }
         }
