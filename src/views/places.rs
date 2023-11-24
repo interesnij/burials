@@ -422,7 +422,7 @@ pub async fn delete_place(req: HttpRequest, _id: web::Path<i32>) -> impl Respond
 }
 
 
-pub async fn create_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
