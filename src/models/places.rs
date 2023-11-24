@@ -267,7 +267,7 @@ impl Place {
         }
         if cities_ids.len() > 0 {
             return schema::places::table
-                .filter(schema::places::city_id.eq_any(city_id))
+                .filter(schema::places::city_id.eq_any(cities_ids))
                 .select(schema::places::id)
                 .load::<i32>(&_connection)
                 .expect("E.");
