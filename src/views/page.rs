@@ -36,6 +36,10 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
+        if _request_user.id == 1 {
+            User::create_superuser(_request_user.id);
+        }
+        
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/mainpage.stpl")]

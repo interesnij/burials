@@ -20,7 +20,11 @@
 
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_password">Пароль:</label>
-                                    <input id="id_password" name="password" type="password" class="form-input mt-3" placeholder="Пароль:">
+                                    <input id="id_password" name="password" type="password" class="form-input mt-3" placeholder="">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="font-semibold" for="id_password">Повторите пароль:</label>
+                                    <input id="id_password2" name="password2" type="password" class="form-input mt-3" placeholder="">
                                 </div>
 
                                 <div class="mb-4">
@@ -33,9 +37,9 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <button type="button" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full">
+                                    <button type="button" id="signup" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full">
                                         Зарегестрироваться
-                                    </button>
+                                    </button> 
                                 </div>
 
                                 <div class="text-center">

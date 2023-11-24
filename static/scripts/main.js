@@ -150,7 +150,7 @@ on('body', 'click', '#logg', function() {
   
   on('body', 'click', '#signup', function() {
     _this = this;
-    form = _this.parentElement;
+    form = _this.parentElement.parentElement.parentElement;
     username = form.querySelector("#id_username");
     response = form.querySelector(".api_response");
     if (!username.value){
@@ -162,7 +162,16 @@ on('body', 'click', '#logg', function() {
       toast_error("Пароль - обязательное поле!");
       return
     }
+    else if (form.querySelector("#id_password").value != form.querySelector("#id_password2").value){
+      form.querySelector("#id_password").style.border = "1px #FF0000 solid";
+      form.querySelector("#id_password2").style.border = "1px #FF0000 solid";
+      toast_error("Пароль - обязательное поле!");
+      return
+    }
     else {
+      form.querySelector("#id_password").style.border = "unset";
+      form.querySelector("#id_password2").style.border = "unset";
+      form.querySelector("#id_username").style.border = "unset";
       this.disabled = true
     }
   
@@ -182,3 +191,49 @@ on('body', 'click', '#logg', function() {
     }};
     link.send(form_data);
   });
+
+
+  on('body', 'input', '.desctop_search', function() {
+    _this = this;
+    _help = _this.previousElementSibling;
+    value = _this.value;
+    parent = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+    content_block = parent.querySelector(".content_block");
+    search_block = content_block.previousElementSibling;
+
+    if (value == "") {
+      search_block.innerHTML= "";
+      content_block.classList.remove("hidden");
+      return;
+    }
+    else if (value.length < 3) {
+      search_block.innerHTML= "";
+      content_block.classList.remove("hidden");
+      return;
+    }
+
+    if (_this.getAttribute("data-folder")) {
+      folder = _this.getAttribute("data-folder")
+    } else {
+      folder = ""
+    };
+    url = "/search/" + value + "/";
+
+    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    ajax_link.open( 'GET', url + "?ajax=1", true );
+    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    ajax_link.onreadystatechange = function () {
+      if ( this.readyState == 4 && this.status == 200 ) {
+        elem_ = document.createElement('span');
+        elem_.innerHTML = ajax_link.responseText;
+
+        elem_.querySelector(".is_paginate") ?
+        (
+          search_section = elem_.querySelector(".is_paginate"),
+          search_block.innerHTML = search_section.innerHTML.replaceAll(new RegExp(value, 'ig'), "<span class='selected'>" + value + "</span>")
+        ) : search_block.innerHTML = "<div style='margin-top: 40px;'><div class='align-center'><span class='border' style='padding: 10px 15px;'>Искать пока не из чего...</div></div>";
+        content_block.classList.add("hidden")
+      }
+    }
+    ajax_link.send();
+});

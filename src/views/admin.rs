@@ -212,14 +212,17 @@ pub async fn create_country_page(req: HttpRequest) -> actix_web::Result<HttpResp
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
+        let country_list = Countrie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_country.stpl")]
         struct Template { 
             request_user: User,
+            country_list: Vec<Countrie>,
         }
         let body = Template {
             request_user: _request_user,
+            country_list: country_list,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -237,16 +240,19 @@ pub async fn edit_country_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let object = crate::utils::get_country(*_id).expect("E.");
+        let country_list = Countrie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_country.stpl")]
         struct Template { 
             request_user: User,
             object:       Countrie,
+            country_list: Vec<Countrie>,
         }
         let body = Template {
             request_user: _request_user,
             object:       object,
+            country_list: country_list,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
