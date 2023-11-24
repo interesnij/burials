@@ -48,17 +48,17 @@
 								<input type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent 
                                     dark:bg-slate-900 dark:text-slate-200 rounded 
                                     outline-none border border-gray-200 focus:border-indigo-600  
-                                    dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" id="first_name" name="first_name">
+                                    dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" id="id_first_name" name="first_name">
 							</div>
 							<div>
 								<label class="form-label font-medium">Фамилия : <span class="text-red-600">*</span></label>
-								<input name="last_name" id="last_name" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900
+								<input name="last_name" id="id_last_name" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900
                                      dark:text-slate-200 rounded outline-none border border-gray-200 
                                      focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2">
 							</div>
 							<div>
 								<label class="form-label font-medium">Отчество : </label>
-								<input name="middle_name" id="middle_name" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent 
+								<input name="middle_name" id="id_middle_name" type="text" class="form-input w-full py-2 px-3 h-10 bg-transparent 
                                     dark:bg-slate-900 dark:text-slate-200 rounded outline-none border 
                                     border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2">
 							</div>
@@ -70,7 +70,7 @@
 							<div class="relative mt-1">
 								<input type="date" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
                                         rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                    id="birth_date" name="birth_date">
+                                    id="id_birth_date" name="birth_date">
 							</div>
 						</div>
 						<br>
@@ -79,7 +79,7 @@
 							<div class="relative mt-1">
 								<input type="date" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
                                         rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                    id="death_date" name="death_date">
+                                    id="id_death_date" name="death_date">
 							</div>
 						</div>
                         <div class="md:col-span-3 col-span-12 text-start">
@@ -87,7 +87,7 @@
 							<div class="relative mt-1">
 								<textarea type="date" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
                                         rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                    id="memory_words" name="memory_words">
+                                    id="id_memory_words" name="memory_words">
                                 </textarea>
 							</div>
 						</div>
