@@ -52,9 +52,9 @@ pub async fn get_request_user(req: &HttpRequest) -> Option<User> {
             println!("c[0] {:?}", split_c[0]);
             if split_c[0] == "userrr" {
                 let user_id = split_c[1].parse().unwrap();
-                let _user = crate::utils::get_user(user_id);
+                let __user = crate::utils::get_user(user_id);
                 if __user.is_ok() {
-                    let _user = _user.expect("E.");
+                    let _user = __user.expect("E.");
                     println!("user_id {:?}", &_user.id);
                     return Some(_user.expect("E."));
                 }
