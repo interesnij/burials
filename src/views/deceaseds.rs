@@ -242,21 +242,23 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let place_list = Place::get_all();
+        let places_list = Place::get_all();
         let deceased_list = Deceased::get_all(); 
 
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/create_deceased.stpl")]
             struct Template {
-                request_user: User,
-                place_list:   Vec<Place>,
-                is_ajax:      i32,
+                request_user:  User,
+                places_list:   Vec<Place>,
+                deceased_list: Vec<Deceased>,
+                is_ajax:       i32,
             }
             let body = Template {
-                request_user: _request_user,
-                place_list:   place_list,
-                is_ajax:      is_ajax,
+                request_user:  _request_user,
+                places_list:   places_list,
+                deceased_list: deceased_list,
+                is_ajax:       is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -264,18 +266,18 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/create_deceased.stpl")]
+            #[template(path = "desctop/deceased/create_deceased.stpl")]
             struct Template {
                 request_user:  User,
-                place_list:    Vec<Place>,
-                is_ajax:       i32,
+                places_list:   Vec<Place>,
                 deceased_list: Vec<Deceased>,
+                is_ajax:       i32,
             }
             let body = Template {
                 request_user:  _request_user,
-                place_list:    place_list,
-                is_ajax:       is_ajax,
+                places_list:   places_list,
                 deceased_list: deceased_list,
+                is_ajax:       is_ajax,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
