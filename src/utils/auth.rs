@@ -16,7 +16,13 @@ pub fn is_authenticate(token: &String)-> bool {
 
 pub fn set_token(token: &String, id: &String) {
     let _local_token = web_local_storage_api::set_item(token, id);
-    let t = token.to_string();
+    let t = token.as_str();
+    let result = bearer.try_into_value();
+    assert!(result.is_ok());
+        assert_eq!(
+            result.unwrap(),
+            HeaderValue::from_static("Bearer mF_9.B5f-4.1JqM")
+        );
     Bearer::new(t);
 }
 
