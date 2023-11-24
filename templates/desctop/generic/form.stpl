@@ -52,7 +52,7 @@
 			</div> 
 		</div>
 		<div class="submit-col col-md-12 col-lg-2">
-            <button type="button" class="search search-form-button btn btn-primary">Искать</button>
+            <button style="margin-top: 23px;" type="button" class="search search_deceaseds btn btn-primary">Искать</button>
         </div>
 	</div>
 </form>
