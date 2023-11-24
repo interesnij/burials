@@ -221,7 +221,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        if params.first_name.is_none() || params.last_name.is_none() {
+        if params.last_name.is_none() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""));
         }
         let user_id = get_request_user(&req).await;
