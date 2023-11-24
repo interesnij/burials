@@ -194,7 +194,7 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Resul
         println!("{:?}", form.username.clone());
         println!("{:?}", form.password.clone());
         let i = handle_sign_in(form, &req).await;
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(i.to_string())))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(i.to_string()))
     }
 }
 
