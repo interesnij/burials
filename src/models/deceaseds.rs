@@ -265,7 +265,7 @@ impl Deceased {
             else {
                 return deceaseds
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
-                    .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
+                    //.or_filter(schema::deceaseds::middle_name.ilike(middle_name))
                     .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .limit(limit)
                     .offset(offset)
