@@ -130,7 +130,7 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
     println!("password {:?}", &password);
     println!("item_id {:?}", item.id);
 
-    if let Ok(matching) = bcrypt::verify(&item.password, &password) {
+    if let Ok(matching) = &item.password == &password {
         if matching {
             return Ok(item);
         }
