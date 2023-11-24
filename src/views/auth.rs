@@ -241,12 +241,12 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
         let _connection = establish_connection();
         let _password = bcrypt::hash(form.password.clone(), 8).unwrap();
         let form_user = NewUser {
-            username: form.username.clone(),
-            email:    form.email.clone(),
-            password: _password.clone(),
-            description:      None,
-            image:    None,
-            perm:     1,
+            username:    form.username.clone(),
+            email:       User::next_count(),
+            password:    _password.clone(),
+            description: None,
+            image:       None,
+            perm:        1,
         }; 
         println!("{:?}", form.username.clone());
         println!("{:?}", form.email.clone());

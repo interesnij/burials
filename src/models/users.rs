@@ -44,6 +44,17 @@ impl User {
             .execute(&_connection);
         return 1;
     }
+    pub fn next_count() -> String { 
+        use crate::schema::users::dsl::users;
+
+        let _connection = establish_connection();
+        return (users
+            .select(schema::users::id)
+            .load::<i32>(&_connection)
+            .expect("E.")
+            .len() + 1)
+            .to_string();
+    }
 }
 
 #[derive(Debug, Deserialize, Insertable)]
