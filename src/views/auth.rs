@@ -185,16 +185,17 @@ pub async fn login_form(payload: &mut Multipart) -> LoginUser2 {
     form
 }
 
-pub async fn login(mut payload: Multipart, req: HttpRequest) -> i32 {
+pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Result<HttpResponse> {
     if get_request_user(&req).await.is_some() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("0"))
     }
     else {
         let form = login_form(payload.borrow_mut()).await;
         println!("{:?}", form.username.clone());
         println!("{:?}", form.password.clone());
-        handle_sign_in(form, &req).await
-    }d
+        let i = handle_sign_in(form, &req).await;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("i"))
+    }
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -230,10 +231,10 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
     }
     form
 }
-pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> i32 {
+pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     // Если пользователь не аноним, то отправляем его на страницу новостей
     if get_request_user(&req).await.is_some() {
-        0
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     } 
     else { 
         let form = signup_form(payload.borrow_mut()).await;
@@ -257,6 +258,6 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> i32 {
             .expect("Error saving user.");
 
         //set_current_user(&_user);
-        _new_user.id
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(_new_user.id))
     }
 }
