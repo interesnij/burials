@@ -250,8 +250,10 @@ on('body', 'click', '#logg', function() {
 
 on('body', 'change', '.search_deceaseds', function() {
   form = this.parentElement.parentElement.parentElement; 
+  console.log("click!");
   block = form.nextElementSibling;
   if (!form.querySelector("#id_last_name").value) {
+    console.log("no last_name!");
     return 
   }
 
