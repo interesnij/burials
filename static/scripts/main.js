@@ -137,7 +137,7 @@ on('body', 'click', '#logg', function() {
   
     link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
-      setCookie("userr", link.responseText, 300);
+      setCookie("userrr", link.responseText, 300);
       window.location.href = "/"
       }
     else {
@@ -185,7 +185,7 @@ on('body', 'click', '#logg', function() {
   
     link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
-      setCookie("userr", link.responseText, 300);
+      setCookie("userrr", link.responseText, 300);
       window.location.href = "/"
       }
     else {
