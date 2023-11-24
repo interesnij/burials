@@ -258,6 +258,6 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
             .expect("Error saving user.");
 
         //set_current_user(&_user);
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(_new_user.id))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(_new_user.id.to_string()))
     }
 }
