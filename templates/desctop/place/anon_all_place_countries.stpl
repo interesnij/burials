@@ -1,4 +1,4 @@
-<% include!("../header.stpl"); %>
+<% include!("../anon_header.stpl"); %>
 
     <div class="page-wrapper">
       <section class="property-five">
@@ -202,4 +202,4 @@
       <!--End -->
     </div>
 
-<% include!("../footer.stpl"); %>
+<% include!("../anon_footer.stpl"); %>

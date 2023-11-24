@@ -1,4 +1,4 @@
-<% include!("../header.stpl"); %>
+<% include!("../anon_header.stpl"); %>
 
     <section class="md:h-screen py-36 flex items-center" style="background: linear-gradient(45deg, #ff6600, #0066ff);">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
@@ -51,4 +51,4 @@
             </div>
         </section>
 
-<% include!("../footer.stpl"); %>
+<% include!("../anon_footer.stpl"); %>

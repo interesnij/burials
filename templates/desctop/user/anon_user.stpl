@@ -1,4 +1,4 @@
-<% include!("../header.stpl"); %>
+<% include!("../anon_header.stpl"); %>
 
 <% include!("block/banner.stpl"); %>
 
@@ -33,6 +33,6 @@
 
 
 
-<% include!("../footer.stpl"); %>
+<% include!("../anon_footer.stpl"); %>
 
 

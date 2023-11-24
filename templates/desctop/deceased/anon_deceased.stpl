@@ -1,4 +1,4 @@
-<% include!("../header.stpl"); %>
+<% include!("../anon_header.stpl"); %>
 
 
         <!-- Start Hero -->
@@ -405,12 +405,6 @@
                                     </div>
                                 </div>
 
-
-
-
-
-
-
                             </div>
                         </div><!--end grid-->
                     </div><!--end container-->
@@ -426,4 +420,4 @@
 
 
 
-<% include!("../footer.stpl"); %>
+<% include!("../anon_footer.stpl"); %>
