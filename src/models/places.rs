@@ -237,7 +237,7 @@ impl Place {
 
         let cities_ids = schema::cities::table
             .filter(schema::cities::name.ilike(loc))
-            .select(schema::places::id)
+            .select(schema::cities::id)
             .load::<i32>(&_connection)
             .expect("E.");
         let districts_ids = schema::districts::table
@@ -267,7 +267,7 @@ impl Place {
         }
         if cities_ids.len() > 0 {
             return schema::places::table
-                .filter(schema::places::citie_id.eq_any(citie_id))
+                .filter(schema::places::city_id.eq_any(city_id))
                 .select(schema::places::id)
                 .load::<i32>(&_connection)
                 .expect("E.");

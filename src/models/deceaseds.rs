@@ -184,7 +184,7 @@ impl Deceased {
         }
         if location.is_some() {
             let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
-            let places_ids = Place::search_ids(&loc);
+            let places_ids = crate::models::Place::search_ids(&loc);
             if birth_date.is_some() && death_date.is_some() {
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
