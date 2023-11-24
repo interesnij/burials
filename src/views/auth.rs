@@ -234,7 +234,7 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
 pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     // Если пользователь не аноним, то отправляем его на страницу новостей
     if get_request_user(&req).await.is_some() {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("-300"))
     } 
     else { 
         let form = signup_form(payload.borrow_mut()).await;
