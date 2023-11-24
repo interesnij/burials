@@ -249,7 +249,7 @@ on('body', 'click', '.search_deceaseds', function() {
     return 
   } 
 
-  url = "/main_search/?first_name=" +
+  url = "/main_search?first_name=" +
         form.querySelector("#id_first_name").value +
         "&middle_name=" +
         form.querySelector("#id_middle_name").value +

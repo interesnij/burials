@@ -28,7 +28,7 @@ use crate::utils::{
 
 pub fn page_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
-    config.route("/main_search/", web::get().to(main_search));
+    config.route("/main_search", web::get().to(main_search));
     config.route("/info_1/", web::get().to(info_1_page));
 }
 
@@ -216,7 +216,7 @@ pub struct SeacrhData {
     pub birth_date:  Option<chrono::NaiveDate>,
     pub death_date:  Option<chrono::NaiveDate>,
     pub location:    Option<String>,
-} 
+}  
 pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
