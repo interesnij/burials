@@ -206,9 +206,9 @@ impl Deceased {
             else if death_date.is_some() && birth_date.is_none() {
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + first_name + "%"))
+                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
-                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + last_name + "%"))
+                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
                     .limit(limit)
                     .offset(offset)
@@ -218,9 +218,9 @@ impl Deceased {
             else {
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + first_name + "%"))
+                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
-                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + last_name + "%"))
+                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .limit(limit)
                     .offset(offset)
                     .load::<Deceased>(&_connection)
@@ -230,9 +230,9 @@ impl Deceased {
         else {
             if birth_date.is_some() && death_date.is_some() {
                 return deceaseds
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + first_name + "%"))
+                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
-                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + last_name + "%"))
+                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
                     .limit(limit)
@@ -242,9 +242,9 @@ impl Deceased {
             }
             else if birth_date.is_some() && death_date.is_none() {
                 return deceaseds
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + first_name + "%"))
+                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
-                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + last_name + "%"))
+                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .limit(limit)
                     .offset(offset)
@@ -253,9 +253,9 @@ impl Deceased {
             }
             else if death_date.is_some() && birth_date.is_none() {
                 return deceaseds
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + first_name + "%"))
+                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
-                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + last_name + "%"))
+                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
                     .limit(limit)
                     .offset(offset)
@@ -264,9 +264,9 @@ impl Deceased {
             }
             else {
                 return deceaseds
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + first_name + "%"))
+                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle_name))
-                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + last_name + "%"))
+                    .or_filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .limit(limit)
                     .offset(offset)
                     .load::<Deceased>(&_connection)
