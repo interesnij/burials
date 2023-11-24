@@ -71,6 +71,7 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     }
 
     else {
+        println!("anon");
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/anon_mainpage.stpl")]
