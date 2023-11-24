@@ -109,7 +109,7 @@ on('body', 'click', '.open_child_serves', function(event) {
 on('body', 'click', '#logg', function() {
     _this = this; 
     form = _this.parentElement.parentElement.parentElement;
-    response = form.querySelector(".api_response");
+    response = form.parentElement.querySelector(".api_response");
   
     if (!form.querySelector("#id_username").value){
       form.querySelector("#id_username").style.border = "1px #FF0000 solid";
@@ -152,7 +152,7 @@ on('body', 'click', '#logg', function() {
     _this = this;
     form = _this.parentElement.parentElement.parentElement.parentElement;
     username = form.querySelector("#id_username");
-    response = form.querySelector(".api_response");
+    response = form.parentElement.querySelector(".api_response");
     if (!username.value){
       username.style.border = "1px #FF0000 solid";
       toast_error("Логин - обязательное поле!");
