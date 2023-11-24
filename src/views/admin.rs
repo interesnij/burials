@@ -429,14 +429,14 @@ pub async fn create_city_page(req: HttpRequest) -> actix_web::Result<HttpRespons
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let country_list = Countrie::get_all();
-        let city_list = City::get_all();
+        let city_list = Citie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_city.stpl")]
         struct Template { 
             request_user: User,
             country_list: Vec<Countrie>,
-            city_list:    Vec<City>,
+            city_list:    Vec<Citie>,
         }
         let body = Template {
             request_user: _request_user,
@@ -461,7 +461,7 @@ pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web:
         let object = crate::utils::get_city(*_id).expect("E.");
         let country_list = Countrie::get_all();
         let region_list = Region::get_country_all(object.country_id);
-        let city_list = City::get_all();
+        let city_list = Citie::get_all();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_city.stpl")]
@@ -470,7 +470,7 @@ pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web:
             object:       Citie,
             country_list: Vec<Countrie>,
             region_list:  Vec<Region>,
-            city_list:    Vec<City>,
+            city_list:    Vec<Citie>,
         }
         let body = Template {
             request_user: _request_user,
