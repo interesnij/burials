@@ -230,7 +230,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         let death_date_dd = params.death_date.is_some() && params.death_date.unwrap().format("%Yd-%m-%d").to_string() == "2023-11-25";
         println!("birth_date_dd {:?}", birth_date_dd);
         println!("death_date_dd {:?}", death_date_dd);
-        if birth_date {
+        if birth_date_dd {
             birth_date = None;
         }
         else {
