@@ -201,44 +201,6 @@ on('body', 'click', '#logg', function() {
     link.send(form_data);
   });
 
-
-  on('body', 'input', '.desctop_search', function() {
-    _this = this;
-    _help = _this.previousElementSibling;
-    value = _this.value;
-    parent = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
-    content_block = parent.querySelector(".content_block");
-    search_block = content_block.previousElementSibling;
-
-    if (value == "") {
-      search_block.innerHTML= "";
-      content_block.classList.remove("hidden");
-      return;
-    }
-    else if (value.length < 3) {
-      search_block.innerHTML= "";
-      content_block.classList.remove("hidden");
-      return;
-    }
-
-    if (_this.getAttribute("data-folder")) {
-      folder = _this.getAttribute("data-folder")
-    } else {
-      folder = ""
-    };
-    url = "/search/" + value + "/";
-
-    var ajax_link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    ajax_link.open( 'GET', url + "?ajax=1", true );
-    ajax_link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    ajax_link.onreadystatechange = function () {
-      if ( this.readyState == 4 && this.status == 200 ) {
-        
-      }
-    }
-    ajax_link.send();
-});
-
  
 on('body', 'click', '.search_deceaseds', function() {
   form = this.parentElement.parentElement.parentElement; 
@@ -288,6 +250,7 @@ on('body', 'click', '.search_deceaseds', function() {
   link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
         console.log("success!");
+        block.innerHTML = "";
         block.innerHTML = link.responseText;
     } else { console.log("status", this.status);  };
   };

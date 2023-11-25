@@ -1,8 +1,8 @@
 <div class="property-grid-content grid-item">
     <div class="row">
 <% for i in object_list.iter() { %>
-    <div class="col-xl-6 col-lg-6">
-        <div class="single-properties-box-style1">
+    <div class="col-xl-4 col-lg-4">
+        <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
             <div class="img-holder">
                 <img src="<%= i.get_image() %>" alt="img">
             </div>
