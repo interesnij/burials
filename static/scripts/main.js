@@ -288,7 +288,7 @@ on('body', 'change', '.load_regions', function() {
     block.innerHTML = "";
   } else {
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link.open( 'GET', "/load_region_geo_items/" + val + "/", true );
+      link.open( 'GET', "/load_regions/" + val + "/", true );
       link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link.onreadystatechange = function () {
         if ( link.readyState == 4 ) { 
