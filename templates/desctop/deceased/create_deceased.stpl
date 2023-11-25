@@ -26,7 +26,7 @@
 <section class="relative md:py-24 py-16">
 	<div class="container">
 		
-		<div class="grid md:grid-cols-12 gap-[30px]">
+		<div class="md:grid-cols-12 gap-[30px]">
 		<form>
 			<div class="lg:col-span-3 md:col-span-4">
 				<div class="group profile-pic w-[112px]">
@@ -141,4 +141,4 @@
 	document.body.querySelector("#get_my_lat").innerHTML = latitude;
 	document.body.querySelector("#get_my_lon").innerHTML = longitude;
 })
-<script>
+</script>

@@ -248,8 +248,8 @@ on('body', 'click', '.search_deceaseds', function() {
     console.log("no last_name!");
     return 
   }
-  birth_date = form.querySelector("#id_birth_date").value;
-  death_date = form.querySelector("#id_death_date").value;
+  birth_date = form.querySelector("#id_birth_date");
+  death_date = form.querySelector("#id_death_date");
   if (!birth_date.value) {
     birth_date.value == "00.00.0000"
   }
@@ -264,9 +264,9 @@ on('body', 'click', '.search_deceaseds', function() {
         "&last_name=" +
         form.querySelector("#id_last_name").value +
         "&birth_date=" +
-        form.querySelector("#id_birth_date").value +
+        birth_date.value +
         "&death_date=" +
-        form.querySelector("#id_death_date").value +
+        death_date.value +
         "&location=" +
         form.querySelector("#id_location").value;
 

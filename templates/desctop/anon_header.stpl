@@ -15,9 +15,8 @@
         <link rel="shortcut icon" href="/static/images/main/favicon.ico">
         <link href="/static/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
         <link href="/static/libs/@iconscout/unicons/css/line.css" rel="stylesheet">
-        <link rel="stylesheet" href="/static/styles/tailwind.min.css">
         <link href="/static/styles/bootstrap.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="/static/styles/tailwind.min.css">
     </head>
     
     <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900">
