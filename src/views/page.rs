@@ -226,13 +226,13 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
         let birth_date: Option<chrono::NaiveDate>;
         let death_date: Option<chrono::NaiveDate>;
-        if params.birth_date.format("%d-%m-%Y").to_string() == "2023-11-25" {
+        if params.birth_date.format("%Yd-%m-%d").to_string() == "2023-11-25" {
             birth_date = None;
         }
         else {
             birth_date = params.birth_date;
         }
-        if params.death_date.format("%d-%m-%Y").to_string() == "2023-11-25" {
+        if params.death_date.format("%Yd-%m-%d").to_string() == "2023-11-25" {
             death_date = None;
         }
         else {
