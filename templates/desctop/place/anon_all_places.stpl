@@ -11,7 +11,6 @@
                                     <img src="<%= i.get_image() %>" alt="img">
                                 </div>
                                 <div class="text-holder">
-                                    <% let _place = i.get_place().expect("E."); %>
                                     <h3>
                                         <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list/"><%=i.title %></a>
                                     </h3> 
