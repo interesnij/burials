@@ -54,7 +54,7 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 }
 
 
-pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
 
     let user_id = get_request_user(&req).await;
