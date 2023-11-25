@@ -54,12 +54,7 @@ pub struct NewDeceased {
 
 impl Deceased {
     pub fn get_place(&self) -> Result<Place, Error> {
-        use crate::schema::places::dsl::places;
-
-        let _connection = establish_connection();
-        return Ok(places
-            .filter(schema::users::place_id.eq(self.place_id))
-            .first::<Place>(&_connection)?);
+        return crate::utils::get_place(self.place_id);
     }
     pub fn get_full_name(&self) -> String {
         self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
