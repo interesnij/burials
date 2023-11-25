@@ -285,9 +285,9 @@ impl Deceased {
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
-            println!("empty");
-            return Vec::new();
         }
+        println!("empty");
+        return Vec::new();
     }
 
     // Метод для получения всех объектов данной структуры.
