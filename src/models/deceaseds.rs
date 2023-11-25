@@ -235,10 +235,6 @@ impl Deceased {
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
-            else {
-                println!("empty");
-                return Vec::new();
-            }
         }
         else {
             if birth_date.is_some() && death_date.is_some() {
@@ -289,6 +285,8 @@ impl Deceased {
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
+            println!("empty");
+            return Vec::new();
         }
     }
 
