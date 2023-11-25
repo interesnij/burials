@@ -64,7 +64,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/places/all_places.stpl")]
+            #[template(path = "desctop/place/all_places.stpl")]
             struct Template {
                 request_user: User,
                 object_list:  Vec<Place>,
@@ -79,7 +79,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/places/all_places.stpl")]
+            #[template(path = "mobile/place/all_places.stpl")]
             struct Template {
                 request_user: User,
                 object_list:  Vec<Place>,
@@ -96,7 +96,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/places/anon_all_places.stpl")]
+            #[template(path = "desctop/place/anon_all_places.stpl")]
             struct Template {
                 object_list:  Vec<Place>,
             }
@@ -109,7 +109,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/places/anon_all_places.stpl")]
+            #[template(path = "desctop/place/anon_all_places.stpl")]
             struct Template {
                 object_list:  Vec<Place>,
             }
