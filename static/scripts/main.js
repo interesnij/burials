@@ -250,16 +250,23 @@ on('body', 'click', '.search_deceaseds', function() {
   }
   birth_date = form.querySelector("#id_birth_date").value;
   death_date = form.querySelector("#id_death_date").value;
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = mm + '/' + dd + '/' + yyyy;
+
   if (!birth_date) {
     console.log("no birth_date");
-    birth_date = "1900-00-00";
+    birth_date = today;
     //birth_date = "null";
   }
   if (!death_date) {
     console.log("no death_date");
-    death_date = "2023-10-10";
+    death_date = today;
     //death_date = "null";
-  }
+  } 
   console.log(birth_date);
   console.log(birth_date);
   url = "/main_search?first_name=" +
