@@ -14,10 +14,10 @@
                         <div class="">
                             <h5 class="lg:text-4xl lg:leading-relaxed text-2xl font-semibold">
                                 <%= deceased.last_name %> 
+                                <%= deceased.first_name %>
                                 <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
-                                <% } %> 
-                                <%= deceased.last_name %>
+                                <% } %>
                             </h5>
 
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
@@ -213,8 +213,7 @@
                                     </div>
                                   </div>
                             </div>
-                        </div><!--end grid-->
-                    </div><!--end container-->
+                        </div>
         
         
                     <div class="container md:mt-24 mt-16">
@@ -222,7 +221,7 @@
                             <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Организации работающие в вашем городе</h3>
         
                             <p class="text-slate-400 max-w-xl mx-auto">Найдите организацию или услугу действующую в вашем районе</p>
-                        </div><!--end grid-->
+                        </div>
         
                         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
                             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden">
@@ -250,9 +249,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!--end grid-->
-                    </div><!--end container-->
-                </section><!--end section-->
+                        </div>
+                        
+                    </div>
+                </section>
                  -->
 
 
