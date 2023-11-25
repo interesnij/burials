@@ -29,7 +29,7 @@ impl UploadedFiles {
         );
         let format_path = format_folder.clone() + &filename.to_string();
         // вариант для https
-        let create_path = format_folder.replace("./", "/my/");
+        let create_path = format_folder.replace("./", "/burials/");
         // вариант для debug
         //let create_path = format_folder.replace("./", "/");
         create_dir_all(create_path).unwrap();
