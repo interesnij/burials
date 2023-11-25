@@ -39,6 +39,7 @@ use crate::models::{
 //-------------------------------------------------------------------------
 
 pub fn place_routes(config: &mut web::ServiceConfig) {
+    config.route("/places/", web::get().to(all_places_page));
     config.route("/all_place_city/{id}/", web::get().to(all_place_city_page));
     config.route("/all_place_region/{id}/", web::get().to(all_place_region_page));
     config.route("/all_place_countries/{id}/", web::get().to(all_place_countries_page));
@@ -52,6 +53,75 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 
 }
 
+
+pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+
+    let user_id = get_request_user(&req).await;
+    let object_list = Place::get_all();
+
+    if user_id.is_some() { 
+        let _request_user = user_id.unwrap();
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/places/all_places.stpl")]
+            struct Template {
+                request_user: User,
+                object_list:  Vec<Deceased>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object_list:  object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/places/all_places.stpl")]
+            struct Template {
+                request_user: User,
+                object_list:  Vec<Deceased>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object_list:  object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/places/anon_all_places.stpl")]
+            struct Template {
+                object_list:  Vec<Deceased>,
+            }
+            let body = Template {
+                object_list:  object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "mobile/places/anon_all_places.stpl")]
+            struct Template {
+                object_list:  Vec<Deceased>,
+            }
+            let body = Template {
+                object_list:  object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+}
 
 pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
