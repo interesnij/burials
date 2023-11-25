@@ -66,29 +66,29 @@ impl Place {
         let city_name = schema::cities::table
             .filter(schema::cities::id.eq(self.city_id))
             .select(schema::cities::name)
-            .load::<String>(&_connection)
+            .first::<String>(&_connection)
             .expect("E.");
         let district_name = schema::districts::table
             .filter(schema::districts::id.eq(self.city_id))
-            .select(schema::districts::name)
+            .first(schema::districts::name)
             .load::<String>(&_connection)
             .expect("E.");
         let region_name = schema::regions::table
             .filter(schema::regions::id.eq(self.city_id))
-            .select(schema::regions::name)
+            .first(schema::regions::name)
             .load::<String>(&_connection)
             .expect("E.");
         
         let mut loc = String::new();
         loc.push_str("Россия, ");
-        if region_name.is_some() {
+        if region_name.is_ok() {
             loc.push_str(region_name.expect("E."));
             loc.push_str(", ");
         }
-        if district_name.is_some() {
+        if district_name.is_ok() {
             loc.push_str(district_name.expect("E."));
         }
-        else if city_name.is_some() {
+        else if city_name.is_ok() {
             loc.push_str(city_name.expect("E."));
         }
 
