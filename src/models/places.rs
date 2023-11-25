@@ -67,7 +67,7 @@ impl Place {
         loc.push_str("Россия, ");
         let region_name = schema::regions::table
             .filter(schema::regions::id.eq(self.city_id))
-            .first(schema::regions::name)
+            .select(schema::regions::name)
             .first::<String>(&_connection);
         if region_name.is_ok() {
             loc.push_str(&region_name.expect("E."));
