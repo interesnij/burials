@@ -64,14 +64,16 @@ impl Place {
 
         let _connection = establish_connection();
         let mut loc = String::new();
-        loc.push_str("Россия, ");
-        let region_name = schema::regions::table
-            .filter(schema::regions::id.eq(self.region_id))
-            .select(schema::regions::name)
-            .first::<String>(&_connection);
-        if region_name.is_ok() {
-            loc.push_str(&region_name.expect("E."));
-            loc.push_str(", ");
+        loc.push_str("Россия ");
+        if self.region_id.is_some() {
+            let region_name = schema::regions::table
+                .filter(schema::regions::id.eq(self.region_id.unwrap()))
+                .select(schema::regions::name)
+                .first::<String>(&_connection);
+            if region_name.is_ok() {
+                loc.push_str(&region_name.expect("E."));
+                loc.push_str(" ");
+            }
         }
         if self.city_id.is_some() {
             let _name = schema::cities::table
