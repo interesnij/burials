@@ -109,7 +109,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/places/anon_all_places.stpl")]
+            #[template(path = "desctop/places/anon_all_places.stpl")]
             struct Template {
                 object_list:  Vec<Place>,
             }
