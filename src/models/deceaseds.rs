@@ -180,14 +180,14 @@ impl Deceased {
         location:    Option<String>,
         //limit:       i64,
         //offset:      i64,
-    ) -> Vec<Deceased> {
+    ) -> Vec<Deceased> { 
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
         let middle: String;
         if middle_name.is_some() {
             middle = "%".to_owned() + middle_name.as_deref().unwrap() + "%";
-        }
+        } 
         else { 
             middle = "%".to_owned() + "" + "%";
         }
@@ -274,7 +274,7 @@ impl Deceased {
             else {
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .or_filter(schema::deceaseds::middle_name.ilike(middle))
+                    //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     //.limit(limit)
                     //.offset(offset)
