@@ -277,3 +277,26 @@ on('body', 'change', '.load_region_items', function() {
   link.send( null );
   };
 });
+
+on('body', 'change', '.load_region_items', function() {
+  var val = this.value; 
+  block = this.parentElement.nextElementSibling;
+  if (!block.classList.contains("load_items")) {
+    return;
+  }
+  if (val == '') {
+    block.innerHTML = "";
+  } else {
+      var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+      link.open( 'GET', "/load_region_geo_items/" + val + "/", true );
+      link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      link.onreadystatechange = function () {
+        if ( link.readyState == 4 ) { 
+            if ( link.status == 200 ) {
+                block.innerHTML = link.responseText;
+            }
+        }
+    };
+    link.send( null );
+  };
+});
