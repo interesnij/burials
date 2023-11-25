@@ -134,3 +134,11 @@
 
 </section>
 <% include!("../footer.stpl"); %>
+
+<script>
+	navigator.geolocation.getCurrentPosition(position => {
+	const { latitude, longitude } = position.coords;
+	document.body.querySelector("#get_my_lat").innerHTML = latitude;
+	document.body.querySelector("#get_my_lon").innerHTML = longitude;
+})
+<script>

@@ -247,7 +247,15 @@ on('body', 'click', '.search_deceaseds', function() {
   if (!form.querySelector("#id_last_name").value) {
     console.log("no last_name!");
     return 
-  } 
+  }
+  birth_date = form.querySelector("#id_birth_date").value;
+  death_date = form.querySelector("#id_death_date").value;
+  if (!birth_date.value) {
+    birth_date.value == "00.00.0000"
+  }
+  if (!death_date.value) {
+    death_date.value == "00.00.0000"
+  }
 
   url = "/main_search?first_name=" +
         form.querySelector("#id_first_name").value +
