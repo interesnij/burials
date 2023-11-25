@@ -172,7 +172,7 @@ on('body', 'click', '.remove_district', function() {
 
 
 on('body', 'click', '#create_place', function() {
-  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
