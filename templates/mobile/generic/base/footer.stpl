@@ -6,8 +6,8 @@
                   <div class="py-[60px] px-0">
                       <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                           <div class="lg:col-span-4 md:col-span-12">
-                              <a href="#" class="text-[22px] focus:outline-none">
-                                  <img src="static/images/main/logo-light.png" alt="">
+                              <a href="/" class="text-[22px] focus:outline-none">
+                                  <img src="/static/images/main/logo-light.png" alt="">
                               </a>
                               <p class="mt-6 text-gray-300">Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений.</p>
                               
@@ -16,34 +16,29 @@
                           <div class="lg:col-span-2 md:col-span-4">
                               <h5 class="tracking-[1px] text-gray-100 font-semibold">Захоронения</h5>
                               <ul class="list-none footer-list mt-6">
-                                  <li><a href="place_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> База захоронений</a></li>
-                                  <li class="mt-[10px]"><a href="deceased_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Стена памяти</a></li>
-                                  <li class="mt-[10px]"><a href="deceased_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Известные личности</a></li>
-                                  <li class="mt-[10px]"><a href="deceased_profile_create.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Регистрация захоронения</a></li>
-                                  <li class="mt-[10px]"><a href="place_profile_create.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Оцифровка кладбища</a></li>
-                                  <li class="mt-[10px]"><a href="organization_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Организации</a></li>
-                                  <li class="mt-[10px]"><a href="service_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Услуги</a></li>
+                                  <li><a href="/places/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> База захоронений</a></li>
+                                  <li class="mt-[10px]"><a href class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Стена памяти</a></li>
+                                  <li class="mt-[10px]"><a href class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Известные личности</a></li>
+                                  <li class="mt-[10px]"><a href="/create_place/{id}/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Регистрация захоронения</a></li>
+                                  <li class="mt-[10px]"><a href="/create_deceased/{id}/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Оцифровка кладбища</a></li>
+                                  <li class="mt-[10px]"><a href="/organizations/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Организации</a></li>
+                                  <li class="mt-[10px]"><a href="/services/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Услуги</a></li>
                               </ul>
                           </div><!--end col-->
                   
                           <div class="lg:col-span-3 md:col-span-4">
-                              <h5 class="tracking-[1px] text-gray-100 font-semibold">Регионы</h5>
-                              <ul class="list-none footer-list mt-6">
-                                  <li><a href="page-terms.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Города</a></li>
-                                  <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Края</a></li>
-                                  <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i>Области</a></li>
-                                  <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Республики</a></li>
-                                  <li class="mt-[10px]"><a href="city_all.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Округа</a></li>
+                            <h5 class="tracking-[1px] text-gray-100 font-semibold">География</h5>
+                             <ul class="list-none footer-list mt-6">
+                                  <li><a href="/cities/" class="400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Города</a></li>
+                                  <li class="mt-[10px]"><a href="/regions/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Регионы</a></li>
                               </ul>
                           </div><!--end col-->
 
                           <div class="lg:col-span-3 md:col-span-4">
                               <h5 class="tracking-[1px] text-gray-100 font-semibold">О нас</h5>
                               <ul class="list-none footer-list mt-6">
-                                  <li><a href="info_7.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Контакты</a></li>
-                                  <li class="mt-[10px]"><a href="info_4.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Обратная связь</a></li>
-                                  <li class="mt-[10px]"><a href="info_1.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Партнерство</a></li>
-                                  <li class="mt-[10px]"><a href="info_5.html" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Политика конфиденциальности</a></li>
+                                  <li><a href="/about/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Контакты</a></li>
+                                  <li class="mt-[10px]"><a href="/terms/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Политика конфиденциальности</a></li>
                               </ul>
                           </div><!--end col-->
                          

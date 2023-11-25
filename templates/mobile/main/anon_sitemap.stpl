@@ -29,23 +29,15 @@
                         <h5 class="font-semibold text-xl">Захоронения</h5>
                         <ul class="list-none mt-4">
                             <li class="mt-2"><a href="deceased_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница захоронения</a></li>
-                            <li class="mt-2"><a href="deceased_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация усопшего</a></li>
-                            <li class="mt-2"><a href="deceased_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации захоронения</a></li>
                             <li class="mt-2"><a href="deceased_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Поиск захоронения</a></li>
-    
                         </ul>
                     </div>
                     
                     <div class="">
                         <h5 class="font-semibold text-xl">Кладбища</h5>
                         <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="place_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница кладбища</a></li>
-                            <li class="mt-2"><a href="place_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация кладбища</a></li>
-                            <li class="mt-2"><a href="place_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации</a></li>
-                            <li class="mt-2"><a href="organization_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все организации кладбища</a></li>
-                            <li class="mt-2"><a href="deceased_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все захоронения кладбища</a></li>
-
-
+                            <li class="mt-2"><a href="/place/{id}/organizations/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все организации кладбища</a></li>
+                            <li class="mt-2"><a href="/place/{id}/deceaseds/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все захоронения кладбища</a></li>
                         </ul>
                     </div>
                     
@@ -60,59 +52,20 @@
            
                         </ul>
                     </div>
-                    
-                    <div class="">
-                        <h5 class="font-semibold text-xl">Услуги</h5>
-                        <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="service_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница услуги</a></li>
-                            <li class="mt-2"><a href="service_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Создание услуги</a></li>
-                            <li class="mt-2"><a href="service_profile_create.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Редактирование информации</a></li>
-                            <li class="mt-2"><a href="service_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все услуги</a></li>
-
-                        </ul>
-                    </div>
-                    
-                    <div class="">
-                        <h5 class="font-semibold text-xl">Мемориалы</h5>
-                        <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="deceased_profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница мемориала</a></li>
-                            <li class="mt-2"><a href="deceased_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Все мемориалы города</a></li>
-                            <li class="mt-2"><a href="place_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Братские могилы</a></li>
-                        </ul>
-                    </div>
                     <div class="">
                         <h5 class="font-semibold text-xl">Города и регионы</h5>
                         <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="place_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница города</a></li>
-                            <li class="mt-2"><a href="city_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница региона</a></li>
+                            <li class="mt-2"><a href="/cities/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Города</a></li>
+                            <li class="mt-2"><a href="/regions/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регионы</a></li>
                          </ul>
-                    </div>
-                    
-                    <div class="">
-                        <h5 class="font-semibold text-xl">Учетная запись</h5>
-                        <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="user-profile.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница пользователя</a></li>
-                            <li class="mt-2"><a href="auth-signup.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Регистрация на сайте</a></li>
-                            <li class="mt-2"><a href="auth-login.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Страница входа</a></li>
-                            <li class="mt-2"><a href="user-setting.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Профиль и настройки</a></li>
-                        </ul>
-                    </div>
-                    <div class="">
-                        <h5 class="font-semibold text-xl">Обратная связь, заказы, поиск</h5>
-                        <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="city_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Поиск</a></li>
-                            <li class="mt-2"><a href="index.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Обратная связь</a></li>
-                            <li class="mt-2"><a href="service_all.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Заказать услугу</a></li>
-                        </ul>
                     </div>
                     <div class="">
                         <h5 class="font-semibold text-xl">Документы</h5>
                         <ul class="list-none mt-4">
-                            <li class="mt-2"><a href="info_3.html" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Часто задаваемые вопросы</a></li>
-                            <li class="mt-2"><a href="info_4" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>О нас, контакты</a></li>
-                            <li class="mt-2"><a href="info_1" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Партнерство</a></li>
-                            <li class="mt-2"><a href="info_5" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Политика конфиденциальности</a></li>
-                            <li class="mt-2"><a href="info_6" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Пользовательское соглашение</a></li>
+                            <li class="mt-2"><a href="/faq/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Часто задаваемые вопросы</a></li>
+                            <li class="mt-2"><a href="/about/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>О нас</a></li>
+                            <li class="mt-2"><a href="/policy/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Политика конфиденциальности</a></li>
+                            <li class="mt-2"><a href="/terms/" class="text-slate-400"><i class="mdi mdi-arrow-right text-indigo-600 mr-2"></i>Пользовательское соглашение</a></li>
                         </ul>
                     </div>
                 </div><!--end grid-->
@@ -123,10 +76,6 @@
                     <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Если у вас возник вопрос, свяжитесь с нами!</h3>
 
                     <p class="text-slate-400 max-w-xl mx-auto">Этот сайт является агрегатором ритуальных услуг со всех городов, а так же предоставляет электронную регистрацию захоронений</p>
-                
-                    <div class="mt-6">
-                        <a href="helpcenter-support.html" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mr-2 mt-2"><i class="uil uil-phone"></i> Позвоните нам </a>
-                    </div>
                 </div><!--end grid-->
             </div><!--end container-->
         </section><!--end section-->

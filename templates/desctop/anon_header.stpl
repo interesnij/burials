@@ -45,12 +45,14 @@
                     <li class="has-submenu parent-parent-menu-item">
                         <a href="/places/">Захоронения</a>
                     </li>
+                    <!--
                     <li class="has-submenu parent-parent-menu-item">
                         <a href="/about/">О нас</a>
                     </li>
                     <li class="has-submenu parent-parent-menu-item">
                         <a href="/faq/">FAQ</a>
                     </li>
+                    --> 
                     <li><a href="/login/" class="sub-menu-item">Войти</a></li>
                 </ul>
             </div>

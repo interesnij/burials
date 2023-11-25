@@ -1,7 +1,6 @@
 <% include!("../anon_header.stpl"); %>
 
- 
-      <section class="property-five" style="margin-top:80px">
+       <section class="property-five" style="margin-top:80px">
         <div class="container">
           <div class="row">
             <div class="col-xl-3 col-lg-3 col-md-12 colum1">
@@ -12,15 +11,11 @@
                                     <img src="<%= i.get_image() %>" alt="img">
                                 </div>
                                 <div class="text-holder">
-                                    <div class="top">
-                                        <div class="dot"></div>
-                                        <p><a style="text-decoration: underline"  href="/deceased/<%= i.id %>/"><%= i.get_full_name() %></a></p>
-                                    </div>
-                                    <% let _place = i.get_place().expect("E."); %>
                                     <h3>
-                                        <a style="text-decoration: underline" href="/places/<%= _place.id %>/deceased_list/"><%=_place.title %></a>
+                                        <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list/"><%=i.title %></a>
                                     </h3> 
-                                    <p><%=_place.get_loc() %></p>
+                                    <p><%= i.get_loc() %></p>
+                                    <p>Оцифровано: <%= i.count %></p>
                                 </div>
                             </div>
                           </div>

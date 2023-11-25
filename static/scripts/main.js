@@ -261,6 +261,9 @@ on('body', 'click', '.search_deceaseds', function() {
 on('body', 'change', '.load_region_items', function() {
   var val = this.value; 
   block = this.parentElement.nextElementSibling;
+  if (block.classList.contains("no_region_items")) {
+    return;
+  }
   if (val == '') {
     block.innerHTML = "";
   } else {
