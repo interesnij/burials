@@ -26,7 +26,7 @@
                                         Годы жизни
                                     </h6>
                                     <h6 class="text-2xl font-semibold mt-2">
-                                        <%= deceased.birth_date.format("%d-%m-%Y %H:%M").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y %H:%M").to_string() %>
+                                        <%= deceased.birth_date.format("%d-%m-%Y").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y").to_string() %>
                                     </h6>
                                 </div>
                                 
