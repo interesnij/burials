@@ -67,7 +67,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[template(path = "desctop/places/all_places.stpl")]
             struct Template {
                 request_user: User,
-                object_list:  Vec<Deceased>,
+                object_list:  Vec<Place>,
             }
             let body = Template {
                 request_user: _request_user,
@@ -82,7 +82,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[template(path = "mobile/places/all_places.stpl")]
             struct Template {
                 request_user: User,
-                object_list:  Vec<Deceased>,
+                object_list:  Vec<Place>,
             }
             let body = Template {
                 request_user: _request_user,
@@ -98,7 +98,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/places/anon_all_places.stpl")]
             struct Template {
-                object_list:  Vec<Deceased>,
+                object_list:  Vec<Place>,
             }
             let body = Template {
                 object_list:  object_list,
@@ -111,7 +111,7 @@ pub async fn all_places_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "mobile/places/anon_all_places.stpl")]
             struct Template {
-                object_list:  Vec<Deceased>,
+                object_list:  Vec<Place>,
             }
             let body = Template {
                 object_list:  object_list,
