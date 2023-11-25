@@ -4,173 +4,39 @@
       <section class="property-five">
         <div class="container">
           <div class="row">
-
-
-
-<!-------------------------------------- ФИЛЬТРЫ ПОИСКА --------------------------------------------------------------->
-
-
-            <div class="col-xl-2 colum1">       
-              <div class="property-sidebar-content">
-                <div class="inner-title">
-
-                  <h5>Настройки поиска</h5>
-                </div>
-
-                <div class="advanced-search-box">
-                  <form
-                    action="index.html"
-                    method="post"
-                    class="advanced-search-form clearfix"
-                  >
-
-
-
-                    <div class="row">
-                      <div class="col-xl-12">
-                        
-                        <div class="form-group clearfix">
-
-                          <label>Ключевое слово</label>
-
-                          <div class="field-input">
-
-<!------------------------------------------Поле ввода -->
-
-                            <input
-                              type="text"
-                              name="keywords"
-                              placeholder=""/>
-
-                          </div>
-                        </div>
-
-
-<!-----------------------------------------Тип поиска -->
-                        
-                        <div class="form-group clearfix">
-
-                          <label>Тип</label>
-
-                          <div class="field-input">
-                            <div class="select-box">
-
-                              <select class="wide">
-
-                                <option data-display="Выберите тип">
-                                  Выберите тип
-                                </option>
-
-                                <option value="1">Усопший</option>
-                                <option value="1">Город</option>
-                                <option value="2">Захоронение</option>
-                                <option value="3">Кладбище</option>
-                                <option value="4">Услугу</option>
-                                <option value="4">Организацию</option>
-
-                            
-                              </select>
-
-                            </div>
-                          </div>
-                        </div>
-
-
-<!----------------------------------------------Кнопка -->
-
-                        <div class="btn-box">
-                          <button
-                            class="btn-one"
-                            type="submit"
-                            data-loading-text="Please wait..."
-                          >
-                            <span class="txt">
-                              Поиск
-                              <i class="icon-plus-sign"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-
-
-
-<!-----------------------------------------------ОБЪЕКТЫ----------------------------------------------->
-
-<div class="col-xl-6 colum2">
+            <div class="col-xl-6 colum2">
               <div class="property-content-box">
                 <div class="property-content-box__inner grid">
-                  <!-- Start Properties Grid Content-->
                   <div class="property-grid-content grid-item">
                     <div class="row">
-
-
-<!---------------------------------------------------------------Усопший-->
-
-                      <!-- Start Single Properties Box Style1-->
-
-                      <div class="col-xl-6 col-lg-6">
-                        <% for deceased in object_list.iter() { %>
-                        <div class="single-properties-box-style1">
-                          <div class="img-holder">
-                            <img src="/static/images/deceased/deceased1.jpg" alt="" />
-                          </div>
-
-                          <div class="text-holder">
-                            <div class="top">
-                              <div class="dot"></div>
-
-                              <p><a href="/deceased/{id}/">Усопший</a></p>
-                           
-                            </div>
-                            <h3>
-                            
-                              <a href="/deceased/{id}/">
-                              <%= deceased.first_name %>                            
-                              </a>
-
-                            </h3>
-                            
-                            <p>
-                            <%= deceased.place_id %>
-                            </p>
-
-                            <br>
-
-                            <div class="info-box">
-                              <ul>
-
-                                <li>
-                                  <span class=""></span>
-                                  <%= deceased.birth_date.format("%d-%m-%Y %H:%M").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y %H:%M").to_string() %> 
-
-                                </li>
-
-                              </ul>
-
+                      <div class="col-xl-4 col-lg-4">
+                        <% for i in object_list.iter() { %>
+                          <div class="col-xl-4 col-lg-4">
+                            <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
+                                <div class="img-holder">
+                                    <img src="<%= i.get_image() %>" alt="img">
+                                </div>
+                                <div class="text-holder">
+                                    <div class="top">
+                                        <div class="dot"></div>
+                                        <p><a href="/deceased/<%= i.id %>/"><%= i.get_full_name() %></a></p>
+                                    </div>
+                                    <% let _place = i.get_place().expect("E."); %>
+                                    <h3>
+                                        <a href="/places/<%= _place.id %>/deceased_list/"><%=_place.title %></a>
+                                    </h3> 
+                                    <p><%=_place.get_loc() %></p>
+                                </div>
                             </div>
                           </div>
-                        </div>
                         <% } %>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
- 
-
-
-
-
-<!-------------------------------------------------------КАРТА-->
-
-            <div class="col-xl-4 col-md-12 colum3">
+            </div> 
+            <div class="col-xl-4 col-lg-4 col-md-12 colum3">
               <div class="listings-page-map">
                 <iframe
                   src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"

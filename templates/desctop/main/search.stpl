@@ -13,7 +13,7 @@
                 </div>
                 <% let _place = i.get_place().expect("E."); %>
                 <h3>
-                    <a href="/place/<%=_place.id %>/"><%=_place.title %></a>
+                    <a href="/places/<%= _place.id %>/deceased_list/"><%=_place.title %></a>
                 </h3> 
                 <p><%=_place.get_loc() %></p>
             </div>

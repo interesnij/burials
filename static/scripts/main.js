@@ -231,7 +231,7 @@ on('body', 'click', '.search_deceaseds', function() {
     //death_date = "null";
   } 
   console.log(birth_date);
-  console.log(birth_date);
+  console.log(death_date);
   url = "/main_search?first_name=" +
         form.querySelector("#id_first_name").value +
         "&middle_name=" +

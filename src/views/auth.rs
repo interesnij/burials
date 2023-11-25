@@ -135,6 +135,22 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
     println!("AuthError");
     Err(AuthError::NotFound(String::from("User not found")))
 }
+fn user_with_username_exists(username: String) -> bool {
+    let _connection = establish_connection();
+    let item = schema::users::table
+        .filter(schema::users::username.eq(username))
+        .first::<User>(&_connection)
+        .is_ok();
+    
+    println!("item.password {:?}", &item.password);
+    println!("password {:?}", &password);
+    println!("item_id {:?}", item.id);
+    if bcrypt::verify(password.as_str(), item.password.as_str()).unwrap() {
+        return Ok(item); 
+    }
+    println!("AuthError");
+    Err(AuthError::NotFound(String::from("User not found")))
+}
 
 async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i32 {
     let _connection = establish_connection();
@@ -248,7 +264,10 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
             description: None,
             image:       None,
             perm:        1,
-        }; 
+        };
+        if user_with_username_exists(form.username.clone()) {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("user_with_username_exists"));
+        }
         println!("{:?}", form.username.clone());
         println!("{:?}", form.email.clone());
         println!("{:?}", form.password.clone());
