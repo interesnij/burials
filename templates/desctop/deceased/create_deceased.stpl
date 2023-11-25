@@ -138,7 +138,10 @@
 <script>
 	navigator.geolocation.getCurrentPosition(position => {
 	const { latitude, longitude } = position.coords;
-	document.body.querySelector("#get_my_lat").innerHTML = latitude;
-	document.body.querySelector("#get_my_lon").innerHTML = longitude;
+	console.log(latitude);
+  	console.log(longitude);
+
+	document.body.querySelector("#get_my_lat").value = latitude;
+	document.body.querySelector("#get_my_lon").value = longitude;
 })
 </script>

@@ -252,11 +252,11 @@ on('body', 'click', '.search_deceaseds', function() {
   death_date = form.querySelector("#id_death_date").value;
   if (!birth_date) {
     console.log("no birth_date");
-    birth_date == "00.00.0000"
+    birth_date = "00.00.0000"
   }
   if (!death_date) {
     console.log("no death_date");
-    death_date == "00.00.0000"
+    death_date = "00.00.0000"
   }
   console.log(birth_date);
   console.log(birth_date);
