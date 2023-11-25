@@ -14,7 +14,7 @@ use crate::utils::{
 };
 use crate::schema::deceaseds;
 use serde::{Serialize, Deserialize};
-use crate:models::Place;
+use crate::models::Place;
 
 
 // Структура для хранения данных об усопшем

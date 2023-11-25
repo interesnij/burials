@@ -63,10 +63,6 @@ impl Place {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
-        let _country: String;
-        let _region: String;
-        let _district: String;
-        let _city: String;
         let city_name = schema::cities::table
             .filter(schema::cities::id.eq(self.city_id))
             .select(schema::cities::name)
@@ -241,14 +237,6 @@ impl Place {
         let _connection = establish_connection();
         return places
             .filter(schema::places::city_id.eq(city_id))
-            .load::<Place>(&_connection)
-            .expect("E.");
-    }
-    pub fn get_all() -> Vec<Place> {
-        use crate::schema::places::dsl::places;
-
-        let _connection = establish_connection();
-        return places
             .load::<Place>(&_connection)
             .expect("E.");
     }
