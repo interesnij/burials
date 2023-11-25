@@ -7,22 +7,22 @@
                         <% if object_list.len() == 0 { %>
                           <h3>Кладбище пустое</h3>
                         <% } else { %>
-                        <% for i in object_list.iter() { %>
-                          <div style="margin-bottom:10px">
-                            <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
-                                <div class="img-holder">
-                                    <img src="<%= i.get_image() %>" alt="img">
-                                </div>
-                                <div class="text-holder">
-                                    <h3>
-                                        <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list/"><%=i.title %></a>
-                                    </h3> 
-                                    <p><%= i.get_loc() %></p>
-                                    <p>Оцифровано: <%= i.count %></p>
-                                </div>
+                          <% for i in object_list.iter() { %>
+                            <div style="margin-bottom:10px">
+                              <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
+                                  <div class="img-holder">
+                                      <img src="<%= i.get_image() %>" alt="img">
+                                  </div>
+                                  <div class="text-holder">
+                                      <h3>
+                                          <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list/"><%=i.title %></a>
+                                      </h3> 
+                                      <p><%= i.get_loc() %></p>
+                                      <p>Оцифровано: <%= i.count %></p>
+                                  </div>
+                              </div>
                             </div>
-                          </div>
-                        <% } %>
+                          <% } %>
                         <% } %>
             </div> 
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
