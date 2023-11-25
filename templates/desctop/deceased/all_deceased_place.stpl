@@ -1,12 +1,11 @@
 <% include!("../header.stpl"); %>
 
-    <div class="page-wrapper">
       <section class="property-five">
         <div class="container">
           <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-12 colum1">
                         <% for i in object_list.iter() { %>
-                          <div class="">
+                          <div style="margin-top:50px">
                             <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
                                 <div class="img-holder">
                                     <img src="<%= i.get_image() %>" alt="img">
@@ -28,7 +27,7 @@
             </div> 
             <div class="col-xl-8 col-lg-8 col-md-12 colum2">
               <div class="listings-page-map">
-                <iframe
+                <iframe sstyle="width: 100%; height: 800px;"
                   src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"
                   class="google-map"
                   allowfullscreen
@@ -38,7 +37,5 @@
           </div>
         </div>
       </section>
-      <!--End -->
-    </div>
 
 <% include!("../footer.stpl"); %>
