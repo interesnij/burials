@@ -206,6 +206,7 @@ on('body', 'click', '.search_deceaseds', function() {
   form = this.parentElement.parentElement.parentElement; 
   console.log("click!");
   block = form.nextElementSibling;
+  block.innerHTML = "";
   if (!form.querySelector("#id_last_name").value) {
     console.log("no last_name!");
     return 
@@ -250,7 +251,6 @@ on('body', 'click', '.search_deceaseds', function() {
   link.onreadystatechange = function () {
     if ( this.readyState == 4 && this.status == 200 ) {
         console.log("success!");
-        block.innerHTML = "";
         block.innerHTML = link.responseText;
     } else { console.log("status", this.status);  };
   };
