@@ -15,6 +15,7 @@
                                         <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list/"><%=i.title %></a>
                                     </h3> 
                                     <p><%= i.get_loc() %></p>
+                                    <p>Оцифровано: <%= i.count %></p>
                                 </div>
                             </div>
                           </div>

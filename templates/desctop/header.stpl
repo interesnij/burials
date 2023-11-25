@@ -24,7 +24,7 @@
                 width: 100%;
             }
             .pointer {
-                cursor: pointer !importante;
+                cursor: pointer !important;
             }
         </style>
     </head>
