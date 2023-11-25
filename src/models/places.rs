@@ -63,33 +63,33 @@ impl Place {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
-        let city_name = schema::cities::table
-            .filter(schema::cities::id.eq(self.city_id))
-            .select(schema::cities::name)
-            .first::<String>(&_connection)
-            .expect("E.");
-        let district_name = schema::districts::table
-            .filter(schema::districts::id.eq(self.city_id))
-            .first(schema::districts::name)
-            .load::<String>(&_connection)
-            .expect("E.");
+        let mut loc = String::new();
+        loc.push_str("Россия, ");
         let region_name = schema::regions::table
             .filter(schema::regions::id.eq(self.city_id))
             .first(schema::regions::name)
-            .load::<String>(&_connection)
-            .expect("E.");
-        
-        let mut loc = String::new();
-        loc.push_str("Россия, ");
+            .first::<String>(&_connection);
         if region_name.is_ok() {
             loc.push_str(region_name.expect("E."));
             loc.push_str(", ");
         }
-        if district_name.is_ok() {
-            loc.push_str(district_name.expect("E."));
+        if self.city_id.is_some() {
+            let _name = schema::cities::table
+                .filter(schema::cities::id.eq(self.city_id.unwrap()))
+                .select(schema::cities::name)
+                .first::<String>(&_connection);
+            if _name.is_ok() {
+                loc.push_str(_name.expect("E."));
+            }
         }
-        else if city_name.is_ok() {
-            loc.push_str(city_name.expect("E."));
+        else if self.district_id.is_some() {
+            let _name = schema::districts::table
+                .filter(schema::districts::id.eq(self.district_id.unwrap()))
+                .select(schema::districts::name)
+                .first::<String>(&_connection);
+            if _name.is_ok() {
+                loc.push_str(_name.expect("E."));
+            }
         }
 
         return loc;
