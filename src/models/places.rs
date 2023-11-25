@@ -70,7 +70,7 @@ impl Place {
             .first(schema::regions::name)
             .first::<String>(&_connection);
         if region_name.is_ok() {
-            loc.push_str(region_name.expect("E."));
+            loc.push_str(&region_name.expect("E."));
             loc.push_str(", ");
         }
         if self.city_id.is_some() {
@@ -79,7 +79,7 @@ impl Place {
                 .select(schema::cities::name)
                 .first::<String>(&_connection);
             if _name.is_ok() {
-                loc.push_str(_name.expect("E."));
+                loc.push_str(&_name.expect("E."));
             }
         }
         else if self.district_id.is_some() {
@@ -88,7 +88,7 @@ impl Place {
                 .select(schema::districts::name)
                 .first::<String>(&_connection);
             if _name.is_ok() {
-                loc.push_str(_name.expect("E."));
+                loc.push_str(&_name.expect("E."));
             }
         }
 
