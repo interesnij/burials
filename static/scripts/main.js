@@ -253,12 +253,12 @@ on('body', 'click', '.search_deceaseds', function() {
   if (!birth_date) {
     console.log("no birth_date");
     birth_date = "1900-00-00";
-    birth_date = "null";
+    //birth_date = "null";
   }
   if (!death_date) {
     console.log("no death_date");
     death_date = "2023-10-10";
-    death_date = "null";
+    //death_date = "null";
   }
   console.log(birth_date);
   console.log(birth_date);
