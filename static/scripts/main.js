@@ -255,7 +255,7 @@ on('body', 'click', '.search_deceaseds', function() {
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
-  today = mm + '/' + dd + '/' + yyyy;
+  today = yyyy + '-' + mm + '-' + dd;
 
   if (!birth_date) {
     console.log("no birth_date");
