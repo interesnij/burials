@@ -66,7 +66,7 @@ impl Place {
         let mut loc = String::new();
         loc.push_str("Россия, ");
         let region_name = schema::regions::table
-            .filter(schema::regions::id.eq(self.city_id))
+            .filter(schema::regions::id.eq(self.region_id))
             .select(schema::regions::name)
             .first::<String>(&_connection);
         if region_name.is_ok() {
