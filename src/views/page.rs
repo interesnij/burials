@@ -224,13 +224,27 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         if params.last_name.is_none() || params.first_name.is_none() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no last_name"));
         }
+        let birth_date: Option<chrono::NaiveDate>;
+        let death_date: Option<chrono::NaiveDate>;
+        if params.birth_date.format("%d-%m-%Y").to_string() == "2023-11-25" {
+            birth_date = None;
+        }
+        else {
+            birth_date = params.birth_date;
+        }
+        if params.death_date.format("%d-%m-%Y").to_string() == "2023-11-25" {
+            death_date = None;
+        }
+        else {
+            death_date = params.death_date;
+        }
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
             params.first_name.as_deref().unwrap().to_string(),
             params.middle_name.clone(),
             params.last_name.as_deref().unwrap().to_string(),
-            params.birth_date,
-            params.death_date,
+            birth_date,
+            death_date,
             params.location.clone(),
         );
         if user_id.is_some() {
