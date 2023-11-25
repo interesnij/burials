@@ -137,19 +137,10 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
 }
 fn user_with_username_exists(username: String) -> bool {
     let _connection = establish_connection();
-    let item = schema::users::table
+    schema::users::table
         .filter(schema::users::username.eq(username))
         .first::<User>(&_connection)
-        .is_ok();
-    
-    println!("item.password {:?}", &item.password);
-    println!("password {:?}", &password);
-    println!("item_id {:?}", item.id);
-    if bcrypt::verify(password.as_str(), item.password.as_str()).unwrap() {
-        return Ok(item); 
-    }
-    println!("AuthError");
-    Err(AuthError::NotFound(String::from("User not found")))
+        .is_ok()
 }
 
 async fn handle_sign_in(data: LoginUser2, req: &HttpRequest) -> i32 {

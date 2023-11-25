@@ -14,7 +14,7 @@
                         <div class="">
                             <h5 class="lg:text-4xl lg:leading-relaxed text-2xl font-semibold">
                                 <%= deceased.last_name %> 
-                                <% if deceased.middle_name { %>
+                                <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
                                 <% } %> 
                                 <%= deceased.last_name %>
@@ -111,7 +111,7 @@
                         <div id="myTabContent" class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md">
                             <div class="" id="description" role="tabpanel" aria-labelledby="profile-tab">
                                 <p class="text-slate-400">
-                                    <% if deceased.memory_words { %>
+                                    <% if deceased.memory_words.is_some() { %>
                                         <%= deceased.memory_words.as_deref().unwrap() %>
                                     <% } else { %>
                                         Описания нет.
