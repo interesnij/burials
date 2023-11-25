@@ -14,6 +14,7 @@ use crate::utils::{
 };
 use crate::schema::deceaseds;
 use serde::{Serialize, Deserialize};
+use crate:models::Place;
 
 
 // Структура для хранения данных об усопшем
@@ -52,6 +53,9 @@ pub struct NewDeceased {
 }
 
 impl Deceased {
+    pub fn get_full_name(&self) -> String {
+        self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
+    }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
             return self.image.as_deref().unwrap().to_string();

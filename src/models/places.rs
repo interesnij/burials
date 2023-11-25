@@ -59,6 +59,54 @@ pub struct NewPlace {
 
 // Реализация методов для структуры Place
 impl Place {
+    pub fn get_loc(&self) -> String {
+        use crate::schema::places::dsl::places;
+
+        let _connection = establish_connection();
+        let _country: String;
+        let _region: String;
+        let _district: String;
+        let _city: String;
+        let city_name = schema::cities::table
+            .filter(schema::cities::id.eq(self.city_id))
+            .select(schema::cities::name)
+            .load::<String>(&_connection)
+            .expect("E.");
+        let district_name = schema::districts::table
+            .filter(schema::districts::id.eq(self.city_id))
+            .select(schema::districts::name)
+            .load::<String>(&_connection)
+            .expect("E.");
+        let region_name = schema::regions::table
+            .filter(schema::regions::id.eq(self.city_id))
+            .select(schema::regions::name)
+            .load::<String>(&_connection)
+            .expect("E.");
+        
+        let mut loc = String::new();
+        loc.push_str("Россия, ");
+        if region_name.is_some() {
+            loc.push_str(region_name.expect("E."));
+            loc.push_str(", ");
+        }
+        if district_name.is_some() {
+            loc.push_str(district_name.expect("E."));
+        }
+        else if city_name.is_some() {
+            loc.push_str(city_name.expect("E."));
+        }
+
+        return loc;
+    }
+
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return self.image.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/img.jpg".to_string();
+        }
+    }
     pub fn plus(&self, count: i16) -> () {
         let _connection = establish_connection();
         diesel::update(self)
@@ -193,6 +241,14 @@ impl Place {
         let _connection = establish_connection();
         return places
             .filter(schema::places::city_id.eq(city_id))
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_all() -> Vec<Place> {
+        use crate::schema::places::dsl::places;
+
+        let _connection = establish_connection();
+        return places
             .load::<Place>(&_connection)
             .expect("E.");
     }

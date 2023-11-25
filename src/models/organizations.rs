@@ -46,6 +46,14 @@ pub struct NewOrganization {
 
 // Реализация методов для структуры Organization
 impl Organization {
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return self.image.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/img.jpg".to_string();
+        }
+    }
     pub fn create (
         user_id:     i32,
         name:        String,
