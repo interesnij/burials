@@ -195,6 +195,7 @@ impl Deceased {
             let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
             let places_ids = crate::models::Place::search_ids(&loc);
             if birth_date.is_some() && death_date.is_some() {
+                println!("location && birth_date && death_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
@@ -209,6 +210,7 @@ impl Deceased {
                     .expect("E.");
             }
             else if birth_date.is_some() && death_date.is_none() {
+                println!("location && birth_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
@@ -221,6 +223,7 @@ impl Deceased {
                     .expect("E.");
             }
             else if death_date.is_some() && birth_date.is_none() {
+                println!("location && death_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
@@ -233,11 +236,13 @@ impl Deceased {
                     .expect("E.");
             }
             else {
+                println!("empty");
                 return Vec::new();
             }
         }
         else {
             if birth_date.is_some() && death_date.is_some() {
+                println!("birth_date && death_date");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
@@ -250,6 +255,7 @@ impl Deceased {
                     .expect("E.");
             }
             else if birth_date.is_some() && death_date.is_none() {
+                println!("birth_date");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
@@ -261,6 +267,7 @@ impl Deceased {
                     .expect("E.");
             }
             else if death_date.is_some() && birth_date.is_none() {
+                println!("death_date");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .or_filter(schema::deceaseds::middle_name.ilike(middle))
@@ -272,6 +279,7 @@ impl Deceased {
                     .expect("E.");
             }
             else {
+                println!("default!!");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
