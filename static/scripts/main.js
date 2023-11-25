@@ -278,7 +278,7 @@ on('body', 'change', '.load_region_items', function() {
   };
 });
 
-on('body', 'change', '.load_region_items', function() {
+on('body', 'change', '.load_regions', function() {
   var val = this.value; 
   block = this.parentElement.nextElementSibling;
   if (!block.classList.contains("load_items")) {
