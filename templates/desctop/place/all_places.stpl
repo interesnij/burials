@@ -92,9 +92,9 @@ function init() {
             iconPieChartCaptionMaxWidth: 200
         });
 
-    myMap.geoObjects
-        .add(myGeoObject)
-        .add(myPieChart);
+    //myMap.geoObjects
+        //.add(myGeoObject)
+        //.add(myPieChart);
         <% for i in object_list.iter() { %>
             myMap.geoObjects
             .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
