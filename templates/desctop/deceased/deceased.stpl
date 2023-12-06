@@ -14,21 +14,21 @@
                         <div class="">
                             <h5 class="lg:text-4xl lg:leading-relaxed text-2xl font-semibold">
                                 <%= deceased.last_name %> 
-                                <%= deceased.first_name %>
+                                <%= deceased.first_name %> 
                                 <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
                                 <% } %>
                             </h5>
 
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
-                                <div>
+                               
                                     <h6 class="text-lg font-semibold">
                                         Годы жизни
                                     </h6>
                                     <p class="text-2xl font-semibold mt-2">
                                         <%= deceased.birth_date.format("%d-%m-%Y").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y").to_string() %>
                                     </p>
-                                </div>
+                                
                                 
                             </div>
 

@@ -388,7 +388,6 @@
                                       <div class="mt-8">
                                           <div class="section-title text-md-start">
                                               <p class="text-white/50 max-w-xl mx-auto mb-2">  Легко найти местоположение захоронения ваших близких, провести генеалогические исследования и осуществитьпоиск записей о ушедших в цифровом архиве. Восстановить связь с вашими предками и членами семьи, сохраняя их наследие и историю.</p>
-                                              <a href="" class="text-white">Поиск<i class="uil uil-angle-right-b align-middle"></i></a>
                                           </div>
                                       </div>
                                   </div>
@@ -832,11 +831,7 @@
 
             <div class="lg:ml-8 mt-8 md:mt-0">
                 <h4 class="mb-4 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Прокладывайте <br> маршрут на карте:</h4>
-                <p class="text-slate-400">С легкостью найдите путь к кладбищу, используя удобную карту. Предоставляем детальные инструкции, чтобы облегчить вам путь.</p>
-
-                <div class="mt-4">
-                    <a href="deceased_all.html" class="btn btn-link text-indigo-600 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Проложить маршрут<i class="uil uil-angle-right-b align-middle"></i></a>
-                </div>
+                <p class="text-slate-400">С легкостью найдите путь к кладбищу или усопшему, используя удобную карту. Этот инструмент доступен на страницах кладбищ и покойников.</p>
             </div>
         </div><!--end grid-->
     </div><!--end container-->
@@ -855,10 +850,11 @@
                     <li class="mb-1 flex"><i class="uil uil-check-circle text-indigo-600 text-xl mr-2"></i> Сравнивать цены</li>
                     <li class="mb-1 flex"><i class="uil uil-check-circle text-indigo-600 text-xl mr-2"></i> Читать отзывы</li>
                 </ul>
-
+                <!--
                 <div class="mt-4">
                     <a href="service_all.html" class="btn btn-link text-indigo-600 hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Найти организацию или услугу <i class="uil uil-angle-right-b align-middle"></i></a>
                 </div>
+                -->
             </div>
         </div>
     </div><!--end container-->
@@ -919,7 +915,7 @@
                 class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
                 alt=""
               />
-              <h6 class="mt-2 font-semibold">Иванов Иван</h6>
+              <h6 class="mt-2 font-semibold">Бусыгин Иван</h6>
               <span class="text-slate-400 text-sm">Пользователь</span>
             </div>
           </div>
@@ -1073,7 +1069,7 @@
                 class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
                 alt=""
               />
-              <h6 class="mt-2 font-semibold">Иванов Иван</h6>
+              <h6 class="mt-2 font-semibold">Антонов Ринат</h6>
               <span class="text-slate-400 text-sm">Пользователь</span>
             </div>
           </div>
@@ -1087,7 +1083,7 @@
 
 
 
-
+      <!--
       <div class="container lg:mt-24 mt-16">
         <div class="grid grid-cols-1 text-center">
           <h3
@@ -1109,9 +1105,8 @@
             >
           </div>
         </div>
-        <!--end grid-->
       </div>
-      <!--end container-->
+      -->
     </section>
 
     <br><br><br><br>

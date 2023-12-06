@@ -14,20 +14,21 @@
                               
                           </div><!--end col-->
                   
+                          <!--
                           <div class="lg:col-span-3 md:col-span-4">
                             <h5 class="tracking-[1px] text-gray-100 font-semibold">География</h5>
                              <ul class="list-none footer-list mt-6">
                                   <li><a href="/cities/" class="400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Города</a></li>
                                   <li class="mt-[10px]"><a href="/regions/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Регионы</a></li>
                               </ul>
-                          </div><!--end col-->
+                          </div>
+                          -->
 
                           <div class="lg:col-span-3 md:col-span-4">
                               <h5 class="tracking-[1px] text-gray-100 font-semibold">О нас</h5>
                               <ul class="list-none footer-list mt-6">
-                                  <li><a href="/about/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Контакты</a></li>
-                                  <li class="mt-[10px]"><a href="/terms/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Политика конфиденциальности</a></li>
-                                  <li class="mt-[10px]"><a href="/policy/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Условия использования</a></li>
+                                  <li class="mt-[10px]"><a href="/terms/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Политика сайта</a></li>
+                                  <li class="mt-[10px]"><a href="/policy/" class="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"><i class="uil uil-angle-right-b me-1"></i> Условия сайта</a></li>
                               </ul>
                           </div><!--end col-->
                          
@@ -56,6 +57,7 @@
     <script src="/static/js/plugins.init.js"></script>
     <script src="/static/js/app.js"></script>
     <script src="/static/js/easy_background.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b" type="text/javascript"></script>
     <script src="/static/scripts/main.js"></script>
     <% if request_user.is_superuser() { %>
         <script defer type="text/javascript" src="/static/scripts/admin.js"></script>
@@ -63,7 +65,7 @@
     <script>
         easy_background("#home",
             {
-                slide: ["static/images/main/01.jpg", "static/images/main/02.jpg", "static/images/main/03.jpg"],
+                slide: ["/static/images/main/01.jpg", "/static/images/main/02.jpg", "/static/images/main/03.jpg"],
                 delay: [4000, 4000, 4000]
             }
         );

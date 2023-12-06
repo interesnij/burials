@@ -225,7 +225,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no last_name"));
         }
         let birth_date: Option<chrono::NaiveDate>;
-        let death_date: Option<chrono::NaiveDate>;
+        let death_date: Option<chrono::NaiveDate>; 
         let birth_date_dd = params.birth_date.is_some() && params.birth_date.unwrap().format("%Y-%m-%d").to_string() == "2023-11-25".to_string();
         let death_date_dd = params.death_date.is_some() && params.death_date.unwrap().format("%Y-%m-%d").to_string() == "2023-11-25".to_string();
         println!("birth_date_dd {:?}", birth_date_dd);

@@ -214,13 +214,12 @@ on('body', 'click', '.search_deceaseds', function() {
   birth_date = form.querySelector("#id_birth_date").value;
   death_date = form.querySelector("#id_death_date").value;
 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
+  var dd = 25;
+  var mm = 11;
+  var yyyy = 2023;
   today = yyyy + '-' + mm + '-' + dd;
 
-  if (!birth_date) {
+  if (!birth_date) { 
     console.log("no birth_date");
     birth_date = today;
     //birth_date = "null";
