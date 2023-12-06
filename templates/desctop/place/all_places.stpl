@@ -94,8 +94,9 @@ function init() {
 
     myMap.geoObjects
         .add(myGeoObject)
-        .add(myPieChart)
+        .add(myPieChart);
         <% for i in object_list.iter() { %>
+            myMap.geoObjects
             .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>, {
                 balloonContent: '<%= i.title %>',
                 iconCaption: 'Очень длиннный, но невероятно интересный текст'
