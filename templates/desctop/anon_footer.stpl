@@ -55,7 +55,7 @@
     <script src="/static/js/plugins.init.js"></script>
     <script src="/static/js/app.js"></script>
     <script src="/static/js/easy_background.js"></script> 
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f24c512a-4137-4c65-a9e6-39f5d7cd0ebe" type="text/javascript"></script>
     <script src="/static/scripts/main.js"></script>
     <script>
         easy_background("#home", 
