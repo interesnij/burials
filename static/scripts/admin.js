@@ -206,7 +206,7 @@ on('body', 'click', '#edit_place', function() {
 });
 
 on('body', 'click', '.remove_place', function() {
-  delete_item("/delete_place/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
+  delete_item("/delete_place/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
 

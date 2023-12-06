@@ -144,8 +144,8 @@
                                             class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 
                                             dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 
                                             dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                                            value="<%= place.description.as_deref().unwrap() %>"
                                         >
+                                        <%= place.description.as_deref().unwrap() %>
                                         </textarea>
                                     <% } else { %>
                                     <textarea 
@@ -178,7 +178,7 @@
 
                             <button type="button" data-pk="<%= place.id %>" id="edit_place" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 
                                 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">
-                                Добавить
+                                Изменить
                             </button> 
                         </div>
                         
