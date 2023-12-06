@@ -97,14 +97,14 @@ function init() {
         .add(myPieChart);
         <% for i in object_list.iter() { %>
             myMap.geoObjects
-            .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>, {
+            .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>,] {
                 balloonContent: '<%= i.title %>',
                 iconCaption: 'Очень длиннный, но невероятно интересный текст'
             }, {
                 preset: 'islands#blueCircleDotIconWithCaption',
                 iconCaptionMaxWidth: '50'
-            }))
-        <% } %>;
+            }));
+        <% } %>
 }
 
 </script>
