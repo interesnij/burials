@@ -19,7 +19,7 @@
                                 </div>
                               </div>
                               <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
-                                data-geo="<%= i.lat %>,<%= i.lon %>"
+                                data-geo="<%= i.lat %>, <%= i.lon %>"
                               >
                                 Маршрут
                               </a>
@@ -144,7 +144,7 @@ function init() {
       console.log(`Latitude : ${crd.latitude}`);
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
-      addrFrom = ConvertToDecimal(crd.latitude) + "," + ConvertToDecimal(crd.longitude);
+      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
       console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
 
