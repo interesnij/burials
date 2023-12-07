@@ -129,8 +129,9 @@ function init() {
     addrFrom = navigator.geolocation.getCurrentPosition(position => {
       position.coords
     });
-    console.log(addrTo);
-    console.log(addrFrom);
+    console.log("addrTo", addrTo);
+    console.log("getCurrentPosition", navigator.geolocation.getCurrentPosition);
+    console.log("geolocation", navigator.geolocation);
 
     if (addrFrom && addrTo) {
       showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
