@@ -57,7 +57,7 @@
     <script src="/static/js/plugins.init.js"></script>
     <script src="/static/js/app.js"></script>
     <script src="/static/js/easy_background.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=60445215-6d3a-4f88-87fe-8d52b72e5bc9" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f24c512a-4137-4c65-a9e6-39f5d7cd0ebe" type="text/javascript"></script>
     <script src="/static/scripts/main.js"></script>
     <% if request_user.is_superuser() { %>
         <script defer type="text/javascript" src="/static/scripts/admin.js"></script>
