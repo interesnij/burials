@@ -227,7 +227,7 @@ function init() {
         if (activeRoute) {
           var length = route.getActiveRoute().properties.get("distance");
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span>';
+              '<span>Расстояние: ' + length.text + '.</span>');
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           activeRoute.balloon.open();
         }
