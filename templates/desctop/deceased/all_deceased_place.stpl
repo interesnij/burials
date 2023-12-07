@@ -160,6 +160,7 @@ function init() {
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
       addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
+      addrFrom = crd.latitude + ", " + crd.longitude;
       console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
 
