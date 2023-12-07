@@ -42,7 +42,7 @@
                 <p id="notice3"></p>
               </div>
 
-              <div id="map"></div>
+              <div id="map" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div> 
 
               <div id="map_footer">
                 <div id="messageHeader1"></div>
