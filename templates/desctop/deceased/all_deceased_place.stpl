@@ -96,36 +96,9 @@ function init() {
     controls: []
   });
   // Создадим панель маршрутизации.
-  routePanelControl = new ymaps.control.RoutePanel({
-    options: {
-      // Добавим заголовок панели.
-      showHeader: true,
-      title: 'Расчёт расстояния'
-    }
-  });
-  var zoomControl = new ymaps.control.ZoomControl({
-    options: {
-      size: 'small',
-      float: 'none',
-      position: {
-        bottom: 145,
-        right: 10
-      }
-    }
-  });
-  // Пользователь сможет построить только автомобильный маршрут.
-  routePanelControl.routePanel.options.set({
-    types: {
-      auto: true
-    }
-  });
-  // Неизменяемые точки "откуда" и "куда"
-  routePanelControl.routePanel.state.set({
-    fromEnabled: false,
-    toEnabled: false
-  });
 
-  //map.controls.add(routePanelControl).add(zoomControl);
+  //////////////////////////////////
+  //////////////////////////////////
 
 
   // При клике по кнопке запускаем верификацию введёных данных и построение маршрута
@@ -144,6 +117,37 @@ function init() {
   });
 
   $('.get_ma').bind('click', function(e) {
+    routePanelControl = new ymaps.control.RoutePanel({
+      options: {
+        // Добавим заголовок панели.
+        showHeader: true,
+        title: 'Расчёт расстояния'
+      }
+    });
+    var zoomControl = new ymaps.control.ZoomControl({
+      options: {
+        size: 'small',
+        float: 'none',
+        position: {
+          bottom: 145,
+          right: 10
+        }
+      }
+    });
+    // Пользователь сможет построить только автомобильный маршрут.
+    routePanelControl.routePanel.options.set({
+      types: {
+        auto: true
+      }
+    });
+    // Неизменяемые точки "откуда" и "куда"
+    routePanelControl.routePanel.state.set({
+      fromEnabled: false,
+      toEnabled: false
+    });
+
+    map.controls.add(routePanelControl).add(zoomControl);
+
     addrTo = this.getAttribute("data-geo");
     //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
     const g_options = {
