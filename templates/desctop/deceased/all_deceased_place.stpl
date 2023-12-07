@@ -132,6 +132,27 @@ function init() {
     console.log("addrTo", addrTo);
     console.log("getCurrentPosition", navigator.geolocation.getCurrentPosition);
     console.log("geolocation", navigator.geolocation);
+    
+    const g_options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function g_success(pos) {
+      const crd = pos.coords;
+
+      console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+    }
+
+    function g_error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
 
     if (addrFrom && addrTo) {
       showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
