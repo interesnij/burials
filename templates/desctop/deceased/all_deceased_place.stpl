@@ -129,8 +129,8 @@ function init() {
     }
   });
   $('.get_ma').bind('click', function(e) {
-    _addrTo = this.getAttribute("data-geo").split(",");
-    addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
+    addrTo = this.getAttribute("data-geo");
+    //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
     const g_options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -147,9 +147,16 @@ function init() {
       addrFrom = ConvertToDecimal(crd.latitude) + "," + ConvertToDecimal(crd.longitude);
       console.log(`addrFrom: ${geocode(addrFrom)}`);
       console.log(`addrTo: ${geocode(addrTo)}`);
+
+      document.body.querySelector("#suggest1").value = addrFrom;
+      document.body.querySelector("#suggest2").value = addrTo;
+      geocode('#suggest1');
+      geocode('#suggest2');
+      addrFrom = document.body.querySelector("#suggest1").value;
+      addrTo = document.body.querySelector("#suggest2").value;
       if (addrFrom && addrTo) {
         //showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
-        showRoute(addrFrom, geocode(addrTo).getAddressLine());
+        showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
       } else {
         alert("Согласитесь на отслеживание Вашего местоположение");
       }
@@ -163,8 +170,8 @@ function init() {
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
   });
 
-  function geocode(value) {
-    var request = value.val();
+  function geocode(ctrl_id) {
+    var request = $(ctrl_id).val();
 
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
