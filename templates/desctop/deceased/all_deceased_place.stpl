@@ -273,7 +273,7 @@ function init() {
           price = calculate(Math.round(length.value / 1000)),
             // Создадим макет содержимого балуна маршрута.
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>';
+              '<span>Расстояние: ' + length.text + '.</span><br/>');
           // Зададим этот макет для содержимого балуна.
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           // Откроем балун.
