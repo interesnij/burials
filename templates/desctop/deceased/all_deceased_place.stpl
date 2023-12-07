@@ -11,7 +11,7 @@
                                 <img src="<%= i.get_image() %>" class="h-11 w-11 rounded-full shadow" alt="img">
                                 <div class="ms-3 flex-1">
                                   <a href="/deceased/<%= i.id %>/" class="text-lg font-semibold hover:text-indigo-600 duration-500">
-                                    <%= deceased.last_name %> <%= deceased.first_name %>
+                                    <%= i.last_name %> <%= i.first_name %>
                                   </a>
                                   <p class="text-sm text-slate-400">
                                     <%= i.birth_date.format("%d-%m-%Y").to_string() %> - <%= i.death_date.format("%d-%m-%Y").to_string() %>
@@ -19,7 +19,7 @@
                                 </div>
                               </div>
                               <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
-                                data-geo="<%= deceased.lat %>,<%= deceased.lon %>"
+                                data-geo="<%= i.lat %>,<%= i.lon %>"
                               >
                                 Маршрут
                               </a>
