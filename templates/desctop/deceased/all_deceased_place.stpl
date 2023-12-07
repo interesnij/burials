@@ -61,10 +61,11 @@
 <script>
 ymaps.ready(init);
 
+function successPos(pos) {
+  return pos.coords;
+}
 function getPos() {
-    navigator.geolocation.getCurrentPosition(position => {
-    addrFrom = position.coords;
-  });
+    navigator.geolocation.getCurrentPosition(successPos);
 }
 
 function init() {
