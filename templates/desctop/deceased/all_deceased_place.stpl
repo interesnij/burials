@@ -133,7 +133,7 @@ function init() {
       maximumAge: 0,
     };
 
-    function g_success(pos, addrTo) {
+    function g_success(pos) {
       const crd = pos.coords;
 
       console.log("Your current position is:");
@@ -153,7 +153,7 @@ function init() {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
-    navigator.geolocation.getCurrentPosition(g_success(addrTo), g_error, g_options);
+    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
   });
 
   function geocode(ctrl_id) {
