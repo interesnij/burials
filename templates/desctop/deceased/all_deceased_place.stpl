@@ -29,15 +29,15 @@
             </div>
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
 
-              <div id="map_header" class="hidden">
+              <div id="map_header" style="margin-top:50px">
                 <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
-                <button style="display:none" type="submit" id="button1">Проверить</button>
+                <button type="submit" id="button1">Проверить</button>
                 <p id="notice1"></p>
                 <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
-                <button style="display:none" type="submit" id="button2">Проверить</button>
+                <button type="submit" id="button2">Проверить</button>
                 <p id="notice2"></p>
               </div>
-              <div id="route" class="hidden">
+              <div id="route" class="">
                 <button type="submit" id="button3">Построить маршрут</button>
                 <p id="notice3"></p>
               </div>
