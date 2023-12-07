@@ -70,6 +70,10 @@ function getPos() {
   });
     //navigator.geolocation.getCurrentPosition(successPos);
 }
+function ConvertToDecimal(num) {
+    num = num.toString(); //If it's not already a String
+    return num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
+}
 
 function init() {
   var suggestView = new ymaps.SuggestView('suggest1'),
@@ -140,7 +144,7 @@ function init() {
       console.log(`Latitude : ${crd.latitude}`);
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
-      addrFrom = parseInt(crd.latitude * 100 / 100) + "," + parseInt(crd.longitude * 100 / 100);
+      addrFrom = ConvertToDecimal(crd.latitude) + "," + ConvertToDecimal(crd.longitude);
       console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
       if (addrFrom && addrTo) {
