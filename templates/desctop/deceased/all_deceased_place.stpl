@@ -150,12 +150,11 @@ function init() {
 
       document.body.querySelector("#suggest1").value = addrFrom;
       document.body.querySelector("#suggest2").value = addrTo;
-      geocode('#suggest1');
-      geocode('#suggest2');
+      //geocode('#suggest1');
+      //geocode('#suggest2');
       addrFrom = document.body.querySelector("#suggest1").value;
       addrTo = document.body.querySelector("#suggest2").value;
       if (addrFrom && addrTo) {
-        //showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
         showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
       } else {
         alert("Согласитесь на отслеживание Вашего местоположение");
