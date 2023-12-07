@@ -96,8 +96,19 @@ function init() {
     center: [<%= place.lat %>, <%= place.lon %>],
     zoom: 9,
     controls: []
-  });
+  }); 
   // Создадим панель маршрутизации.
+
+  <% for i in object_list.iter() { %>
+      map.geoObjects
+          .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
+          balloonContent: '<%= i.last_name %> <%= i.first_name %>',
+          iconCaption: ''
+      }, {
+          preset: 'islands#blueCircleDotIconWithCaption',
+          iconCaptionMaxWidth: '50'
+      }));
+  <% } %>
 
   //////////////////////////////////
   routePanelControl = new ymaps.control.RoutePanel({
