@@ -65,7 +65,10 @@ function successPos(pos) {
   return pos.coords;
 }
 function getPos() {
-    navigator.geolocation.getCurrentPosition(successPos);
+  navigator.geolocation.getCurrentPosition(position => {
+    return position.coords
+  });
+    //navigator.geolocation.getCurrentPosition(successPos);
 }
 
 function init() {
