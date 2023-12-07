@@ -142,6 +142,7 @@ function init() {
       console.log(`More or less ${crd.accuracy} meters.`);
       addrFrom = crd.latitude + "," + crd.longitude;
       console.log(`addrFrom: ${addrFrom}`);
+      console.log(`addrTo: ${addrTo}`);
       if (addrFrom && addrTo) {
         showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
       } else {
