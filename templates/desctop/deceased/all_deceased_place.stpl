@@ -164,7 +164,7 @@ function init() {
   });
 
   function geocode(value) {
-    var request = value;
+    var request = value.val();
 
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
