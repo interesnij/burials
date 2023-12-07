@@ -125,8 +125,8 @@ function init() {
     }
   });
   $('.get_ma').bind('click', function(e) {
-    addrTo = parseFloat(this.getAttribute("data-geo")).toFixed(2);
-    
+    _addrTo = this.getAttribute("data-geo").split(",");
+    addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
     const g_options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -140,7 +140,7 @@ function init() {
       console.log(`Latitude : ${crd.latitude}`);
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
-      addrFrom = parseFloat(crd.latitude + "," + crd.longitude).toFixed(2);
+      addrFrom = parseFloat(crd.latitude).toFixed(2) + "," + parseFloat(crd.longitude).toFixed(2);
       console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
       if (addrFrom && addrTo) {
