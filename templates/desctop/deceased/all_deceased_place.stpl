@@ -106,7 +106,7 @@ function init() {
     toEnabled: false
   });
 
-  map.controls.add(routePanelControl).add(zoomControl);
+  //map.controls.add(routePanelControl).add(zoomControl);
 
   $('#button1').bind('click', function(e) {
     geocode('#suggest1');
@@ -124,6 +124,8 @@ function init() {
   $('.get_ma').bind('click', function(e) {
     addrTo = this.getAttribute("data-geo");
     addrFrom = getPos();
+    console.log(addrTo);
+    console.log(addrFrom);
 
     if (addrFrom && addrTo) {
       showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
