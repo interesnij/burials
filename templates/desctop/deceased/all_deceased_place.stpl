@@ -126,7 +126,9 @@ function init() {
   });
   $('.get_ma').bind('click', function(e) {
     addrTo = this.getAttribute("data-geo");
-    addrFrom = getPos();
+    addrFrom = navigator.geolocation.getCurrentPosition(position => {
+      position.coords
+    });
     console.log(addrTo);
     console.log(addrFrom);
 
