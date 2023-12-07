@@ -177,7 +177,7 @@ function init() {
       _location.then(
         function(result) {
           // Добавление местоположения на карту.
-          console.log(`location: ${result.geoObjects}`);
+          console.log(`location: ${result.geoObjects.get(0).geometry.getCoordinates()}`);
         },
         function(err) {
           console.log('Ошибка: ' + err)
