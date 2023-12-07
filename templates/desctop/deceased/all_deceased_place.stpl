@@ -252,21 +252,31 @@ function init() {
 
 
   function showRoute(from, to) {
+    // https://tech.yandex.ru/maps/jsbox/2.1/deliveryCalculator 
     routePanelControl.routePanel.state.set({
       from: from,
       to: to
     });
+    // Получим ссылку на маршрут.
     routePanelControl.routePanel.getRouteAsync().then(function(route) {
+      // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
       route.model.setParams({
         results: 1
       }, true);
+      // Повесим обработчик на событие построения маршрута.
       route.model.events.add('requestsuccess', function() {
         var activeRoute = route.getActiveRoute();
         if (activeRoute) {
+          // Получим протяженность маршрута.
           var length = route.getActiveRoute().properties.get("distance");
+          // Вычислим стоимость доставки.
+          price = calculate(Math.round(length.value / 1000)),
+            // Создадим макет содержимого балуна маршрута.
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span>');
+              '<span>Расстояние: ' + length.text + '.</span><br/>';
+          // Зададим этот макет для содержимого балуна.
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
+          // Откроем балун.
           activeRoute.balloon.open();
         }
       });
