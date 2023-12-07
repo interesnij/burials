@@ -40,7 +40,8 @@ ymaps.ready(init);
 function init() {
     var myMap = new ymaps.Map("map", {
             center: [55.7522, 37.6156],
-            zoom: 5
+            zoom: 5,
+            controls: []
         }, {
             searchControlProvider: 'yandex#search'
         }),
@@ -99,7 +100,7 @@ function init() {
             myMap.geoObjects
             .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
                 balloonContent: '<%= i.title %>',
-                iconCaption: 'Очень длиннный, но невероятно интересный текст'
+                iconCaption: ''
             }, {
                 preset: 'islands#blueCircleDotIconWithCaption',
                 iconCaptionMaxWidth: '50'

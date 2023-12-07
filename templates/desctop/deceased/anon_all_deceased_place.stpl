@@ -27,13 +27,7 @@
                         <% } %>
             </div> 
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
-              <div class="listings-page-map">
-                <iframe style="width: 100%; height: 800px;"
-                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"
-                  class="google-map"
-                  allowfullscreen
-                ></iframe>
-              </div>
+              <div id="map"></div>
             </div>
           </div>
         </div>

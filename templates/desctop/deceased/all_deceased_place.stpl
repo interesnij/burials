@@ -6,32 +6,49 @@
             <div class="col-xl-3 col-lg-3 col-md-12 colum1">
                         <% for i in object_list.iter() { %>
                           <div style="margin-bottom:10px">
-                            <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
-                                <div class="img-holder">
-                                    <img src="<%= i.get_image() %>" alt="img">
+                            <div class="flex items-center justify-between">
+                              <div class="flex items-center">
+                                <img src="<%= i.get_image() %>" class="h-11 w-11 rounded-full shadow" alt="img">
+                                <div class="ms-3 flex-1">
+                                  <a href="/deceased/<%= i.id %>/" class="text-lg font-semibold hover:text-indigo-600 duration-500">
+                                    <%= deceased.last_name %> <%= deceased.first_name %>
+                                  </a>
+                                  <p class="text-sm text-slate-400">
+                                    <%= i.birth_date.format("%d-%m-%Y").to_string() %> - <%= i.death_date.format("%d-%m-%Y").to_string() %>
+                                  </p>
                                 </div>
-                                <div class="text-holder">
-                                    <div class="top">
-                                        <div class="dot"></div>
-                                        <p><a style="text-decoration: underline"  href="/deceased/<%= i.id %>/"><%= i.get_full_name() %></a></p>
-                                    </div>
-                                    <% let _place = i.get_place().expect("E."); %>
-                                    <h3>
-                                        <a style="text-decoration: underline" href="/places/<%= _place.id %>/deceased_list/"><%=_place.title %></a>
-                                    </h3> 
-                                    <p><%=_place.get_loc() %></p>
-                                </div>
+                              </div>
+                              <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
+                                data-geo="<%= deceased.lat %>,<%= deceased.lon %>"
+                              >
+                                Маршрут
+                              </a>
                             </div>
                           </div>
                         <% } %>
-            </div> 
+            </div>
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
-              <div class="listings-page-map">
-                <iframe style="width: 100%; height: 800px;"
-                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"
-                  class="google-map"
-                  allowfullscreen
-                ></iframe>
+
+              <div id="map_header" class="hidden">
+                <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
+                <button style="display:none" type="submit" id="button1">Проверить</button>
+                <p id="notice1"></p>
+                <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
+                <button style="display:none" type="submit" id="button2">Проверить</button>
+                <p id="notice2"></p>
+              </div>
+              <div id="route" class="hidden">
+                <button type="submit" id="button3">Построить маршрут</button>
+                <p id="notice3"></p>
+              </div>
+
+              <div id="map"></div>
+
+              <div id="map_footer">
+                <div id="messageHeader1"></div>
+                <div id="message1"></div>
+                <div id="messageHeader2"></div>
+                <div id="message2"></div>
               </div>
             </div>
           </div>
@@ -39,3 +56,258 @@
       </section>
 
 <% include!("../footer.stpl"); %>
+
+<script>
+function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
+
+ymaps.ready(init);
+
+var suggestView = new ymaps.SuggestView('suggest1'),
+suggestView = new ymaps.SuggestView('suggest2'),
+map, routePanelControl,
+addrFrom, addrTo;
+
+function init() {
+    var myMap = new ymaps.Map("map", {
+            center: [<%= place.lat %>, <%= place.lon %>],
+            zoom: 10,
+            controls: [],
+            type: "yandex#satellite"
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
+
+    // Создаем геообъект с типом геометрии "Точка".
+        myGeoObject = new ymaps.GeoObject({
+            // Описание геометрии.
+            geometry: {
+                type: "Point",
+                coordinates: [55.8, 37.8]
+            },
+            // Свойства.
+            properties: {
+                // Контент метки.
+                iconContent: 'ВЫ',
+                hintContent: 'Вы находитесь здесь'
+            }
+        }, {
+            // Опции.
+            // Иконка метки будет растягиваться под размер ее содержимого.
+            preset: 'islands#blackStretchyIcon',
+            // Метку можно перемещать.
+            draggable: true
+        });
+
+    //myMap.geoObjects
+        //.add(myGeoObject)
+        <% for i in object_list.iter() { %>
+            myMap.geoObjects
+            .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
+                balloonContent: '<%= i.title %>',
+                iconCaption: ''
+            }, {
+                preset: 'islands#blueCircleDotIconWithCaption',
+                iconCaptionMaxWidth: '50'
+            }));
+        <% } %>
+
+
+ routePanelControl = new ymaps.control.RoutePanel({
+    options: {
+      // Добавим заголовок панели.
+      showHeader: true,
+      title: 'Расчёт расстояния'
+    }
+  });
+  var zoomControl = new ymaps.control.ZoomControl({
+    options: {
+      size: 'small',
+      float: 'none',
+      position: {
+        bottom: 145,
+        right: 10
+      }
+    }
+  });
+  // Пользователь сможет построить только автомобильный маршрут.
+  routePanelControl.routePanel.options.set({
+    types: {
+      auto: true
+    }
+  });
+  // Неизменяемые точки "откуда" и "куда"
+  routePanelControl.routePanel.state.set({
+    fromEnabled: false,
+    toEnabled: false
+  });
+
+  map.controls.add(routePanelControl).add(zoomControl);
+
+
+  // При клике по кнопке запускаем верификацию введёных данных и построение маршрута
+  $('#button1').bind('click', function(e) {
+    geocode('#suggest1');
+  });
+  $('#button2').bind('click', function(e) {
+    geocode('#suggest2');
+  });
+  $('#button3').bind('click', function(e) {
+    if (addrFrom && addrTo) {
+      showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+    } else {
+      $('#notice3').css('display', 'block');
+    }
+  });
+
+  function geocode(ctrl_id) {
+    // Забираем запрос из поля ввода.
+    var request = $(ctrl_id).val();
+    // Геокодируем введённые данные.
+    ymaps.geocode(request).then(function(res) {
+      var obj = res.geoObjects.get(0),
+        error, hint;
+
+      if (obj) {
+        // Об оценке точности ответа геокодера можно прочитать тут: https://tech.yandex.ru/maps/doc/geocoder/desc/reference/precision-docpage/
+        switch (obj.properties.get('metaDataProperty.GeocoderMetaData.precision')) {
+          case 'exact':
+            break;
+          case 'number':
+          case 'near':
+          case 'range':
+            error = 'Неточный адрес, требуется уточнение';
+            hint = 'Уточните номер дома';
+            break;
+          case 'street':
+            error = 'Неполный адрес, требуется уточнение';
+            hint = 'Уточните номер дома';
+            break;
+          case 'other':
+          default:
+            error = 'Неточный адрес, требуется уточнение';
+            hint = 'Уточните адрес';
+        }
+      } else {
+        error = 'Адрес не найден';
+        hint = 'Уточните адрес';
+      }
+
+      // Если геокодер возвращает пустой массив или неточный результат, то показываем ошибку.
+      if (error) {
+        if (ctrl_id == '#suggest1') {
+          addrFrom = null
+        } else {
+          addrTo = null
+        }
+        showError(ctrl_id, error);
+        showMessage(ctrl_id, hint);
+      } else {
+        if (ctrl_id == '#suggest1') {
+          addrFrom = obj
+        } else {
+          addrTo = obj
+        }
+        showResult(ctrl_id);
+      }
+      if (addrFrom && addrTo) {
+        $('#notice3').css('display', 'none');
+      } else {
+        $('#notice3').css('display', 'block');
+      }
+    }, function(e) {
+      console.log(e)
+    })
+
+  }
+
+  function showResult(ctrl_id) {
+    // Удаляем сообщение об ошибке, если найденный адрес совпадает с поисковым запросом.
+    $(ctrl_id).removeClass('input_error');
+    $('#notice1').css('display', 'none');
+    $('#notice2').css('display', 'none');
+    // полный адрес для сообщения под картой.
+    if (ctrl_id == '#suggest1') {
+      showMessage(ctrl_id, addrFrom.getAddressLine());
+    } else {
+      showMessage(ctrl_id, addrTo.getAddressLine());
+    }
+    // Сохраняем укороченный адрес для подписи метки.
+    //shortAddress = [obj.getThoroughfare(), obj.getPremiseNumber(), obj.getPremise()].join(' ');
+  }
+
+  function showError(ctrl_id, message) {
+    $(ctrl_id).addClass('input_error');
+    if (ctrl_id == '#suggest1') {
+      $('#notice1').text(message);
+      $('#notice1').css('display', 'block');
+    } else {
+      $('#notice2').text(message);
+      $('#notice2').css('display', 'block');
+    }
+
+  }
+
+
+  function showRoute(from, to) {
+    // https://tech.yandex.ru/maps/jsbox/2.1/deliveryCalculator 
+    routePanelControl.routePanel.state.set({
+      from: from,
+      to: to
+    });
+    // Получим ссылку на маршрут.
+    routePanelControl.routePanel.getRouteAsync().then(function(route) {
+      // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
+      route.model.setParams({
+        results: 1
+      }, true);
+      // Повесим обработчик на событие построения маршрута.
+      route.model.events.add('requestsuccess', function() {
+        var activeRoute = route.getActiveRoute();
+        if (activeRoute) {
+          // Получим протяженность маршрута.
+          var length = route.getActiveRoute().properties.get("distance");
+          // Вычислим стоимость доставки.
+          price = calculate(Math.round(length.value / 1000)),
+            // Создадим макет содержимого балуна маршрута.
+            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<span>Расстояние: ' + length.text + '.</span><br/>';
+          // Зададим этот макет для содержимого балуна.
+          route.options.set('routeBalloonContentLayout', balloonContentLayout);
+          // Откроем балун.
+          activeRoute.balloon.open();
+        }
+      });
+    });
+  }
+
+  function showMessage(ctrl_id, message) {
+    if (ctrl_id == '#suggest1') {
+      $('#messageHeader1').html('<b>Пункт отправления:</b>');
+      $('#message1').html(message);
+    } else {
+      $('#messageHeader2').html('<b>Пункт назначения:</b>');
+      $('#message2').html(message);
+    }
+  }
+
+  // Функция, вычисляющая стоимость доставки.
+  function calculate(routeLength) {
+    return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
+  }
+}
+
+
+on('body', 'click', '.get_ma', function() {
+  geoo = this.getAttribute("data-geo");
+  suggest1 = document.body.querySelector("#suggest1");
+  suggest2 = document.body.querySelector("#suggest2");
+  navigator.geolocation.getCurrentPosition(position => {
+    latitude, longitude = position.coords;
+    suggest1.value = position.coords;
+  });
+  suggest2.value = geoo;
+  suggest2.parentElement.nextElementSibling.classList.remove("hidden");
+  suggest2.parentElement.classList.remove("hidden");
+});
+
+</script>
