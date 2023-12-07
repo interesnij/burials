@@ -173,8 +173,8 @@ function init() {
       geocode('#suggest2');
       addrFrom = document.body.querySelector("#suggest1").value;
 
-      var location = ymaps.geolocation;
-      location.then(
+      var _location = ymaps.geolocation.get();
+      _location.then(
         function(result) {
           // Добавление местоположения на карту.
           console.log(`location: ${result}`);
