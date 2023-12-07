@@ -1,36 +1,362 @@
 <% include!("../anon_header.stpl"); %>
 
- 
-      <section class="property-five" style="margin-top:80px">
+      <section class="property-five" style="margin-top:90px">
         <div class="container">
           <div class="row">
-            <div class="col-xl-3 col-lg-3 col-md-12 colum1">
+            <div class="col-xl-3 col-lg-3 col-md-12 colum1" style="height: 90vh;">
                         <% for i in object_list.iter() { %>
                           <div style="margin-bottom:10px">
-                            <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
-                                <div class="img-holder">
-                                    <img src="<%= i.get_image() %>" alt="img">
+                            <div class="flex items-center justify-between">
+                              <div class="flex items-center">
+                                <img src="<%= i.get_image() %>" class="h-11 w-11 shadow" alt="img">
+                                <div class="ms-3 flex-1">
+                                  <a href="/deceased/<%= i.id %>/" class="">
+                                    <%= i.last_name %> <%= i.first_name %>
+                                  </a>
+                                  <p class="small">
+                                    <%= i.birth_date.format("%d-%m-%Y").to_string() %> - <%= i.death_date.format("%d-%m-%Y").to_string() %>
+                                  </p>
+                                  <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
+                                      data-geo="<%= i.lat %>, <%= i.lon %>"
+                                  >
+                                    Маршрут
+                                  </a>
                                 </div>
-                                <div class="text-holder">
-                                    <div class="top">
-                                        <div class="dot"></div>
-                                        <p><a style="text-decoration: underline"  href="/deceased/<%= i.id %>/"><%= i.get_full_name() %></a></p>
-                                    </div>
-                                    <% let _place = i.get_place().expect("E."); %>
-                                    <h3>
-                                        <a style="text-decoration: underline" href="/places/<%= _place.id %>/deceased_list/"><%=_place.title %></a>
-                                    </h3> 
-                                    <p><%=_place.get_loc() %></p>
-                                </div>
+
+                              </div>
+                              
                             </div>
                           </div>
                         <% } %>
-            </div> 
+            </div>
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
-              <div id="map"></div>
+
+              <div id="map_header" style="margin-top:50px" class="hidden">
+                <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
+                <button type="submit" id="button1">Проверить</button>
+                <p id="notice1"></p>
+                <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
+                <button type="submit" id="button2">Проверить</button>
+                <p id="notice2"></p>
+              </div>
+              <div id="route" class="hidden">
+                <button type="submit" id="button3">Построить маршрут</button>
+                <p id="notice3"></p>
+              </div>
+
+              <div id="map" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div> 
+
+              <div id="map_footer">
+                <div id="messageHeader1"></div>
+                <div id="message1"></div>
+                <div id="messageHeader2"></div>
+                <div id="message2"></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
 <% include!("../anon_footer.stpl"); %>
+
+<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+<script>
+ymaps.ready(init);
+
+function successPos(pos) {
+  return pos.coords;
+}
+function getPos() {
+  navigator.geolocation.getCurrentPosition(position => {
+    return position.coords
+  });
+    //navigator.geolocation.getCurrentPosition(successPos);
+}
+function ConvertToDecimal(num) {
+    num = num.toString(); //If it's not already a String
+    return num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
+}
+
+
+
+function init() {
+  // Стоимость за километр.
+  var DELIVERY_TARIFF = 20,
+    // Минимальная стоимость.
+    MINIMUM_COST = 500;
+  // https://tech.yandex.ru/maps/jsbox/2.1/input_validation
+  // Подключаем поисковые подсказки к полю ввода.
+  var suggestView = new ymaps.SuggestView('suggest1'),
+    suggestView = new ymaps.SuggestView('suggest2'),
+    map, routePanelControl,
+    addrFrom, addrTo;
+
+
+  map = new ymaps.Map('map', {
+    center: [<%= place.lat %>, <%= place.lon %>],
+    zoom: 9,
+    controls: []
+  }); 
+  // Создадим панель маршрутизации.
+
+  <% for i in object_list.iter() { %>
+      map.geoObjects
+          .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
+          balloonContent: '<%= i.last_name %> <%= i.first_name %>',
+          iconCaption: ''
+      }, { 
+          preset: 'islands#blueCircleDotIconWithCaption',
+          iconCaptionMaxWidth: '50',
+          iconLayout: 'default#image',
+          iconImageHref: '<%= i.get_image() %>',
+          icon_imagesize: [30, 42],
+          iconImageOffset: [-3, -42]
+      }));
+  <% } %>
+
+  //////////////////////////////////
+  routePanelControl = new ymaps.control.RoutePanel({
+      options: {
+        // Добавим заголовок панели.
+        showHeader: true,
+        title: 'Расчёт расстояния'
+      }
+    });
+    var zoomControl = new ymaps.control.ZoomControl({
+      options: {
+        size: 'small',
+        float: 'none',
+        position: {
+          bottom: 145,
+          right: 10
+        }
+      }
+    });
+    // Пользователь сможет построить только автомобильный маршрут.
+    routePanelControl.routePanel.options.set({
+      types: {
+        auto: true
+      }
+    });
+    // Неизменяемые точки "откуда" и "куда"
+    routePanelControl.routePanel.state.set({
+      fromEnabled: false,
+      toEnabled: false
+    });
+
+    map.controls.add(routePanelControl).add(zoomControl);
+  //////////////////////////////////
+
+
+  // При клике по кнопке запускаем верификацию введёных данных и построение маршрута
+  $('#button1').bind('click', function(e) {
+    geocode('#suggest1');
+  });
+  $('#button2').bind('click', function(e) {
+    geocode('#suggest2');
+  });
+  $('#button3').bind('click', function(e) {
+    if (addrFrom && addrTo) {
+      showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+    } else {
+      $('#notice3').css('display', 'block');
+    }
+  });
+
+  $('.get_ma').bind('click', function(e) {
+    addrTo = this.getAttribute("data-geo");
+    //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
+    const g_options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function g_success(pos) {
+      const crd = pos.coords;
+
+      console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
+      //addrFrom = crd.latitude + ", " + crd.longitude;
+      console.log(`addrFrom: ${addrFrom}`);
+      console.log(`addrTo: ${addrTo}`);
+
+      document.body.querySelector("#suggest1").value = addrFrom;
+      document.body.querySelector("#suggest2").value = addrTo;
+      geocode('#suggest1');
+      geocode('#suggest2');
+      addrFrom = document.body.querySelector("#suggest1").value;
+
+      var _location = ymaps.geolocation.get();
+      _location.then(
+        function(result) {
+          // Добавление местоположения на карту.
+          addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
+          console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
+        },
+        function(err) {
+          console.log('Ошибка: ' + err)
+        }
+      );
+
+      addrTo = document.body.querySelector("#suggest2").value;
+      if (addrFrom && addrTo) {
+        showRoute(addrFrom, addrTo);
+      } else {
+        alert("Согласитесь на отслеживание Вашего местоположение");
+      }
+      
+    }
+
+    function g_error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
+  });
+
+
+  function geocode(ctrl_id) {
+    // Забираем запрос из поля ввода.
+    var request = $(ctrl_id).val();
+    // Геокодируем введённые данные.
+    ymaps.geocode(request).then(function(res) {
+      var obj = res.geoObjects.get(0),
+        error, hint;
+
+      if (obj) {
+        // Об оценке точности ответа геокодера можно прочитать тут: https://tech.yandex.ru/maps/doc/geocoder/desc/reference/precision-docpage/
+        switch (obj.properties.get('metaDataProperty.GeocoderMetaData.precision')) {
+          case 'exact':
+            break;
+          case 'number':
+          case 'near':
+          case 'range':
+            error = 'Неточный адрес, требуется уточнение';
+            hint = 'Уточните номер дома';
+            break;
+          case 'street':
+            error = 'Неполный адрес, требуется уточнение';
+            hint = 'Уточните номер дома';
+            break;
+          case 'other':
+          default:
+            error = 'Неточный адрес, требуется уточнение';
+            hint = 'Уточните адрес';
+        }
+      } else {
+        error = 'Адрес не найден';
+        hint = 'Уточните адрес';
+      }
+
+      // Если геокодер возвращает пустой массив или неточный результат, то показываем ошибку.
+      if (error) {
+        if (ctrl_id == '#suggest1') {
+          addrFrom = null
+        } else {
+          addrTo = null
+        }
+        showError(ctrl_id, error);
+        showMessage(ctrl_id, hint);
+      } else {
+        if (ctrl_id == '#suggest1') {
+          addrFrom = obj
+        } else {
+          addrTo = obj
+        }
+        showResult(ctrl_id);
+      }
+      if (addrFrom && addrTo) {
+        $('#notice3').css('display', 'none');
+      } else {
+        $('#notice3').css('display', 'block');
+      }
+    }, function(e) {
+      console.log(e)
+    })
+
+  }
+
+  function showResult(ctrl_id) {
+    // Удаляем сообщение об ошибке, если найденный адрес совпадает с поисковым запросом.
+    $(ctrl_id).removeClass('input_error');
+    $('#notice1').css('display', 'none');
+    $('#notice2').css('display', 'none');
+    // полный адрес для сообщения под картой.
+    if (ctrl_id == '#suggest1') {
+      showMessage(ctrl_id, addrFrom.getAddressLine());
+    } else {
+      showMessage(ctrl_id, addrTo.getAddressLine());
+    }
+    // Сохраняем укороченный адрес для подписи метки.
+    //shortAddress = [obj.getThoroughfare(), obj.getPremiseNumber(), obj.getPremise()].join(' ');
+  }
+
+  function showError(ctrl_id, message) {
+    $(ctrl_id).addClass('input_error');
+    if (ctrl_id == '#suggest1') {
+      $('#notice1').text(message);
+      $('#notice1').css('display', 'block');
+    } else {
+      $('#notice2').text(message);
+      $('#notice2').css('display', 'block');
+    }
+
+  }
+
+
+  function showRoute(from, to) {
+    // https://tech.yandex.ru/maps/jsbox/2.1/deliveryCalculator 
+    routePanelControl.routePanel.state.set({
+      from: from,
+      to: to
+    });
+    // Получим ссылку на маршрут.
+    routePanelControl.routePanel.getRouteAsync().then(function(route) {
+      // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
+      route.model.setParams({
+        results: 1
+      }, true);
+      // Повесим обработчик на событие построения маршрута.
+      route.model.events.add('requestsuccess', function() {
+        var activeRoute = route.getActiveRoute();
+        if (activeRoute) {
+          // Получим протяженность маршрута.
+          var length = route.getActiveRoute().properties.get("distance");
+          // Вычислим стоимость доставки.
+          price = calculate(Math.round(length.value / 1000)),
+            // Создадим макет содержимого балуна маршрута.
+            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<span>Расстояние: ' + length.text + '.</span><br/>' +
+              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+            
+            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<span>Расстояние: ' + length.text + '.</span><br/>');
+          // Зададим этот макет для содержимого балуна.
+          route.options.set('routeBalloonContentLayout', balloonContentLayout);
+          // Откроем балун.
+          activeRoute.balloon.open();
+        }
+      });
+    });
+  }
+
+  function showMessage(ctrl_id, message) {
+    if (ctrl_id == '#suggest1') {
+      $('#messageHeader1').html('<b>Пункт отправления:</b>');
+      $('#message1').html(message);
+    } else {
+      $('#messageHeader2').html('<b>Пункт назначения:</b>');
+      $('#message2').html(message);
+    }
+  }
+
+  // Функция, вычисляющая стоимость доставки.
+  function calculate(routeLength) {
+    return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
+  }
+}
+</script>
