@@ -58,65 +58,32 @@
 <% include!("../footer.stpl"); %>
 
 <script>
-function on(elSelector,eventName,selector,fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while(el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
-
 ymaps.ready(init);
 
-var suggestView = new ymaps.SuggestView('suggest1'),
-suggestView = new ymaps.SuggestView('suggest2'),
-map, routePanelControl,
-addrFrom, addrTo;
-
 function init() {
-    var myMap = new ymaps.Map("map", {
-            center: [<%= place.lat %>, <%= place.lon %>],
-            zoom: 10,
-            controls: [],
-            type: "yandex#satellite"
-        }, {
-            searchControlProvider: 'yandex#search'
-        }),
-
-    // Создаем геообъект с типом геометрии "Точка".
-        myGeoObject = new ymaps.GeoObject({
-            // Описание геометрии.
-            geometry: {
-                type: "Point",
-                coordinates: [55.8, 37.8]
-            },
-            // Свойства.
-            properties: {
-                // Контент метки.
-                iconContent: 'ВЫ',
-                hintContent: 'Вы находитесь здесь'
-            }
-        }, {
-            // Опции.
-            // Иконка метки будет растягиваться под размер ее содержимого.
-            preset: 'islands#blackStretchyIcon',
-            // Метку можно перемещать.
-            draggable: true
-        });
-
-    //myMap.geoObjects
-        //.add(myGeoObject)
-        <% for i in object_list.iter() { %>
-            myMap.geoObjects
-            .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
-                balloonContent: '<%= i.last_name %> <%= i.first_name %>',
-                iconCaption: '<%= i.get_image() %>'
-            }, {
-                preset: 'islands#blueCircleDotIconWithCaption',
-                iconCaptionMaxWidth: '50'
-            }));
-        <% } %>
+  // Стоимость за километр.
+  var DELIVERY_TARIFF = 20,
+    // Минимальная стоимость.
+    MINIMUM_COST = 500;
+  // https://tech.yandex.ru/maps/jsbox/2.1/input_validation
+  // Подключаем поисковые подсказки к полю ввода.
+  var suggestView = new ymaps.SuggestView('suggest1'),
+    suggestView = new ymaps.SuggestView('suggest2'),
+    map, routePanelControl,
+    addrFrom, addrTo;
 
 
- routePanelControl = new ymaps.control.RoutePanel({
+  map = new ymaps.Map('map', {
+    center: [55.75, 37.65],
+    zoom: 9,
+    controls: []
+  });
+  // Создадим панель маршрутизации.
+  routePanelControl = new ymaps.control.RoutePanel({
     options: {
       // Добавим заголовок панели.
       showHeader: true,
-      title: 'Расчёт расстояния'
+      title: 'Расчёт доставки'
     }
   });
   var zoomControl = new ymaps.control.ZoomControl({
@@ -270,7 +237,8 @@ function init() {
           price = calculate(Math.round(length.value / 1000)),
             // Создадим макет содержимого балуна маршрута.
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>';
+              '<span>Расстояние: ' + length.text + '.</span><br/>' +
+              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
           // Зададим этот макет для содержимого балуна.
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           // Откроем балун.
@@ -296,18 +264,5 @@ function init() {
   }
 }
 
-
-on('body', 'click', '.get_ma', function() {
-  geoo = this.getAttribute("data-geo");
-  suggest1 = document.body.querySelector("#suggest1");
-  suggest2 = document.body.querySelector("#suggest2");
-  navigator.geolocation.getCurrentPosition(position => {
-    latitude, longitude = position.coords;
-    suggest1.value = position.coords;
-  });
-  suggest2.value = geoo;
-  suggest2.parentElement.nextElementSibling.classList.remove("hidden");
-  suggest2.parentElement.classList.remove("hidden");
-});
 
 </script>
