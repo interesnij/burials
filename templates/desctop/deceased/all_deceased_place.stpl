@@ -8,7 +8,7 @@
                           <div style="margin-bottom:10px">
                             <div class="flex items-center justify-between">
                               <div class="flex items-center">
-                                <img src="<%= i.get_image() %>" class="h-11 w-11 rounded-full shadow" alt="img">
+                                <img src="<%= i.get_image() %>" class="h-15 w-15 shadow" alt="img">
                                 <div class="ms-3 flex-1">
                                   <a href="/deceased/<%= i.id %>/" class="">
                                     <%= i.last_name %> <%= i.first_name %>
@@ -93,7 +93,7 @@ function init() {
 
 
   map = new ymaps.Map('map', {
-    center: [55.75, 37.65],
+    center: [<%= place.lat %>, <%= place.lon %>],
     zoom: 9,
     controls: []
   });
