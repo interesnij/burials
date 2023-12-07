@@ -145,7 +145,7 @@ function init() {
       console.log(`addrTo: ${addrTo}`);
       if (addrFrom && addrTo) {
         //showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
-        showRoute(addrFrom, addrTo);
+        showRoute(geocode(addrFrom).getAddressLine(), geocode(addrTo).getAddressLine());
       } else {
         alert("Согласитесь на отслеживание Вашего местоположение");
       }
@@ -159,8 +159,9 @@ function init() {
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
   });
 
-  function geocode(ctrl_id) {
-    var request = $(ctrl_id).val();
+  function geocode(value) {
+    var request = value;
+
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
         error, hint;
