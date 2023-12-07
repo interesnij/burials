@@ -145,8 +145,8 @@ function init() {
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
       addrFrom = ConvertToDecimal(crd.latitude) + "," + ConvertToDecimal(crd.longitude);
-      console.log(`addrFrom: ${geocode(addrFrom)}`);
-      console.log(`addrTo: ${geocode(addrTo)}`);
+      console.log(`addrFrom: ${addrFrom}`);
+      console.log(`addrTo: ${addrTo}`);
 
       document.body.querySelector("#suggest1").value = addrFrom;
       document.body.querySelector("#suggest2").value = addrTo;
