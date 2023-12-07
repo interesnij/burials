@@ -10,19 +10,21 @@
                               <div class="flex items-center">
                                 <img src="<%= i.get_image() %>" class="h-11 w-11 rounded-full shadow" alt="img">
                                 <div class="ms-3 flex-1">
-                                  <a href="/deceased/<%= i.id %>/" class="text-lg font-semibold hover:text-indigo-600 duration-500">
+                                  <a href="/deceased/<%= i.id %>/" class="">
                                     <%= i.last_name %> <%= i.first_name %>
                                   </a>
-                                  <p class="text-sm text-slate-400">
+                                  <p class="small">
                                     <%= i.birth_date.format("%d-%m-%Y").to_string() %> - <%= i.death_date.format("%d-%m-%Y").to_string() %>
                                   </p>
+                                  <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
+                                      data-geo="<%= i.lat %>, <%= i.lon %>"
+                                  >
+                                    Маршрут
+                                  </a>
                                 </div>
+
                               </div>
-                              <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
-                                data-geo="<%= i.lat %>, <%= i.lon %>"
-                              >
-                                Маршрут
-                              </a>
+                              
                             </div>
                           </div>
                         <% } %>
