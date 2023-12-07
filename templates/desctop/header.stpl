@@ -29,7 +29,7 @@
             #map {
                 width: 100%; height: 100%; padding: 0; margin: 0;
             }
-            #id_170196651480360781797 {
+            .ymaps-2-1-79-controls__control_toolbar {
                 display: none;
             }
         </style>
