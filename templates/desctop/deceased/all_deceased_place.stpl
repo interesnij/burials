@@ -145,11 +145,11 @@ function init() {
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
       addrFrom = ConvertToDecimal(crd.latitude) + "," + ConvertToDecimal(crd.longitude);
-      console.log(`addrFrom: ${addrFrom}`);
-      console.log(`addrTo: ${addrTo}`);
+      console.log(`addrFrom: ${geocode(addrFrom)}`);
+      console.log(`addrTo: ${geocode(addrTo)}`);
       if (addrFrom && addrTo) {
         //showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
-        showRoute(geocode(addrTo).getAddressLine(), geocode(addrTo).getAddressLine());
+        showRoute(addrFrom, geocode(addrTo).getAddressLine());
       } else {
         alert("Согласитесь на отслеживание Вашего местоположение");
       }
