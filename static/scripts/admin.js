@@ -228,8 +228,8 @@ on('body', 'click', '#create_deceased', function() {
     link.send(form_data);
 });
 on('body', 'click', '#edit_deceased', function() {
-  _this = this;
-  form = _this.parentElement.parentElement.parentElement.parentElement;
+  _this = this; 
+  form = _this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
