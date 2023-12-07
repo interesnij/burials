@@ -144,7 +144,8 @@ function init() {
       console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
       if (addrFrom && addrTo) {
-        showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+        //showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+        showRoute(addrFrom, addrTo);
       } else {
         alert("Согласитесь на отслеживание Вашего местоположение");
       }
