@@ -141,7 +141,7 @@ function init() {
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
       addrFrom = parseInt(crd.latitude * 100 / 100) + "," + parseInt(crd.longitude * 100 / 100);
-      console.log(`addrFrom: ${addrFrom}`);parseInt(n * 100)) / 100
+      console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
       if (addrFrom && addrTo) {
         //showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
