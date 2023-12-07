@@ -76,6 +76,7 @@ function ConvertToDecimal(num) {
 }
 
 
+
 function init() {
   // Стоимость за километр.
   var DELIVERY_TARIFF = 20,
@@ -99,7 +100,7 @@ function init() {
     options: {
       // Добавим заголовок панели.
       showHeader: true,
-      title: 'Расчёт доставки'
+      title: 'Расчёт расстояния'
     }
   });
   var zoomControl = new ymaps.control.ZoomControl({
@@ -141,6 +142,48 @@ function init() {
       $('#notice3').css('display', 'block');
     }
   });
+
+  $('.get_ma').bind('click', function(e) {
+    addrTo = this.getAttribute("data-geo");
+    //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
+    const g_options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function g_success(pos) {
+      const crd = pos.coords;
+
+      console.log("Your current position is:");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude: ${crd.longitude}`);
+      console.log(`More or less ${crd.accuracy} meters.`);
+      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
+      console.log(`addrFrom: ${addrFrom}`);
+      console.log(`addrTo: ${addrTo}`);
+
+      document.body.querySelector("#suggest1").value = addrFrom;
+      document.body.querySelector("#suggest2").value = addrTo;
+      //geocode('#suggest1');
+      //geocode('#suggest2');
+      addrFrom = document.body.querySelector("#suggest1").value;
+      addrTo = document.body.querySelector("#suggest2").value;
+      if (addrFrom && addrTo) {
+        showRoute(addrFrom, addrTo);
+      } else {
+        alert("Согласитесь на отслеживание Вашего местоположение");
+      }
+      
+    }
+
+    function g_error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
+  });
+  
 
   function geocode(ctrl_id) {
     // Забираем запрос из поля ввода.
