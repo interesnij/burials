@@ -125,7 +125,7 @@ function init() {
     toEnabled: false
   });
 
-  map.controls.add(routePanelControl).add(zoomControl);
+  //map.controls.add(routePanelControl).add(zoomControl);
 
 
   // При клике по кнопке запускаем верификацию введёных данных и построение маршрута
