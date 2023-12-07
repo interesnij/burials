@@ -103,8 +103,8 @@ function init() {
         <% for i in object_list.iter() { %>
             myMap.geoObjects
             .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
-                balloonContent: '<%= i.title %>',
-                iconCaption: ''
+                balloonContent: '<%= i.last_name %> <%= i.first_name %>',
+                iconCaption: '<%= i.get_image() %>'
             }, {
                 preset: 'islands#blueCircleDotIconWithCaption',
                 iconCaptionMaxWidth: '50'
