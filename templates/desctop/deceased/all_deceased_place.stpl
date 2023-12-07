@@ -183,7 +183,7 @@ function init() {
 
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
   });
-  
+
 
   function geocode(ctrl_id) {
     // Забираем запрос из поля ввода.
@@ -298,6 +298,9 @@ function init() {
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
               '<span>Расстояние: ' + length.text + '.</span><br/>' +
               '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+            
+            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<span>Расстояние: ' + length.text + '.</span><br/>');
           // Зададим этот макет для содержимого балуна.
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           // Откроем балун.
