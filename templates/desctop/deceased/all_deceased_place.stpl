@@ -126,12 +126,6 @@ function init() {
   });
   $('.get_ma').bind('click', function(e) {
     addrTo = this.getAttribute("data-geo");
-    addrFrom = navigator.geolocation.getCurrentPosition(position => {
-      position.coords
-    });
-    console.log("addrTo", addrTo);
-    console.log("getCurrentPosition", navigator.geolocation.getCurrentPosition);
-    console.log("geolocation", navigator.geolocation);
     
     const g_options = {
       enableHighAccuracy: true,
@@ -139,26 +133,27 @@ function init() {
       maximumAge: 0,
     };
 
-    function g_success(pos) {
+    function g_success(pos, addrTo) {
       const crd = pos.coords;
 
       console.log("Your current position is:");
       console.log(`Latitude : ${crd.latitude}`);
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
+      addrFrom = crd.latitude + "," + crd.longitude;
+      if (addrFrom && addrTo) {
+        showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+      } else {
+        alert("Согласитесь на отслеживание Вашего местоположение");
+      }
+      
     }
 
     function g_error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
-    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
-
-    if (addrFrom && addrTo) {
-      showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
-    } else {
-      alert("Согласитесь на отслеживание Вашего местоположение");
-    }
+    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options(addrTo));
   });
 
   function geocode(ctrl_id) {
