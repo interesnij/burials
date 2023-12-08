@@ -212,7 +212,7 @@ on('body', 'click', '.remove_place', function() {
 
 
 on('body', 'click', '#create_deceased', function() { 
-  let form = this.parentElement.parentElement.parentElement.parentElement;
+  let form = this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
       return

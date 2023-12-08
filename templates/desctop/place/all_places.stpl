@@ -45,7 +45,7 @@ function init() {
         }, {
             searchControlProvider: 'yandex#search'
         }),
-
+    myMap.setType('yandex#satellite');
     // Создаем геообъект с типом геометрии "Точка".
         myGeoObject = new ymaps.GeoObject({
             // Описание геометрии.
