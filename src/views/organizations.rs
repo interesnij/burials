@@ -243,16 +243,16 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/all_organization_countries.stpl")]
             struct Template {
-                request_user:     User,
-                country:          Countrie,
-                all_organization: Vec<Organization>,
-                all_places:       Vec<PlaceSmall>,
+                request_user:      User,
+                country:           Countrie,
+                all_organizations: Vec<Organization>,
+                all_places:        Vec<PlaceSmall>,
             }
             let body = Template {
-                request_user:     _request_user,
-                country:          _country,
-                all_organization: _organizations,
-                all_places:       all_places,
+                request_user:      _request_user,
+                country:           _country,
+                all_organizations: _organizations,
+                all_places:        all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -262,16 +262,16 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/all_organization_countries.stpl")]
             struct Template {
-                request_user:     User,
-                country:          Countrie,
-                all_organization: Vec<Organization>,
-                all_places:       Vec<PlaceSmall>,
+                request_user:      User,
+                country:           Countrie,
+                all_organizations: Vec<Organization>,
+                all_places:        Vec<PlaceSmall>,
             }
             let body = Template {
-                request_user:     _request_user,
-                country:          _country,
-                all_organization: _organizations,
-                all_places:       all_places,
+                request_user:      _request_user,
+                country:           _country,
+                all_organizations: _organizations,
+                all_places:        all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -283,14 +283,14 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_countries.stpl")]
             struct Template {
-                country:          Countrie,
-                all_organization: Vec<Organization>,
-                all_places:       Vec<PlaceSmall>,
+                country:           Countrie,
+                all_organizations: Vec<Organization>,
+                all_places:        Vec<PlaceSmall>,
             }
             let body = Template {
-                country:          _country,
-                all_organization: _organizations,
-                all_places:       all_places,
+                country:           _country,
+                all_organizations: _organizations,
+                all_places:        all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -300,14 +300,14 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_countries.stpl")]
             struct Template {
-                country:          Countrie,
-                all_organization: Vec<Organization>,
-                all_places:       Vec<PlaceSmall>,
+                country:           Countrie,
+                all_organizations: Vec<Organization>,
+                all_places:        Vec<PlaceSmall>,
             }
             let body = Template {
-                country:          _country,
-                all_organization: _organizations,
-                all_places:       all_places,
+                country:           _country,
+                all_organizations: _organizations,
+                all_places:        all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
