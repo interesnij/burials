@@ -215,8 +215,8 @@ impl Organization {
     }
     pub fn get_region_organizations(region_id: i32) -> (Vec<Organization>, Vec<PlaceSmall>) {
         use crate::utils::get_organization;
-        let mut places_stack = Vec::new();
-        let mut org_stack = Vec::new();
+        let mut places_stack: Vec<PlaceSmall> = Vec::new();
+        let mut org_stack: Vec<Organization> = Vec::new();
         let _connection = establish_connection();
         let places_vec = schema::organizations_places::table
             .filter(schema::organizations_places::region_id.eq(region_id))
@@ -237,8 +237,8 @@ impl Organization {
     }
     pub fn get_country_organizations(country_id: i32) -> (Vec<Organization>, Vec<PlaceSmall>) {
         use crate::utils::get_organization;
-        let mut places_stack = Vec::new();
-        let mut org_stack = Vec::new();
+        let mut places_stack: Vec<PlaceSmall> = Vec::new();
+        let mut org_stack: Vec<Organization> = Vec::new();
         let _connection = establish_connection();
         let places_vec = schema::organizations_places::table
             .filter(schema::organizations_places::country_id.eq(country_id))
