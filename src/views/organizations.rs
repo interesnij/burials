@@ -5,6 +5,7 @@ use actix_web::{
     HttpResponse,
     error::InternalError,
     http::StatusCode,
+    Responder,
 };
 use crate::errors::Error;
 use crate::models::{
@@ -691,7 +692,8 @@ pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Re
     if user_id.is_some() {
         //let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
-            _service.delete(user_id);
+        let _service = crate::utils::get_service(form.id).expect("E.");
+        _service.delete(user_id);
     }
     HttpResponse::Ok()
 }
@@ -840,7 +842,8 @@ pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Respon
     if user_id.is_some() {
         //let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
-            _loc.delete(user_id);
+        let _loc = crate::utils::get_organization_loc(form.id).expect("E.");
+        _loc.delete(user_id);
     } 
     HttpResponse::Ok()
 }

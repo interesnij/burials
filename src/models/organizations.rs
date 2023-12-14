@@ -197,7 +197,7 @@ impl Organization {
             .load::<OrganizationsPlace>(&_connection)
             .expect("E."); 
         for _place in places_vec.iter() {
-            let org = get_organization(obj.organization_id).expect("E.");
+            let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
                 name: org.name.clone(),
                 address: _place.get_loc(),
@@ -219,7 +219,7 @@ impl Organization {
             .load::<OrganizationsPlace>(&_connection)
             .expect("E.");
         for _place in places_vec.iter() {
-            let org = get_organization(obj.organization_id).expect("E.");
+            let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
                 name: org.name.clone(),
                 address: _place.get_loc(),
@@ -241,7 +241,7 @@ impl Organization {
             .load::<OrganizationsPlace>(&_connection)
             .expect("E.");
         for _place in places_vec.iter() {
-            let org = get_organization(obj.organization_id).expect("E.");
+            let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
                 name: org.name.clone(),
                 address: _place.get_loc(),
