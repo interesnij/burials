@@ -55,16 +55,16 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
 
     config.route("/create_country/", web::post().to(create_country));
     config.route("/edit_country/{id}/", web::post().to(edit_country));
-    config.route("/delete_country/{id}/", web::post().to(delete_country));
+    config.route("/delete_country/", web::post().to(delete_country));
     config.route("/create_region/", web::post().to(create_region));
     config.route("/edit_region/{id}/", web::post().to(edit_region));
-    config.route("/delete_region/{id}/", web::post().to(delete_region));
+    config.route("/delete_region/", web::post().to(delete_region));
     config.route("/create_district/", web::post().to(create_district));
     config.route("/edit_district/{id}/", web::post().to(edit_district));
-    config.route("/delete_district/{id}/", web::post().to(delete_district));
+    config.route("/delete_district/", web::post().to(delete_district));
     config.route("/create_city/", web::post().to(create_city));
     config.route("/edit_city/{id}/", web::post().to(edit_city));
-    config.route("/delete_region/{id}/", web::post().to(delete_city));
+    config.route("/delete_region/", web::post().to(delete_city));
 }
 
 
@@ -500,7 +500,7 @@ pub async fn create_district(req: HttpRequest, mut payload: Multipart) -> impl R
                 form.lon,
             );
         }
-    }; 
+    };
     HttpResponse::Ok()
 }
 pub async fn edit_district(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
@@ -520,12 +520,13 @@ pub async fn edit_district(req: HttpRequest, mut payload: Multipart, _id: web::P
         }
     };
     HttpResponse::Ok()
-}
-pub async fn delete_district(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+}                                                          
+pub async fn delete_district(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
-    if user_id.is_some() {
+    if user_id.is_some() { 
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _request_user = user_id.unwrap();
-        let _district = crate::utils::get_district(*_id).expect("E.");
+        let _district = crate::utils::get_district(form.id).expect("E.");
         if _request_user.is_admin() {
             _district.delete();
         }
@@ -569,11 +570,12 @@ pub async fn edit_city(req: HttpRequest, mut payload: Multipart, _id: web::Path<
     };
     HttpResponse::Ok()
 }
-pub async fn delete_city(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn delete_city(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        let _city = crate::utils::get_city(*_id).expect("E.");
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _city = crate::utils::get_city(form.id).expect("E.");
         if _request_user.is_admin() {
             _city.delete();
         }
@@ -615,11 +617,12 @@ pub async fn edit_region(req: HttpRequest, mut payload: Multipart, _id: web::Pat
     };
     HttpResponse::Ok()
 }
-pub async fn delete_region(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn delete_region(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        let _region = crate::utils::get_region(*_id).expect("E.");
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _region = crate::utils::get_region(form.id).expect("E.");
         if _request_user.is_admin() {
             _region.delete();
         }
@@ -659,11 +662,12 @@ pub async fn edit_country(req: HttpRequest, mut payload: Multipart, _id: web::Pa
     };
     HttpResponse::Ok()
 }
-pub async fn delete_country(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn delete_country(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        let _country = crate::utils::get_country(*_id).expect("E.");
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _country = crate::utils::get_country(form.id).expect("E.");
         if _request_user.is_admin() {
             _country.delete();
         }

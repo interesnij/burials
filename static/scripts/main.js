@@ -203,13 +203,20 @@ on('body', 'click', '#logg', function() {
 
  
 on('body', 'click', '.search_deceaseds', function() {
-  form = this.parentElement.parentElement.parentElement; 
-  console.log("click!");
+  form = this.parentElement.parentElement.parentElement;
+  form.querySelector("#id_last_name").style.border = "unset";
+  form.querySelector("#id_last_name").style.border = "unset";
   block = form.nextElementSibling;
   block.innerHTML = "";
   if (!form.querySelector("#id_last_name").value) {
-    console.log("no last_name!");
-    return 
+    toast_warning("Фамилия - обязательное поле");
+    form.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
+    return
+  }
+  else if (!form.querySelector("#id_first_name").value) {
+    toast_warning("Имя - обязательное поле");
+    form.querySelector("#id_first_name").style.border = "1px #FF0000 solid";
+    return
   }
   birth_date = form.querySelector("#id_birth_date").value;
   death_date = form.querySelector("#id_death_date").value;
@@ -222,12 +229,10 @@ on('body', 'click', '.search_deceaseds', function() {
   if (!birth_date) { 
     console.log("no birth_date");
     birth_date = today;
-    //birth_date = "null";
   }
   if (!death_date) {
     console.log("no death_date");
     death_date = today;
-    //death_date = "null";
   } 
   console.log(birth_date);
   console.log(death_date);

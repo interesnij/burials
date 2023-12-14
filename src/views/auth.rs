@@ -61,7 +61,7 @@ pub async fn signup_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/auth/signup.stpl")]
+            #[template(path = "desctop/auth/signup.stpl")]
             struct Template {
                 is_ajax: i32,
             }
@@ -95,7 +95,7 @@ pub async fn login_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/auth/login.stpl")]
+            #[template(path = "desctop/auth/login.stpl")]
             struct Template {
                 is_ajax: i32,
                 }

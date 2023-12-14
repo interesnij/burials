@@ -86,7 +86,8 @@ CREATE TABLE organizations (
     hours       VARCHAR(100) NOT NULL,  -- Время работы организации
     website     VARCHAR(100),           -- Веб-сайт организации (может быть пустым)
     image       VARCHAR(100),           -- Ссылка на фотографию организации (может быть пустой)
-    user_id     INT NOT NULL
+    user_id     INT NOT NULL,
+    types       INT NOT NULL
 );
 
 -- Создание индекса для ускорения поиска по идентификатору организации
@@ -96,13 +97,11 @@ CREATE INDEX idx_organization_id ON organizations (id);
 CREATE TABLE organizations_places (
     id              SERIAL PRIMARY KEY,
     organization_id INT NOT NULL,
-    city_id         INT,
-    district_id     INT,
-    region_id       INT,
+    city_id         INT NOT NULL,
+    region_id       INT, 
     country_id      INT NOT NULL,
-    lat             FLOAT,
-    lon             FLOAT
-); 
+    address2        VARCHAR(500) NOT NULL
+);
 
 --______________________________________________________________________________________
 
@@ -123,7 +122,8 @@ CREATE TABLE places (
     director     VARCHAR(255),
     phone        VARCHAR(15),
     lat          FLOAT NOT NULL,
-    lon          FLOAT NOT NULL
+    lon          FLOAT NOT NULL,
+    types        INT NOT NULL
 );
 
 CREATE TABLE reviews (
@@ -138,7 +138,6 @@ CREATE TABLE services (
     id              SERIAL PRIMARY KEY,
     user_id         INT NOT NULL,
     organization_id INT NOT NULL,
-    city_id         INT NOT NULL,
     title           VARCHAR(100) NOT NULL,
     description     VARCHAR(1000) NOT NULL,
     image           VARCHAR(100),

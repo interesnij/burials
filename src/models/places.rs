@@ -34,6 +34,7 @@ pub struct Place {
     pub phone:       Option<String>,
     pub lat:         f64,
     pub lon:         f64,
+    pub types:       i16,
 }
 
 // Структура для создания новой записи Place
@@ -55,6 +56,7 @@ pub struct NewPlace {
     pub phone:       Option<String>,
     pub lat:         f64,
     pub lon:         f64,
+    pub types:       i16,
 }
 
 // Реализация методов для структуры Place
@@ -121,6 +123,28 @@ impl Place {
                 .expect("Error.");
         }
     }
+
+    pub fn publish(&self, user_id: i32, types: i16) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            diesel::update(self)
+                .set(schema::places::types.eq(2))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn unpublish(&self, user_id: i32, types: i16) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            diesel::update(self)
+                .set(schema::places::types.eq(1))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+
     pub fn create (
         user_id:     i32,
         city_id:     Option<i32>,
@@ -141,29 +165,36 @@ impl Place {
 
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
-        if _user.perm > 10 {
-            let new_form = NewPlace {
-                user_id:     user_id,
-                city_id:     city_id,
-                district_id: district_id,
-                region_id:   region_id,
-                country_id:  country_id,
-                title:       title,
-                description: description,
-                hours:       hours,
-                image:       image,
-                address:     address,
-                count:       0,
-                director:    director,
-                phone:       phone,
-                lat:         lat,
-                lon:         lon,
-            };
-            diesel::insert_into(schema::places::table)
-                .values(&new_form)
-                .execute(&_connection)
-                .expect("Error.");
+        let types: i16;
+        if _user.perm > 9 {
+            types = 2;
+        } else {
+            types = 1;
         }
+        
+        let new_form = NewPlace {
+            user_id:     user_id,
+            city_id:     city_id,
+            district_id: district_id,
+            region_id:   region_id,
+            country_id:  country_id,
+            title:       title,
+            description: description,
+            hours:       hours,
+            image:       image,
+            address:     address,
+            count:       0,
+            director:    director,
+            phone:       phone,
+            lat:         lat,
+            lon:         lon,
+            types:       types,
+        };
+        diesel::insert_into(schema::places::table)
+            .values(&new_form)
+            .execute(&_connection)
+            .expect("Error.");
+
         return 1;
     }
     pub fn edit ( 

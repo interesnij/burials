@@ -43,7 +43,7 @@ impl Review {
     ) -> i16 {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
-        if _user.perm > 10 {
+        if _user.perm > 9 {
             let new_form = NewReview {
                 service_id: service_id,
                 user_id:    user_id,

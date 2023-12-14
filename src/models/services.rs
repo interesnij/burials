@@ -20,12 +20,11 @@ pub struct Service {
     pub id: i32,
     pub user_id:         i32,
     pub organization_id: i32,
-    pub city_id:         i32,
     pub title:           String,
     pub description:     String,
     pub image:           Option<String>,
     pub price:           i32,
-}
+} 
 
 // Структура NewService используется для создания новых объектов Service
 #[derive(Serialize, Deserialize, Insertable)]
@@ -33,7 +32,6 @@ pub struct Service {
 pub struct NewService {
     pub user_id:         i32,
     pub organization_id: i32,
-    pub city_id:         i32,
     pub title:           String,
     pub description:     String,
     pub image:           Option<String>,
@@ -44,21 +42,18 @@ impl Service {
     pub fn create (
         user_id:         i32,
         organization_id: i32,
-        city_id:         i32,
         title:           String,
         description:     String,
         image:           Option<String>,
         price:           i32,
     ) -> i16 {
         let _connection = establish_connection();
-        let _user = crate::utils::get_user(user_id).expect("E.");
         let _organization = crate::utils::get_organization(organization_id).expect("E.");
 
-        if _organization.user_id == user_id || _user.perm > 10 {
+        if _organization.user_id == user_id {
             let new_form = NewService {
                 user_id:         user_id,
                 organization_id: organization_id,
-                city_id:         city_id,
                 title:           title,
                 description:     description,
                 image:           image,
@@ -74,7 +69,6 @@ impl Service {
     pub fn edit (
         &self,
         user_id:     i32,
-        city_id:     i32,
         title:       String,
         description: String,
         image:       Option<String>,
@@ -83,25 +77,30 @@ impl Service {
         use crate::schema::services::dsl::services;
 
         let _connection = establish_connection();
-        diesel::update(self)
-            .set((
-                schema::services::city_id.eq(city_id),
-                schema::services::title.eq(title),
-                schema::services::description.eq(description),
-                schema::services::image.eq(image),
-                schema::services::price.eq(price),
-            ))
-            .execute(&_connection)
-            .expect("Error.");
+        let _organization = crate::utils::get_organization(self.organization_id).expect("E.");
+        if _organization.user_id == user_id {
+            diesel::update(self)
+                .set((
+                    schema::services::title.eq(title),
+                    schema::services::description.eq(description),
+                    schema::services::image.eq(image),
+                    schema::services::price.eq(price),
+                ))
+                .execute(&_connection)
+                .expect("Error.");
+        }
         return 1;
     }
-    pub fn delete(&self) -> i16 {
+    pub fn delete(&self, user_id: i32) -> i16 {
         use crate::schema::services::dsl::services;
 
         let _connection = establish_connection();
-        diesel::delete(services.filter(schema::services::id.eq(self.id)))
-            .execute(&_connection)
-            .expect("E");
+        let _organization = crate::utils::get_organization(self.organization_id).expect("E.");
+        if _organization.user_id == user_id {
+            diesel::delete(services.filter(schema::services::id.eq(self.id)))
+                .execute(&_connection)
+                .expect("E");
+        }
         return 1;
     }
 

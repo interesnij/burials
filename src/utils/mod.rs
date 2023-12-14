@@ -32,18 +32,8 @@ use crate::models::{
     User, Deceased, Organization, 
     Service, Place, Review,
     Countrie, Region, Citie, District,
+    OrganizationPlace,
 };
-
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct DataOrganizationsPlace {
-    pub city_id:     Option<i32>,
-    pub district_id: Option<i32>,
-    pub region_id:   Option<i32>, 
-    pub country_id:  Option<i32>,
-    pub lat:         Option<f64>,
-    pub lon:         Option<f64>, 
-}
 
 
 pub fn establish_connection() -> PgConnection {
@@ -185,6 +175,13 @@ pub fn get_district(pk: i32) -> Result<District, Error> {
     return Ok(districts
         .filter(schema::districts::id.eq(pk))
         .first::<District>(&_connection)?);
+}
+pub fn get_organization_loc(pk: i32) -> Result<OrganizationsPlace, Error> {
+    use crate::schema::organizations_places::dsl::organizations_places;
+    let _connection = establish_connection();
+    return Ok(organizations_places
+        .filter(schema::organizations_places::id.eq(pk))
+        .first::<OrganizationsPlace>(&_connection)?);
 }
 
 pub fn get_limit_offset (

@@ -2,7 +2,7 @@ function delete_item(url, id) {
     form_data = new FormData();
     form_data.append("id", id);
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'POST', url, true );
+    link.open( 'POST', url, true )
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {

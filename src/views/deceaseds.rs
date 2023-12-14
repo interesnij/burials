@@ -43,7 +43,7 @@ pub fn deceased_routes(config: &mut web::ServiceConfig) {
 
     config.route("/create_deceased/", web::post().to(create_deceased));
     config.route("/edit_deceased/{id}/", web::post().to(edit_deceased));
-    config.route("/delete_deceased/{id}/", web::post().to(delete_deceased));
+    config.route("/delete_deceased/", web::post().to(delete_deceased));
 }
 
 
@@ -97,7 +97,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/all_deceased_place.stpl")]
+            #[template(path = "desctop/deceased/all_deceased_place.stpl")]
             struct Template {
                 request_user:     User,
                 place:            Place,
@@ -139,7 +139,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/anon_all_deceased_place.stpl")]
+            #[template(path = "desctop/deceased/anon_all_deceased_place.stpl")]
             struct Template {
                 place:            Place,
                 object_list:      Vec<Deceased>,
@@ -184,7 +184,7 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/deceased.stpl")]
+            #[template(path = "desctop/deceased/deceased.stpl")]
             struct Template {
                 request_user: User,
                 deceased:     Deceased,
@@ -218,7 +218,7 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/deceased/anon_deceased.stpl")]
+            #[template(path = "desctop/deceased/anon_deceased.stpl")]
             struct Template {
                 deceased: Deceased,
                 is_ajax:  i32,
@@ -401,13 +401,14 @@ pub async fn edit_deceased(req: HttpRequest, mut payload: Multipart, _id: web::P
     };
     HttpResponse::Ok()
 }
-pub async fn delete_deceased(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn delete_deceased(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        let _deceased = crate::utils::get_deceased(*_id).expect("E.");
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _deceased = crate::utils::get_deceased(form.id).expect("E.");
         if _request_user.id == _deceased.user_id || _request_user.is_admin() {
-            _deceased.delete();
+            _deceased.delete(user_id);
         }
     };
     HttpResponse::Ok()

@@ -149,7 +149,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/all_place_city.stpl")]
+            #[template(path = "desctop/place/all_place_city.stpl")]
             struct Template {
                 request_user: User,
                 city:         Citie,
@@ -183,7 +183,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_all_place_city.stpl")]
+            #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
                 city:         Citie,
                 all_places:   Vec<Place>,
@@ -226,7 +226,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/all_place_region.stpl")]
+            #[template(path = "desctop/place/all_place_region.stpl")]
             struct Template {
                 request_user: User,
                 region:       Region,
@@ -260,7 +260,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_all_place_region.stpl")]
+            #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
                 region:       Region,
                 all_places:   Vec<Place>,
@@ -303,7 +303,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/all_place_countries.stpl")]
+            #[template(path = "desctop/place/all_place_countries.stpl")]
             struct Template {
                 request_user: User,
                 country:      Countrie,
@@ -337,7 +337,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_all_place_countries.stpl")]
+            #[template(path = "desctop/place/anon_all_place_countries.stpl")]
             struct Template {
                 country:      Countrie,
                 all_places:   Vec<Place>,
@@ -380,7 +380,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         else {
             
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/place.stpl")]
+            #[template(path = "desctop/place/place.stpl")]
             struct Template {
                 request_user: User,
                 place:        Place,
@@ -410,7 +410,7 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "mobile/place/anon_place.stpl")]
+            #[template(path = "desctop/place/anon_place.stpl")]
             struct Template {
                 place:        Place,
             }
@@ -479,13 +479,14 @@ pub async fn edit_place(req: HttpRequest, mut payload: Multipart, _id: web::Path
     };
     HttpResponse::Ok()
 }
-pub async fn delete_place(req: HttpRequest, _id: web::Path<i32>) -> impl Responder {
+pub async fn delete_place(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        let _place = crate::utils::get_place(*_id).expect("E.");
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _place = crate::utils::get_place(form.id).expect("E.");
         if _request_user.id == _place.user_id || _request_user.is_admin() {
-            _place.delete();
+            _place.delete(user_id);
         }
     };
     HttpResponse::Ok()

@@ -39,7 +39,7 @@ impl User {
         }
     }
     pub fn is_admin(&self) -> bool {
-        return self.perm > 10;
+        return self.perm > 9;
     }
     pub fn is_superuser(&self) -> bool {
         return self.perm > 59;

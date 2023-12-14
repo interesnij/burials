@@ -8,7 +8,6 @@ use std::{
     fs::create_dir_all,
     str,
 };
-use crate::utils::DataOrganizationsPlace;
 
 
 #[derive(Debug, Clone)]
@@ -290,7 +289,6 @@ pub struct OrganizationForms {
     pub hours:       String,
     pub website:     Option<String>,
     pub image:       Option<String>, 
-    pub places:      Vec<DataOrganizationsPlace>
 }
 // форма для элементов 
 pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
@@ -302,7 +300,6 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
         hours:       "".to_string(),
         website:     None, 
         image:       None,
-        places:      Vec::new(),  
     };
 
    
@@ -349,21 +346,6 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
                         .expect("E");
                 }
                 form.image = Some(file.path.clone().replace("./","/"));
-            }
-        }
-        else if name == "places" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    form.places.push(DataOrganizationsPlace {
-                        city_id:     None,
-                        district_id: None,
-                        region_id:   None, 
-                        country_id:  None,
-                        lat:         None,
-                        lon:         None, 
-                    });
-                } 
             }
         }
     }
@@ -716,6 +698,105 @@ pub async fn country_form(payload: &mut Multipart) -> CountryForms {
             }
         }
 
+    }
+    form
+}
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct IdForms {
+    pub id: i32,
+}
+// форма для элементов 
+pub async fn id_form(payload: &mut Multipart) -> IdForms {
+    let mut form: IdForms = IdForms {
+        id: 0,
+    };
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        if field.name() == "id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.id = Some(_int);
+                }
+            }
+        }
+    }
+    form
+}
+
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct LocForms {
+    pub city_id:    i32,
+    pub region_id:  Option<i32>,
+    pub country_id: i32,
+    pub address2:   String,
+}
+// форма для элементов 
+pub async fn loc_form(payload: &mut Multipart) -> LocForms {
+    let mut form: LocForms = LocForms {
+        city_id:    0,
+        region_id:  None,
+        country_id: 0,
+        address2:   "".to_string(),
+    };
+   
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        let name = field.name();
+        let string_list = ["address2"];
+
+        if string_list.contains(&name) {
+            let mut _content = "".to_string();
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "address2" {
+                        form.address2 = data_string;
+                    }
+                }
+            }
+        }
+        else if name == "country_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.country_id = _int;
+                }
+            }
+        }
+        else if name == "region_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.region_id = Some(_int);
+                }
+            }
+        }
+        else if name == "city_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.city_id = Some(_int);
+                }
+            }
+        }
+        else if name == "country_id" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.country_id = Some(_int);
+                }
+            }
+        }
     }
     form
 }
