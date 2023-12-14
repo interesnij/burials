@@ -49,7 +49,7 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 
     config.route("/create_place/", web::post().to(create_place));
     config.route("/edit_place/{id}/", web::post().to(edit_place));
-    config.route("/delete_place/{id}/", web::post().to(delete_place));
+    config.route("/delete_place/", web::post().to(delete_place));
 
 }
 
