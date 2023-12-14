@@ -71,7 +71,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/all_organization_city_page.stpl")]
+            #[template(path = "desctop/organization/all_organization_city.stpl")]
             struct Template {
                 request_user:      User,
                 city:              Citie,
@@ -90,7 +90,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/all_organization_city_page.stpl")]
+            #[template(path = "desctop/organization/all_organization_city.stpl")]
             struct Template {
                 request_user:      User,
                 city:              Citie,
@@ -111,7 +111,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_all_organization_city_page.stpl")]
+            #[template(path = "desctop/organization/anon_all_organization_city.stpl")]
             struct Template {
                 city:             Citie,
                 all_organization: Vec<Organization>,
@@ -128,7 +128,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_all_organization_city_page.stpl")]
+            #[template(path = "desctop/organization/anon_all_organization_city.stpl")]
             struct Template {
                 city:             Citie,
                 all_organization: Vec<Organization>,
@@ -156,7 +156,7 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/all_organization_region_page.stpl")]
+            #[template(path = "desctop/organization/all_organization_region.stpl")]
             struct Template {
                 request_user:      User,
                 region:            Region,
@@ -175,7 +175,7 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/all_organization_region_page.stpl")]
+            #[template(path = "desctop/organization/all_organization_region.stpl")]
             struct Template {
                 request_user:      User,
                 region:            Region,
@@ -196,7 +196,7 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_all_organization_region_page.stpl")]
+            #[template(path = "desctop/organization/anon_all_organization_region.stpl")]
             struct Template {
                 region:            Region,
                 all_organizations: Vec<Organization>,
@@ -213,7 +213,7 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_all_organization_region_page.stpl")]
+            #[template(path = "desctop/organization/anon_all_organization_region.stpl")]
             struct Template {
                 region:            Region,
                 all_organizations: Vec<Organization>,
@@ -241,7 +241,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/all_organization_countries_page.stpl")]
+            #[template(path = "desctop/organization/all_organization_countries.stpl")]
             struct Template {
                 request_user:     User,
                 country:          Countries,
@@ -259,7 +259,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/all_organization_countries_page.stpl")]
+            #[template(path = "desctop/organization/all_organization_countries.stpl")]
             struct Template {
                 request_user:     User,
                 country:          Countries,
@@ -279,7 +279,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_all_organization_countries_page.stpl")]
+            #[template(path = "desctop/organization/anon_all_organization_countries.stpl")]
             struct Template {
                 country:          Countries,
                 all_organization: Vec<Organization>,
@@ -288,7 +288,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             let body = Template {
                 country:          _countries,
                 all_organization: _organization,
-                all_places:       Vec<PlaceSmall>,
+                all_places:       all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -296,7 +296,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_all_organization_countries_page.stpl")]
+            #[template(path = "desctop/organization/anon_all_organization_countries.stpl")]
             struct Template {
                 country:          Countries,
                 all_organization: Vec<Organization>,
@@ -322,7 +322,7 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/organization_page.stpl")]
+            #[template(path = "desctop/organization/organization.stpl")]
             struct Template {
                 request_user: User,
                 organization: Organization,
@@ -337,7 +337,7 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/organization_page.stpl")]
+            #[template(path = "desctop/organization/organization.stpl")]
             struct Template {
                 request_user: User,
                 organization: Organization,
@@ -354,7 +354,7 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_organization_page.stpl")]
+            #[template(path = "desctop/organization/anon_organization.stpl")]
             struct Template {
                 organization: Organization,
             }
@@ -367,7 +367,7 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/organization/anon_organization_page.stpl")]
+            #[template(path = "desctop/organization/anon_organization.stpl")]
             struct Template {
                 organization: Organization,
             }
