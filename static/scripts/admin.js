@@ -249,3 +249,22 @@ on('body', 'click', '.remove_deceased', function() {
   delete_item("/delete_deceased/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
+
+
+on('body', 'click', '.publish_place', function() {
+  delete_item("/place/publish/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+});
+on('body', 'click', '.unpublish_place', function() {
+  delete_item("/place/unpublish/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+});
+
+on('body', 'click', '.publish_organization', function() {
+  delete_item("/organization/publish/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+});
+on('body', 'click', '.unpublish_organization', function() {
+  delete_item("/organization/unpublish/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+});

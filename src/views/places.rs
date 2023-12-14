@@ -50,7 +50,8 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
     config.route("/create_place/", web::post().to(create_place));
     config.route("/edit_place/{id}/", web::post().to(edit_place));
     config.route("/delete_place/", web::post().to(delete_place));
-
+    config.route("/place/publish/", web::post().to(publish_place));
+    config.route("/place/unpublish/", web::post().to(unpublish_place));
 }
 
 
@@ -488,6 +489,26 @@ pub async fn delete_place(req: HttpRequest, mut payload: Multipart) -> impl Resp
         if _request_user.is_admin() {
             _place.delete();
         }
+    };
+    HttpResponse::Ok()
+}
+pub async fn publish_place(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _place = crate::utils::get_place(form.id).expect("E.");
+        _place.publish(_request_user.id);
+    };
+    HttpResponse::Ok()
+}
+pub async fn unpublish_place(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _place = crate::utils::get_place(form.id).expect("E.");
+        _place.unpublish(_request_user.id);
     };
     HttpResponse::Ok()
 }

@@ -307,3 +307,70 @@ on('body', 'change', '.load_regions', function() {
     link.send( null );
   };
 });
+
+
+on('body', 'click', '#create_organization', function() {
+  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_name").value) {
+      form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+  }
+  else if (!form.querySelector("#id_description").value) {
+    form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_director").value) {
+    form.querySelector("#id_director").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_phone").value) {
+    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_phone").value) {
+    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/create_organization/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
+on('body', 'click', '#edit_organization', function() {
+  _this = this;
+  form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_name").value) {
+    form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_description").value) {
+    form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_director").value) {
+    form.querySelector("#id_director").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_phone").value) {
+    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_phone").value) {
+    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/edit_organization/" + _this.getAttribute("data-pk") + "/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});

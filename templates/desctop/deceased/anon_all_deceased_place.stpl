@@ -94,7 +94,7 @@ function init() {
 
   map = new ymaps.Map('map', {
     center: [<%= place.lat %>, <%= place.lon %>],
-    zoom: 14,
+    zoom: 9,
     controls: []
   });
   map.setType('yandex#satellite');

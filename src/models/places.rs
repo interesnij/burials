@@ -129,7 +129,7 @@ impl Place {
         }
     }
 
-    pub fn publish(&self, user_id: i32, types: i16) -> () {
+    pub fn publish(&self, user_id: i32) -> () {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
@@ -139,7 +139,7 @@ impl Place {
                 .expect("Error.");
         }
     }
-    pub fn unpublish(&self, user_id: i32, types: i16) -> () {
+    pub fn unpublish(&self, user_id: i32) -> () {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
