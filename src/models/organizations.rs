@@ -154,7 +154,7 @@ impl Organization {
             diesel::delete(schema::organizations_places::table.filter(schema::organizations_places::organization_id.eq(self.id)))
                 .execute(&_connection)
                 .expect("E");
-            }
+        }
         return 1;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
@@ -163,9 +163,10 @@ impl Organization {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         if self.user_id == user_id || _user.perm > 9 {
-        diesel::delete(organizations.filter(schema::organizations::id.eq(self.id)))
-            .execute(&_connection)
-            .expect("E");
+            diesel::delete(organizations.filter(schema::organizations::id.eq(self.id)))
+                .execute(&_connection)
+                .expect("E");
+        }
         return 1;
     }
 
