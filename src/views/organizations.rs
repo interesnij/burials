@@ -392,6 +392,7 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
+        let org_list = Organization::get_all();
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -400,11 +401,13 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 request_user: User,
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
+                org_list:     Vec<Organization>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
                 country_list: country_list,
+                org_list:     org_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -417,11 +420,13 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 request_user: User,
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
+                org_list:     Vec<Organization>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
                 country_list: country_list,
+                org_list:     org_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -213,6 +213,12 @@ impl Organization {
         
         return (org_stack, places_stack);
     }
+    pub fn get_all() -> Vec<Organization> {
+        let _connection = establish_connection();
+        return schema::organizations::table
+            .load::<Organization>(&_connection)
+            .expect("E."); 
+    }
     pub fn get_region_organizations(region_id: i32) -> (Vec<Organization>, Vec<PlaceSmall>) {
         use crate::utils::get_organization;
         let mut places_stack: Vec<PlaceSmall> = Vec::new();
