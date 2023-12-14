@@ -63,9 +63,9 @@ pub fn organization_routes(config: &mut web::ServiceConfig) {
 
 
 pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _city = crate::utils::get_city(*_id).expect("E.");
-    let (_organizations, _places)  = block(move || Organization::get_city_organizations(_city.id)).await?;
+    let (_organizations, all_places)  = block(move || Organization::get_city_organizations(_city.id)).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -148,9 +148,9 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
 
 //Получение всех организаций одного региона
 pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _region = crate::utils::get_region(*_id).expect("E.");
-    let (_organizations, _places)  = block(move || Organization::get_region_organizations(_region.id)).await?;
+    let (_organizations, all_places)  = block(move || Organization::get_region_organizations(_region.id)).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -233,9 +233,9 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
 
 //Получение всех организаций одной страны
 pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _country = crate::utils::get_country(*_id).expect("E.");
-    let (_organizations, _places)  = block(move || Organization::get_country_organizations(_country.id)).await?;
+    let (_organizations, all_places)  = block(move || Organization::get_country_organizations(_country.id)).await?;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -317,7 +317,7 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
 }
 
 pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let is_desctop = is_desctop(&req);
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _organization = crate::utils::get_organization(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
