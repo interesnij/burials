@@ -13,7 +13,7 @@ use serde::{Serialize, Deserialize};
 use crate::utils::{
     establish_connection,
 };
-
+use crate::models::Service;
 
 // Структура для представления данных об организации
 /*
@@ -24,7 +24,7 @@ types
 #[derive(Debug, Queryable, Serialize, PartialEq, Deserialize, Identifiable)]
 pub struct Organization {
     pub id:          i32,
-    pub name:        String,
+    pub name:        String, 
     pub description: String,
     pub director:    String,
     pub phone:       String,
@@ -206,7 +206,7 @@ impl Organization {
                 name: org.name.clone(),
                 address: _place.get_loc(),
             });
-            if org_stack.iter().any(|i| i.id != org.id) {
+            if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
                 org_stack.push(org);
             }
         }
@@ -217,6 +217,13 @@ impl Organization {
         let _connection = establish_connection();
         return schema::organizations::table
             .load::<Organization>(&_connection)
+            .expect("E."); 
+    }
+    pub fn get_services(&self) -> Vec<Service> {
+        let _connection = establish_connection();
+        return schema::services::table
+            .filter(schema::services::organization_id.eq(self.id))
+            .load::<Service>(&_connection)
             .expect("E."); 
     }
     pub fn get_region_organizations(region_id: i32) -> (Vec<Organization>, Vec<PlaceSmall>) {
@@ -234,12 +241,31 @@ impl Organization {
                 name: org.name.clone(),
                 address: _place.get_loc(),
             });
-            if org_stack.iter().any(|i| i.id != org.id) {
+            if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
                 org_stack.push(org);
             }
         }
         
         return (org_stack, places_stack);
+    }
+    pub fn get_places(&self) -> Vec<PlaceSmall> {
+        let mut places_stack: Vec<PlaceSmall> = Vec::new();
+
+        let _connection = establish_connection();
+        let mut places_stack: Vec<PlaceSmall> = Vec::new();
+
+        let places_vec = schema::organizations_places::table
+            .filter(schema::organizations_places::organization_id.eq(self.id))
+            .load::<OrganizationsPlace>(&_connection)
+            .expect("E.");
+        for _place in places_vec.iter() {
+            places_stack.push(PlaceSmall{
+                name: self.name.clone(),
+                address: _place.get_loc(),
+            });
+        }
+        
+        return places_stack;
     }
     pub fn get_country_organizations(country_id: i32) -> (Vec<Organization>, Vec<PlaceSmall>) {
         use crate::utils::get_organization;
@@ -252,6 +278,7 @@ impl Organization {
             .expect("E.");
         if places_vec.is_empty() {
             return (schema::organizations::table
+                .filter(schema::organizations::types.eq(2))
                 .load::<Organization>(&_connection)
                 .expect("E."), places_stack);
         }
@@ -261,7 +288,7 @@ impl Organization {
                 name: org.name.clone(),
                 address: _place.get_loc(),
             });
-            if org_stack.iter().any(|i| i.id != org.id) {
+            if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
                 org_stack.push(org);
             }
         }

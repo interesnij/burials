@@ -321,6 +321,7 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
 pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _organization = crate::utils::get_organization(*_id).expect("E.");
+    let all_places = _organization.get_places();
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -330,10 +331,12 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             struct Template {
                 request_user: User,
                 organization: Organization,
+                all_places:   Vec<PlaceSmall>,
             }
             let body = Template {
                 request_user: _request_user,
                 organization: _organization,
+                all_places:   all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -345,10 +348,12 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             struct Template {
                 request_user: User,
                 organization: Organization,
+                all_places:   Vec<PlaceSmall>,
             }
             let body = Template {
                 request_user: _request_user,
                 organization: _organization,
+                all_places:   all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -361,9 +366,11 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             #[template(path = "desctop/organization/anon_organization.stpl")]
             struct Template {
                 organization: Organization,
+                all_places:   Vec<PlaceSmall>,
             }
             let body = Template {
                 organization: _organization,
+                all_places:   all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -374,9 +381,11 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             #[template(path = "desctop/organization/anon_organization.stpl")]
             struct Template {
                 organization: Organization,
+                all_places:   Vec<PlaceSmall>,
             }
             let body = Template {
                 organization: _organization,
+                all_places:   all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

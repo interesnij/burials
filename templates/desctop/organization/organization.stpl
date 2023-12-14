@@ -1,4 +1,159 @@
 <% include!("../header.stpl"); %>
 
+<section class="relative table w-full py-72 bg-no-repeat bg-center" style="background: linear-gradient(45deg, #ff6600, #0066ff);">
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+</section>
+<section class="relative md:py-24 py-16">
+    <div class="container">
+        <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+            <div class="lg:col-span-4 md:col-span-5">
+                <div class="lg:-mt-[330px] -mt-[299px]">
+                    <div class="rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800">
+                        <div class="text-center py-8 p-6 border-b border-gray-100 dark:border-gray-700">
+                            <img src="<%= organization.get_image() %>" class="h-24 w-24 p-4 shadow-md mx-auto rounded-full block" alt="">
+                            <h5 class="mt-5 text-xl font-semibold mb-0"><%= organization.name %></h5>
+                            <p>
+                                <a style="text-decoration: underline" href="/create_loc/<%= organization.id %>/">Добавить офис</a>
+                                <a style="text-decoration: underline" href="/create_service/<%= organization.id %>/">Добавить услугу</a>
+                            <p>
+                        </div>
+
+                        <div class="p-6">
+                            <h5 class="font-semibold">Информация :</h5>
+                            <ul class="list-none mt-4">
+                                <li class="flex mt-2 items-center font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin h-4 w-4 text-amber-500 mr-3">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg><span class="text-slate-400 mr-3">Телефон :</span> <%= organization.phone %>
+                                </li>
+                                <li class="flex mt-2 items-center font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin h-4 w-4 text-amber-500 mr-3">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg><span class="text-slate-400 mr-3">Часы работы :</span> <%= organization.hours %>
+                                </li>
+                                <li class="flex mt-2 items-center font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin h-4 w-4 text-amber-500 mr-3">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg><span class="text-slate-400 mr-3">Директор :</span> <%= organization.director %>
+                                </li>
+                                <% if organization.website.is_some() { %>
+                                <li class="flex mt-2 items-center font-medium"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link h-4 w-4 text-amber-500 mr-3">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                    </svg><span class="text-slate-400 mr-3">Сайт :</span> <%= organization.websit.as_deref().unwrap() %>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="w-full leading-[0] border-0 mt-8">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 md:col-span-7">
+                <h4 class="text-xl font-semibold">О компании:</h4>
+                
+                <p class="text-slate-400 mt-4"><%= organization.description %></p>
+                <h4 class="text-xl font-semibold">Услуги:</h4>
+                <div class="grid lg:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
+                    <% for i in organization.get_services().iter() { %>
+                        <a href="">
+                            <div class="group flex  bg-white dark:bg-slate-900 transition-all duration-500 hover:scale-105 shadow dark:shadow-gray-800 hover:shadow-md dark:hover:shadow-gray-700 ease-in-out items-center p-3 rounded-md">
+                                <div class="content">
+                                    <h4 class="text-lg font-medium group-hover:text-indigo-600 duration-500 ease-in-out"><%= i.title %></h4>
+                                    <p class="text-slate-400"><%= i.description %></p>
+                                    <p class="text-slate-400"><%= i.price %> руб.</p>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </div><!--end grid-->
+    </div><!--end container-->
+
+
+</section>
 
 <% include!("../footer.stpl"); %>
+
+<script>
+ymaps.ready(init);
+
+function init() {
+    var myMap = new ymaps.Map("map", {
+            center: [55.7522, 37.6156],
+            zoom: 5,
+            controls: []
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
+    // Создаем геообъект с типом геометрии "Точка".
+        myGeoObject = new ymaps.GeoObject({
+            // Описание геометрии.
+            geometry: {
+                type: "Point",
+                coordinates: [55.8, 37.8]
+            },
+            // Свойства.
+            properties: {
+                // Контент метки.
+                iconContent: 'Я тащусь',
+                hintContent: 'Ну давай уже тащи'
+            }
+        }, {
+            // Опции.
+            // Иконка метки будет растягиваться под размер ее содержимого.
+            preset: 'islands#blackStretchyIcon',
+            // Метку можно перемещать.
+            draggable: true
+        }),
+        myPieChart = new ymaps.Placemark([
+            55.847, 37.6
+        ], {
+            // Данные для построения диаграммы.
+            data: [
+                {weight: 8, color: '#0E4779'},
+                {weight: 6, color: '#1E98FF'},
+                {weight: 4, color: '#82CDFF'}
+            ],
+            iconCaption: "Диаграмма"
+        }, {
+            // Зададим произвольный макет метки.
+            iconLayout: 'default#pieChart',
+            // Радиус диаграммы в пикселях.
+            iconPieChartRadius: 30,
+            // Радиус центральной части макета.
+            iconPieChartCoreRadius: 10,
+            // Стиль заливки центральной части.
+            iconPieChartCoreFillStyle: '#ffffff',
+            // Cтиль линий-разделителей секторов и внешней обводки диаграммы.
+            iconPieChartStrokeStyle: '#ffffff',
+            // Ширина линий-разделителей секторов и внешней обводки диаграммы.
+            iconPieChartStrokeWidth: 3,
+            // Максимальная ширина подписи метки.
+            iconPieChartCaptionMaxWidth: 200
+        });
+    myMap.setType('yandex#satellite');
+    //myMap.geoObjects
+        //.add(myGeoObject)
+        //.add(myPieChart);
+        <% for i in all_places.iter() { %>
+            myMap.geoObjects
+            .add(new ymaps.Placemark([<%= i.address %>], {
+                balloonContent: '<%= i.name %>',
+                iconCaption: ''
+            }, {
+                preset: 'islands#blueCircleDotIconWithCaption',
+                iconCaptionMaxWidth: '50',
+                //iconLayout: 'default#image',
+                //iconImageHref: '',
+                //icon_imagesize: [30, 42],
+                //iconImageOffset: [-3, -42]
+            }));
+        <% } %>
+}
+
+</script>
