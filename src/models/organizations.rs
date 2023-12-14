@@ -228,7 +228,7 @@ impl Organization {
                 name: org.name.clone(),
                 address: _place.get_loc(),
             });
-            if org_stack.iter().any(|&i| i != org) {
+            if org_stack.iter().any(|&i.id| i != org.id) {
                 org_stack.push(org);
             }
         }
@@ -250,7 +250,7 @@ impl Organization {
                 name: org.name.clone(),
                 address: _place.get_loc(),
             });
-            if org_stack.iter().any(|&i| i != org) {
+            if org_stack.iter().any(|&i.id| i != org.id) {
                 org_stack.push(org);
             }
         }
