@@ -73,11 +73,11 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/all_organization_city.stpl")]
             struct Template {
-                request_user:      User,
+                request_user:      User, 
                 city:              Citie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-            }
+            } 
             let body = Template {
                 request_user:      _request_user,
                 city:              _city,
@@ -113,14 +113,14 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_city.stpl")]
             struct Template {
-                city:             Citie,
-                all_organization: Vec<Organization>,
-                all_places:       Vec<PlaceSmall>,
+                city:              Citie,
+                all_organizations: Vec<Organization>,
+                all_places:        Vec<PlaceSmall>,
             }
             let body = Template {
-                city:             _city,
-                all_organization: _organizations,
-                all_places:       all_places,
+                city:              _city,
+                all_organizations: _organizations,
+                all_places:        all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -130,14 +130,14 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_city.stpl")]
             struct Template {
-                city:             Citie,
-                all_organization: Vec<Organization>,
-                all_places:       Vec<PlaceSmall>,
+                city:              Citie,
+                all_organizations: Vec<Organization>,
+                all_places:        Vec<PlaceSmall>,
             }
             let body = Template {
-                city:             _city,
-                all_organization: _organizations,
-                all_places:       all_places,
+                city:              _city,
+                all_organizations: _organizations,
+                all_places:        all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
