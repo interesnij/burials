@@ -485,8 +485,8 @@ pub async fn delete_place(req: HttpRequest, mut payload: Multipart) -> impl Resp
         let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _place = crate::utils::get_place(form.id).expect("E.");
-        if _request_user.id == _place.user_id || _request_user.is_admin() {
-            _place.delete(_request_user.id);
+        if _request_user.is_admin() {
+            _place.delete();
         }
     };
     HttpResponse::Ok()

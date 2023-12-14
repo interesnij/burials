@@ -719,7 +719,7 @@ pub async fn id_form(payload: &mut Multipart) -> IdForms {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: i32 = s.parse().unwrap();
-                    form.id = Some(_int);
+                    form.id = _int;
                 }
             }
         }
@@ -784,7 +784,7 @@ pub async fn loc_form(payload: &mut Multipart) -> LocForms {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: i32 = s.parse().unwrap();
-                    form.city_id = Some(_int);
+                    form.city_id = _int;
                 }
             }
         }
@@ -793,7 +793,7 @@ pub async fn loc_form(payload: &mut Multipart) -> LocForms {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let _int: i32 = s.parse().unwrap();
-                    form.country_id = Some(_int);
+                    form.country_id = _int;
                 }
             }
         }

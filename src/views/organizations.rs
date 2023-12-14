@@ -113,13 +113,11 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_city_page.stpl")]
             struct Template {
-                request_user:     User,
                 city:             Citie,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
-                request_user:     _request_user,
                 city:             _city,
                 all_organization: _organization,
                 all_places:       all_places,
@@ -132,13 +130,11 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_city_page.stpl")]
             struct Template {
-                request_user:     User,
                 city:             Citie,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
-                request_user:     _request_user,
                 city:             _city,
                 all_organization: _organization,
                 all_places:       all_places,
@@ -285,13 +281,11 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_countries_page.stpl")]
             struct Template {
-                request_user:     User,
                 country:          Countries,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
-                request_user:     _request_user,
                 country:          _countries,
                 all_organization: _organization,
                 all_places:       Vec<PlaceSmall>,
@@ -304,13 +298,11 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_countries_page.stpl")]
             struct Template {
-                request_user:     User,
                 country:          Countries,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
-                request_user:     _request_user,
                 country:          _country,
                 all_organization: _organization,
                 all_places:       all_places,
@@ -364,12 +356,10 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_organization_page.stpl")]
             struct Template {
-                request_user:   User,
-                organization:       Organization,
+                organization: Organization,
             }
             let body = Template {
-                request_user:   _request_user,
-                organization:       _organization,
+                organization: _organization,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -379,12 +369,10 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_organization_page.stpl")]
             struct Template {
-                request_user:   User,
-                organization:       Organization,
+                organization: Organization,
             }
             let body = Template {
-                request_user:   _request_user,
-                organization:       _organization,
+                organization: _organization,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -688,7 +676,7 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
 pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
-        //let _request_user = user_id.unwrap();
+        let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _service = crate::utils::get_service(form.id).expect("E.");
         _service.delete(_request_user.id);
@@ -770,7 +758,7 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                     request_user: _request_user,
                     organization: _organization,
                     is_ajax:      is_ajax,
-                    loc:          loc,
+                    loc:          _loc,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -789,7 +777,7 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                     request_user: _request_user,
                     organization: _organization,
                     is_ajax:      is_ajax,
-                    loc:          loc,
+                    loc:          _loc,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -838,7 +826,7 @@ pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i
 pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
-        //let _request_user = user_id.unwrap();
+        let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _loc = crate::utils::get_organization_loc(form.id).expect("E.");
         _loc.delete(_request_user.id);

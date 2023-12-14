@@ -243,7 +243,7 @@ impl Place {
         }
         return 1;
     }
-    pub fn delete(&self, user_id) -> i16 {
+    pub fn delete(&self) -> i16 {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
