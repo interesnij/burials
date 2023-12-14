@@ -77,7 +77,7 @@ pub async fn load_countries(req: HttpRequest) -> actix_web::Result<HttpResponse>
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
 
-        #[derive(TemplateOnce)]
+        #[derive(TemplateOnce)] 
         #[template(path = "desctop/load/load_countries.stpl")]
         struct Template { 
             country_list: Vec<Countrie>,

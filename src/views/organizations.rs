@@ -731,7 +731,8 @@ pub async fn create_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
-        let _organization = crate::utils::get_organization(*_id).expect("E."); 
+        let _organization = crate::utils::get_organization(*_id).expect("E.");
+        let country_list = Countrie::get_all();
         if _request_user.id == _organization.user_id || _request_user.is_admin() {
             if is_desctop {
                 #[derive(TemplateOnce)]
@@ -740,11 +741,13 @@ pub async fn create_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                     request_user: User,
                     is_ajax:      i32,
                     organization: Organization,
+                    country_list: Vec<Countrie>,
                 }
                 let body = Template {
                     request_user: _request_user,
                     is_ajax:      is_ajax,
                     organization: _organization,
+                    country_list: country_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -757,11 +760,13 @@ pub async fn create_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                     request_user: User,
                     is_ajax:      i32,
                     organization: Organization,
+                    country_list: Vec<Countrie>,
                 }
                 let body = Template {
                     request_user: _request_user,
                     is_ajax:      is_ajax,
                     organization: _organization,
+                    country_list: country_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -782,6 +787,7 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
     let _loc = crate::utils::get_organization_loc(*_id).expect("E.");
     let _organization = crate::utils::get_organization(_loc.organization_id).expect("E.");
     let user_id = get_request_user(&req).await;
+    let country_list = Countrie::get_all();
 
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
@@ -794,12 +800,14 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                     organization: Organization,
                     is_ajax:      i32,
                     loc:          OrganizationsPlace,
+                    country_list: Vec<Countrie>,
                 }
                 let body = Template {
                     request_user: _request_user,
                     organization: _organization,
                     is_ajax:      is_ajax,
                     loc:          _loc,
+                    country_list: country_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -813,12 +821,14 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                     organization: Organization,
                     is_ajax:      i32,
                     loc:          OrganizationsPlace,
+                    country_list: Vec<Countrie>,
                 }
                 let body = Template {
                     request_user: _request_user,
                     organization: _organization,
                     is_ajax:      is_ajax,
                     loc:          _loc,
+                    country_list: country_list,
                 }
                 .render_once()
                 .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
