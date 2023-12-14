@@ -16,7 +16,7 @@ use crate::utils::{
 
 
 // Структура для представления данных об организации
-#[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
+#[derive(Debug, Queryable, Serialize, PartialEq, Deserialize, Identifiable)]
 pub struct Organization {
     pub id:          i32,
     pub name:        String,
@@ -304,27 +304,17 @@ impl OrganizationsPlace {
                 loc.push_str(", ");
             }
         }
-        if self.city_id.is_some() {
-            let _name = schema::cities::table
-                .filter(schema::cities::id.eq(self.city_id.unwrap()))
-                .select(schema::cities::name)
-                .first::<String>(&_connection);
-            if _name.is_ok() {
-                loc.push_str(&_name.expect("E."));
-                loc.push_str(", ");
-            }
+
+        let _name = schema::cities::table
+            .filter(schema::cities::id.eq(self.city_id))
+            .select(schema::cities::name)
+            .first::<String>(&_connection);
+        if _name.is_ok() {
+            loc.push_str(&_name.expect("E."));
+            loc.push_str(", ");
         }
-        else if self.district_id.is_some() {
-            let _name = schema::districts::table
-                .filter(schema::districts::id.eq(self.district_id.unwrap()))
-                .select(schema::districts::name)
-                .first::<String>(&_connection);
-            if _name.is_ok() {
-                loc.push_str(&_name.expect("E."));
-                loc.push_str(", ");
-            }
-        }
-        loc.push_str(self.address2);
+        
+        loc.push_str(&self.address2);
         return loc;
     }
     pub fn create (
