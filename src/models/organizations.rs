@@ -250,6 +250,12 @@ impl Organization {
             .filter(schema::organizations_places::country_id.eq(country_id))
             .load::<OrganizationsPlace>(&_connection)
             .expect("E.");
+        if places_vec.is_empty() {
+            return (schema::organizations::table
+                .filter(schema::organizations::country_id.eq(country_id))
+                .load::<Organization>(&_connection)
+                .expect("E."), places_stack);
+        }
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
