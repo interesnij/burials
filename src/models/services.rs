@@ -17,7 +17,7 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Service {
-    pub id: i32,
+    pub id:              i32,
     pub user_id:         i32,
     pub organization_id: i32,
     pub title:           String,
@@ -73,7 +73,7 @@ impl Service {
         description: String,
         image:       Option<String>,
         price:       i32,
-    ) -> i16 {
+    ) -> i16 { 
         use crate::schema::services::dsl::services;
 
         let _connection = establish_connection();

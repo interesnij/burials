@@ -537,7 +537,7 @@ pub async fn delete_organization(req: HttpRequest, mut payload: Multipart) -> im
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _organization = crate::utils::get_organization(form.id).expect("E.");
         if _request_user.id == _organization.user_id || _request_user.is_admin() {
-            _organization.delete(user_id);
+            _organization.delete(_request_user.id);
         }
     };
     HttpResponse::Ok()
@@ -660,7 +660,6 @@ pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::
         Service::create ( 
             _request_user.id,
             *_id,
-            form.name.clone(),
             form.title.clone(),
             form.description.clone(),
             form.image.clone(),
@@ -678,7 +677,6 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
         let form = crate::utils::service_form(payload.borrow_mut()).await;
         _service.edit (
             _request_user.id,
-            form.name.clone(),
             form.title.clone(),
             form.description.clone(),
             form.image.clone(),
@@ -693,7 +691,7 @@ pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Re
         //let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _service = crate::utils::get_service(form.id).expect("E.");
-        _service.delete(user_id);
+        _service.delete(_request_user.id);
     }
     HttpResponse::Ok()
 }
@@ -843,7 +841,7 @@ pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Respon
         //let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _loc = crate::utils::get_organization_loc(form.id).expect("E.");
-        _loc.delete(user_id);
+        _loc.delete(_request_user.id);
     } 
     HttpResponse::Ok()
 }
