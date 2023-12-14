@@ -32,7 +32,7 @@ use crate::models::{
     User, Deceased, Organization, 
     Service, Place, Review,
     Countrie, Region, Citie, District,
-    OrganizationPlace,
+    OrganizationsPlace,
 };
 
 

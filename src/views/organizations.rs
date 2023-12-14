@@ -13,9 +13,9 @@ use crate::models::{
     Review,
     Service,
     User,
-    Countrie,
+    Countrie, Region, City,
     PlaceSmall,
-    OrganizationPlace,
+    OrganizationsPlace,
 };
 use sailfish::TemplateOnce;
 use diesel::{
@@ -232,7 +232,7 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
 }
 
 //Получение всех организаций одной страны
-pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let _country = crate::utils::get_country(*_id).expect("E.");
     let (_organizations, all_places)  = block(move || Organization::get_country_organizations(_country.id)).await?;
@@ -755,7 +755,7 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                     request_user: User,
                     organization: Organization,
                     is_ajax:      i32,
-                    loc:          OrganizationPlace,
+                    loc:          OrganizationsPlace,
                 }
                 let body = Template {
                     request_user: _request_user,
@@ -774,7 +774,7 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
                     request_user: User,
                     organization: Organization,
                     is_ajax:      i32,
-                    loc:          OrganizationPlace,
+                    loc:          OrganizationsPlace,
                 }
                 let body = Template {
                     request_user: _request_user,
@@ -801,7 +801,7 @@ pub async fn create_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path
     if _user.is_some() { 
         let _request_user = _user.unwrap();
         let form = crate::utils::loc_form(payload.borrow_mut()).await;
-        OrganizationPlace::create ( 
+        OrganizationsPlace::create ( 
             _request_user.id,
             *_id, 
             form.city_id,
