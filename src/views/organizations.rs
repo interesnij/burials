@@ -13,7 +13,7 @@ use crate::models::{
     Review,
     Service,
     User,
-    Countrie, Region, City,
+    Countrie, Region, Citie,
     PlaceSmall,
     OrganizationsPlace,
 };
