@@ -374,3 +374,45 @@ on('body', 'click', '#edit_organization', function() {
     }};
     link.send(form_data);
 });
+
+on('body', 'click', '#create_loc', function() {
+  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_address2").value) {
+      form.querySelector("#id_address2").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+  }
+  form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/create_loc/" + this.getAttribute("data-pk") + "/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
+
+on('body', 'click', '#create_service', function() {
+  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_price").value) {
+      form.querySelector("#id_price").style.setProperty('border', '1px #FF0000 solid', 'important');
+      return
+  }
+  else if (!form.querySelector("#id_description").value) {
+    form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  else if (!form.querySelector("#id_title").value) {
+    form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+    return
+  }
+  form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/create_service/" + this.getAttribute("data-pk") + "/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});

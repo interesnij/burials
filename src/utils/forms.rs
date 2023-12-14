@@ -355,7 +355,6 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
 //------------------------------ФОРМА УСЛУГ-----------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ServiceForms {
-    pub city_id:     i32,
     pub title:       String,
     pub description: String,
     pub image:       Option<String>,
@@ -364,7 +363,6 @@ pub struct ServiceForms {
 // форма для элементов 
 pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
     let mut form: ServiceForms = ServiceForms {
-        city_id:     0,
         title:       "".to_string(),
         description: "".to_string(),
         image:       None,
@@ -388,17 +386,6 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                     } else if field.name() == "description" {
                         form.description = data_string;
                     }
-                }
-            }
-        }
-
-
-        else if name == "city_id" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: i32 = s.parse().unwrap();
-                    form.city_id = _int;
                 }
             }
         }
