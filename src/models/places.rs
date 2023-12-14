@@ -221,26 +221,26 @@ impl Place {
     ) -> i16 {
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
-        let _connection = establish_connection();
-            diesel::update(self)
-                .set((
-                    schema::places::city_id.eq(city_id),
-                    schema::places::district_id.eq(district_id),
-                    schema::places::region_id.eq(region_id),
-                    schema::places::country_id.eq(country_id),
-                    schema::places::title.eq(title),
-                    schema::places::description.eq(description),
-                    schema::places::hours.eq(hours),
-                    schema::places::image.eq(image),
-                    schema::places::address.eq(address),
-                    schema::places::director.eq(director),
-                    schema::places::phone.eq(phone),
-                    schema::places::lat.eq(lat),
-                    schema::places::lon.eq(lon),
-                ))
-                .execute(&_connection)
-                .expect("Error.");
-        
+            let _connection = establish_connection();
+                diesel::update(self)
+                    .set((
+                        schema::places::city_id.eq(city_id),
+                        schema::places::district_id.eq(district_id),
+                        schema::places::region_id.eq(region_id),
+                        schema::places::country_id.eq(country_id),
+                        schema::places::title.eq(title),
+                        schema::places::description.eq(description),
+                        schema::places::hours.eq(hours),
+                        schema::places::image.eq(image),
+                        schema::places::address.eq(address),
+                        schema::places::director.eq(director),
+                        schema::places::phone.eq(phone),
+                        schema::places::lat.eq(lat),
+                        schema::places::lon.eq(lon),
+                    ))
+                    .execute(&_connection)
+                    .expect("Error.");
+        }
         return 1;
     }
     pub fn delete(&self, user_id) -> i16 {
