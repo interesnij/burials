@@ -252,7 +252,6 @@ impl Organization {
             .expect("E.");
         if places_vec.is_empty() {
             return (schema::organizations::table
-                .filter(schema::organizations::country_id.eq(country_id))
                 .load::<Organization>(&_connection)
                 .expect("E."), places_stack);
         }
