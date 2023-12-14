@@ -12,12 +12,6 @@
                         <div class="text-center py-8 p-6 border-b border-gray-100 dark:border-gray-700">
                             <img src="<%= organization.get_image() %>" class="h-24 w-24 p-4 shadow-md mx-auto rounded-full block" alt="">
                             <h5 class="mt-5 text-xl font-semibold mb-0"><%= organization.name %></h5>
-                            <% if organization.user_id == request_user.id || request_user.is_admin() { %>
-                            <p>
-                                <a style="text-decoration: underline" href="/create_loc/<%= organization.id %>/">Добавить офис</a>
-                                <a style="text-decoration: underline" href="/create_service/<%= organization.id %>/">Добавить услугу</a>
-                            <p>
-                            <% } %>
                         </div>
 
                         <div class="p-6">
