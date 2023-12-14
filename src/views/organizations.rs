@@ -119,7 +119,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             }
             let body = Template {
                 city:             _city,
-                all_organization: _organization,
+                all_organization: _organizations,
                 all_places:       all_places,
             }
             .render_once()
@@ -136,7 +136,7 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
             }
             let body = Template {
                 city:             _city,
-                all_organization: _organization,
+                all_organization: _organizations,
                 all_places:       all_places,
             }
             .render_once()
@@ -244,14 +244,15 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             #[template(path = "desctop/organization/all_organization_countries.stpl")]
             struct Template {
                 request_user:     User,
-                country:          Countries,
+                country:          Countrie,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
                 request_user:     _request_user,
-                country:          _countries,
+                country:          _country,
                 all_organization: _organizations,
+                all_places:       all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -262,14 +263,15 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             #[template(path = "desctop/organization/all_organization_countries.stpl")]
             struct Template {
                 request_user:     User,
-                country:          Countries,
+                country:          Countrie,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
                 request_user:     _request_user,
-                country:          _countries,
+                country:          _country,
                 all_organization: _organizations,
+                all_places:       all_places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -281,13 +283,13 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_countries.stpl")]
             struct Template {
-                country:          Countries,
+                country:          Countrie,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
-                country:          _countries,
-                all_organization: _organization,
+                country:          _country,
+                all_organization: _organizations,
                 all_places:       all_places,
             }
             .render_once()
@@ -298,13 +300,13 @@ pub async fn all_organization_countries_page(req: HttpRequest, _id: web::Path<i3
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/anon_all_organization_countries.stpl")]
             struct Template {
-                country:          Countries,
+                country:          Countrie,
                 all_organization: Vec<Organization>,
                 all_places:       Vec<PlaceSmall>,
             }
             let body = Template {
                 country:          _country,
-                all_organization: _organization,
+                all_organization: _organizations,
                 all_places:       all_places,
             }
             .render_once()
@@ -398,8 +400,9 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 country_list: Vec<Countrie>,
             }
             let body = Template {
-                request_user:  _request_user,
-                is_ajax:       is_ajax,
+                request_user: _request_user,
+                is_ajax:      is_ajax,
+                country_list: country_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -666,7 +669,7 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
         _service.edit (
             _request_user.id,
             form.title.clone(),
-            form.description.clone(),
+            form.description.clone(), 
             form.image.clone(),
             form.price,
         );

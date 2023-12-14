@@ -357,7 +357,7 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
 pub struct ServiceForms {
     pub city_id:     i32,
     pub title:       String,
-    pub description: Option<String>,
+    pub description: String,
     pub image:       Option<String>,
     pub price:       i32,
 }
@@ -366,7 +366,7 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
     let mut form: ServiceForms = ServiceForms {
         city_id:     0,
         title:       "".to_string(),
-        description: None,
+        description: "".to_string(),
         image:       None,
         price:       0,
     };
@@ -386,7 +386,7 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                     if field.name() == "title" {
                         form.title = data_string;
                     } else if field.name() == "description" {
-                        form.description = Some(data_string);
+                        form.description = data_string;
                     }
                 }
             }
