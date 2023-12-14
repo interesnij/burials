@@ -16,6 +16,11 @@ use serde::{Serialize, Deserialize};
 
 
 // Структура для таблицы Places 
+/*
+types
+1  предложен
+2  одобрен
+*/
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Place {
     pub id:          i32, 
@@ -214,6 +219,8 @@ impl Place {
         lat:         f64,
         lon:         f64,
     ) -> i16 {
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
         let _connection = establish_connection();
             diesel::update(self)
                 .set((
@@ -236,7 +243,7 @@ impl Place {
         
         return 1;
     }
-    pub fn delete(&self) -> i16 {
+    pub fn delete(&self, user_id) -> i16 {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();

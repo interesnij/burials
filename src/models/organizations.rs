@@ -16,6 +16,11 @@ use crate::utils::{
 
 
 // Структура для представления данных об организации
+/*
+types
+1  предложена
+2  одобрена
+*/
 #[derive(Debug, Queryable, Serialize, PartialEq, Deserialize, Identifiable)]
 pub struct Organization {
     pub id:          i32,
@@ -125,7 +130,6 @@ impl Organization {
     pub fn edit (
         &self,
         user_id:     i32,
-        object_id:   i32,
         name:        String,
         description: String,
         director:    String,
