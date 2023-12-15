@@ -51,6 +51,7 @@ pub struct NewOrganization {
 }
 
 pub struct PlaceSmall {
+    pub id:      i32,
     pub name:    String,
     pub address: String,
 }
@@ -203,7 +204,8 @@ impl Organization {
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
-                name: org.name.clone(),
+                id:      _place.id,
+                name:    org.name.clone(),
                 address: _place.get_loc(),
             });
             if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
@@ -238,7 +240,8 @@ impl Organization {
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
-                name: org.name.clone(),
+                id:      _place.id,
+                name:    org.name.clone(),
                 address: _place.get_loc(),
             });
             if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
@@ -260,7 +263,8 @@ impl Organization {
             .expect("E.");
         for _place in places_vec.iter() {
             places_stack.push(PlaceSmall{
-                name: self.name.clone(),
+                id:      _place.id,
+                name:    self.name.clone(),
                 address: _place.get_loc(),
             });
         }
@@ -285,7 +289,8 @@ impl Organization {
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
             places_stack.push(PlaceSmall{
-                name: org.name.clone(),
+                id:      _place.id,
+                name:    org.name.clone(),
                 address: _place.get_loc(),
             });
             if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
