@@ -48,7 +48,8 @@
                                 <% } %>
                             </ul>
 
-                            <h5 class="font-semibold">Офисы :</h5>
+                            <% if all_places.len() != 0 { %>
+                            <h5 style="margin-top:40px" class="font-semibold">Офисы :</h5>
                             <ul class="list-none mt-4">
                                 <% for i in all_places.iter() { %>
                                     <li class="flex mt-2 items-center font-medium">
@@ -62,6 +63,7 @@
                                     </li>
                                 <% } %>
                             </ul>
+                            <% } %>
                         </div>
                     </div>
 
@@ -83,13 +85,13 @@
                                     <h4 class="text-lg font-medium group-hover:text-indigo-600 duration-500 ease-in-out"><%= i.title %></h4>
                                     <p class="text-slate-400"><%= i.description %></p>
                                     <p class="text-slate-400"><%= i.price %> руб.</p>
-                                </div>
-                                <% if admin { %>
+                                    <% if admin { %>
                                     <p>
-                                        <a style="text-decoration: underline" href="/edit_service/<%= i.id %>/">Изменить услугу</a>
-                                        <a style="text-decoration: underline" class="delete_service pointer" data-pk="<%= i.id %>">Удалить услугу</a>
+                                        <a style="text-decoration: underline" href="/edit_service/<%= i.id %>/">Изменить</a>
+                                        <a style="text-decoration: underline" class="delete_service pointer" data-pk="<%= i.id %>">Удалить</a>
                                     <p>
                                 <% } %>
+                                </div>
                             </div> 
                     <% } %>
                 </div>
