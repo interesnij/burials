@@ -72,8 +72,8 @@
                                         class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 
                                         dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 
                                         dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                                        value="<%= service.description %>"
                                     >
+                                    <%= service.description %>
                                     </textarea>
                                 </div>
                             </div>
