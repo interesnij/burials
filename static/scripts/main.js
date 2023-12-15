@@ -24,6 +24,7 @@ function eraseCookie(name) {
 }
 function deleteAllCookies() {
   const cookies = document.cookie.split(";");
+  setCookie("userrr", 0, 90);
   for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i];
       const eqPos = cookie.indexOf("=");
@@ -33,7 +34,7 @@ function deleteAllCookies() {
 }
 on('body', 'click', '.logout_hundler', function() {
   window.location.href = "/";
-  deleteAllCookies();
+  setCookie("userrr", 0, 90);
   eraseCookie("userrr");
   window.location.href = "/";
   eraseCookie("userrr");
