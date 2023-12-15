@@ -221,6 +221,13 @@ impl Organization {
             .load::<Organization>(&_connection)
             .expect("E."); 
     }
+    pub fn suggested() -> Vec<Organization> {
+        let _connection = establish_connection();
+        return schema::organizations::table
+            .filter(schema::organizations::types.ne(2))
+            .load::<Organization>(&_connection)
+            .expect("E."); 
+    }
     pub fn get_services(&self) -> Vec<Service> {
         let _connection = establish_connection();
         return schema::services::table

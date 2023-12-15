@@ -51,6 +51,11 @@ on('body', 'click', '.remove_country', function() {
     this.parentElement.remove();
 });
 
+on('body', 'click', '.publish_org', function() {
+  delete_item("/organization/publish/", this.getAttribute("data-pk"));
+  this.parentElement.innerHTML = "Одобрено";
+});
+
 
 on('body', 'click', '#create_region', function() {
   let form = this.parentElement.parentElement.parentElement;

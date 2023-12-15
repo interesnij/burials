@@ -65,6 +65,8 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/create_city/", web::post().to(create_city));
     config.route("/edit_city/{id}/", web::post().to(edit_city));
     config.route("/delete_region/", web::post().to(delete_city));
+
+    config.route("/admin/organizations/", web::get().to(suggested_organizations_page));
 }
 
 
@@ -673,4 +675,34 @@ pub async fn delete_country(req: HttpRequest, mut payload: Multipart) -> impl Re
         }
     };
     HttpResponse::Ok()
+}
+
+pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Organization;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let org_list = Organization::suggested();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/suggested_organizations.stpl")]
+        struct Template { 
+            request_user: User,
+            org_list:     Vec<Organization>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            org_list:     org_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
 }
