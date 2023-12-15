@@ -514,8 +514,9 @@ pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> ac
             form.website.clone(),
             form.image.clone(),
         );
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body())
 }
 
 pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -534,8 +535,9 @@ pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: we
             form.website.clone(),
             form.image.clone(),
         );
-    };
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+    }; 
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body())
 }
 pub async fn delete_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
@@ -694,8 +696,9 @@ pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::
             form.image.clone(),
             form.price,
         );
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body())
 }
 
 pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -711,8 +714,9 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
             form.image.clone(),
             form.price,
         );
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body())
 }
 pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
@@ -857,8 +861,9 @@ pub async fn create_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path
             form.country_id,
             form.address2.clone(),
         );
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body())
 }
 
 pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -871,8 +876,9 @@ pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i
             _request_user.id,
             form.address2,
         );
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body())
 }
 pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
