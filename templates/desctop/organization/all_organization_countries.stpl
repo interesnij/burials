@@ -87,17 +87,25 @@ function init() {
             // Максимальная ширина подписи метки.
             iconPieChartCaptionMaxWidth: 200
         });
+
+    var addToMap = function(inputAdress) {
+        ymaps.geocode(inputAdress, { //ищем по нужному адресу
+            boundedBy: myMap.getBounds(),
+            results: 1
+        }).then(function(res) {
+            myMap.geoObjects.add(res.geoObjects.get(0));
+        });
+    };
+    
     myMap.setType('yandex#satellite');
     //myMap.geoObjects
         //.add(myGeoObject)
         //.add(myPieChart);
         <% for i in all_places.iter() { %>
-            myMap.geoObjects
-            .add(new ymaps.Placemark("<%= i.address %>", {
-                balloonContent: '<%= i.name %>',
-                iconCaption: ''
-            }));
+            addToMap(<%= i.address %>);
         <% } %>
+
+        
 }
 
 </script>
