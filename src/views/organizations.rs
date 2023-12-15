@@ -515,7 +515,7 @@ pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> ac
             form.image.clone(),
         );
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
 }
 
 pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -535,7 +535,7 @@ pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: we
             form.image.clone(),
         );
     };
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
 }
 pub async fn delete_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
@@ -695,7 +695,7 @@ pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::
             form.price,
         );
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
 }
 
 pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -712,7 +712,7 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
             form.price,
         );
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
 }
 pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
@@ -858,7 +858,7 @@ pub async fn create_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path
             form.address2.clone(),
         );
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
 }
 
 pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
@@ -872,7 +872,7 @@ pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i
             form.address2,
         );
     }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()))
 }
 pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 

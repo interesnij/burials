@@ -462,3 +462,26 @@ on('body', 'click', '#edit_service', function() {
     }};
     link.send(form_data);
 });
+
+
+function delete_item_2(url, id) {
+  form_data = new FormData();
+  form_data.append("id", id);
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'POST', url, true )
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+    toast_success("Удалено!");
+  }};
+  link.send(form_data);
+};
+
+on('body', 'click', '.delete_service', function() {
+  delete_item("/delete_service/", this.getAttribute("data-pk"));
+  this.parentElement.parentElement.parentElement.remove();
+});
+on('body', 'click', '.delete_loc', function() {
+  delete_item("/delete_loc/", this.getAttribute("data-pk"));
+  this.parentElement.parentElement.remove();
+});
