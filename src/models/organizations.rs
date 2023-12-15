@@ -300,9 +300,9 @@ impl Organization {
                 name:    org.name.clone(),
                 address: _place.get_loc(),
             });
-            if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
+            //if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
                 org_stack.push(org);
-            } 
+            //} 
         }
         return (org_stack, places_stack);
     }

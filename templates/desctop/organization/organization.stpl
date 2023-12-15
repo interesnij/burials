@@ -23,7 +23,7 @@
                             <% if request_user.is_admin() && organization.types != 2 { %>
                                 <p>
                                     <a class="publish_org pointer" data-pk="<%= organization.id %>" style="text-decoration: underline" >Одобрить</a>
-                                <p>
+                                <p> 
                             <% } %>
                         </div>
 
