@@ -23,9 +23,9 @@ function eraseCookie(name) {
   document.cookie = name+'=; Max-Age=-99999999;';  
 }
 on('body', 'click', '.logout_hundler', function() {
+  window.location.href = "/";
   eraseCookie("userrr");
-  window.location.href = "/"
-}) 
+})
 
 class ToastManager {
     constructor() {
