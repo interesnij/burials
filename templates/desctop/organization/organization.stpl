@@ -58,7 +58,7 @@
                             <h5 style="margin-top:40px" class="font-semibold">Офисы :</h5>
                             <ul class="list-none mt-4">
                                 <% for i in all_places.iter() { %>
-                                    <li class="flex mt-2 items-center font-medium" style="border: 1px dotter #ccc">
+                                    <li class="flex mt-2 items-center font-medium" style="border: 1px dashed #ccc">
                                         <%= i.address %>
                                         <% if admin { %> 
                                         <p class="small">
@@ -167,23 +167,20 @@ function init() {
             // Максимальная ширина подписи метки.
             iconPieChartCaptionMaxWidth: 200
         });
-    myMap.setType('yandex#satellite');
+
+        var addToMap = function(inputAdress) {
+            ymaps.geocode(inputAdress, { //ищем по нужному адресу
+                boundedBy: myMap.getBounds(),
+                results: 1
+            }).then(function(res) {
+                myMap.geoObjects.add(res.geoObjects.get(0));
+            });
+        };
     //myMap.geoObjects
         //.add(myGeoObject)
-        //.add(myPieChart);
+        //.add(myPieChart); 
         <% for i in all_places.iter() { %>
-            myMap.geoObjects
-            .add(new ymaps.Placemark([<%= i.address %>], {
-                balloonContent: '<%= i.name %>',
-                iconCaption: ''
-            }, {
-                preset: 'islands#blueCircleDotIconWithCaption',
-                iconCaptionMaxWidth: '50',
-                //iconLayout: 'default#image',
-                //iconImageHref: '',
-                //icon_imagesize: [30, 42],
-                //iconImageOffset: [-3, -42]
-            }));
+            addToMap("<%= i.address %>");
         <% } %>
 }
 

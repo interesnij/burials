@@ -36,8 +36,8 @@ ymaps.ready(init);
 function init() {
     var myMap = new ymaps.Map("map", {
             center: [55.7522, 37.6156],
-            zoom: 4,
-            controls: []
+            zoom: 4
+            //controls: []
         }, {
             searchControlProvider: 'yandex#search'
         }),
@@ -97,7 +97,7 @@ function init() {
         });
     };
 
-    myMap.setType('yandex#satellite');
+    //myMap.setType('yandex#satellite');
     //myMap.geoObjects
         //.add(myGeoObject)
         //.add(myPieChart);
