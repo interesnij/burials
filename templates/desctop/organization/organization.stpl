@@ -58,7 +58,7 @@
                             <h5 style="margin-top:40px" class="font-semibold">Офисы :</h5>
                             <ul class="list-none mt-4">
                                 <% for i in all_places.iter() { %>
-                                    <li class="flex mt-2 items-center font-medium">
+                                    <li class="flex mt-2 items-center font-medium" style="border: 1px dotter #ccc">
                                         <%= i.address %>
                                         <% if admin { %> 
                                         <p class="small">
