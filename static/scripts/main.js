@@ -376,7 +376,7 @@ on('body', 'click', '#edit_organization', function() {
 });
 
 on('body', 'click', '#create_loc', function() {
-  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  let form = this.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_address2").value) {
       form.querySelector("#id_address2").style.setProperty('border', '1px #FF0000 solid', 'important');
       return
@@ -394,7 +394,7 @@ on('body', 'click', '#create_loc', function() {
 
 on('body', 'click', '#edit_loc', function() {
   _this = this;
-  form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  form = _this.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_address2").value) {
     form.querySelector("#id_address2").style.setProperty('border', '1px #FF0000 solid', 'important');
     return
