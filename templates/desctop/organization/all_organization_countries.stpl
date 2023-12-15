@@ -93,7 +93,7 @@ function init() {
         //.add(myPieChart);
         <% for i in all_places.iter() { %>
             myMap.geoObjects
-            .add(new ymaps.Placemark(["<%= i.address %>"], {
+            .add(new ymaps.Placemark("<%= i.address %>", {
                 balloonContent: '<%= i.name %>',
                 iconCaption: ''
             }));
