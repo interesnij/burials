@@ -302,7 +302,7 @@ impl Organization {
             });
             println!("any {:?}", org_stack.iter().any(|i| i.id != org.id));
             println!("types == 2 {:?}", org.types == 2);
-            if org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
+            if !org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
                 org_stack.push(org);
             }
         }
