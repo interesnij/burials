@@ -96,13 +96,6 @@ function init() {
             .add(new ymaps.Placemark(["<%= i.address %>"], {
                 balloonContent: '<%= i.name %>',
                 iconCaption: ''
-            }, {
-                preset: 'islands#blueCircleDotIconWithCaption',
-                iconCaptionMaxWidth: '50',
-                //iconLayout: 'default#image',
-                //iconImageHref: '',
-                //icon_imagesize: [30, 42],
-                //iconImageOffset: [-3, -42]
             }));
         <% } %>
 }
