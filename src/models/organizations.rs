@@ -97,7 +97,7 @@ impl Organization {
         hours:       String, 
         website:     Option<String>,
         image:       Option<String>,
-    ) -> i16 {
+    ) -> i32 {
         use crate::schema::organizations::dsl::organizations;
 
         let _connection = establish_connection();
@@ -125,7 +125,7 @@ impl Organization {
             .get_result::<Organization>(&_connection)
             .expect("Error.");
 
-        return 1;
+        return _new.id;
     }
     pub fn edit (
         &self,
@@ -137,7 +137,7 @@ impl Organization {
         hours:       String,
         website:     Option<String>,
         image:       Option<String>,
-    ) -> i16 {
+    ) -> i32 {
         use crate::schema::organizations::dsl::organizations;
         let _user = crate::utils::get_user(user_id).expect("E.");
         if self.user_id == user_id || _user.perm > 9 {
@@ -159,7 +159,7 @@ impl Organization {
                 .execute(&_connection)
                 .expect("E");
         }
-        return 1;
+        return self.id;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
         use crate::schema::organizations::dsl::organizations;
@@ -366,7 +366,7 @@ impl OrganizationsPlace {
         region_id:       Option<i32>,
         country_id:      i32, 
         address2:        String,
-    ) -> i16 {
+    ) -> i32 {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         let _organization = crate::utils::get_organization(organization_id).expect("E.");
@@ -383,14 +383,14 @@ impl OrganizationsPlace {
                 .execute(&_connection)
                 .expect("Error.");
         }
-        return 1;
+        return _organization.id;
     }
 
     pub fn edit (
         &self,
         user_id:  i32,
         address2: String,
-    ) -> i16 {
+    ) -> i32 {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         let _organization = crate::utils::get_organization(self.organization_id).expect("E.");
@@ -400,7 +400,7 @@ impl OrganizationsPlace {
                 .execute(&_connection)
                 .expect("Error.");
         }
-        return 1;
+        return _organization.id;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
         use crate::schema::organizations_places::dsl::organizations_places;

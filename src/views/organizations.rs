@@ -499,12 +499,12 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
     }
 }
 
-pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> actix_web::Result<HttpResponse> {
     let _user = get_request_user(&req).await;
     if _user.is_some() { 
         let _request_user = _user.unwrap();
         let form = crate::utils::organization_form(payload.borrow_mut()).await;
-        Organization::create ( 
+        let id = Organization::create ( 
             _request_user.id, 
             form.name.clone(),
             form.description.clone(),
@@ -515,16 +515,16 @@ pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> im
             form.image.clone(),
         );
     }; 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
 }
 
-pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _organization = crate::utils::get_organization(*_id).expect("E."); 
         let form = crate::utils::organization_form(payload.borrow_mut()).await;
-        _organization.edit (
+        let id = _organization.edit (
             _request_user.id,
             form.name.clone(),
             form.description.clone(),
@@ -535,7 +535,7 @@ pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: we
             form.image.clone(),
         );
     };
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
 }
 pub async fn delete_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
@@ -681,12 +681,12 @@ pub async fn edit_service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
     }
 }
 
-pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let _user = get_request_user(&req).await;
     if _user.is_some() { 
         let _request_user = _user.unwrap();
         let form = crate::utils::service_form(payload.borrow_mut()).await;
-        Service::create ( 
+        let id = Service::create (  
             _request_user.id,
             *_id,
             form.title.clone(),
@@ -695,16 +695,16 @@ pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::
             form.price,
         );
     }; 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
 }
 
-pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _service = crate::utils::get_service(*_id).expect("E.");
         let form = crate::utils::service_form(payload.borrow_mut()).await;
-        _service.edit (
+        let id = _service.edit (
             _request_user.id,
             form.title.clone(),
             form.description.clone(), 
@@ -712,7 +712,7 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
             form.price,
         );
     }; 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
 }
 pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
@@ -844,12 +844,12 @@ pub async fn edit_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
     }
 }
 
-pub async fn create_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn create_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let _user = get_request_user(&req).await;
     if _user.is_some() { 
         let _request_user = _user.unwrap();
         let form = crate::utils::loc_form(payload.borrow_mut()).await;
-        OrganizationsPlace::create ( 
+        let id = OrganizationsPlace::create ( 
             _request_user.id,
             *_id, 
             form.city_id,
@@ -858,21 +858,21 @@ pub async fn create_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path
             form.address2.clone(),
         );
     }; 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
 }
 
-pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+pub async fn edit_loc(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _loc = crate::utils::get_organization_loc(*_id).expect("E.");
         let form = crate::utils::loc_form(payload.borrow_mut()).await;
-        _loc.edit (
+        let id = _loc.edit (
             _request_user.id,
             form.address2,
         );
     }; 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("id".to_string()))
 }
 pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 

@@ -54,7 +54,7 @@ impl Service {
         description:     String,
         image:           Option<String>,
         price:           i32,
-    ) -> i16 {
+    ) -> i32 {
         let _connection = establish_connection();
         let _organization = crate::utils::get_organization(organization_id).expect("E.");
 
@@ -72,7 +72,7 @@ impl Service {
                 .execute(&_connection)
                 .expect("Error.");
         }
-        return 1;
+        return _organization.id;
     }
     pub fn edit (
         &self,
@@ -81,7 +81,7 @@ impl Service {
         description: String,
         image:       Option<String>,
         price:       i32,
-    ) -> i16 { 
+    ) -> i32 { 
         use crate::schema::services::dsl::services;
 
         let _connection = establish_connection();
@@ -97,7 +97,7 @@ impl Service {
                 .execute(&_connection)
                 .expect("Error.");
         }
-        return 1;
+        return _organization.id;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
         use crate::schema::services::dsl::services;
