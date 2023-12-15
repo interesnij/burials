@@ -27,8 +27,9 @@
                                 <div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
                                     <img src="/static/images/upload.png" class="rounded-full" id="image" alt="img">
                                     <div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
-                                    <label class="absolute inset-0 cursor-pointer" for="pro-img">Загрузите изображение</label>
+                                    <label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
                                 </div>
+                                <p>Загрузите изображение</p>
                             </div> 
                         </div>
                     </div>
