@@ -5,7 +5,6 @@
 </section>
 <section class="relative md:py-24 py-16">
     <div class="container">
-    <% let admin = organization.user_id == request_user.id || request_user.is_admin(); %>
         <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
             <div class="lg:col-span-4 md:col-span-5">
                 <div class="lg:-mt-[330px] -mt-[299px]">
@@ -13,18 +12,6 @@
                         <div class="text-center py-8 p-6 border-b border-gray-100 dark:border-gray-700">
                             <img src="<%= organization.get_image() %>" class="h-24 w-24 p-4 shadow-md mx-auto rounded-full block" alt="">
                             <h5 class="mt-5 text-xl font-semibold mb-0"><%= organization.name %></h5>
-                            <% if admin { %>
-                            <p>
-                                <a style="text-decoration: underline" href="/edit_organization/<%= organization.id %>/">Редактировать</a>
-                                <a style="text-decoration: underline" href="/create_loc/<%= organization.id %>/">Добавить офис</a>
-                                <a style="text-decoration: underline" href="/create_service/<%= organization.id %>/">Добавить услугу</a>
-                            <p>
-                            <% } %>
-                            <% if request_user.is_admin() && organization.types != 2 { %>
-                                <p>
-                                    <a class="publish_org pointer" data-pk="<%= organization.id %>" style="text-decoration: underline" >Одобрить</a>
-                                <p> 
-                            <% } %>
                         </div>
 
                         <div class="p-6">
@@ -60,12 +47,7 @@
                                 <% for i in all_places.iter() { %>
                                     <li class="flex mt-2 items-center font-medium" style="border: 1px dashed #ccc">
                                         <%= i.address %>
-                                        <% if admin { %> 
-                                        <p class="small">
-                                            <a style="text-decoration: underline" href="/edit_loc/<%= i.id %>/">Изменить</a>
-                                            <a style="text-decoration: underline" class="delete_loc pointer" data-pk="<%= i.id %>">Удалить</a>
-                                        <p>
-                                <% } %> 
+                                        
                                     </li>
                                 <% } %>
                             </ul>
@@ -91,11 +73,7 @@
                                     <h4 class="text-lg font-medium group-hover:text-indigo-600 duration-500 ease-in-out"><%= i.title %></h4>
                                     <p class="text-slate-400"><%= i.description %></p>
                                     <p class="text-slate-400"><%= i.price %> руб.</p>
-                                    <% if admin { %>
-                                    <p>
-                                        <a style="text-decoration: underline" href="/edit_service/<%= i.id %>/">Изменить</a>
-                                        <a style="text-decoration: underline" class="delete_service pointer" data-pk="<%= i.id %>">Удалить</a>
-                                    <p>
+                                    
                                 <% } %>
                                 </div>
                             </div> 
