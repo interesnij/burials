@@ -96,13 +96,13 @@ function init() {
             myMap.geoObjects.add(res.geoObjects.get(0));
         });
     };
-    
+
     myMap.setType('yandex#satellite');
     //myMap.geoObjects
         //.add(myGeoObject)
         //.add(myPieChart);
         <% for i in all_places.iter() { %>
-            addToMap(<%= i.address %>);
+            addToMap("<%= i.address %>");
         <% } %>
 
         
