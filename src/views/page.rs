@@ -193,6 +193,9 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
         else {
             location = params.location.clone();
+            if &location.as_deref().unwrap().to_string() == &" " {
+                location = None;
+            }
         }
 
         let user_id = get_request_user(&req).await;
