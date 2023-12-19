@@ -94,11 +94,11 @@ function init() {
     zoom: 18,
     controls: ['routePanelControl']
   });
-  var control = myMap.controls.get('routePanelControl');
+  var control = map.controls.get('routePanelControl');
   control.options.set({
       autofocus: false
   });
-  
+
   map.setType('yandex#satellite');
       map.geoObjects
           .add(new ymaps.Placemark([<%= deceased.lat %>, <%= deceased.lon %>], {
