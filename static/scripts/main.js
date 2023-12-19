@@ -259,6 +259,8 @@ on('body', 'click', '.search_deceaseds', function() {
   } 
   console.log(birth_date);
   console.log(death_date);
+  console.log(location);
+  
   url = "/main_search?first_name=" +
         form.querySelector("#id_first_name").value +
         "&middle_name=" +
