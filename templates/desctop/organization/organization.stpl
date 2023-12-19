@@ -125,7 +125,6 @@ function init() {
             center: res.geoObjects.get(0).geometry.getCoordinates(),
             zoom : 5
         });
-    });
 
         var addToMap = function(inputAdress) {
             ymaps.geocode(inputAdress, { //ищем по нужному адресу
@@ -135,12 +134,11 @@ function init() {
                 myMap.geoObjects.add(res.geoObjects.get(0));
             });
         };
-    //myMap.geoObjects
-        //.add(myGeoObject)
-        //.add(myPieChart); 
+
         <% for i in all_places.iter() { %>
             addToMap("<%= i.address %>");
         <% } %>
+    });
 }
 
 </script>
