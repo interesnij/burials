@@ -110,12 +110,17 @@
 
 <% include!("../footer.stpl"); %>
 
+
+<% if all_places.len() > 0 { %>
+
+<% let first = all_places[0]; %>
+
 <script>
 ymaps.ready(init);
 
 function init() {
     var myMap = new ymaps.Map("map", {
-            center: [55.7522, 37.6156],
+            center: [<%= first.address %>],
             zoom: 5,
             controls: []
         }, {
@@ -185,3 +190,5 @@ function init() {
 }
 
 </script>
+
+<% } %>
