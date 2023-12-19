@@ -17,6 +17,126 @@
 # Common
 --------------------------------------------------------------*/
 
+.toasts {
+  width: auto;
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  z-index: 9999;
+}
+.toast {
+width: 100%;
+padding: 10px;
+position: relative;
+background-color: white;
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+color: black;
+cursor: pointer;
+}
+.toast span {
+display: inline-block;
+margin: 0 6px 0 3px;
+}
+.toast h3 {
+font-weight: 400;
+font-size: 1.1em;
+margin: 2px;
+}
+.toast .exit {
+position: absolute;
+top: 7px;
+right: 7px;
+font-size: 1.1em;
+}
+.toast progress[value] {
+-webkit-appearance: none;
+appearance: none;
+position: absolute;
+width: 100%;
+left: 0;
+top: -2px;
+height: 5px;
+}
+.toast progress[value]::-webkit-progress-bar {
+background-color: white;
+}
+
+.success {
+/*background-color: #E8F5E9; */
+color: #ffffff !important;
+background-image: -moz-linear-gradient(45deg, #07ba7d 0%, #0fd793 100%) !important;
+background-image: -webkit-linear-gradient(45deg, #07ba7d 0%, #0fd793 100%) !important;
+background-image: -ms-linear-gradient(45deg, #07ba7d 0%, #0fd793 100%) !important;
+border-color: transparent;
+background-color: #07ba7d !important;
+}
+.success span {
+color: #4CAF50;
+}
+.success progress[value]::-webkit-progress-value {
+background-color: #4CAF50;
+}
+.success .fas {
+color: #4CAF50;
+}
+
+.error {
+/*background-color: #FFEBEE;*/
+  color: #ffffff !important;
+  background-image: -moz-linear-gradient(45deg, #cf0723 0%, #f63b55 100%) !important;
+  background-image: -webkit-linear-gradient(45deg, #cf0723 0%, #f63b55 100%) !important;
+  background-image: -ms-linear-gradient(45deg, #cf0723 0%, #f63b55 100%) !important;
+  border-color: transparent;
+  background-color: #cf0723 !important;
+}
+.error span {
+color: #EF5350;
+}
+.error progress[value]::-webkit-progress-value {
+background-color: #EF5350;
+}
+.error .icon {
+color: #EF5350;
+}
+
+.info {
+/*background-color: #E3F2FD;*/
+color: #ffffff !important;
+background-image: -moz-linear-gradient(45deg, #4a19c8 0%, #7979ff 100%) !important;
+background-image: -webkit-linear-gradient(45deg, #4a19c8 0%, #7979ff 100%) !important;
+background-image: -ms-linear-gradient(45deg, #4a19c8 0%, #7979ff 100%) !important;
+border-color: transparent;
+background-color: #4a19c8 !important;
+}
+.info span {
+color: #42A5F5;
+}
+.info progress[value]::-webkit-progress-value {
+background-color: #42A5F5;
+}
+.info .fas {
+color: #42A5F5;
+}
+
+.warning {
+/*background-color: #FFFDE7;*/
+color: #ffffff !important;
+background-image: -moz-linear-gradient(45deg, #ff7800 0%, #f5a811 100%) !important;
+background-image: -webkit-linear-gradient(45deg, #ff7800 0%, #f5a811 100%) !important;
+background-image: -ms-linear-gradient(45deg, #ff7800 0%, #f5a811 100%) !important;
+border-color: transparent;
+background-color: #ff7800 !important;
+}
+.warning span {
+color: #FFD600;
+}
+.warning progress[value]::-webkit-progress-value {
+background-color: #FFD600;
+}
+.warning .fas {
+color: #FFD600;
+}
+
 .pointer {
   cursor: pointer !important;
 }
