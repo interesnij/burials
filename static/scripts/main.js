@@ -234,6 +234,7 @@ on('body', 'click', '.search_deceaseds', function() {
   }
   birth_date = form.querySelector("#id_birth_date").value;
   death_date = form.querySelector("#id_death_date").value;
+  location = form.querySelector("#id_location").value;
 
   var dd = 25;
   var mm = 11;
@@ -247,6 +248,14 @@ on('body', 'click', '.search_deceaseds', function() {
   if (!death_date) {
     console.log("no death_date");
     death_date = today;
+  }
+  if (!death_date) {
+    console.log("no death_date");
+    death_date = today;
+  }
+  if (!location) {
+    console.log("no location");
+    location = " ";
   } 
   console.log(birth_date);
   console.log(death_date);
@@ -261,7 +270,7 @@ on('body', 'click', '.search_deceaseds', function() {
         "&death_date=" +
         death_date +
         "&location=" +
-        form.querySelector("#id_location").value;
+        location;
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', url, true );
