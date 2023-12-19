@@ -123,7 +123,7 @@ function init() {
     ymaps.geocode('<%= first.address %>').then(function (res) {
         myMap = new ymaps.Map('map', {
             center: res.geoObjects.get(0).geometry.getCoordinates(),
-            zoom : 5
+            zoom : 9
         });
 
         var addToMap = function(inputAdress) {
