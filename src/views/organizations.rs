@@ -455,6 +455,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
+        let org_list = Organization::get_all();
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/edit_organization.stpl")]
@@ -463,12 +464,14 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 organization: Organization,
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
+                org_list:     Vec<Organization>,
             }
             let body = Template {
                 request_user: _request_user,
                 organization: _organization,
                 is_ajax:      is_ajax,
                 country_list: country_list,
+                org_list:     org_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -482,12 +485,14 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 organization: Organization,
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
+                org_list:     Vec<Organization>,
             }
             let body = Template {
                 request_user: _request_user,
                 organization: _organization,
                 is_ajax:      is_ajax,
                 country_list: country_list,
+                org_list:     org_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
