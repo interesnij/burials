@@ -192,6 +192,7 @@ impl Deceased {
             middle = "%".to_owned() + "" + "%";
         }
         if location.is_some() {
+            println!("location exists!!");
             let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
             let places_ids = crate::models::Place::search_ids(&loc);
             if birth_date.is_some() && death_date.is_some() {
@@ -208,8 +209,8 @@ impl Deceased {
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
-            }
-            else if location.is_some() && birth_date.is_some() && death_date.is_none() {
+            } 
+            else if birth_date.is_some() && death_date.is_none() {
                 println!("location && birth_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
