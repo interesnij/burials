@@ -66,15 +66,12 @@
                             <div class="grid grid-cols-1">
                                 <div class="mt-5">
                                     <label class="form-label font-medium">Описание : </label>
-                                    <textarea 
-                                        name="description" 
+                                    <input <% if service.description.is_some() { %>value="<%= service.description.as_deref().unwrap() %>"<% } %>  
                                         id="id_description" 
-                                        class="form-input w-full text-[15px] py-2 px-3 h-28 bg-transparent dark:bg-slate-900 
-                                        dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 
-                                        dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2"
-                                    >
-                                    <%= service.description %>
-                                    </textarea>
+                                        name="description" 
+                                        type="text" 
+                                        class="form-input mt-3" 
+                                    />
                                 </div>
                             </div>
 

@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
 
-                            <div class="grid grid-cols-1">
+                            <div class="grid grid-cols-1"> 
                                 <div class="mt-5">
                                     <label class="form-label font-medium">Описание : </label>
                                     <input <% if place.description.is_some() { %>value="<%= place.description.as_deref().unwrap() %>"<% } %>  

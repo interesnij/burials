@@ -474,16 +474,24 @@ on('body', 'click', '#edit_loc', function() {
 
 on('body', 'click', '#create_service', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_price").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_price").value) {
       form.querySelector("#id_price").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите цену услуги");
       return
   }
   else if (!form.querySelector("#id_description").value) {
     form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите описание услуги");
     return
   }
   else if (!form.querySelector("#id_title").value) {
     form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите название услуги");
     return
   }
   form_data = new FormData(form);
@@ -500,16 +508,24 @@ on('body', 'click', '#create_service', function() {
 on('body', 'click', '#edit_service', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+  
+  form.querySelector("#id_price").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_price").value) {
-    form.querySelector("#id_price").style.setProperty('border', '1px #FF0000 solid', 'important');
-    return
+      form.querySelector("#id_price").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите цену услуги");
+      return
   }
   else if (!form.querySelector("#id_description").value) {
     form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите описание услуги");
     return
   }
   else if (!form.querySelector("#id_title").value) {
     form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите название услуги");
     return
   }
   
