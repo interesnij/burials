@@ -50,8 +50,8 @@
 		<div class="">
             <% for object in region_list.iter() { %>
             <p><%= object.name %>
-                | <a class="ajax" href="/edit_region/<%= object.id %>/">~</a>
-                | <a class="pointer remove_region" data-pk="<%= object.id %>">x</a>
+                | <a class="ajax" href="/edit_region/<%= object.id %>/">Изменить</a>
+                | <a class="pointer remove_region" data-pk="<%= object.id %>">Удалить</a>
             </p>
             <% } %>
         </div>

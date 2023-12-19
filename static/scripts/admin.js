@@ -61,11 +61,21 @@ on('body', 'click', '.publish_org', function() {
 
 on('body', 'click', '#create_region', function() {
   let form = this.parentElement.parentElement.parentElement;
+  
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название региона");
+      toast_error("Укажите название");
       return
-    }
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну");
+    return
+  }
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -79,11 +89,20 @@ on('body', 'click', '#create_region', function() {
 on('body', 'click', '#edit_region', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
-      form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название региона");
-      return
-    }
+    form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите название");
+    return
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну");
+    return
+  }
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -103,11 +122,21 @@ on('body', 'click', '.remove_region', function() {
 
 on('body', 'click', '#create_city', function() {
   let form = this.parentElement.parentElement.parentElement;
+  
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название города");
+      toast_error("Укажите название");
       return
-    }
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну");
+    return
+  }
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -121,11 +150,21 @@ on('body', 'click', '#create_city', function() {
 on('body', 'click', '#edit_city', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
+  
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название города");
+      toast_error("Укажите название");
       return
-    }
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну");
+    return
+  }
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -144,11 +183,21 @@ on('body', 'click', '.remove_city', function() {
 
 on('body', 'click', '#create_district', function() {
   let form = this.parentElement.parentElement.parentElement;
+  
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название района");
-      return 
-    } 
+      toast_error("Укажите название");
+      return
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну");
+    return
+  }
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -162,11 +211,21 @@ on('body', 'click', '#create_district', function() {
 on('body', 'click', '#edit_district', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
+  
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название района");
+      toast_error("Укажите название");
       return
-    }
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну");
+    return
+  }
+  
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -186,11 +245,20 @@ on('body', 'click', '.remove_district', function() {
 
 on('body', 'click', '#create_place', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
       toast_error("Укажите название кладбища");
       return
-    } 
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну кладбища");
+    return
+  }
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -204,12 +272,22 @@ on('body', 'click', '#create_place', function() {
 on('body', 'click', '#edit_place', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
       toast_error("Укажите название кладбища");
       return
-    } 
-    form_data = new FormData(form);
+  }
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну кладбища");
+    return
+  }
+
+  form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'POST', "/edit_place/" + _this.getAttribute("data-pk") + "/", true );

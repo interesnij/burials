@@ -60,8 +60,8 @@
 		<div class="">
             <% for object in district_list.iter() { %>
             <p><%= object.name %>
-                | <a class="ajax" href="/edit_district/<%= object.id %>/">~</a>
-                | <a class="pointer remove_district" data-pk="<%= object.id %>">x</a>
+                | <a class="ajax" href="/edit_district/<%= object.id %>/">Изменить</a>
+                | <a class="pointer remove_district" data-pk="<%= object.id %>">Удалить</a>
             </p>
             <% } %>
     	</div>

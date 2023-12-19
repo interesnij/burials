@@ -149,8 +149,8 @@
             <div class="">
                 <% for i in place_list.iter() { %>
                 <p><%= i.title %>
-                    | <a class="ajax" href="/edit_place/<%= i.id %>/">~</a>
-                    | <a class="pointer remove_place" data-pk="<%= i.id %>">x</a>
+                    | <a class="ajax" href="/edit_place/<%= i.id %>/">Изменить</a>
+                    | <a class="pointer remove_place" data-pk="<%= i.id %>">Удалить</a>
                 </p>
                 <% } %>
     	    </div>

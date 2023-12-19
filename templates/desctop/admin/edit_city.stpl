@@ -59,8 +59,8 @@
 		<div class="">
             <% for i in city_list.iter() { %>
             <p><%= i.name %>
-                | <a class="ajax" href="/edit_city/<%= i.id %>/">~</a>
-                | <a class="pointer remove_city" data-pk="<%= i.id %>">x</a>
+                | <a class="ajax" href="/edit_city/<%= i.id %>/">Изменить</a>
+                | <a class="pointer remove_city" data-pk="<%= i.id %>">Удалить</a>
             </p>
             <% } %>
         </div>

@@ -137,8 +137,8 @@
 		<div class="">
             <% for i in deceased_list.iter() { %>
             <p><%= i.last_name %>
-                | <a class="ajax" href="/edit_deceased/<%= i.id %>/">~</a>
-                | <a class="pointer remove_deceased" data-pk="<%= i.id %>">x</a>
+                | <a class="ajax" href="/edit_deceased/<%= i.id %>/">Изменить</a>
+                | <a class="pointer remove_deceased" data-pk="<%= i.id %>">Удалить</a>
             </p>
             <% } %>
     	</div>
