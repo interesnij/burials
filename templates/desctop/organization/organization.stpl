@@ -120,7 +120,7 @@ ymaps.ready(init);
 
 function init() {
     var myMap = new ymaps.Map("map", {
-            center: "<%= first.address %>",
+            center: ["<%= first.address %>"],
             zoom: 5,
             controls: []
         }, {
