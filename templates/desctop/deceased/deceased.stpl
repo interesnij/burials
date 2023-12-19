@@ -92,11 +92,7 @@ function init() {
   map = new ymaps.Map('map', {
     center: [<%= deceased.lat %>, <%= deceased.lon %>],
     zoom: 18,
-    controls: ['routePanelControl']
-  });
-  var control = map.controls.get('routePanelControl');
-  control.options.set({
-      autofocus: false
+    controls: []
   });
 
   map.setType('yandex#satellite');
@@ -176,7 +172,7 @@ function init() {
       geocode('#suggest2');
       addrFrom = document.body.querySelector("#suggest1").value;
 
-      var _location = ymaps.geolocation.get();
+      var _location = ymaps.geolocation.get({mapStateAutoApply: true});
       _location.then(
         function(result) {
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
