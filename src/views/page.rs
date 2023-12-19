@@ -167,13 +167,14 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no last_name"));
         }
         let birth_date: Option<chrono::NaiveDate>;
-        let death_date: Option<chrono::NaiveDate>; 
+        let birth_date: Option<chrono::NaiveDate>;
+        let location: Option<String>; 
         let birth_date_dd = params.birth_date.is_some() && params.birth_date.unwrap().format("%Y-%m-%d").to_string() == "2023-11-25".to_string();
         let death_date_dd = params.death_date.is_some() && params.death_date.unwrap().format("%Y-%m-%d").to_string() == "2023-11-25".to_string();
-        println!("birth_date_dd {:?}", birth_date_dd);
-        println!("death_date_dd {:?}", death_date_dd);
-        println!("birth_format {:?}", params.birth_date.unwrap().format("%Y-%m-%d").to_string());
-        println!("death_format {:?}", params.death_date.unwrap().format("%Y-%m-%d").to_string());
+        //println!("birth_date_dd {:?}", birth_date_dd);
+        //println!("death_date_dd {:?}", death_date_dd);
+        //println!("birth_format {:?}", params.birth_date.unwrap().format("%Y-%m-%d").to_string());
+        //println!("death_format {:?}", params.death_date.unwrap().format("%Y-%m-%d").to_string());
         if birth_date_dd {
             birth_date = None;
         }
@@ -186,6 +187,14 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         else {
             death_date = params.death_date;
         }
+
+        if params.location.is_none() {
+            location = None;
+        }
+        else {
+            location = params.location.clone();
+        }
+
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
             params.first_name.as_deref().unwrap().to_string(),
@@ -193,7 +202,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             params.last_name.as_deref().unwrap().to_string(),
             birth_date,
             death_date,
-            params.location.clone(),
+            location,
         );
         if user_id.is_some() {
             let _request_user = user_id.unwrap();
