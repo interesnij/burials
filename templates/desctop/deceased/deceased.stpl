@@ -92,8 +92,13 @@ function init() {
   map = new ymaps.Map('map', {
     center: [<%= deceased.lat %>, <%= deceased.lon %>],
     zoom: 18,
-    controls: []
-  }); 
+    controls: ['routePanelControl']
+  });
+  var control = myMap.controls.get('routePanelControl');
+  control.options.set({
+      autofocus: false
+  });
+  
   map.setType('yandex#satellite');
       map.geoObjects
           .add(new ymaps.Placemark([<%= deceased.lat %>, <%= deceased.lon %>], {
