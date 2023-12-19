@@ -82,12 +82,12 @@ function init() {
     map, routePanelControl,
     addrFrom, addrTo;
 
-
+  var map;
   map = new ymaps.Map('map', {
     center: [<%= deceased.lat %>, <%= deceased.lon %>],
-    zoom: 14,
+    zoom: 17,
     controls: []
-  });
+  }); 
   map.setType('yandex#satellite');
       map.geoObjects
           .add(new ymaps.Placemark([<%= deceased.lat %>, <%= deceased.lon %>], {
