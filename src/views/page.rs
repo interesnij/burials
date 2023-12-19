@@ -189,13 +189,13 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         }
 
         if params.location.is_none() {
-            println("location None!!!");
+            println!("location None!!!");
             location = None;
         }
         else {
             location = params.location.clone();
             if &location.as_deref().unwrap().to_string() == &"xxx".to_string() {
-                println("location empty!!!");
+                println!("location empty!!!");
                 location = None;
             }
         }
