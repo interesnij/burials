@@ -253,7 +253,7 @@ on('body', 'click', '.search_deceaseds', function() {
     console.log("no death_date");
     death_date = today;
   }
-  if (!location) {
+  if (!_location) {
     console.log("no location");
     _location = " ";
   } 
