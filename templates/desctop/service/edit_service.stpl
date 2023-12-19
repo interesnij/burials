@@ -66,7 +66,7 @@
                             <div class="grid grid-cols-1">
                                 <div class="mt-5">
                                     <label class="form-label font-medium">Описание : </label>
-                                    <input <% if service.description.is_some() { %>value="<%= service.description.as_deref().unwrap() %>"<% } %>  
+                                    <input value="<%= service.description %>"  
                                         id="id_description" 
                                         name="description" 
                                         type="text" 
