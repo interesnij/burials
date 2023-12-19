@@ -113,7 +113,7 @@
 
 <% if all_places.len() > 0 { %>
 
-<% let first = all_places[0]; %>
+<% let first = &all_places[0]; %>
 
 <script>
 ymaps.ready(init);
