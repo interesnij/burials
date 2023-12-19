@@ -12,123 +12,312 @@
 
                     <div class="lg:col-span-6 md:col-span-7">
                         <div class="">
-                            <h5 class="lg:text-4xl lg:leading-relaxed text-2xl font-semibold">
+                            <h1 class="font-semibold">
                                 <%= deceased.last_name %> 
-                                <%= deceased.first_name %>
+                                <%= deceased.first_name %> 
                                 <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
                                 <% } %>
-                            </h5>
+                            </h1>
 
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                               
                                     <h6 class="text-lg font-semibold">
                                         Годы жизни
                                     </h6>
-                                    <p class="text-2xl font-semibold mt-2">
+                                    <p class="font-semibold mt-2">
                                         <%= deceased.birth_date.format("%d-%m-%Y").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y").to_string() %>
                                     </p>
+
+                            </div>
+                            <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                               
+                                    <h6 class="text-lg font-semibold">
+                                        Кладбище
+                                    </h6>
+                                    <p class="font-semibold mt-2">
+                                        <a href="/places/<%= _place.id %>/deceased_list/" class="">
+                                            <%= _place.title %>
+                                        </a> 
+                                        <br />
+                                        <span class="font-semibold small">
+                                          <%=_place.get_loc() %>
+                                        </span>
+                                        <br />
+                                        <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
+                                            data-geo="<%= deceased.lat %>, <%= deceased.lon %>"
+                                        >
+                                          Маршрут
+                                        </a>
+                                      </p>
                             </div>
 
-                            <div class="mt-6">
-                                <a href="/places/<%= _place.id %>/deceased_list/" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mr-2">
-                                    <%= _place.title %>
-                                </a> 
-                                <p>
-                                    <%=_place.get_loc() %>
-                                </p>
-                            </div>
+                            <% include!("map.stpl"); %>
                         </div>
                     </div>
                 </div>
 
             </div>
-                <!--
-                <section class="relative md:py-24 py-16 overflow-hidden">
-                    <div class="container">
-                        <div class="grid grid-cols-1 pb-8 text-center">
-                            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Слова памяти!</h3>
-                            <p class="text-slate-400 max-w-xl mx-auto">Если вы знали этого человека можете оставить слова памяти о нем!</p>
-                        </div>
-                    </div>
-        
-                    <div class="container-fluid">
-                        <div class="grid grid-cols-1 mt-8">
-                            <div class="slider relative overflow-hidden m-auto mb-4 before:content-[''] before:absolute before:top-0 before:left-0 before:z-2 after:content-[''] after:absolute after:top-0 after:right-0 after:z-2">
-                                <div class="slide-track flex items-center">
-                                    <div class="slide h-auto md:w-[360px] w-72 m-2">
-
-
-
-                                        <ul class="space-y-4">
-                                            <li class="rounded-lg shadow dark:shadow-gray-800 p-6">
-                                                <div class="flex items-center pb-6 border-b border-gray-100 dark:border-gray-800">
-                                                    <img src="static/images/user/01.jpg" class="h-16 w-16 rounded-full shadow dark:shadow-gray-800" alt="">
-                    
-                                                    <div class="pl-4">
-                                                        <a href="/user/{id}/" class="text-lg hover:text-indigo-600 duration-500 ease-in-out"
-                                                        
-                                                        
-                                                        >Иванов Иван
-                                                        
-                                                        </a>
-                                                        <p class="text-slate-400">Пользователь</p>
-                                                    </div>
-                                                </div>
-                    
-                                                <div class="mt-6">
-                                                    <p class="text-slate-400">
-                                                    
-                                                    "Дорогой , ты всегда был в наших сердцах и теперь твоя память живет и в виртуальном мире. Ты оставил незабываемый след в нашей жизни.
-                                                    
-                                                    </p>
-                                                    
-                                                </div>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                  </div>
-                            </div>
-                        </div>
-        
-        
-                    <div class="container md:mt-24 mt-16">
-                        <div class="grid grid-cols-1 pb-8 text-center">
-                            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Организации работающие в вашем городе</h3>
-        
-                            <p class="text-slate-400 max-w-xl mx-auto">Найдите организацию или услугу действующую в вашем районе</p>
-                        </div>
-        
-                        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
-                            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden">
-
-                                <img src="/static/images/service/service1.jpg" alt="">
-        
-                                <div class="content p-6">
-                                    <a href="/organization/{id}/services/" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
-                                    
-                                    Памятники/Надгробия
-                                    
-                                    </a>
-                                    <p class="text-slate-400 mt-3"> 
-                                    
-                                    создание и установка монументов, сохраняющих память о ушедших и служащих в качестве места для вечной памяти
-                                    
-                                    </p>
-                                    
-                                    <div class="mt-4">
-                                        <a 
-                                        
-                                        href="/organization/{id}/services/" 
-                                        
-                                        class="btn btn-link font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Подробнее <i class="uil uil-arrow-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </section>
-                 -->
 
 <% include!("../anon_footer.stpl"); %>
+
+<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+<script>
+ymaps.ready(init);
+
+function successPos(pos) {
+  return pos.coords;
+}
+function getPos() {
+  navigator.geolocation.getCurrentPosition(position => {
+    return position.coords
+  });
+    //navigator.geolocation.getCurrentPosition(successPos);
+}
+function ConvertToDecimal(num) {
+    num = num.toString(); //If it's not already a String
+    return num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
+}
+
+function init() {
+  var DELIVERY_TARIFF = 20,
+    MINIMUM_COST = 500;
+
+  var suggestView = new ymaps.SuggestView('suggest1'),
+    suggestView = new ymaps.SuggestView('suggest2'),
+    map, routePanelControl,
+    addrFrom, addrTo;
+
+  var map; 
+  map = new ymaps.Map('map', {
+    center: [<%= deceased.lat %>, <%= deceased.lon %>],
+    zoom: 18,
+    controls: []
+  });
+
+  map.setType('yandex#satellite');
+      map.geoObjects
+          .add(new ymaps.Placemark([<%= deceased.lat %>, <%= deceased.lon %>], {
+          balloonContent: '<%= deceased.last_name %> <%= deceased.first_name %>',
+          iconCaption: ''
+      }, {
+          preset: 'islands#blueCircleDotIconWithCaption',
+          iconCaptionMaxWidth: '50',
+          iconLayout: 'default#image',
+          iconImageHref: '<%= deceased.get_image() %>',
+          icon_imagesize: [30, 42],
+          iconImageOffset: [-3, -42]
+      }));
+
+  //////////////////////////////////
+  routePanelControl = new ymaps.control.RoutePanel({
+      options: {
+        showHeader: true,
+        title: 'Расчёт расстояния'
+      }
+    });
+    var zoomControl = new ymaps.control.ZoomControl({
+      options: {
+        size: 'small',
+        float: 'none',
+        position: {
+          bottom: 145,
+          right: 10
+        }
+      }
+    });
+    routePanelControl.routePanel.options.set({
+      types: {
+        auto: true
+      }
+    });
+    routePanelControl.routePanel.state.set({
+      fromEnabled: false,
+      toEnabled: false
+    });
+
+    map.controls.add(routePanelControl).add(zoomControl);
+  //////////////////////////////////
+
+
+  $('#button1').bind('click', function(e) {
+    geocode('#suggest1');
+  });
+  $('#button2').bind('click', function(e) {
+    geocode('#suggest2');
+  });
+  $('#button3').bind('click', function(e) {
+    if (addrFrom && addrTo) {
+      showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+    } else {
+      $('#notice3').css('display', 'block');
+    }
+  });
+
+  $('.get_ma').bind('click', function(e) {
+    addrTo = this.getAttribute("data-geo");
+    const g_options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function g_success(pos) {
+      const crd = pos.coords;
+      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
+
+      document.body.querySelector("#suggest1").value = addrFrom;
+      document.body.querySelector("#suggest2").value = addrTo;
+      geocode('#suggest1');
+      geocode('#suggest2');
+      addrFrom = document.body.querySelector("#suggest1").value;
+
+      var _location = ymaps.geolocation.get({mapStateAutoApply: true});
+      _location.then( 
+        function(result) {
+          addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
+          console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
+        },
+        function(err) {
+          console.log('Ошибка: ' + err)
+        }
+      );
+
+      addrTo = document.body.querySelector("#suggest2").value;
+      if (addrFrom && addrTo) {
+        showRoute(addrFrom, addrTo);
+      } else {
+        alert("Согласитесь на отслеживание Вашего местоположение");
+      }
+      
+    }
+
+    function g_error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
+  });
+
+
+  function geocode(ctrl_id) {
+    var request = $(ctrl_id).val();
+    ymaps.geocode(request).then(function(res) {
+      var obj = res.geoObjects.get(0),
+        error, hint;
+
+      if (obj) {
+        switch (obj.properties.get('metaDataProperty.GeocoderMetaData.precision')) {
+          case 'exact':
+            break;
+          case 'number':
+          case 'near':
+          case 'range':
+            error = 'Неточный адрес, требуется уточнение';
+            hint = 'Уточните номер дома';
+            break;
+          case 'street':
+            error = 'Неполный адрес, требуется уточнение';
+            hint = 'Уточните номер дома';
+            break;
+          case 'other':
+          default:
+            error = 'Неточный адрес, требуется уточнение';
+            hint = 'Уточните адрес';
+        }
+      } else {
+        error = 'Адрес не найден';
+        hint = 'Уточните адрес';
+      }
+
+      if (error) {
+        if (ctrl_id == '#suggest1') {
+          addrFrom = null
+        } else {
+          addrTo = null
+        }
+        showError(ctrl_id, error);
+        showMessage(ctrl_id, hint);
+      } else {
+        if (ctrl_id == '#suggest1') {
+          addrFrom = obj
+        } else {
+          addrTo = obj
+        }
+        showResult(ctrl_id);
+      }
+      if (addrFrom && addrTo) {
+        $('#notice3').css('display', 'none');
+      } else {
+        $('#notice3').css('display', 'block');
+      }
+    }, function(e) {
+      console.log(e)
+    })
+
+  }
+
+  function showResult(ctrl_id) {
+    $(ctrl_id).removeClass('input_error');
+    $('#notice1').css('display', 'none');
+    $('#notice2').css('display', 'none');
+    if (ctrl_id == '#suggest1') {
+      showMessage(ctrl_id, addrFrom.getAddressLine());
+    } else {
+      showMessage(ctrl_id, addrTo.getAddressLine());
+    }
+  }
+
+  function showError(ctrl_id, message) {
+    $(ctrl_id).addClass('input_error');
+    if (ctrl_id == '#suggest1') {
+      $('#notice1').text(message);
+      $('#notice1').css('display', 'block');
+    } else {
+      $('#notice2').text(message);
+      $('#notice2').css('display', 'block');
+    }
+
+  }
+
+  function showRoute(from, to) {
+    routePanelControl.routePanel.state.set({
+      from: from,
+      to: to
+    });
+    routePanelControl.routePanel.getRouteAsync().then(function(route) {
+      route.model.setParams({
+        results: 1
+      }, true);
+      route.model.events.add('requestsuccess', function() {
+        var activeRoute = route.getActiveRoute();
+        if (activeRoute) {
+          var length = route.getActiveRoute().properties.get("distance");
+          price = calculate(Math.round(length.value / 1000)),
+            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<span>Расстояние: ' + length.text + '.</span><br/>' +
+              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+            
+            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<span>Расстояние: ' + length.text + '.</span><br/>');
+          route.options.set('routeBalloonContentLayout', balloonContentLayout);
+          activeRoute.balloon.open();
+        }
+      });
+    });
+  }
+
+  function showMessage(ctrl_id, message) {
+    if (ctrl_id == '#suggest1') {
+      $('#messageHeader1').html('<b>Пункт отправления:</b>');
+      $('#message1').html(message);
+    } else {
+      $('#messageHeader2').html('<b>Пункт назначения:</b>');
+      $('#message2').html(message);
+    }
+  }
+  function calculate(routeLength) {
+    return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
+  }
+}
+</script>

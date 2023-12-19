@@ -173,7 +173,7 @@ function init() {
       addrFrom = document.body.querySelector("#suggest1").value;
 
       var _location = ymaps.geolocation.get({mapStateAutoApply: true});
-      _location.then(
+      _location.then( 
         function(result) {
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
           console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);

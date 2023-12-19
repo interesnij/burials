@@ -170,7 +170,7 @@ function init() {
       geocode('#suggest2');
       addrFrom = document.body.querySelector("#suggest1").value;
 
-      var _location = ymaps.geolocation.get();
+      var _location = ymaps.geolocation.get({mapStateAutoApply: true});
       _location.then(
         function(result) {
           // Добавление местоположения на карту.
