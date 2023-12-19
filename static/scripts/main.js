@@ -255,9 +255,9 @@ on('body', 'click', '.search_deceaseds', function() {
   }
   console.log("_location len", _location.length);
 
-  if (!_location) {
+  if (_location.length == 0) {
     console.log("no location");
-    _location = " ";
+    _location = "xxx";
   } 
   console.log(birth_date);
   console.log(death_date);
