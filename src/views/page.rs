@@ -193,7 +193,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             params.last_name.as_deref().unwrap().to_string(),
             birth_date,
             death_date,
-            params.location,
+            params.location.clone(),
         );
         if user_id.is_some() {
             let _request_user = user_id.unwrap();
