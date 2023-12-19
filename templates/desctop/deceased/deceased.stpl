@@ -40,10 +40,16 @@
                                             <%= _place.title %>
                                         </a> 
                                         <br />
-                                        <p class="text-lg font-semibold small">
-                                        <%=_place.get_loc() %>
-                                        </p>
-                                    </p>
+                                        <span class="font-semibold small">
+                                          <%=_place.get_loc() %>
+                                        </span>
+                                        <br />
+                                        <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
+                                            data-geo="<%= deceased.lat %>, <%= deceased.lon %>"
+                                        >
+                                          Маршрут
+                                        </a>
+                                      </p>
                             </div>
 
                             <% include!("map.stpl"); %>
@@ -82,10 +88,10 @@ function init() {
     map, routePanelControl,
     addrFrom, addrTo;
 
-  var map;
+  var map; 
   map = new ymaps.Map('map', {
     center: [<%= deceased.lat %>, <%= deceased.lon %>],
-    zoom: 17,
+    zoom: 20,
     controls: []
   }); 
   map.setType('yandex#satellite');
