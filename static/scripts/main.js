@@ -234,7 +234,7 @@ on('body', 'click', '.search_deceaseds', function() {
   }
   birth_date = form.querySelector("#id_birth_date").value;
   death_date = form.querySelector("#id_death_date").value;
-  location = form.querySelector("#id_location").value;
+  _location = form.querySelector("#id_location").value;
 
   var dd = 25;
   var mm = 11;
@@ -255,12 +255,12 @@ on('body', 'click', '.search_deceaseds', function() {
   }
   if (!location) {
     console.log("no location");
-    location = " ";
+    _location = " ";
   } 
   console.log(birth_date);
   console.log(death_date);
-  console.log(location);
-  
+  console.log(_location);
+
   url = "/main_search?first_name=" +
         form.querySelector("#id_first_name").value +
         "&middle_name=" +
@@ -272,7 +272,7 @@ on('body', 'click', '.search_deceaseds', function() {
         "&death_date=" +
         death_date +
         "&location=" +
-        location;
+        _location;
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
   link.open( 'GET', url, true );
