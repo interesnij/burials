@@ -325,24 +325,37 @@ on('body', 'change', '.load_regions', function() {
 
 on('body', 'click', '#create_organization', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название организации");
       return
   }
   else if (!form.querySelector("#id_description").value) {
     form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите описание организации");
     return
   }
   else if (!form.querySelector("#id_director").value) {
     form.querySelector("#id_director").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите директора организации");
     return
   }
   else if (!form.querySelector("#id_phone").value) {
     form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите телефон организации");
     return
   }
-  else if (!form.querySelector("#id_phone").value) {
-    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну организации");
     return
   }
   form_data = new FormData(form);
@@ -358,26 +371,40 @@ on('body', 'click', '#create_organization', function() {
 on('body', 'click', '#edit_organization', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_name").value) {
-    form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-    return
+      form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название организации");
+      return
   }
   else if (!form.querySelector("#id_description").value) {
     form.querySelector("#id_description").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите описание организации");
     return
   }
   else if (!form.querySelector("#id_director").value) {
     form.querySelector("#id_director").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите директора организации");
     return
   }
   else if (!form.querySelector("#id_phone").value) {
     form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите телефон организации");
     return
   }
-  else if (!form.querySelector("#id_phone").value) {
-    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+  else if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну организации");
     return
   }
+  
   form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -391,9 +418,19 @@ on('body', 'click', '#edit_organization', function() {
 
 on('body', 'click', '#create_loc', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement;
-  if (!form.querySelector("#id_address2").value) {
-      form.querySelector("#id_address2").style.setProperty('border', '1px #FF0000 solid', 'important');
+
+  form.querySelector("#country_id").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_address2").style.setProperty('border', 'unset', 'important');
+
+  if (!form.querySelector("#country_id").value) {
+      form.querySelector("#country_id").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите страну организации");
       return
+  }
+  else if (!form.querySelector("#id_address2").value) {
+    form.querySelector("#id_address2").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите улицу и дом организации");
+    return
   }
   form_data = new FormData(form);
   
@@ -409,8 +446,18 @@ on('body', 'click', '#create_loc', function() {
 on('body', 'click', '#edit_loc', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement;
-  if (!form.querySelector("#id_address2").value) {
+
+  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_address2").style.setProperty('border', 'unset', 'important');
+
+  if (!form.querySelector("#id_country").value) {
+    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите страну организации");
+    return
+  }
+  else if (!form.querySelector("#id_address2").value) {
     form.querySelector("#id_address2").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите улицу и дом организации");
     return
   }
   

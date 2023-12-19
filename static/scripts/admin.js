@@ -16,6 +16,7 @@ on('body', 'click', '#create_country', function() {
     let form = this.parentElement.parentElement.parentElement;
     if (!form.querySelector("#id_name").value) {
         form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+        toast_error("Укажите название страны");
         return
       }
       form_data = new FormData(form);
@@ -33,6 +34,7 @@ on('body', 'click', '#edit_country', function() {
     form = _this.parentElement.parentElement.parentElement;
     if (!form.querySelector("#id_name").value) {
         form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+        toast_error("Укажите название страны");
         return
       }
       form_data = new FormData(form);
@@ -61,6 +63,7 @@ on('body', 'click', '#create_region', function() {
   let form = this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название региона");
       return
     }
     form_data = new FormData(form);
@@ -78,6 +81,7 @@ on('body', 'click', '#edit_region', function() {
   form = _this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название региона");
       return
     }
     form_data = new FormData(form);
@@ -101,6 +105,7 @@ on('body', 'click', '#create_city', function() {
   let form = this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название города");
       return
     }
     form_data = new FormData(form);
@@ -118,6 +123,7 @@ on('body', 'click', '#edit_city', function() {
   form = _this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название города");
       return
     }
     form_data = new FormData(form);
@@ -140,8 +146,9 @@ on('body', 'click', '#create_district', function() {
   let form = this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      return
-    }
+      toast_error("Укажите название района");
+      return 
+    } 
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -157,6 +164,7 @@ on('body', 'click', '#edit_district', function() {
   form = _this.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название района");
       return
     }
     form_data = new FormData(form);
@@ -171,7 +179,7 @@ on('body', 'click', '#edit_district', function() {
 });
 
 on('body', 'click', '.remove_district', function() {
-  delete_item("/delete_district/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
+  delete_item("/delete_district/" + this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
 
@@ -180,6 +188,7 @@ on('body', 'click', '#create_place', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название кладбища");
       return
     } 
     form_data = new FormData(form);
@@ -197,6 +206,7 @@ on('body', 'click', '#edit_place', function() {
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название кладбища");
       return
     } 
     form_data = new FormData(form);
@@ -218,11 +228,51 @@ on('body', 'click', '.remove_place', function() {
 
 on('body', 'click', '#create_deceased', function() { 
   let form = this.parentElement.parentElement.parentElement;
+  form.querySelector("#id_first_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_last_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_birth_date").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_death_date").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#get_my_lat").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#get_my_lon").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите имя усопшего");
       return
-    } 
-    form_data = new FormData(form);
+  }
+  else if (!form.querySelector("#id_last_name").value) {
+    form.querySelector("#id_last_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите фамилию усопшего");
+    return
+  }
+  else if (!form.querySelector("#id_birth_date").value) {
+    form.querySelector("#id_birth_date").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите дату рождения усопшего");
+    return
+  }
+  else if (!form.querySelector("#id_death_date").value) {
+    form.querySelector("#id_death_date").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите дату смерти усопшего");
+    return
+  }
+  else if (!form.querySelector("#place_id").value) {
+    form.querySelector("#place_id").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите место захоронения усопшего");
+    return
+  }
+  else if (!form.querySelector("#get_my_lat").value) {
+    form.querySelector("#get_my_lat").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите широту местоположения усопшего");
+    return
+  }
+  else if (!form.querySelector("#get_my_lon").value) {
+    form.querySelector("#get_my_lon").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите долготу местоположения усопшего");
+    return
+  }
+
+  form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'POST', "/create_deceased/", true );
@@ -235,11 +285,51 @@ on('body', 'click', '#create_deceased', function() {
 on('body', 'click', '#edit_deceased', function() {
   _this = this; 
   form = _this.parentElement.parentElement.parentElement;
+  form.querySelector("#id_first_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_last_name").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_birth_date").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_death_date").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#get_my_lat").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#get_my_lon").style.setProperty('border', 'unset', 'important');
+
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите имя усопшего");
       return
-    }
-    form_data = new FormData(form);
+  }
+  else if (!form.querySelector("#id_last_name").value) {
+    form.querySelector("#id_last_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите фамилию усопшего");
+    return
+  }
+  else if (!form.querySelector("#id_birth_date").value) {
+    form.querySelector("#id_birth_date").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите дату рождения усопшего");
+    return
+  }
+  else if (!form.querySelector("#id_death_date").value) {
+    form.querySelector("#id_death_date").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите дату смерти усопшего");
+    return
+  }
+  else if (!form.querySelector("#place_id").value) {
+    form.querySelector("#place_id").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите место захоронения усопшего");
+    return
+  }
+  else if (!form.querySelector("#get_my_lat").value) {
+    form.querySelector("#get_my_lat").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите широту местоположения усопшего");
+    return
+  }
+  else if (!form.querySelector("#get_my_lon").value) {
+    form.querySelector("#get_my_lon").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите долготу местоположения усопшего");
+    return
+  }
+  
+  form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'POST', "/edit_deceased/" + _this.getAttribute("data-pk") + "/", true );

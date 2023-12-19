@@ -1,0 +1,21 @@
+<div id="map_header" style="margin-top:50px" class="hidden">
+                <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
+                <button type="submit" id="button1">Проверить</button>
+                <p id="notice1"></p>
+                <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
+                <button type="submit" id="button2">Проверить</button>
+                <p id="notice2"></p>
+              </div>
+              <div id="route" class="hidden">
+                <button type="submit" id="button3">Построить маршрут</button>
+                <p id="notice3"></p>
+              </div>
+
+              <div id="map" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div> 
+
+              <div id="map_footer">
+                <div id="messageHeader1"></div>
+                <div id="message1"></div>
+                <div id="messageHeader2"></div>
+                <div id="message2"></div>
+              </div>

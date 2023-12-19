@@ -31,7 +31,7 @@
                                 </div>
                                 <p>Загрузите изображение</p>
                             </div> 
-                        </div>
+                        </div> 
                     </div>
 
                 <div class="lg:col-span-9 md:col-span-8">
@@ -44,14 +44,14 @@
                                         class="form-input w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 
                                         dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 
                                         dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 mt-2" 
-                                        placeholder="Название" 
+                                        placeholder="Название"
                                         id="id_name"
                                         name="name" 
                                     > 
                                 </div>
 
                                 <div>
-                                    <label class="form-label font-medium">Описание : </label>
+                                    <label class="form-label font-medium">Описание : <span class="text-red-600">*</span></label>
                                     <input 
                                         name="description" 
                                         id="id_description" 
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div> 
-                                    <label class="form-label font-medium">Руководитель : </label>
+                                    <label class="form-label font-medium">Руководитель : <span class="text-red-600">*</span></label>
                                     <input 
                                         name="director" 
                                         id="id_director" 
@@ -75,7 +75,7 @@
                                 
                                 </div>
                                 <div>
-                                    <label class="form-label font-medium">Контактный номер : </label>
+                                    <label class="form-label font-medium">Контактный номер : <span class="text-red-600">*</span></label>
                                     <input 
                                         name="phone" 
                                         id="id_phone" 
@@ -88,8 +88,8 @@
                             </div>                                    
 
                             <div class="md:col-span-6 col-span-12 text-start">
-                                <label class="font-semibold">Страна:</label>
-                                <select name="country_id" class="form-select load_regions form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <label class="font-semibold">Страна: <span class="text-red-600">*</span></label>
+                                <select id="id_country" name="country_id" class="form-select load_regions form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     <option value="">Выберите страну</option>
                                     <% for i in country_list.iter() { %>
                                         <option value="<%= i.id %>"><%= i.name %></option>
@@ -111,10 +111,8 @@
                                 </div>
                             </div>
 
-                            
-                            <br>
                                 <div class="md:col-span-3 col-span-12 text-start">
-                                    <label class="font-semibold md:invisible md:block hidden">Часы работы:</label>
+                                    <label class="font-semibold md:invisible md:block hidden">Часы работы: <span class="text-red-600">*</span></label>
                                     <div class="relative mt-1">
                                         <input type="text" 
                                             class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded 
@@ -123,9 +121,7 @@
                                         >
                                     </div>
                                 </div>
-
-                            <br><br>
-
+                            <br>
                             <button type="button" id="create_organization" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 
                                 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">
                                 Добавить
