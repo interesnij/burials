@@ -91,7 +91,7 @@ function init() {
   var map; 
   map = new ymaps.Map('map', {
     center: [<%= deceased.lat %>, <%= deceased.lon %>],
-    zoom: 20,
+    zoom: 18,
     controls: []
   }); 
   map.setType('yandex#satellite');
