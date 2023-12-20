@@ -427,8 +427,6 @@ on('body', 'click', '#edit_deceased', function() {
   _input = form.querySelector("#pro-img");
   _path = form.querySelector("#image").getAttribute("src");
   get_image_value(_input, _path);
-
-  form.querySelector("#get_my_lon")
   
   form_data = new FormData(form);
   
