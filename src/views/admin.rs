@@ -64,7 +64,7 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/delete_district/", web::post().to(delete_district));
     config.route("/create_city/", web::post().to(create_city));
     config.route("/edit_city/{id}/", web::post().to(edit_city));
-    config.route("/delete_region/", web::post().to(delete_city));
+    config.route("/delete_city/", web::post().to(delete_city));
 
     config.route("/admin/organizations/", web::get().to(suggested_organizations_page));
 
