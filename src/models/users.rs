@@ -30,14 +30,6 @@ pub struct User {
     pub perm:     i16,
 }
 impl User {
-    pub fn get_image(&self) -> String {
-        if self.image.is_some() {
-            return self.image.as_deref().unwrap().to_string();
-        }
-        else {
-            return "/static/images/img.jpg".to_string();
-        }
-    }
     pub fn get_all(exclude_user_id: i32) -> Vec<Countrie> {
         let _connection = establish_connection();
         return schema::users::table

@@ -86,10 +86,12 @@ pub async fn all_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse>
         #[derive(TemplateOnce)] 
         #[template(path = "desctop/admin/users.stpl")]
         struct Template { 
-            users_list: Vec<User>,
+            request_user: User,
+            users_list:   Vec<User>,
         }
         let body = Template {
-            users_list: users_list,
+            request_user: _request_user,
+            users_list:   users_list,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
