@@ -451,8 +451,8 @@ on('body', 'click', '.remove_staff', function() {
   console.log("click");
 });
 on('body', 'click', '.create_admin', function() {
-  delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
   _this = this;
+  delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
   _this.classList.remove("create_admin");
   _this.classList.add("remove_staff");
   _this.innerHTML = "Убрать из админов";
