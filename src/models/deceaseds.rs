@@ -126,13 +126,13 @@ impl Deceased {
         let _connection = establish_connection();
         //println!("birth_date {:?}", birth_date.format("%Y-%m-%d").to_string());
         //println!("death_date {:?}", death_date.format("%Y-%m-%d").to_string());
-        diesel::update(self) 
+        diesel::update(self)
             .set((
                 schema::deceaseds::first_name.eq(first_name),
                 schema::deceaseds::middle_name.eq(middle_name),
                 schema::deceaseds::last_name.eq(last_name),
-                schema::deceaseds::birth_date.eq(birth_date),
-                schema::deceaseds::death_date.eq(death_date),
+                schema::deceaseds::birth_date.eq(chrono::NaiveDate::parse_from_str(birth_date, "%Y-%m-%d").unwrap()),
+                schema::deceaseds::death_date.eq(chrono::NaiveDate::parse_from_str(death_date, "%Y-%m-%d").unwrap()),
                 schema::deceaseds::memory_words.eq(memory_words),
                 schema::deceaseds::lat.eq(lat),
                 schema::deceaseds::lon.eq(lon),
