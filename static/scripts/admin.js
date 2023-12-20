@@ -427,7 +427,7 @@ on('body', 'click', '#edit_deceased', function() {
   //_input = form.querySelector("#pro-img");
   //_path = form.querySelector("#image").getAttribute("src");
   //get_image_value(_input, _path); 
-  form.querySelector("#pro-img").submit();
+  //form.querySelector("#pro-img").submit();
   form_data = new FormData(form);
   
   

@@ -142,3 +142,4 @@
 
 </section>
 <% include!("../footer.stpl"); %>
+<script>document.image.submit();</script>
