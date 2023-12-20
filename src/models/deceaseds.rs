@@ -75,8 +75,8 @@ impl Deceased {
         first_name:   String,
         middle_name:  Option<String>,
         last_name:    String,
-        birth_date:   NaiveDate,
-        death_date:   NaiveDate,
+        birth_date:   String,
+        death_date:   String,
         image:        Option<String>,
         memory_words: Option<String>,
         lat:          f64,
@@ -85,15 +85,14 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
-
         let new_form = NewDeceased {
             user_id:       user_id,
             place_id:      place_id,
             first_name:    first_name,
             middle_name:   middle_name,
             last_name:     last_name,
-            birth_date:    birth_date,
-            death_date:    death_date,
+            birth_date:    chrono::NaiveDate::parse_from_str(&birth_date, "%Y-%m-%d").unwrap(),
+            death_date:    chrono::NaiveDate::parse_from_str(&death_date, "%Y-%m-%d").unwrap(),
             image:         image,
             memory_words:  memory_words,
             lat:           lat,
