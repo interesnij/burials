@@ -124,6 +124,8 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
+        println!("birth_date {:?}", birth_date.format("%Y-%m-%d").to_string());
+        println!("death_date {:?}", death_date.format("%Y-%m-%d").to_string());
         diesel::update(self)
             .set((
                 schema::deceaseds::first_name.eq(first_name),
