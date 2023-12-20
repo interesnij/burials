@@ -3,7 +3,6 @@
     <section class="property-five" style="margin-top:100px;height: 100vh;">
         <div class="container">
         <h4 style="text-decoration: underline" href="/create_organization/">Предложенные фирмы</h4>
-          <div class="row"> 
             <% for i in users_list.iter() { %>
                 <div style="margin-bottom:10px">
                     <div class="flex items-center justify-between">
@@ -14,11 +13,11 @@
                                 
                                 <p class="small"> 
                                     <% if i.is_admin() { %>
-                                        <a class="pointer remove_staff text-slate-400 hover:text-indigo-600 duration-500 ms-5" data-pk="<%= i.id %>">
+                                        <a class="pointer remove_staff hover:text-indigo-600" data-pk="<%= i.id %>">
                                             Убрать из админов
                                         </a>
                                     <% } else { %>
-                                        <a class="pointer create_admin text-slate-400 hover:text-indigo-600 duration-500 ms-5" data-pk="<%= i.id %>">
+                                        <a class="pointer create_admin hover:text-indigo-600" data-pk="<%= i.id %>">
                                             Сделать админом
                                         </a>
                                     <% } %>
@@ -28,7 +27,6 @@
                     </div>
                 </div>
             <% } %>
-          </div>
         </div>
     </section>
 
