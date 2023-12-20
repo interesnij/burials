@@ -91,18 +91,6 @@
                                 </div>
                             </div>                                    
 
-                            <div class="md:col-span-6 col-span-12 text-start">
-                                <label class="font-semibold">Страна: <span class="text-red-600">*</span></label>
-                                <select id="id_country" name="country_id" class="form-select load_regions form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                    <option value="">Выберите страну</option>
-                                    <% for i in country_list.iter() { %>
-                                        <option value="<%= i.id %>"><%= i.name %></option>
-                                    <% } %> 
-                                </select>  
-                            </div> 
-                            <div class="md:col-span-6 col-span-12 text-start load_items"></div>
-						    <span class="no_districts"></span>
-                            
                             <div class="grid grid-cols-12 gap-4 mt-4">
                                 <div class="col-span-12 text-start">
                                     <label class="font-semibold" for="Address">Сайт:</label>

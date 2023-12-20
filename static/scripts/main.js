@@ -343,7 +343,6 @@ on('body', 'click', '#create_organization', function() {
   form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -363,11 +362,6 @@ on('body', 'click', '#create_organization', function() {
   else if (!form.querySelector("#id_phone").value) {
     form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
     toast_error("Укажите телефон организации");
-    return
-  }
-  else if (!form.querySelector("#id_country").value) {
-    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите страну организации");
     return
   }
   form_data = new FormData(form);
@@ -388,7 +382,6 @@ on('body', 'click', '#edit_organization', function() {
   form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -408,11 +401,6 @@ on('body', 'click', '#edit_organization', function() {
   else if (!form.querySelector("#id_phone").value) {
     form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
     toast_error("Укажите телефон организации");
-    return
-  }
-  else if (!form.querySelector("#id_country").value) {
-    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите страну организации");
     return
   }
   
