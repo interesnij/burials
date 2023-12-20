@@ -231,7 +231,6 @@ impl Place {
                         schema::places::title.eq(title),
                         schema::places::description.eq(description),
                         schema::places::hours.eq(hours),
-                        schema::places::image.eq(image),
                         schema::places::address.eq(address),
                         schema::places::director.eq(director),
                         schema::places::phone.eq(phone),
@@ -240,6 +239,13 @@ impl Place {
                     ))
                     .execute(&_connection)
                     .expect("Error.");
+
+            if image.is_some() {
+                diesel::update(self)
+                    .set(schema::places::image.eq(image))
+                    .execute(&_connection)
+                    .expect("Error.");
+            }
         }
         return 1;
     }

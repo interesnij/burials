@@ -108,7 +108,7 @@ impl Deceased {
         
         return 1;
     }
-    pub fn edit ( 
+    pub fn edit (  
         &self,
         user_id:      i32,
         first_name:   String,
