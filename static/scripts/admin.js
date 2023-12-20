@@ -430,8 +430,9 @@ on('body', 'click', '#edit_deceased', function() {
   //form.querySelector("#pro-img").submit();
 
   const dataTransfer = new DataTransfer();
-  var file = new File(["foo"], form.querySelector("#image").src, {});
-  dataTransfer.items.add(file);//your file(s) reference(s)
+  var img = new Image;
+  img.src = form.querySelector("#image").src;
+  dataTransfer.items.add(img);//your file(s) reference(s)
   document.getElementById('pro-img').files = dataTransfer.files;
 
   form_data = new FormData(form);
