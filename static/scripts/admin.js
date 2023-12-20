@@ -360,8 +360,26 @@ on('body', 'click', '#create_deceased', function() {
     }};
     link.send(form_data);
 });
+
+
+function get_image_value(_input, _path) {
+  entrou = false;
+  _input.click();
+  _input.onchange = function() {
+      if (!entrou) {
+          _input.value = _path;
+          reader = new FileReader();
+          reader.readAsDataURL(_input.files[0])
+      }
+      entrou = true;
+      setTimeout(function() {
+          entrou = false
+      }, 1000)
+  }
+};
+
 on('body', 'click', '#edit_deceased', function() {
-  _this = this; 
+  _this = this;  
   form = _this.parentElement.parentElement.parentElement;
   form.querySelector("#id_first_name").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_last_name").style.setProperty('border', 'unset', 'important');
@@ -406,6 +424,11 @@ on('body', 'click', '#edit_deceased', function() {
     toast_error("Укажите долготу местоположения усопшего");
     return
   }
+  _input = form.querySelector("#pro-img");
+  _path = form.querySelector("#image").getAttribute("src");
+  get_image_value(_input, _path);
+
+  form.querySelector("#get_my_lon")
   
   form_data = new FormData(form);
   
@@ -419,7 +442,7 @@ on('body', 'click', '#edit_deceased', function() {
 });
 
 on('body', 'click', '.remove_deceased', function() {
-  delete_item("/delete_deceased/" + _this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
+  delete_item("/delete_deceased/" + this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
 
