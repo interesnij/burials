@@ -455,9 +455,11 @@ on('body', 'click', '.toggle_admin', function() {
   if (_this.classList.contains("admin")) {
     delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
     _this.classList.remove("admin");
+    _this.innerHTML = "Сделать админом";
   }else {
     delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
     _this.classList.add("admin");
+    _this.innerHTML = "Убрать из админов";
   }
   console.log("click");
 });
