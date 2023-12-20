@@ -23,7 +23,7 @@
 	<div class="container">
 		
 		<div class="md:grid-cols-12 gap-[30px]">
-		<form>
+		<form name="foo">
 			<div class="lg:col-span-3 md:col-span-4">
 				<div class="group profile-pic w-[112px]">
 					<input id="pro-img" value="<%= deceased.get_image() %>" name="image" type="file" class="hidden" onchange="loadFile(event)" />
@@ -142,4 +142,4 @@
 
 </section>
 <% include!("../footer.stpl"); %>
-<script>document.image.submit();</script>
+<script>document.foo.submit();</script>
