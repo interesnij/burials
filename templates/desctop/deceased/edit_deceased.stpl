@@ -142,4 +142,3 @@
 
 </section>
 <% include!("../footer.stpl"); %>
-<script>document.foo.submit();</script>

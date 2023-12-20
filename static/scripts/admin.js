@@ -428,6 +428,11 @@ on('body', 'click', '#edit_deceased', function() {
   //_path = form.querySelector("#image").getAttribute("src");
   //get_image_value(_input, _path); 
   //form.querySelector("#pro-img").submit();
+
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(form.querySelector("#image").getAttribute("src"));//your file(s) reference(s)
+  document.getElementById('pro-img').files = dataTransfer.files;
+
   form_data = new FormData(form);
   
   
