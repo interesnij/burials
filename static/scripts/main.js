@@ -343,7 +343,6 @@ on('body', 'click', '#create_organization', function() {
   form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
 
   if (!form.querySelector("#id_name").value) {
@@ -389,7 +388,6 @@ on('body', 'click', '#edit_organization', function() {
   form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
   form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
 
   if (!form.querySelector("#id_name").value) {
