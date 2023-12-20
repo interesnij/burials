@@ -71,7 +71,7 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["first_name", "last_name","middle_name", "memory_words"];
+        let string_list = ["birth_date", "death_date", "first_name", "last_name","middle_name", "memory_words"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
