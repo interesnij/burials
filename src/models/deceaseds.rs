@@ -131,7 +131,6 @@ impl Deceased {
                 schema::deceaseds::last_name.eq(last_name),
                 schema::deceaseds::birth_date.eq(birth_date),
                 schema::deceaseds::death_date.eq(death_date),
-                schema::deceaseds::image.eq(image),
                 schema::deceaseds::memory_words.eq(memory_words),
                 schema::deceaseds::lat.eq(lat),
                 schema::deceaseds::lon.eq(lon),
@@ -139,6 +138,12 @@ impl Deceased {
             .execute(&_connection)
             .expect("Error.");
         
+        if image.is_some() {
+            diesel::update(self)
+                .set(schema::deceaseds::image.eq(image))
+                .execute(&_connection)
+                .expect("Error.");
+        }
         return 1;
     }
     pub fn delete(&self) -> i16 {

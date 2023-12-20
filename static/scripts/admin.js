@@ -424,19 +424,8 @@ on('body', 'click', '#edit_deceased', function() {
     toast_error("Укажите долготу местоположения усопшего");
     return
   }
-  //_input = form.querySelector("#pro-img");
-  //_path = form.querySelector("#image").getAttribute("src");
-  //get_image_value(_input, _path); 
-  //form.querySelector("#pro-img").submit();
-
-  const dataTransfer = new DataTransfer();
-  var img = new Image;
-  img.src = form.querySelector("#image").src;
-  dataTransfer.items.add(img);//your file(s) reference(s)
-  document.getElementById('pro-img').files = dataTransfer.files;
 
   form_data = new FormData(form);
-  
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'POST', "/edit_deceased/" + _this.getAttribute("data-pk") + "/", true );
