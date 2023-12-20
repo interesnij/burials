@@ -427,8 +427,9 @@ on('body', 'click', '#edit_deceased', function() {
   //_input = form.querySelector("#pro-img");
   //_path = form.querySelector("#image").getAttribute("src");
   //get_image_value(_input, _path); 
-  document.image.submit();
+  form.querySelector("#pro-img").submit();
   form_data = new FormData(form);
+  
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'POST', "/edit_deceased/" + _this.getAttribute("data-pk") + "/", true );
