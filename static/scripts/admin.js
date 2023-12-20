@@ -6,7 +6,7 @@ function delete_item(url, id) {
     link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     link.onreadystatechange = function () {
     if ( link.readyState == 4 && link.status == 200 ) {
-      toast_success("Удалено!");
+      toast_info("Сделано!");
     }};
     link.send(form_data);
 };
@@ -443,14 +443,16 @@ on('body', 'click', '.unpublish_organization', function() {
 });
 
 on('body', 'click', '.remove_staff', function() {
-  this.classList.remove("remove_staff");
-  this.classList.add("create_admin");
-  this.innerHTML = "Сделать админом";
-  delete_item("/users/remove_staff/", this.getAttribute("data-pk"));
+  _this = this;
+  _this.classList.remove("remove_staff");
+  _this.classList.add("create_admin");
+  _this.innerHTML = "Сделать админом";
+  delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
 });
 on('body', 'click', '.create_admin', function() {
-  this.classList.remove("create_admin");
-  this.classList.add("remove_staff");
-  this.innerHTML = "Убрать из админов";
-  delete_item("/users/create_admin/", this.getAttribute("data-pk"));
+  _this = this;
+  _this.classList.remove("create_admin");
+  _this.classList.add("remove_staff");
+  _this.innerHTML = "Убрать из админов";
+  delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
 });
