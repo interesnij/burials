@@ -437,7 +437,7 @@ on('body', 'click', '#edit_deceased', function() {
 });
 
 on('body', 'click', '.remove_deceased', function() {
-  delete_item("/delete_deceased/" + this.getAttribute("data-pk") + "/", this.getAttribute("data-pk"));
+  delete_item("/delete_deceased/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
 
