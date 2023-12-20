@@ -450,11 +450,14 @@ on('body', 'click', '.remove_admin', function() {
   _this.innerHTML = "Сделать админом";
   console.log("click");
 });
-on('body', 'click', '.create_admin', function() {
+on('body', 'click', '.toggle_admin', function() {
   _this = this;
-  delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
-  _this.classList.remove("create_admin");
-  _this.classList.add("remove_admin"); 
-  _this.innerHTML = "Убрать из админов";
+  if (_this.classList.contains("admin")) {
+    delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
+    _this.classList.replace("admin");
+  }else {
+    delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
+    _this.classList.replace("admin");
+  }
   console.log("click");
 });

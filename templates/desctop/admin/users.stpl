@@ -12,11 +12,11 @@
                                 
                                 <p class="small"> 
                                     <% if i.is_admin() { %>
-                                        <a class="pointer remove_admin hover:text-indigo-600" data-pk="<%= i.id %>">
+                                        <a class="pointer toggle_admin <% if i.is_admin() { %>admin<% } %> hover:text-indigo-600" data-pk="<%= i.id %>">
                                             Убрать из админов
-                                        </a>
+                                        </a> 
                                     <% } else { %>
-                                        <a class="pointer create_admin hover:text-indigo-600" data-pk="<%= i.id %>">
+                                        <a class="pointer toggle_admin <% if i.is_admin() { %>admin<% } %> hover:text-indigo-600" data-pk="<%= i.id %>">
                                             Сделать админом
                                         </a>
                                     <% } %>
