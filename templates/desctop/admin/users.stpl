@@ -2,7 +2,6 @@
 
     <section class="property-five" style="margin-top:100px;height: 100vh;">
         <div class="container">
-        <h4 style="text-decoration: underline" href="/create_organization/">Предложенные фирмы</h4>
             <% for i in users_list.iter() { %>
                 <div style="margin-bottom:10px">
                     <div class="flex items-center justify-between">

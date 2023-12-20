@@ -444,15 +444,17 @@ on('body', 'click', '.unpublish_organization', function() {
 
 on('body', 'click', '.remove_staff', function() {
   _this = this;
+  delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
   _this.classList.remove("remove_staff");
   _this.classList.add("create_admin");
   _this.innerHTML = "Сделать админом";
-  delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
+  console.log("click");
 });
 on('body', 'click', '.create_admin', function() {
+  delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
   _this = this;
   _this.classList.remove("create_admin");
   _this.classList.add("remove_staff");
   _this.innerHTML = "Убрать из админов";
-  delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
+  console.log("click");
 });
