@@ -424,9 +424,9 @@ on('body', 'click', '#edit_deceased', function() {
     toast_error("Укажите долготу местоположения усопшего");
     return
   }
-  _input = form.querySelector("#pro-img");
-  _path = form.querySelector("#image").getAttribute("src");
-  get_image_value(_input, _path);
+  //_input = form.querySelector("#pro-img");
+  //_path = form.querySelector("#image").getAttribute("src");
+  //get_image_value(_input, _path);
   
   form_data = new FormData(form);
   

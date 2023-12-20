@@ -26,14 +26,14 @@
 		<form>
 			<div class="lg:col-span-3 md:col-span-4">
 				<div class="group profile-pic w-[112px]">
-					<input id="pro-img" name="image" type="file" class="hidden" onchange="loadFile(event)" />
+					<input id="pro-img" value="<%= deceased.get_image() %>" name="image" type="file" class="hidden" onchange="loadFile(event)" />
 					<div>
 						<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
 							<img src="<%= deceased.get_image() %>" class="rounded-full" id="image" alt="img">
 							<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
 							<label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
 						</div>
-					</div>
+					</div> 
 				</div>
 			</div>
 			<div class="lg:col-span-9 md:col-span-8">
@@ -91,7 +91,7 @@
                                     id="id_death_date" name="death_date"
                                     value='<%= deceased.death_date.format("%Y-%m-%d").to_string() %>'
                                 >
-							</div>
+							</div> 
 						</div>
                         <div class="md:col-span-3 col-span-12 text-start">
 							<label class="font-semibold md:invisible md:block hidden">Слова памяти:</label>
