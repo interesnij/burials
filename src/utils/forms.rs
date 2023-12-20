@@ -88,6 +88,15 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                     } else if field.name() == "memory_words" {
                         form.memory_words = Some(data_string);
                     }
+                    else if field.name() == "memory_words" {
+                        form.memory_words = Some(data_string);
+                    }
+                    else if field.name() == "birth_date" {
+                        form.birth_date = Some(data_string);
+                    }
+                    else if field.name() == "death_date" {
+                        form.death_date = Some(data_string);
+                    }
                 }
             }
         }
