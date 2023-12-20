@@ -22,7 +22,7 @@ use crate::errors::Error;
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct User {
     pub id:       i32,
-    pub username: String,
+    pub username: String, 
     pub email:    String,
     pub password: String,
     pub description: Option<String>,
@@ -30,6 +30,21 @@ pub struct User {
     pub perm:     i16,
 }
 impl User {
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return self.image.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/img.jpg".to_string();
+        }
+    }
+    pub fn get_all(exclude_user_id: i32) -> Vec<Countrie> {
+        let _connection = establish_connection();
+        return schema::users::table
+            .filter(schema::users::id.ne(exclude_user_id))
+            .load::<User>(&_connection)
+            .expect("E");
+    }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
             return self.image.as_deref().unwrap().to_string();
@@ -49,6 +64,22 @@ impl User {
 
         let _u = diesel::update(users::table.filter(users::id.eq(user_id)))
             .set(schema::users::perm.eq(60))
+            .execute(&_connection);
+        return 1;
+    }
+    pub fn create_admin(user_id: i32) -> i16 {
+        let _connection = establish_connection();
+
+        let _u = diesel::update(users::table.filter(users::id.eq(user_id)))
+            .set(schema::users::perm.eq(10))
+            .execute(&_connection);
+        return 1;
+    }
+    pub fn remove_staff(user_id: i32) -> i16 {
+        let _connection = establish_connection();
+
+        let _u = diesel::update(users::table.filter(users::id.eq(user_id)))
+            .set(schema::users::perm.eq(1))
             .execute(&_connection);
         return 1;
     }

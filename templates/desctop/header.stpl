@@ -83,6 +83,7 @@
                             <li><a href="/create_place/" class="sub-menu-item">Добавить кладбище</a></li>
                             <li><a href="/create_deceased/" class="sub-menu-item">Добавить покойника</a></li>
                             <li><a href="/admin/organizations/" class="sub-menu-item">Организации</a></li>
+                            <li><a href="/users/all/" class="sub-menu-item">Пользователи</a></li>
                         </ul>
                     </li>
                     <% } %>

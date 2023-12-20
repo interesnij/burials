@@ -67,9 +67,35 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/delete_region/", web::post().to(delete_city));
 
     config.route("/admin/organizations/", web::get().to(suggested_organizations_page));
+
+    config.route("/users/all/", web::get().to(all_users_list));
+    config.route("/users/create_admin/", web::post().to(create_admin));
+    config.route("/users/remove_staff/", web::post().to(remove_staff));
 }
 
 
+pub async fn all_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        let users_list = crate::models::User::get_all(_request_user.id);
+
+        #[derive(TemplateOnce)] 
+        #[template(path = "desctop/admin/users.stpl")]
+        struct Template { 
+            users_list: Vec<User>,
+        }
+        let body = Template {
+            users_list: users_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
 pub async fn load_countries(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_none() {
@@ -705,4 +731,30 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
+}
+
+
+pub async fn create_admin(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _user = crate::utils::get_user(form.id).expect("E.");
+        if _request_user.is_admin() {
+            _user.create_admin();
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn remove_staff(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _user = crate::utils::get_user(form.id).expect("E.");
+        if _request_user.is_admin() {
+            _user.remove_staff();
+        }
+    };
+    HttpResponse::Ok()
 }

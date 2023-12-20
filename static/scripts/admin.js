@@ -441,3 +441,16 @@ on('body', 'click', '.unpublish_organization', function() {
   delete_item("/organization/unpublish/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 });
+
+on('body', 'click', '.remove_staff', function() {
+  this.classList.remove("remove_staff");
+  this.classList.add("create_admin");
+  this.innerHTML = "Сделать админом";
+  delete_item("/users/remove_staff/", this.getAttribute("data-pk"));
+});
+on('body', 'click', '.create_admin', function() {
+  this.classList.remove("create_admin");
+  this.classList.add("remove_staff");
+  this.innerHTML = "Убрать из админов";
+  delete_item("/users/create_admin/", this.getAttribute("data-pk"));
+});

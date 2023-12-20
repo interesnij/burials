@@ -96,21 +96,11 @@
                         <div class="md:col-span-3 col-span-12 text-start">
 							<label class="font-semibold md:invisible md:block hidden">Слова памяти:</label>
 							<input <% if deceased.memory_words.is_some() { %>value="<%= deceased.memory_words.as_deref().unwrap() %>"<% } %>  
-                                        id="id_memory_words" 
-                                        name="memory_words" 
-                                        type="text" 
-                                        class="form-input mt-3" 
-                                    />
-							<div class="relative mt-1">
-								<textarea type="date" class="form-input ps-12 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 
-                                        rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" 
-                                    id="id_memory_words" name="memory_words"
-                                >
-								<% if deceased.memory_words.is_some() { %>
-                                	<%= deceased.memory_words.as_deref().unwrap() %>
-                                <% } %>
-                                </textarea>
-							</div>
+                                id="id_memory_words" 
+                                name="memory_words" 
+                                type="text" 
+                                class="form-input mt-3" 
+                            />
 						</div>
                         <div class="md:col-span-6 col-span-12 text-start">
                             <label class="font-semibold">Место захоронения: <span class="text-red-600">*</span></label>
