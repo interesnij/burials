@@ -454,10 +454,10 @@ on('body', 'click', '.toggle_admin', function() {
   _this = this;
   if (_this.classList.contains("admin")) {
     delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
-    _this.classList.replace("admin");
+    _this.classList.replace("admin", "");
   }else {
     delete_item("/users/create_admin/", _this.getAttribute("data-pk"));
-    _this.classList.replace("admin");
+    _this.classList.replace("", "admin");
   }
   console.log("click");
 });
