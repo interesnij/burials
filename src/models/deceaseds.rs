@@ -114,8 +114,8 @@ impl Deceased {
         first_name:   String,
         middle_name:  Option<String>,
         last_name:    String,
-        birth_date:   NaiveDate,
-        death_date:   NaiveDate,
+        birth_date:   String,
+        death_date:   String,
         image:        Option<String>,
         memory_words: Option<String>,
         lat:          f64,
@@ -124,9 +124,9 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
-        println!("birth_date {:?}", birth_date.format("%Y-%m-%d").to_string());
-        println!("death_date {:?}", death_date.format("%Y-%m-%d").to_string());
-        diesel::update(self)
+        //println!("birth_date {:?}", birth_date.format("%Y-%m-%d").to_string());
+        //println!("death_date {:?}", death_date.format("%Y-%m-%d").to_string());
+        diesel::update(self) 
             .set((
                 schema::deceaseds::first_name.eq(first_name),
                 schema::deceaseds::middle_name.eq(middle_name),
