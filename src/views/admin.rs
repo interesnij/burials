@@ -743,7 +743,7 @@ pub async fn create_admin(req: HttpRequest, mut payload: Multipart) -> impl Resp
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _user = crate::utils::get_user(form.id).expect("E.");
         if _request_user.is_admin() {
-            _user.create_admin();
+            crate::models::User::create_admin(form.id);
         }
     };
     HttpResponse::Ok()
@@ -755,7 +755,7 @@ pub async fn remove_staff(req: HttpRequest, mut payload: Multipart) -> impl Resp
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _user = crate::utils::get_user(form.id).expect("E.");
         if _request_user.is_admin() {
-            _user.remove_staff();
+            crate::models::User::remove_staff(form.id);
         }
     };
     HttpResponse::Ok()

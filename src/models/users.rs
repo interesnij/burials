@@ -30,7 +30,7 @@ pub struct User {
     pub perm:     i16,
 }
 impl User {
-    pub fn get_all(exclude_user_id: i32) -> Vec<Countrie> {
+    pub fn get_all(exclude_user_id: i32) -> Vec<User> {
         let _connection = establish_connection();
         return schema::users::table
             .filter(schema::users::id.ne(exclude_user_id))
