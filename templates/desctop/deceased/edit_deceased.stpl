@@ -129,7 +129,9 @@
 								</div>
 							</div>
 
-							<% if deceased.get_images().len() > 0 { %>
+						</div>
+						<br>
+						<% if deceased.get_images().len() > 0 { %>
 								<label class="font-semibold">Добавленные фото: </label>
 								<div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
 									<% for i in deceased.get_images().iter() { %>
@@ -140,7 +142,6 @@
 									<% } %>
 								</div>
 							<% } %>
-						</div>
 
 						<br><br>
 
