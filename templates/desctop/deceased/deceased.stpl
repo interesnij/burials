@@ -65,18 +65,22 @@
                                     </h6>
                                     <p class="font-semibold mt-2">
                                         <br />
-                                        <a class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
+                                        <a class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматический</a>
                                         <br />
                                         или
                                         <br />
 
-                                            <input type="text" id="suggest1" class="input" placeholder="Адрес отправления">
-                                            <button type="submit" id="button1">Ок</button>
-                                            <p id="notice1"></p>
-                                            <input type="text" id="suggest2" class="input" placeholder="Адрес назначения">
-                                            <button type="submit" id="button2">Ок</button>
+                                            <input type="text" id="suggest1" class="input form_control" placeholder="Адрес отправления">
+                                            <button class="btn" type="submit" id="button1">Ок</button>
+                                            <span id="notice1"></span>
+                                            <br />
+
+                                            <input type="text" id="suggest2" class="input form_control" placeholder="Адрес назначения">
+                                            <button class="btn" type="submit" id="button2">Ок</button>
                                             <p id="notice2"></p>
-                                            <button type="submit" id="button3">Кастомно</button>
+                                            <br />
+
+                                            <button class="btn" type="submit" id="button3">Кастомный</button>
                                             <span id="notice3"></span>
                                       </p>
                             </div>
