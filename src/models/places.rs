@@ -196,9 +196,9 @@ impl Place {
             lon:         lon,
             types:       types,
         };
-        diesel::insert_into(schema::places::table)
+        let _new = diesel::insert_into(schema::places::table)
             .values(&new_form)
-            .execute(&_connection)
+            .get_result::<Place>(&_connection)
             .expect("Error.");
 
         crate::models::File::create(_new.id, 2, images);
