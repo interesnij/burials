@@ -5,6 +5,7 @@ pub mod page;
 pub mod places;
 pub mod users;
 pub mod admin;
+pub mod progs;
 
 
 pub use self::{
@@ -15,4 +16,5 @@ pub use self::{
     places::*,
     users::*,
     admin::*,
+    progs::*,
 };

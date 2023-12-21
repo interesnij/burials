@@ -584,3 +584,8 @@ on('body', 'change', '#pro-images', function() {
 
   document.body.querySelector(".photos_upload_response").innerHTML = word;
 }); 
+
+on('body', 'click', '.delete_file', function() {
+  delete_item("/delete_file/", this.getAttribute("data-pk"));
+  this.parentElement.remove();
+}); 

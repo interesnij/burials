@@ -131,3 +131,9 @@
   .pointer {
     cursor: pointer !important;
   }
+
+  .image_fit_300 {
+    object-fit: cover;
+    height: 300px;
+    width: 100%;
+  }
