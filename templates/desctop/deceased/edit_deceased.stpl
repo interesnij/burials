@@ -156,7 +156,7 @@
 		</div>
 
 		<div class="">
-			<label style="font-size: x-large;margin-top:20px" class="font-semibold">Список созданных покойников: </label>
+			<p style="font-size: x-large;margin-top:20px" class="font-semibold">Список созданных покойников: </p>
             <% for i in deceased_list.iter() { %>
             <p><%= i.last_name %>
                 | <a class="ajax" href="/edit_deceased/<%= i.id %>/">Изменить</a>

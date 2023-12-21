@@ -424,6 +424,8 @@ on('body', 'click', '#edit_deceased', function() {
     toast_error("Укажите долготу местоположения усопшего");
     return
   }
+  form.querySelector("#edit_deceased").setAttribute("disabled", "true");
+  form.querySelector("#edit_deceased").innerHTML = "Идет сохранение";
 
   form_data = new FormData(form);
   
