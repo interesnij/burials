@@ -518,6 +518,7 @@ pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> ac
             form.hours.clone(),
             form.website.clone(),
             form.image.clone(),
+            form.images.clone(),
         );
         return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()));
     }; 
@@ -539,6 +540,7 @@ pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: we
             form.hours.clone(),
             form.website.clone(),
             form.image.clone(),
+            form.images.clone(),
         );
         return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()));
     }; 

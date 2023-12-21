@@ -81,7 +81,8 @@ impl Deceased {
         memory_words: Option<String>,
         lat:          f64,
         lon:          f64,
-    ) -> i16 {
+        images:       Vec<String>,
+    ) -> i16 { 
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
@@ -100,10 +101,14 @@ impl Deceased {
         };
         let _new = diesel::insert_into(schema::deceaseds::table)
             .values(&new_form)
-            .execute(&_connection)
+            .get_result::<Deceased>(&_connection)
             .expect("Error.");
         let _place = crate::utils::get_place(place_id).expect("E.");
         _place.plus(1);
+
+        for i in images.iter() {
+            crate::models::File::create(_new.id, 3, i);
+        } 
         
         return 1;
     }
@@ -119,6 +124,7 @@ impl Deceased {
         memory_words: Option<String>,
         lat:          f64,
         lon:          f64,
+        images:       Vec<String>,
     ) -> i16 {
         use crate::schema::deceaseds::dsl::deceaseds;
 
@@ -145,6 +151,20 @@ impl Deceased {
                 .execute(&_connection)
                 .expect("Error.");
         }
+        if images.len() > 1 {
+            //diesel::delete(
+            //    schema::files::table.filter(
+            //        schema::files::object_id.eq(_new.id),
+            //         schema::files::object_types.eq(3),
+            //    ))
+            //    .execute(&_connection)
+            //    .expect("E");
+
+            for i in images.iter() {
+                crate::models::File::create(_new.id, 3, i);
+            }
+        }
+
         return 1;
     }
     pub fn delete(&self) -> i16 {

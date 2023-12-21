@@ -52,6 +52,7 @@ pub struct DeceasedForms {
     pub memory_words: Option<String>,
     pub lat:          f64,
     pub lon:          f64,
+    pub images:       Vec<String>,
 }
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
@@ -66,7 +67,8 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
         memory_words: None,
         lat:          0.0,
         lon:          0.0,
-    };
+        images:       Vec::new(),
+    }; 
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
@@ -145,6 +147,24 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                 form.image = Some(file.path.clone().replace("./","/"));
             }
         }
+        else if field.name() == "images[]" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string());
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                };
+                form.images.push(file.path.clone().replace("./","/"));
+            }
+        }
     }
     form
 }
@@ -165,6 +185,7 @@ pub struct PlaceForms {
     pub phone:       Option<String>,
     pub lat:         f64,
     pub lon:         f64,
+    pub images:      Vec<String>,
 }
 // форма для элементов 
 pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
@@ -182,6 +203,7 @@ pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
         phone:       None,
         lat:         0.0,
         lon:         0.0,
+        images:      Vec::new(),
     };
 
     while let Some(item) = payload.next().await {
@@ -284,6 +306,24 @@ pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
                 }
             }
         }
+        else if field.name() == "images[]" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string());
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                };
+                form.images.push(file.path.clone().replace("./","/"));
+            }
+        }
     }
     form
 }
@@ -297,7 +337,8 @@ pub struct OrganizationForms {
     pub phone:       String,
     pub hours:       String,
     pub website:     Option<String>,
-    pub image:       Option<String>, 
+    pub image:       Option<String>,
+    pub images:      Vec<String>,
 }
 // форма для элементов 
 pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
@@ -309,6 +350,7 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
         hours:       "".to_string(),
         website:     None, 
         image:       None,
+        images:      Vec::new(),
     };
 
    
@@ -355,6 +397,24 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
                         .expect("E");
                 }
                 form.image = Some(file.path.clone().replace("./","/"));
+            }
+        }
+        else if field.name() == "images[]" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string());
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                };
+                form.images.push(file.path.clone().replace("./","/"));
             }
         }
     }

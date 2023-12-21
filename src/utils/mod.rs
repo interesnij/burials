@@ -32,7 +32,7 @@ use crate::models::{
     User, Deceased, Organization, 
     Service, Place, Review,
     Countrie, Region, Citie, District,
-    OrganizationsPlace,
+    OrganizationsPlace, File,
 };
 
 
@@ -119,6 +119,13 @@ pub fn get_organization(pk: i32) -> Result<Organization, Error> {
     return Ok(organizations
         .filter(schema::organizations::id.eq(pk))
         .first::<Organization>(&_connection)?);
+}
+pub fn get_file(pk: i32) -> Result<File, Error> {
+    use crate::schema::files::dsl::files;
+    let _connection = establish_connection();
+    return Ok(files
+        .filter(schema::files::id.eq(pk))
+        .first::<File>(&_connection)?);
 }
 pub fn get_deceased(pk: i32) -> Result<Deceased, Error> {
     use crate::schema::deceaseds::dsl::deceaseds;

@@ -28,18 +28,6 @@
 		
 		<div class="md:grid-cols-12 gap-[30px]">
 		<form>
-			<div class="lg:col-span-3 md:col-span-4">
-				<div class="group profile-pic w-[112px]">
-					<input id="pro-img" name="image" type="file" class="hidden" onchange="loadFile(event)" />
-					<div>
-						<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
-							<img src="/static/images/upload.png" class="rounded-full" id="image" alt="img">
-							<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
-							<label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="lg:col-span-9 md:col-span-8">
 				<div class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
 					<h5 class="text-lg font-semibold mb-4">Данные усопшего:</h5>
@@ -109,6 +97,39 @@
 							<input id="get_my_lon" name="lon" type="text" class="form-input mt-3" />
 						</div>
 
+
+
+
+						<div class="lg:col-span-3 md:col-span-4">
+							<div class="group profile-pic w-[112px]">
+								<input id="pro-img" accept="image/*" name="image" type="file" class="hidden" onchange="loadFile(event)" />
+								<div>
+									<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
+										<img src="/static/images/upload.png" class="rounded-full" id="image" alt="img">
+										<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
+										<label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
+									</div>
+								</div>
+								<p class="small">Загрузите портрет покойника</p>
+							</div>
+						</div>
+
+						<div class="lg:col-span-3 md:col-span-4">
+							<div class="group profile-pic w-[112px]">
+								<input id="pro-images" accept="image/*" multiple name="files[]" name="image" type="file" class="hidden" onchange="loadFile(event)" />
+								<div>
+									<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
+										<img src="/static/images/upload.png" class="rounded-full" id="image" alt="img">
+										<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
+										<label class="absolute inset-0 cursor-pointer" for="pro-images"></label>
+									</div>
+								</div> 
+								<p class="small">Загрузите Дополнительные фото</p>
+							</div>
+						</div>
+
+
+
 						<br><br>
 
 						<button type="button" id="create_deceased" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 
@@ -117,17 +138,18 @@
                         </button>
 				</div>
 			</div>
-			</form>
-		</div>
-		<div class="">
-            <% for i in deceased_list.iter() { %>
+		</form>
+	</div>
+
+	<div class="">
+        <% for i in deceased_list.iter() { %>
             <p><%= i.last_name %>
                 | <a class="ajax" href="/edit_deceased/<%= i.id %>/">Изменить</a>
                 | <a class="pointer remove_deceased" data-pk="<%= i.id %>">Удалить</a>
             </p>
-            <% } %>
-    	</div>
-	</div>
+        <% } %>
+    </div>
+</div>
 
 </section>
 <% include!("../footer.stpl"); %>

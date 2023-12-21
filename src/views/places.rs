@@ -447,6 +447,7 @@ pub async fn create_place(req: HttpRequest, mut payload: Multipart) -> impl Resp
                 form.phone.clone(),
                 form.lat,
                 form.lon,
+                form.images.clone(),
             );
         }
     }; 
@@ -475,6 +476,7 @@ pub async fn edit_place(req: HttpRequest, mut payload: Multipart, _id: web::Path
                 form.phone.clone(),
                 form.lat,
                 form.lon,
+                form.images.clone(),
             );
         }
     };

@@ -165,6 +165,7 @@ impl Place {
         phone:       Option<String>,
         lat:         f64,
         lon:         f64,
+        images:      Vec<String>,
     ) -> i16 {
         use crate::schema::places::dsl::places;
 
@@ -200,6 +201,10 @@ impl Place {
             .execute(&_connection)
             .expect("Error.");
 
+        for i in images.iter() {
+            crate::models::File::create(_new.id, 2, i);
+        }
+
         return 1;
     }
     pub fn edit ( 
@@ -218,6 +223,7 @@ impl Place {
         phone:       Option<String>,
         lat:         f64,
         lon:         f64,
+        images:      Vec<String>,
     ) -> i16 {
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
@@ -245,6 +251,10 @@ impl Place {
                     .set(schema::places::image.eq(image))
                     .execute(&_connection)
                     .expect("Error.");
+            }
+
+            for i in images.iter() {
+                crate::models::File::create(_new.id, 2, i);
             }
         }
         return 1;

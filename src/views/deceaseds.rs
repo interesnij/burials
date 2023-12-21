@@ -372,6 +372,7 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart) -> impl R
                 form.memory_words.clone(),
                 form.lat.clone(),
                 form.lon.clone(),
+                form.images.clone(),
             );
         }
     }; 
@@ -396,6 +397,7 @@ pub async fn edit_deceased(req: HttpRequest, mut payload: Multipart, _id: web::P
                 form.memory_words.clone(),
                 form.lat.clone(),
                 form.lon.clone(),
+                form.images.clone(),
             );
         }
     };

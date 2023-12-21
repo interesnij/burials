@@ -98,6 +98,7 @@ impl Organization {
         hours:       String, 
         website:     Option<String>,
         image:       Option<String>,
+        images:      Vec<String>,
     ) -> i32 {
         use crate::schema::organizations::dsl::organizations;
 
@@ -126,6 +127,10 @@ impl Organization {
             .get_result::<Organization>(&_connection)
             .expect("Error.");
 
+        for i in images.iter() {
+            crate::models::File::create(_new.id, 1, i);
+        }
+
         return _new.id;
     }
     pub fn edit (
@@ -138,6 +143,7 @@ impl Organization {
         hours:       String,
         website:     Option<String>,
         image:       Option<String>,
+        images:      Vec<String>,
     ) -> i32 {
         use crate::schema::organizations::dsl::organizations;
         let _user = crate::utils::get_user(user_id).expect("E.");
@@ -159,6 +165,10 @@ impl Organization {
             diesel::delete(schema::organizations_places::table.filter(schema::organizations_places::organization_id.eq(self.id)))
                 .execute(&_connection)
                 .expect("E");
+
+            for i in images.iter() {
+                crate::models::File::create(_new.id, 1, i);
+            }
         }
         return self.id;
     }

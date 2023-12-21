@@ -5,6 +5,7 @@ use crate::schema::{
     regions,
     cities,
     districts,
+    files,
 };
 use crate::diesel::{
     Queryable,
@@ -465,4 +466,66 @@ pub struct NewDistrict {
     pub country_id: i32,
     pub lat:        Option<f64>,
     pub lon:        Option<f64>,
+}
+
+
+/*
+    Файлы для прикрепления к объектам. Наприммер, универсально подойдет для галереи покойника.
+    
+    object_types:
+    | 1 Организация
+    | 2 Кладбище
+    | 3 Покойник
+*/
+
+#[derive(Queryable, Serialize, Deserialize, Identifiable)]
+pub struct File { 
+    pub id:           i32,
+    pub object_id:    i32,
+    pub object_types: i16,
+    pub src:          String,
+}
+
+impl File { 
+    pub fn create (
+        object_id:    i32,
+        object_types: i16,
+        images:       Vec<String>,
+    ) -> i16 {
+        if images.len() > 0 {
+            let _connection = establish_connection();
+
+            for i in images.iter() {
+                let new_form = NewFile {
+                    object_id:    object_id,
+                    object_types: object_types,
+                    src:          i,
+                };
+                let _new = diesel::insert_into(schema::files::table)
+                    .values(&new_form)
+                    .execute(&_connection)
+                    .expect("Error.");
+            }
+        }
+        
+        return 1;
+    }
+    pub fn delete(&self) -> i16 {
+        use crate::schema::files::dsl::files;
+
+        let _connection = establish_connection();
+        diesel::delete(files.filter(schema::files::id.eq(self.id)))
+            .execute(&_connection)
+            .expect("E");
+        
+        return 1;
+    }
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="files"]
+pub struct NewFile { 
+    pub object_id:    i32,
+    pub object_types: i16,
+    pub src:          String,
 }
