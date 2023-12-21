@@ -147,7 +147,7 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                 form.image = Some(file.path.clone().replace("./","/"));
             }
         }
-        else if field.name() == "images[]" {
+        else if field.name() == "files[]" {
             let _new_path = field.content_disposition().get_filename().unwrap();
             if _new_path != "" {
                 let file = UploadedFiles::new(_new_path.to_string());
@@ -306,7 +306,7 @@ pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
                 }
             }
         }
-        else if field.name() == "images[]" {
+        else if field.name() == "files[]" {
             let _new_path = field.content_disposition().get_filename().unwrap();
             if _new_path != "" {
                 let file = UploadedFiles::new(_new_path.to_string());
@@ -399,7 +399,7 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
                 form.image = Some(file.path.clone().replace("./","/"));
             }
         }
-        else if field.name() == "images[]" {
+        else if field.name() == "files[]" {
             let _new_path = field.content_disposition().get_filename().unwrap();
             if _new_path != "" {
                 let file = UploadedFiles::new(_new_path.to_string());
