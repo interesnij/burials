@@ -41,11 +41,11 @@ pub async fn delete_file(req: HttpRequest, mut payload: Multipart) -> impl Respo
                 _request_user.id == _organization.user_id || _request_user.is_admin()
             },
             2 => {
-                let _place = crate::utils::get_place(form.id).expect("E.");
+                let _place = crate::utils::get_place(_file.object_id).expect("E.");
                 _request_user.is_admin()
             },
             3 => {
-                let _deceased = crate::utils::get_deceased(form.id).expect("E.");
+                let _deceased = crate::utils::get_deceased(_file.object_id).expect("E.");
                 _request_user.id == _deceased.user_id || _request_user.is_admin()
             },
             _ => false,
