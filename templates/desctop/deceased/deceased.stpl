@@ -67,7 +67,7 @@
                                     </h6>
                                     <p class="font-semibold mt-2">
                                         <br />
-                                        <a style="text-decoration: underline" class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
+                                        <a style="text-decoration: underline" class="pointer get_ma"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
                                         <span> или </span>
                                         <br />
                                           <div>
@@ -80,7 +80,7 @@
                                             <br />
                                           </div>
                                           <div>
-                                            <button class="btn" style="border: 1ps solid grey; float: right" type="submit" id="button3">Построить</button>
+                                            <button class="btn" style="border: 1px solid grey; float: right" type="submit" id="button3">Построить</button>
                                             <span id="notice3"></span>
                                           </div>
                                       </p>
