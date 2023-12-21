@@ -10,7 +10,7 @@
                         </div>
 
                         <% if deceased.get_images().len() > 0 { %>
-                            <div class="top-20 grid lg:grid-cols-6 grid-cols-1 gap-5">
+                            <div class="grid lg:grid-cols-6 grid-cols-1 gap-5">
                                 <% for i in deceased.get_images().iter() { %>
                                 <div class="show_image" data-pk="<%= i.id %>" style="margin-bottom:15px">
                                     <img src="<%= i.src %>" style="height: 70%;" class="image_fit_300" alt="img">
