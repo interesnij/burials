@@ -561,3 +561,22 @@ on('body', 'click', '.delete_loc', function() {
   delete_item("/delete_loc/", this.getAttribute("data-pk"));
   this.parentElement.parentElement.remove();
 });
+
+on('body', 'change', '#pro-images', function() {
+  len = this.files.length;
+
+  a = len % 10;
+  b = len % 100;
+
+  if (a == 1 && b != 11) {
+    word = "Выбранa " + len + " фотография";
+  }
+  else if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) {
+    word = "Выбраны " + len + " фотографии";
+  }
+  else {
+    word = "Выбраны " + len + " фотографий";
+  }
+
+  document.body.querySelector(".photos_upload_response").innerHTML = word;
+}

@@ -120,7 +120,8 @@
 										<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
 										<label class="absolute inset-0 cursor-pointer" for="pro-images"></label>
 									</div>
-								</div> 
+								</div>
+								<p class="photos_upload_response"></p>
 							</div>
 						</div>
 
