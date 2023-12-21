@@ -13,6 +13,7 @@ use crate::utils::{
 };
 use crate::schema::places;
 use serde::{Serialize, Deserialize};
+use crate::models:File;
 
 
 // Структура для таблицы Places 
@@ -66,6 +67,16 @@ pub struct NewPlace {
 
 // Реализация методов для структуры Place
 impl Place {
+    pub fn get_images(&self) -> Vec<File> {
+        use crate::schema::files::dsl::files;
+
+        let _connection = establish_connection();
+        return files
+            .filter(schema::files::object_id.eq(self.id))
+            .filter(schema::files::object_types.eq(2))
+            .load::<File>(&_connection)
+            .expect("E.");
+    }
     pub fn get_loc(&self) -> String {
         use crate::schema::places::dsl::places;
 

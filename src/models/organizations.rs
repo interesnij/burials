@@ -13,7 +13,7 @@ use serde::{Serialize, Deserialize};
 use crate::utils::{
     establish_connection,
 };
-use crate::models::Service;
+use crate::models::{Service, File};
 
 // Структура для представления данных об организации
 /*
@@ -59,6 +59,16 @@ pub struct PlaceSmall {
 
 // Реализация методов для структуры Organization
 impl Organization {
+    pub fn get_images(&self) -> Vec<File> {
+        use crate::schema::files::dsl::files;
+
+        let _connection = establish_connection();
+        return files
+            .filter(schema::files::object_id.eq(self.id))
+            .filter(schema::files::object_types.eq(1))
+            .load::<File>(&_connection)
+            .expect("E.");
+    }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
             return self.image.as_deref().unwrap().to_string();

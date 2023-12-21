@@ -14,7 +14,7 @@ use crate::utils::{
 };
 use crate::schema::deceaseds;
 use serde::{Serialize, Deserialize};
-use crate::models::Place;
+use crate::models::{Place, File};
 use crate::errors::Error;
 
 
@@ -320,6 +320,16 @@ impl Deceased {
         let _connection = establish_connection();
         return deceaseds
             .load::<Deceased>(&_connection)
+            .expect("E.");
+    }
+    pub fn get_images(&self) -> Vec<File> {
+        use crate::schema::files::dsl::files;
+
+        let _connection = establish_connection();
+        return files
+            .filter(schema::files::object_id.eq(self.id))
+            .filter(schema::files::object_types.eq(3))
+            .load::<File>(&_connection)
             .expect("E.");
     }
     pub fn count(place_id: i32) -> usize { 
