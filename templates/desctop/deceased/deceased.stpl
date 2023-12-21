@@ -70,13 +70,13 @@
                                         <span>или</span>
                                         <br />
                                           <div>
-                                            <input type="text" id="suggest1" class="input form_control" placeholder="Адрес отправления">
+                                            <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
                                             <button class="btn" type="submit" id="button1">Ок</button>
                                             <span id="notice1"></span>
                                             
                                           </div>
                                           <div>
-                                            <input type="text" id="suggest2" class="input form_control" placeholder="Адрес назначения">
+                                            <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
                                             <button class="btn" type="submit" id="button2">Ок</button>
                                             <p id="notice2"></p>
                                             <br />
