@@ -149,7 +149,7 @@ impl Deceased {
                 .execute(&_connection)
                 .expect("Error.");
         }
-        if images.len() > 1 {
+        if images.len() > 0 {
             //diesel::delete(
             //    schema::files::table.filter(
             //        schema::files::object_id.eq(_new.id),
