@@ -98,10 +98,10 @@
 						</div>
 
 
-
-						<div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
-							<label class="font-semibold">Портрет покойника: </label>
+						<br>
+						<div class="grid lg:grid-cols-2 grid-cols-1 gap-5" >
 							<div class="profile-pic w-[112px]">
+								<label class="font-semibold">Портрет покойника: </label>
 								<input id="pro-img" accept="image/*" name="image" type="file" class="hidden" onchange="loadFile(event)" />
 								<div>
 									<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
