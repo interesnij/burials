@@ -251,7 +251,7 @@ impl Place {
                     .expect("Error.");
             }
 
-            crate::models::File::create(_new.id, 2, images);
+            crate::models::File::create(self.id, 2, images);
         }
         return 1;
     }

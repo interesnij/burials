@@ -495,7 +495,7 @@ impl File {
         if images.len() > 0 {
             let _connection = establish_connection();
 
-            for i in images.iter() {
+            for i in images.into_iter() {
                 let new_form = NewFile {
                     object_id:    object_id,
                     object_types: object_types,

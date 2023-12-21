@@ -164,7 +164,7 @@ impl Organization {
                 .execute(&_connection)
                 .expect("E");
 
-            crate::models::File::create(_new.id, 1, images);
+            crate::models::File::create(self.id, 1, images);
         }
         return self.id;
     }

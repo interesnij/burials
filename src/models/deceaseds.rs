@@ -158,7 +158,7 @@ impl Deceased {
             //    .execute(&_connection)
             //    .expect("E");
 
-            crate::models::File::create(_new.id, 3, images);
+            crate::models::File::create(self.id, 3, images);
         }
 
         return 1;
