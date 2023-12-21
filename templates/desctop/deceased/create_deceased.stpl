@@ -99,9 +99,9 @@
 
 
 
-
-						<div class="lg:col-span-3 md:col-span-4">
-							<div class="group profile-pic w-[112px]">
+						<div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
+							<label class="font-semibold">Портрет покойника: </label>
+							<div class="profile-pic w-[112px]">
 								<input id="pro-img" accept="image/*" name="image" type="file" class="hidden" onchange="loadFile(event)" />
 								<div>
 									<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
@@ -110,12 +110,9 @@
 										<label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
 									</div>
 								</div>
-								<p class="small">Загрузите портрет покойника</p>
 							</div>
-						</div>
-
-						<div class="lg:col-span-3 md:col-span-4">
-							<div class="group profile-pic w-[112px]">
+							<div class="">
+								<label class="font-semibold">Дополнительные фото: </label>
 								<input id="pro-images" accept="image/*" multiple name="files[]" name="image" type="file" class="hidden" onchange="loadFile(event)" />
 								<div>
 									<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
@@ -124,7 +121,6 @@
 										<label class="absolute inset-0 cursor-pointer" for="pro-images"></label>
 									</div>
 								</div> 
-								<p class="small">Загрузите Дополнительные фото</p>
 							</div>
 						</div>
 
