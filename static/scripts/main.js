@@ -196,6 +196,8 @@ on('body', 'click', '#logg', function() {
       form.querySelector("#id_username").style.border = "unset";
       this.disabled = true
     }
+
+    form.querySelector("#signup").setAttribute("disabled", "true");
   
     form_data = new FormData(form);
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -364,6 +366,10 @@ on('body', 'click', '#create_organization', function() {
     toast_error("Укажите телефон организации");
     return
   }
+
+  form.querySelector("#create_organization").setAttribute("disabled", "true");
+  form.querySelector("#create_organization").innerHTML = "Идет сохранение";
+
   form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -403,6 +409,9 @@ on('body', 'click', '#edit_organization', function() {
     toast_error("Укажите телефон организации");
     return
   }
+
+  form.querySelector("#edit_organization").setAttribute("disabled", "true");
+  form.querySelector("#edit_organization").innerHTML = "Идет сохранение";
   
   form_data = new FormData(form);
   
@@ -431,6 +440,10 @@ on('body', 'click', '#create_loc', function() {
     toast_error("Укажите улицу и дом организации");
     return
   }
+
+  form.querySelector("#create_loc").setAttribute("disabled", "true");
+  form.querySelector("#create_loc").innerHTML = "Идет сохранение";
+
   form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -459,6 +472,9 @@ on('body', 'click', '#edit_loc', function() {
     toast_error("Укажите улицу и дом организации");
     return
   }
+
+  form.querySelector("#edit_loc").setAttribute("disabled", "true");
+  form.querySelector("#edit_loc").innerHTML = "Идет сохранение";
   
   form_data = new FormData(form);
   
@@ -493,6 +509,10 @@ on('body', 'click', '#create_service', function() {
     toast_error("Укажите название услуги");
     return
   }
+
+  form.querySelector("#create_service").setAttribute("disabled", "true");
+  form.querySelector("#create_service").innerHTML = "Идет сохранение";
+
   form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -527,6 +547,9 @@ on('body', 'click', '#edit_service', function() {
     toast_error("Укажите название услуги");
     return
   }
+
+  form.querySelector("#edit_service").setAttribute("disabled", "true");
+  form.querySelector("#edit_service").innerHTML = "Идет сохранение";
   
   form_data = new FormData(form);
   

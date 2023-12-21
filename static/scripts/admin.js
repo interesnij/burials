@@ -18,7 +18,11 @@ on('body', 'click', '#create_country', function() {
         form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
         toast_error("Укажите название страны");
         return
-      }
+    }
+
+    form.querySelector("#create_country").setAttribute("disabled", "true");
+    form.querySelector("#create_country").innerHTML = "Идет сохранение";
+
       form_data = new FormData(form);
     
       link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -36,7 +40,11 @@ on('body', 'click', '#edit_country', function() {
         form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
         toast_error("Укажите название страны");
         return
-      }
+    }
+
+    form.querySelector("#edit_country").setAttribute("disabled", "true");
+    form.querySelector("#edit_country").innerHTML = "Идет сохранение";
+
       form_data = new FormData(form);
     
       link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -76,6 +84,9 @@ on('body', 'click', '#create_region', function() {
     return
   }
 
+  form.querySelector("#create_region").setAttribute("disabled", "true");
+  form.querySelector("#create_region").innerHTML = "Идет сохранение";
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -103,6 +114,10 @@ on('body', 'click', '#edit_region', function() {
     toast_error("Укажите страну");
     return
   }
+
+  form.querySelector("#edit_region").setAttribute("disabled", "true");
+  form.querySelector("#edit_region").innerHTML = "Идет сохранение";
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -137,6 +152,9 @@ on('body', 'click', '#create_city', function() {
     return
   }
 
+  form.querySelector("#create_city").setAttribute("disabled", "true");
+  form.querySelector("#create_city").innerHTML = "Идет сохранение";
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -164,6 +182,9 @@ on('body', 'click', '#edit_city', function() {
     toast_error("Укажите страну");
     return
   }
+
+  form.querySelector("#edit_city").setAttribute("disabled", "true");
+  form.querySelector("#edit_city").innerHTML = "Идет сохранение";
 
     form_data = new FormData(form);
   
@@ -198,6 +219,9 @@ on('body', 'click', '#create_district', function() {
     return
   }
 
+  form.querySelector("#create_district").setAttribute("disabled", "true");
+  form.querySelector("#create_district").innerHTML = "Идет сохранение";
+
     form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
@@ -225,6 +249,9 @@ on('body', 'click', '#edit_district', function() {
     toast_error("Укажите страну");
     return
   }
+
+  form.querySelector("#edit_district").setAttribute("disabled", "true");
+  form.querySelector("#edit_district").innerHTML = "Идет сохранение";
   
     form_data = new FormData(form);
   
@@ -259,7 +286,11 @@ on('body', 'click', '#create_place', function() {
     toast_error("Укажите страну кладбища");
     return
   }
-    form_data = new FormData(form);
+
+  form.querySelector("#create_place").setAttribute("disabled", "true");
+  form.querySelector("#create_place").innerHTML = "Идет сохранение";
+
+  form_data = new FormData(form);
   
     link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
     link.open( 'POST', "/create_place/", true );
@@ -286,6 +317,9 @@ on('body', 'click', '#edit_place', function() {
     toast_error("Укажите страну кладбища");
     return
   }
+
+  form.querySelector("#edit_place").setAttribute("disabled", "true");
+  form.querySelector("#edit_place").innerHTML = "Идет сохранение";
 
   form_data = new FormData(form);
   
@@ -349,6 +383,9 @@ on('body', 'click', '#create_deceased', function() {
     toast_error("Укажите долготу местоположения усопшего");
     return
   }
+
+  form.querySelector("#create_deceased").setAttribute("disabled", "true");
+  form.querySelector("#create_deceased").innerHTML = "Идет сохранение";
 
   form_data = new FormData(form);
   
