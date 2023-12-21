@@ -24,27 +24,8 @@ use crate::errors::Error;
 
 
 pub fn progs_routes(config: &mut web::ServiceConfig) {
-    config.route("/feedback/", web::post().to(create_feedback));
+    //config.route("/feedback/", web::post().to(create_feedback));
     config.route("/delete_file/", web::post().to(delete_file));
-}
-
-pub async fn create_feedback(mut payload: actix_multipart::Multipart) -> impl Responder {
-    use crate::schema::feedbacks;
-    use crate::models::NewFeedback;
-    use crate::utils::feedback_form;
-
-    let _connection = establish_connection();
-    let form = feedback_form(payload.borrow_mut()).await;
-    let new_feedback = NewFeedback {
-        username: form.username.clone(),
-        email:    form.email.clone(),
-        message:  form.message.clone()
-    };
-    diesel::insert_into(feedbacks::table)
-        .values(&new_feedback)
-        .execute(&_connection)
-        .expect("E.");
-    return HttpResponse::Ok();
 }
 
 pub async fn delete_file(req: HttpRequest, mut payload: Multipart) -> impl Responder {
