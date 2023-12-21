@@ -8,6 +8,7 @@ use crate::views::{
     page,
     places,
     users,
+    progs,
 };
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
@@ -19,5 +20,6 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
     .configure(admin::admin_routes)
     .configure(places::place_routes)
     .configure(users::user_routes)
+    .configure(progs::progs_routes)
     ;
 }
