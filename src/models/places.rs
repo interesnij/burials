@@ -201,9 +201,7 @@ impl Place {
             .execute(&_connection)
             .expect("Error.");
 
-        for i in images.iter() {
-            crate::models::File::create(_new.id, 2, i);
-        }
+        crate::models::File::create(_new.id, 2, images);
 
         return 1;
     }
@@ -253,9 +251,7 @@ impl Place {
                     .expect("Error.");
             }
 
-            for i in images.iter() {
-                crate::models::File::create(_new.id, 2, i);
-            }
+            crate::models::File::create(_new.id, 2, images);
         }
         return 1;
     }

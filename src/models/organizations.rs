@@ -127,9 +127,7 @@ impl Organization {
             .get_result::<Organization>(&_connection)
             .expect("Error.");
 
-        for i in images.iter() {
-            crate::models::File::create(_new.id, 1, i);
-        }
+        crate::models::File::create(_new.id, 1, images);
 
         return _new.id;
     }
@@ -166,9 +164,7 @@ impl Organization {
                 .execute(&_connection)
                 .expect("E");
 
-            for i in images.iter() {
-                crate::models::File::create(_new.id, 1, i);
-            }
+            crate::models::File::create(_new.id, 1, images);
         }
         return self.id;
     }

@@ -106,9 +106,7 @@ impl Deceased {
         let _place = crate::utils::get_place(place_id).expect("E.");
         _place.plus(1);
 
-        for i in images.into_iter() {
-            crate::models::File::create(_new.id, 3, i);
-        } 
+        crate::models::File::create(_new.id, 3, images);
         
         return 1;
     }
@@ -160,9 +158,7 @@ impl Deceased {
             //    .execute(&_connection)
             //    .expect("E");
 
-            for i in images.iter() {
-                crate::models::File::create(_new.id, 3, i);
-            }
+            crate::models::File::create(_new.id, 3, images);
         }
 
         return 1;
