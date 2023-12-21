@@ -113,16 +113,12 @@
 							</div>
 							<div class="">
 								<label class="font-semibold">Дополнительные фото: </label>
-								<input id="pro-images" accept="image/*" multiple name="files[]" name="image" type="file" class="hidden" onchange="loadFile(event)" />
-								<div>
-									<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
-										<img src="/static/images/upload.png" class="rounded-full" id="image" alt="img">
-										<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
-										<label class="absolute inset-0 cursor-pointer" for="pro-images"></label>
-									</div>
+								<input id="pro-images" accept="image/*" multiple name="files[]" name="image" type="file" class="hidden" />
+								<div id="images_container" style="border: 1px solid #eee; cursor: poiner">
+									<h4 style="font-weight:bold;font-size:30px;color:#CECECE">Нажмите сюда</h4>
 								</div>
 								<p class="photos_upload_response"></p>
-							</div>
+							</div> 
 						</div>
 
 

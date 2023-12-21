@@ -562,6 +562,10 @@ on('body', 'click', '.delete_loc', function() {
   this.parentElement.parentElement.remove();
 });
 
+on('body', 'click', '#images_container', function() {
+  this.previousElementSibling.click();
+});
+
 on('body', 'change', '#pro-images', function() {
   len = this.files.length;
 
