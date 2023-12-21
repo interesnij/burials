@@ -137,3 +137,9 @@
     height: 300px;
     width: 100%;
   }
+
+  .image_fit_200 {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+  }

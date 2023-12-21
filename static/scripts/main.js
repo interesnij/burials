@@ -591,6 +591,9 @@ on('body', 'click', '#images_container', function() {
 
 on('body', 'change', '#pro-images', function() {
   len = this.files.length;
+  if (len > 10) {
+    alert("Максимальное количество фотографий - 10")
+  }
 
   a = len % 10;
   b = len % 100;

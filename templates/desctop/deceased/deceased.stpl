@@ -11,11 +11,11 @@
 
                         <% if deceased.get_images().len() > 0 { %>
                           <hr />
-                            <label style="font-size: x-large;margin-top:20px" class="font-semibold">Добавленные фото: </label>
+                            <label style="font-size: x-large;margin-top:20px" class="font-semibold">Галерея: </label>
                             <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
                               <% for i in deceased.get_images().iter() { %>
                               <div class="show_image" data-pk="<%= i.id %>" style="margin-bottom:15px">
-                                <img src="<%= i.src %>" class="image_fit_300" alt="img">
+                                <img src="<%= i.src %>" class="image_fit_200" alt="img">
                                 <% if request_user.is_admin() { %>
                                   <a class="pointer small remove_file" style="margin-top:10px" data-pk="<%= i.id %>">Удалить</a>
                                 <% } %>
@@ -67,9 +67,8 @@
                                     </h6>
                                     <p class="font-semibold mt-2">
                                         <br />
-                                        <a class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
-                                        <br />
-                                        <span>или</span>
+                                        <a style="text-decoration: underline" class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
+                                        <span> или </span>
                                         <br />
                                           <div>
                                             <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
@@ -81,7 +80,7 @@
                                             <br />
                                           </div>
                                           <div>
-                                            <button class="btn" style="border: 1ps solid grey" type="submit" id="button3">Построить</button>
+                                            <button class="btn" style="border: 1ps solid grey; float: right" type="submit" id="button3">Построить</button>
                                             <span id="notice3"></span>
                                           </div>
                                       </p>
