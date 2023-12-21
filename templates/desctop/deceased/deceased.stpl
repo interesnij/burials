@@ -65,23 +65,26 @@
                                     </h6>
                                     <p class="font-semibold mt-2">
                                         <br />
-                                        <a class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматический</a>
+                                        <a class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
                                         <br />
-                                        или
+                                        <span>или</span>
                                         <br />
-
+                                          <div>
                                             <input type="text" id="suggest1" class="input form_control" placeholder="Адрес отправления">
                                             <button class="btn" type="submit" id="button1">Ок</button>
                                             <span id="notice1"></span>
-                                            <br />
-
+                                            
+                                          </div>
+                                          <div>
                                             <input type="text" id="suggest2" class="input form_control" placeholder="Адрес назначения">
                                             <button class="btn" type="submit" id="button2">Ок</button>
                                             <p id="notice2"></p>
                                             <br />
-
-                                            <button class="btn" type="submit" id="button3">Кастомный</button>
+                                          </div>
+                                          <div>
+                                            <button class="btn" type="submit" id="button3">Построить</button>
                                             <span id="notice3"></span>
+                                          </div>
                                       </p>
                             </div>
 
