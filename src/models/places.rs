@@ -13,7 +13,7 @@ use crate::utils::{
 };
 use crate::schema::places;
 use serde::{Serialize, Deserialize};
-use crate::models:File;
+use crate::models::File;
 
 
 // Структура для таблицы Places 
