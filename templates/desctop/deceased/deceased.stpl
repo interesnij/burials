@@ -71,18 +71,15 @@
                                         <br />
                                           <div>
                                             <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
-                                            <button class="btn" type="submit" id="button1">Ок</button>
                                             <span id="notice1"></span>
-                                            
                                           </div>
                                           <div>
                                             <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
-                                            <button class="btn" type="submit" id="button2">Ок</button>
                                             <p id="notice2"></p>
                                             <br />
                                           </div>
                                           <div>
-                                            <button class="btn" type="submit" id="button3">Построить</button>
+                                            <button class="btn" style="border: 1ps solid grey" type="submit" id="button3">Построить</button>
                                             <span id="notice3"></span>
                                           </div>
                                       </p>
