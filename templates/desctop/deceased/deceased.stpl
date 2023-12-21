@@ -56,12 +56,28 @@
                                         <span class="font-semibold small">
                                           <%=_place.get_loc() %>
                                         </span>
+                                      </p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                                    <h6 class="text-lg font-semibold">
+                                        Построить маршрут
+                                    </h6>
+                                    <p class="font-semibold mt-2">
                                         <br />
-                                        <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
-                                            data-geo="<%= deceased.lat %>, <%= deceased.lon %>"
-                                        >
-                                          Маршрут
-                                        </a>
+                                        <a class="pointer get_ma duration-500 ms-5"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
+                                        <br />
+                                        или
+                                        <br />
+
+                                            <input type="text" id="suggest1" class="input" placeholder="Адрес отправления">
+                                            <button type="submit" id="button1">Ок</button>
+                                            <p id="notice1"></p>
+                                            <input type="text" id="suggest2" class="input" placeholder="Адрес назначения">
+                                            <button type="submit" id="button2">Ок</button>
+                                            <p id="notice2"></p>
+                                            <button type="submit" id="button3">Кастомно</button>
+                                            <span id="notice3"></span>
                                       </p>
                             </div>
 
