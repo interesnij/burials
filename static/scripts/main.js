@@ -579,4 +579,4 @@ on('body', 'change', '#pro-images', function() {
   }
 
   document.body.querySelector(".photos_upload_response").innerHTML = word;
-}
+}); 
