@@ -133,7 +133,7 @@
 						<br>
 						<% if deceased.get_images().len() > 0 { %>
 							<hr />
-								<label class="font-semibold">Добавленные фото: </label>
+								<label style="font-size: x-large;margin-top:20px" class="font-semibold">Добавленные фото: </label>
 								<div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
 									<% for i in deceased.get_images().iter() { %>
 									<div class="show_image" data-pk="<%= i.id %>" style="margin-bottom:15px">
