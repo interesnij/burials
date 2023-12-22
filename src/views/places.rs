@@ -585,8 +585,14 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     if _place.region_id.is_some() {
         city_list = Citie::get_region_all(_place.region_id.unwrap());
     }
+    else {
+        city_list = Vec::new();
+    }
     if _place.region_id.is_some() {
         district_list = District::get_region_all(_place.region_id.unwrap());
+    }
+    else {
+        district_list = Vec::new();
     }
     let place_list = crate::models::Place::get_all();
 
