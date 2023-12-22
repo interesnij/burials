@@ -76,7 +76,7 @@
                             
                             <div class="grid grid-cols-12 gap-4 mt-4">
                                 <div class="col-span-12 text-start">
-                                    <label class="font-semibold" for="Address">Адрес:</label>
+                                    <label class="font-semibold" for="Address">Улица, дом:</label>
                                     <input id="id_address" 
                                         type="text" name="address"
                                         class="form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 
