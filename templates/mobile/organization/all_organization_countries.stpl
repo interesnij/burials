@@ -1,207 +1,111 @@
 <% include!("../header.stpl"); %>
-
-    <div class="page-wrapper">
-      <section class="property-five">
+      <section class="property-five" style="margin-top:80px">
         <div class="container">
           <div class="row">
 
+            <a style="text-decoration: underline" href="/create_organization/">Добавить организацию</a>
 
-
-<!-------------------------------------- ФИЛЬТРЫ ПОИСКА --------------------------------------------------------------->
-
-
-            <div class="col-xl-2 colum1">       
-              <div class="property-sidebar-content">
-                <div class="inner-title">
-
-                  <h5>Настройки поиска</h5>
-                </div>
-
-                <div class="advanced-search-box">
-                  <form
-                    action="index.html"
-                    method="post"
-                    class="advanced-search-form clearfix"
-                  >
-
-
-
-                    <div class="row">
-                      <div class="col-xl-12">
-                        
-                        <div class="form-group clearfix">
-
-                          <label>Ключевое слово</label>
-
-                          <div class="field-input">
-
-<!------------------------------------------Поле ввода -->
-
-                            <input
-                              type="text"
-                              name="keywords"
-                              placeholder="Что вы хотите найти?"/>
-
-                          </div>
-                        </div>
-
-
-<!-----------------------------------------Тип поиска -->
-                        
-                        <div class="form-group clearfix">
-
-                          <label>Тип</label>
-
-                          <div class="field-input">
-                            <div class="select-box">
-
-                              <select class="wide">
-
-                                <option data-display="Выберите тип">
-                                  Выберите тип
-                                </option>
-
-                                <option value="1">Усопший</option>
-                                <option value="1">Город</option>
-                                <option value="2">Захоронение</option>
-                                <option value="3">Кладбище</option>
-                                <option value="4">Услугу</option>
-                                <option value="4">Организацию</option>
-
-                            
-                              </select>
-
+            <div class="col-xl-3 col-lg-3 col-md-12 colum1" style="overflow: scroll;height: 90vh;">
+                <% for i in all_organizations.iter() { %>
+                    <div style="margin-bottom:10px">
+                        <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
+                            <div class="img-holder">
+                                <img src="<%= i.get_image() %>" alt="img">
                             </div>
-                          </div>
+                            <div class="text-holder">
+                                <h3> 
+                                    <a style="text-decoration: underline" href="/organization/<%= i.id %>/"><%=i.name %></a>
+                                </h3> 
+                            </div>
                         </div>
-
-
-<!----------------------------------------------Кнопка -->
-
-                        <div class="btn-box">
-                          <button
-                            class="btn-one"
-                            type="submit"
-                            data-loading-text="Please wait..."
-                          >
-                            <span class="txt">
-                              Поиск
-                              <i class="icon-plus-sign"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
                     </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-
-
-
-<!-----------------------------------------------ОБЪЕКТЫ----------------------------------------------->
-
-<div class="col-xl-6 colum2">
-              <div class="property-content-box">
-                <div class="property-content-box__inner grid">
-                  <!-- Start Properties Grid Content-->
-                  <div class="property-grid-content grid-item">
-                    <div class="row">
-
-
-
-<!-----------------------------------------------------------ОРГАНИЗАЦИЯ-->
-
-                      <!-- Start Single Properties Box Style1-->
-                      <div class="col-xl-6 col-lg-6">
-                        <div class="single-properties-box-style1">
-                          <div class="img-holder">
-                            <img
-                              src="static/images/organization/organization1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div class="text-holder">
-                            <div class="top">
-                              <div class="dot"></div>
-                              <p><a href="organization_profile.html">Организация</a></p>
-                            </div>
-                            <h3>
-
-                              <a href="organization_profile.html">
-                              Название
-                              </a>
-
-                            </h3>
-
-                            <p>
-                            Краснодарский край, Сочи
-                            </p>
-
-
-                            <br>
-
-                            <div class="info-box">
-
-                              <ul>
-
-                                <li>
-                                  <span class=""></span>Тип 
-                                </li>
-
-                              </ul>
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-<!-----------------------------------------------ПАГИНАЦИЯ--->
-
-               <div class="row">
-                  <div class="col-xl-12">
-                    <ul class="styled-pagination clearfix">
-                      <li class="arrow prev">
-                        <a href="#">
-                          <span class="icon-left-arrow left"></span>Назад
-                        </a>
-                      </li>
-                      <li class="active"><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li class="arrow next">
-                        <a href="#">
-                          Вперед<span class="icon-right-arrow-1 right"></span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-              </div>
-            </div>
- 
-
-
-
-
-<!-------------------------------------------------------КАРТА-->
-
-            <div class="col-xl-4 col-md-12 colum3">
-              <div class="listings-page-map">
-                <iframe
-                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A451024e68e5b1bf2d164bcec08300066ed653cd8c6b5b802c1bde838c684c10b&amp;source=constructor"
-                  class="google-map"
-                  allowfullscreen
-                ></iframe>
-              </div>
+                <% } %>
+            </div> 
+            <div class="col-xl-9 col-lg-9 col-md-12 colum2">
+                <div id="map"></div>
             </div>
           </div>
         </div>
       </section>
-      <!--End -->
-    </div>
 
 <% include!("../footer.stpl"); %>
+
+<script>
+ymaps.ready(init);
+
+function init() {
+    var myMap = new ymaps.Map("map", {
+            center: [55.7522, 37.6156],
+            zoom: 4
+            //controls: []
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
+    // Создаем геообъект с типом геометрии "Точка".
+        myGeoObject = new ymaps.GeoObject({
+            // Описание геометрии.
+            geometry: {
+                type: "Point",
+                coordinates: [55.8, 37.8]
+            },
+            // Свойства.
+            properties: {
+                // Контент метки.
+                iconContent: 'Я тащусь',
+                hintContent: 'Ну давай уже тащи'
+            }
+        }, {
+            // Опции.
+            // Иконка метки будет растягиваться под размер ее содержимого.
+            preset: 'islands#blackStretchyIcon',
+            // Метку можно перемещать.
+            draggable: true
+        }),
+        myPieChart = new ymaps.Placemark([
+            55.847, 37.6
+        ], {
+            // Данные для построения диаграммы.
+            data: [
+                {weight: 8, color: '#0E4779'},
+                {weight: 6, color: '#1E98FF'},
+                {weight: 4, color: '#82CDFF'}
+            ],
+            iconCaption: "Диаграмма"
+        }, {
+            // Зададим произвольный макет метки.
+            iconLayout: 'default#pieChart',
+            // Радиус диаграммы в пикселях.
+            iconPieChartRadius: 30,
+            // Радиус центральной части макета.
+            iconPieChartCoreRadius: 10,
+            // Стиль заливки центральной части.
+            iconPieChartCoreFillStyle: '#ffffff',
+            // Cтиль линий-разделителей секторов и внешней обводки диаграммы.
+            iconPieChartStrokeStyle: '#ffffff',
+            // Ширина линий-разделителей секторов и внешней обводки диаграммы.
+            iconPieChartStrokeWidth: 3,
+            // Максимальная ширина подписи метки.
+            iconPieChartCaptionMaxWidth: 200
+        });
+
+    var addToMap = function(inputAdress) {
+        ymaps.geocode(inputAdress, { //ищем по нужному адресу
+            boundedBy: myMap.getBounds(),
+            results: 1
+        }).then(function(res) {
+            myMap.geoObjects.add(res.geoObjects.get(0));
+        });
+    };
+
+    //myMap.setType('yandex#satellite');
+    //myMap.geoObjects
+        //.add(myGeoObject)
+        //.add(myPieChart);
+        <% for i in all_places.iter() { %>
+            addToMap("<%= i.address %>");
+        <% } %>
+
+        
+}
+
+</script>
