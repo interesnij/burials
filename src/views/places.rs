@@ -581,10 +581,13 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     let region_list = Region::get_country_all(_place.country_id);
 
     let city_list: Vec<Citie>;
+    let district_list: Vec<District>;
     if _place.region_id.is_some() {
         city_list = Citie::get_region_all(_place.region_id.unwrap());
     }
-    let city_list = Citie::get_all(); 
+    if _place.region_id.is_some() {
+        district_list = District::get_region_all(_place.region_id.unwrap());
+    }
     let place_list = crate::models::Place::get_all();
 
     if user_id.is_some() { 
@@ -596,22 +599,24 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/edit_place.stpl")]
             struct Template {
-                request_user: User,
-                place:        Place,
-                is_ajax:      i32,
-                country_list: Vec<Countrie>,
-                region_list:  Vec<Region>,
-                city_list:    Vec<Citie>,
-                place_list:   Vec<Place>,
+                request_user:  User,
+                place:         Place,
+                is_ajax:       i32,
+                country_list:  Vec<Countrie>,
+                region_list:   Vec<Region>,
+                city_list:     Vec<Citie>,
+                district_list: Vec<District>,
+                place_list:    Vec<Place>,
             }
             let body = Template {
-                request_user: _request_user,
-                place:        _place,
-                is_ajax:      is_ajax,
-                country_list: country_list,
-                region_list:  region_list,
-                city_list:    city_list,
-                place_list:   place_list,
+                request_user:  _request_user,
+                place:         _place,
+                is_ajax:       is_ajax,
+                country_list:  country_list,
+                region_list:   region_list,
+                city_list:     city_list,
+                district_list: district_list,
+                place_list:    place_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -621,22 +626,24 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/edit_place.stpl")]
             struct Template {
-                request_user: User,
-                place:        Place,
-                is_ajax:      i32,
-                country_list: Vec<Countrie>,
-                region_list:  Vec<Region>,
-                city_list:    Vec<Citie>,
-                place_list:   Vec<Place>,
+                request_user:  User,
+                place:         Place,
+                is_ajax:       i32,
+                country_list:  Vec<Countrie>,
+                region_list:   Vec<Region>,
+                city_list:     Vec<Citie>,
+                district_list: Vec<District>,
+                place_list:    Vec<Place>,
             }
             let body = Template {
-                request_user: _request_user,
-                place:        _place,
-                is_ajax:      is_ajax,
-                country_list: country_list,
-                region_list:  region_list,
-                city_list:    city_list,
-                place_list:   place_list,
+                request_user:  _request_user,
+                place:         _place,
+                is_ajax:       is_ajax,
+                country_list:  country_list,
+                region_list:   region_list,
+                city_list:     city_list,
+                district_list: district_list,
+                place_list:    place_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
