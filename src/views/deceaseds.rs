@@ -239,9 +239,6 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
-        if !_request_user.is_admin() {
-            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
-        }
         let places_list = Place::get_all();
         let deceased_list = Deceased::get_all(); 
 
@@ -358,24 +355,23 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart) -> impl R
     let _user = get_request_user(&req).await;
     if _user.is_some() {
         let _request_user = _user.unwrap();
-        if _request_user.is_admin() {
-            let form = crate::utils::deceased_form(payload.borrow_mut()).await;
-            Deceased::create ( 
-                _request_user.id, 
-                form.place_id,
-                form.first_name.clone(),
-                form.middle_name.clone(),
-                form.last_name.clone(),
-                form.birth_date.clone(),
-                form.death_date.clone(),
-                form.image.clone(),
-                form.memory_words.clone(),
-                form.lat.clone(),
-                form.lon.clone(),
-                form.images.clone(),
-            );
-        }
-    }; 
+
+        let form = crate::utils::deceased_form(payload.borrow_mut()).await;
+        Deceased::create ( 
+            _request_user.id, 
+            form.place_id,
+            form.first_name.clone(),
+            form.middle_name.clone(),
+            form.last_name.clone(),
+            form.birth_date.clone(),
+            form.death_date.clone(),
+            form.image.clone(),
+            form.memory_words.clone(),
+            form.lat.clone(),
+            form.lon.clone(),
+            form.images.clone(),
+        );
+    };
     HttpResponse::Ok()
 }
 
@@ -384,22 +380,20 @@ pub async fn edit_deceased(req: HttpRequest, mut payload: Multipart, _id: web::P
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _deceased = crate::utils::get_deceased(*_id).expect("E."); 
-        if _request_user.id == _deceased.user_id || _request_user.is_admin() {
-            let form = crate::utils::deceased_form(payload.borrow_mut()).await;
-            _deceased.edit (
-                _request_user.id,
-                form.first_name.clone(),
-                form.middle_name.clone(),
-                form.last_name.clone(),
-                form.birth_date.clone(),
-                form.death_date.clone(),
-                form.image.clone(),
-                form.memory_words.clone(),
-                form.lat.clone(),
-                form.lon.clone(),
-                form.images.clone(),
-            );
-        }
+        let form = crate::utils::deceased_form(payload.borrow_mut()).await;
+        _deceased.edit (
+            _request_user.id,
+            form.first_name.clone(),
+            form.middle_name.clone(),
+            form.last_name.clone(),
+            form.birth_date.clone(),
+            form.death_date.clone(),
+            form.image.clone(),
+            form.memory_words.clone(),
+            form.lat.clone(),
+            form.lon.clone(),
+            form.images.clone(),
+        );
     };
     HttpResponse::Ok()
 }

@@ -59,6 +59,16 @@ pub struct PlaceSmall {
 
 // Реализация методов для структуры Organization
 impl Organization {
+    pub fn count_images(&self) -> usize {
+        let _connection = establish_connection();
+        return schema::files::table
+            .filter(schema::files::object_id.eq(self.id))
+            .filter(schema::files::object_types.eq(1))
+            .select(schema::files::id)
+            .load::<i32>(&_connection)
+            .expect("E")
+            .len();
+    }
     pub fn get_images(&self) -> Vec<File> {
         use crate::schema::files::dsl::files;
 
@@ -202,6 +212,7 @@ impl Organization {
         return organizations
             .filter(schema::organizations::name.ilike(&q))
             .or_filter(schema::organizations::description.ilike(&q))
+            .filter(schema::organizations::types.eq(2))
             .limit(limit)
             .offset(offset)
             .load::<Organization>(&_connection)
@@ -219,14 +230,16 @@ impl Organization {
             .expect("E."); 
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
-            places_stack.push(PlaceSmall{
-                id:      _place.id,
-                name:    org.name.clone(),
-                address: _place.get_loc(),
-            });
-            if !org_stack.iter().any(|i| i.id == org.id) && org.types == 2 {
-                org_stack.push(org);
-           }
+            if org.types == 2 {
+                places_stack.push(PlaceSmall{
+                    id:      _place.id,
+                    name:    org.name.clone(),
+                    address: _place.get_loc(),
+                });
+                if !org_stack.iter().any(|i| i.id == org.id) && org.types == 2 {
+                    org_stack.push(org);
+                }
+            }
         }
         
         return (org_stack, places_stack);
@@ -262,13 +275,15 @@ impl Organization {
             .expect("E.");
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
-            places_stack.push(PlaceSmall{
-                id:      _place.id,
-                name:    org.name.clone(),
-                address: _place.get_loc(),
-            });
-            if !org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
-                org_stack.push(org);
+            if org.types == 2 {
+                places_stack.push(PlaceSmall{
+                    id:      _place.id,
+                    name:    org.name.clone(),
+                    address: _place.get_loc(),
+                });
+                if !org_stack.iter().any(|i| i.id == org.id) && org.types == 2 {
+                    org_stack.push(org);
+                }
             }
         }
         
@@ -311,13 +326,15 @@ impl Organization {
         }
         for _place in places_vec.iter() {
             let org = get_organization(_place.organization_id).expect("E.");
-            places_stack.push(PlaceSmall{
-                id:      _place.id,
-                name:    org.name.clone(),
-                address: _place.get_loc(),
-            });
-            if !org_stack.iter().any(|i| i.id != org.id) && org.types == 2 {
-                org_stack.push(org);
+            if org.types == 2 {
+                places_stack.push(PlaceSmall{
+                    id:      _place.id,
+                    name:    org.name.clone(),
+                    address: _place.get_loc(),
+                });
+                if !org_stack.iter().any(|i| i.id == org.id) && org.types == 2 {
+                    org_stack.push(org);
+                }
             }
         }
         return (org_stack, places_stack);
@@ -327,6 +344,7 @@ impl Organization {
 
         let _connection = establish_connection();
         return organizations
+            .filter(schema::organizations::types.eq(2))
             .select(schema::organizations::id)
             .load::<i32>(&_connection)
             .expect("E.")

@@ -29,6 +29,7 @@ use crate::utils::{
 pub fn page_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
     config.route("/main_search", web::get().to(main_search));
+    config.route("/image/{id}/", web::get().to(image_page));
 }
 
 pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -244,3 +245,46 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no params"));
     }
 }
+
+
+pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let _file = crate::utils::get_file(*id).expect("E.");
+    let mut _description = String::new();
+    match _file.object_types {
+        1 => {
+            let _organization = crate::utils::get_organization(_file.object_id).expect("E.");
+            _description == "Изображение организации ".to_string() + &_organization.name;
+        },
+        2 => {
+            let _place = crate::utils::get_place(_file.object_id).expect("E.");
+            _description == "Изображение кладбища ".to_string() + &_place.title;
+        },
+        3 => {
+            let _deceased = crate::utils::get_deceased(_file.object_id).expect("E.");
+            _description == "Изображение усопшего ".to_string() + &_deceased.get_full_name();
+        },
+        _ => false,
+    };
+
+    let (_prev, _next) = _file.get_prev_next_images();
+
+    #[derive(TemplateOnce)]
+    #[template(path = "desctop/load/image.stpl")]
+    struct Template {
+        file:        crate:models::File,
+        description: String,
+        prev:        Option<File>,
+        next:        Option<File>,
+    }
+    let body = Template {
+        file:        _file,
+        description: _description,
+        prev:        _prev,
+        next:        _next,
+    }
+    .render_once()
+    .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        
+}
+

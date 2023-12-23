@@ -166,7 +166,6 @@ function init() {
 
   $('.get_ma').bind('click', function(e) {
     addrTo = this.getAttribute("data-geo");
-    //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
     const g_options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -174,14 +173,13 @@ function init() {
     };
 
     function g_success(pos) {
-      const crd = pos.coords;
+      const crd = pos.coords; 
 
       console.log("Your current position is:");
       console.log(`Latitude : ${crd.latitude}`);
       console.log(`Longitude: ${crd.longitude}`);
       console.log(`More or less ${crd.accuracy} meters.`);
       addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
-      //addrFrom = crd.latitude + ", " + crd.longitude;
       console.log(`addrFrom: ${addrFrom}`);
       console.log(`addrTo: ${addrTo}`);
 
@@ -194,12 +192,11 @@ function init() {
       var _location = ymaps.geolocation.get({mapStateAutoApply: true});
       _location.then(
         function(result) {
-          // Добавление местоположения на карту.
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
-          console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
+          console.log(`yandex location: ${result.geoObjects.get(0).properties.get('text')}`);
         },
         function(err) {
-          console.log('Ошибка: ' + err)
+          console.log('yandex location error: ' + err)
         }
       );
 
@@ -221,15 +218,12 @@ function init() {
 
 
   function geocode(ctrl_id) {
-    // Забираем запрос из поля ввода.
     var request = $(ctrl_id).val();
-    // Геокодируем введённые данные.
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
         error, hint;
 
       if (obj) {
-        // Об оценке точности ответа геокодера можно прочитать тут: https://tech.yandex.ru/maps/doc/geocoder/desc/reference/precision-docpage/
         switch (obj.properties.get('metaDataProperty.GeocoderMetaData.precision')) {
           case 'exact':
             break;
@@ -253,7 +247,6 @@ function init() {
         hint = 'Уточните адрес';
       }
 
-      // Если геокодер возвращает пустой массив или неточный результат, то показываем ошибку.
       if (error) {
         if (ctrl_id == '#suggest1') {
           addrFrom = null
@@ -282,18 +275,14 @@ function init() {
   }
 
   function showResult(ctrl_id) {
-    // Удаляем сообщение об ошибке, если найденный адрес совпадает с поисковым запросом.
     $(ctrl_id).removeClass('input_error');
     $('#notice1').css('display', 'none');
     $('#notice2').css('display', 'none');
-    // полный адрес для сообщения под картой.
     if (ctrl_id == '#suggest1') {
       showMessage(ctrl_id, addrFrom.getAddressLine());
     } else {
       showMessage(ctrl_id, addrTo.getAddressLine());
     }
-    // Сохраняем укороченный адрес для подписи метки.
-    //shortAddress = [obj.getThoroughfare(), obj.getPremiseNumber(), obj.getPremise()].join(' ');
   }
 
   function showError(ctrl_id, message) {

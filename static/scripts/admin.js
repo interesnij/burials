@@ -61,11 +61,6 @@ on('body', 'click', '.remove_country', function() {
     this.parentElement.remove();
 });
 
-on('body', 'click', '.publish_org', function() {
-  delete_item("/organization/publish/", this.getAttribute("data-pk"));
-  this.parentElement.innerHTML = "Одобрено";
-});
-
 
 on('body', 'click', '#create_region', function() {
   let form = this.parentElement.parentElement.parentElement;
@@ -480,25 +475,6 @@ on('body', 'click', '.remove_deceased', function() {
   this.parentElement.remove();
 });
 
-
-on('body', 'click', '.publish_place', function() {
-  delete_item("/place/publish/", this.getAttribute("data-pk"));
-  this.parentElement.remove();
-});
-on('body', 'click', '.unpublish_place', function() {
-  delete_item("/place/unpublish/", this.getAttribute("data-pk"));
-  this.parentElement.remove();
-});
-
-on('body', 'click', '.publish_organization', function() {
-  delete_item("/organization/publish/", this.getAttribute("data-pk"));
-  this.parentElement.remove();
-});
-on('body', 'click', '.unpublish_organization', function() {
-  delete_item("/organization/unpublish/", this.getAttribute("data-pk"));
-  this.parentElement.remove();
-});
-
 on('body', 'click', '.remove_admin', function() {
   _this = this;
   delete_item("/users/remove_staff/", _this.getAttribute("data-pk"));
@@ -519,4 +495,20 @@ on('body', 'click', '.toggle_admin', function() {
     _this.innerHTML = "Убрать из админов";
   }
   console.log("click");
+});
+
+
+on('body', 'click', '.publish_deceased', function() {
+  delete_item("/deceased/publish/", this.getAttribute("data-pk"));
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+});
+
+on('body', 'click', '.publish_place', function() {
+  delete_item("/place/publish/", this.getAttribute("data-pk"));
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+});
+
+on('body', 'click', '.publish_organization', function() {
+  delete_item("/organization/publish/", this.getAttribute("data-pk"));
+  this.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
 });

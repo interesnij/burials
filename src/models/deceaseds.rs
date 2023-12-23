@@ -34,6 +34,7 @@ pub struct Deceased {
     pub memory_words: Option<String>,
     pub lat:          f64,
     pub lon:          f64,
+    pub types:        i16,
 
 }
 
@@ -52,9 +53,28 @@ pub struct NewDeceased {
     pub memory_words: Option<String>,
     pub lat:          f64,
     pub lon:          f64,
+    pub types:        i16,
 }
 
 impl Deceased {
+    pub fn suggested() -> Vec<Deceased> {
+        let _connection = establish_connection();
+        return schema::deceaseds::table
+            .filter(schema::deceaseds::types.ne(2))
+            .load::<Deceased>(&_connection)
+            .expect("E."); 
+    }
+    pub fn count_images(&self) -> usize {
+        let _connection = establish_connection();
+        return schema::files::table
+            .filter(schema::files::object_id.eq(self.id))
+            .filter(schema::files::object_types.eq(3))
+            .select(schema::files::id)
+            .load::<i32>(&_connection)
+            .expect("E")
+            .len();
+    }
+
     pub fn get_place(&self) -> Result<Place, Error> {
         return crate::utils::get_place(self.place_id);
     }
@@ -86,6 +106,14 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        let types: i16;
+        if _user.perm > 9 {
+            types = 2;
+        } else {
+            types = 1;
+        }
+
         let new_form = NewDeceased {
             user_id:       user_id,
             place_id:      place_id,
@@ -98,6 +126,7 @@ impl Deceased {
             memory_words:  memory_words,
             lat:           lat,
             lon:           lon,
+            types:         types,
         };
         let _new = diesel::insert_into(schema::deceaseds::table)
             .values(&new_form)
@@ -127,8 +156,11 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
-        println!("birth_date {:?}", birth_date);
-        println!("death_date {:?}", death_date);
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm < 10 {
+            return 0;
+        }
+
         diesel::update(self)
             .set((
                 schema::deceaseds::first_name.eq(first_name),
@@ -187,6 +219,7 @@ impl Deceased {
         let _connection = establish_connection();
         return deceaseds
             .filter(schema::deceaseds::place_id.eq(place_id))
+            .filter(schema::deceaseds::types.eq(2))
             .order(schema::deceaseds::death_date.desc())
             .limit(limit)
             .offset(offset)
@@ -227,6 +260,7 @@ impl Deceased {
                     
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -239,6 +273,7 @@ impl Deceased {
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     //.limit(limit)
                     //.offset(offset)
@@ -253,6 +288,7 @@ impl Deceased {
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -268,6 +304,7 @@ impl Deceased {
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -280,6 +317,7 @@ impl Deceased {
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -292,6 +330,7 @@ impl Deceased {
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -303,6 +342,7 @@ impl Deceased {
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
+                    .filter(schema::deceaseds::types.eq(2))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -313,7 +353,6 @@ impl Deceased {
         return Vec::new();
     }
 
-    // Метод для получения всех объектов данной структуры.
     pub fn get_all() -> Vec<Deceased> {
         use crate::schema::deceaseds::dsl::deceaseds;
 
@@ -338,6 +377,7 @@ impl Deceased {
         let _connection = establish_connection();
         return deceaseds
             .filter(schema::deceaseds::place_id.eq(place_id))
+            .filter(schema::deceaseds::types.eq(2))
             .select(schema::deceaseds::id)
             .load::<i32>(&_connection)
             .expect("E.")

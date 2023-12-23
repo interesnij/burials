@@ -11,6 +11,7 @@ use crate::errors::Error;
 use crate::models::{
     Deceased,
     Organization,
+    Place,
     Review,
     Service,
     User,
@@ -67,10 +68,19 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/delete_city/", web::post().to(delete_city));
 
     config.route("/admin/organizations/", web::get().to(suggested_organizations_page));
+    config.route("/admin/places/", web::get().to(suggested_places_page));
+    config.route("/admin/deceaseds/", web::get().to(suggested_deceaseds_page));
 
     config.route("/users/all/", web::get().to(all_users_list));
     config.route("/users/create_admin/", web::post().to(create_admin));
     config.route("/users/remove_staff/", web::post().to(remove_staff));
+
+    config.route("/organization/publish/", web::post().to(publish_organization));
+    config.route("/organization/unpublish/", web::post().to(unpublish_organization));
+    config.route("/place/publish/", web::post().to(publish_place));
+    config.route("/place/unpublish/", web::post().to(unpublish_place));
+    config.route("/deceased/publish/", web::post().to(publish_deceased));
+    config.route("/deceased/unpublish/", web::post().to(unpublish_deceased));
 }
 
 
@@ -705,6 +715,32 @@ pub async fn delete_country(req: HttpRequest, mut payload: Multipart) -> impl Re
     HttpResponse::Ok()
 }
 
+pub async fn create_admin(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _user = crate::utils::get_user(form.id).expect("E.");
+        if _request_user.is_admin() {
+            crate::models::User::create_admin(form.id);
+        }
+    };
+    HttpResponse::Ok()
+}
+pub async fn remove_staff(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _user = crate::utils::get_user(form.id).expect("E.");
+        if _request_user.is_admin() {
+            crate::models::User::remove_staff(form.id);
+        }
+    };
+    HttpResponse::Ok()
+}
+
+
 pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_none() {
@@ -735,28 +771,133 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
     }
 }
 
+pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Organization;
 
-pub async fn create_admin(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let places_list = Place::suggested();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/suggested_places.stpl")]
+        struct Template { 
+            request_user: User,
+            places_list:  Vec<Places>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            places_list:  places_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Deceased;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let deceaseds_list = Deceased::suggested();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/suggested_deceaseds.stpl")]
+        struct Template { 
+            request_user: User,
+            deceaseds_list:  Vec<Deceased>,
+        }
+        let body = Template {
+            request_user:   _request_user,
+            deceaseds_list: deceaseds_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+
+pub async fn publish_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
-        let _user = crate::utils::get_user(form.id).expect("E.");
-        if _request_user.is_admin() {
-            crate::models::User::create_admin(form.id);
-        }
+        let _organization = crate::utils::get_organization(form.id).expect("E.");
+        _organization.publish(_request_user.id);
+        
     };
     HttpResponse::Ok()
 }
-pub async fn remove_staff(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+pub async fn unpublish_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
-        let _user = crate::utils::get_user(form.id).expect("E.");
-        if _request_user.is_admin() {
-            crate::models::User::remove_staff(form.id);
-        }
+        let _organization = crate::utils::get_organization(form.id).expect("E.");
+        _organization.unpublish(_request_user.id);
+        
+    };
+    HttpResponse::Ok()
+}
+
+
+pub async fn publish_place(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _place = crate::utils::get_place(form.id).expect("E.");
+        _place.publish(_request_user.id);
+        
+    };
+    HttpResponse::Ok()
+}
+pub async fn unpublish_place(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _place = crate::utils::get_place(form.id).expect("E.");
+        _place.unpublish(_request_user.id);
+        
+    };
+    HttpResponse::Ok()
+}
+
+pub async fn publish_deceased(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _deceased = crate::utils::get_deceased(form.id).expect("E.");
+        _deceased.publish(_request_user.id);
+        
+    };
+    HttpResponse::Ok()
+}
+pub async fn unpublish_deceased(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _deceased = crate::utils::get_deceased(form.id).expect("E.");
+        _deceased.unpublish(_request_user.id);
+        
     };
     HttpResponse::Ok()
 }

@@ -47,8 +47,6 @@ pub fn organization_routes(config: &mut web::ServiceConfig) {
     config.route("/create_organization/", web::post().to(create_organization));
     config.route("/edit_organization/{id}/", web::post().to(edit_organization));
     config.route("/delete_organization/", web::post().to(delete_organization));
-    config.route("/organization/publish/", web::post().to(publish_organization));
-    config.route("/organization/unpublish/", web::post().to(unpublish_organization));
 
     config.route("/create_service/{id}/", web::get().to(create_service_page));
     config.route("/edit_service/{id}/", web::get().to(edit_service_page));
@@ -558,29 +556,6 @@ pub async fn delete_organization(req: HttpRequest, mut payload: Multipart) -> im
     };
     HttpResponse::Ok()
 }
-pub async fn publish_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let user_id = get_request_user(&req).await; 
-    if user_id.is_some() {
-        let _request_user = user_id.unwrap();
-        let form = crate::utils::id_form(payload.borrow_mut()).await;
-        let _organization = crate::utils::get_organization(form.id).expect("E.");
-        _organization.publish(_request_user.id);
-        
-    };
-    HttpResponse::Ok()
-}
-pub async fn unpublish_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let user_id = get_request_user(&req).await; 
-    if user_id.is_some() {
-        let _request_user = user_id.unwrap();
-        let form = crate::utils::id_form(payload.borrow_mut()).await;
-        let _organization = crate::utils::get_organization(form.id).expect("E.");
-        _organization.unpublish(_request_user.id);
-        
-    };
-    HttpResponse::Ok()
-}
-
 
 pub async fn create_service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);

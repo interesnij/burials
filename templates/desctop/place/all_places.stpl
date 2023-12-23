@@ -5,7 +5,7 @@
           <div class="row">
             <div class="col-xl-3 col-lg-3 col-md-12 colum1" style="overflow: scroll;height: 90vh;">
                         <% if object_list.len() == 0 { %>
-                          <h3>Кладбище пустое</h3>
+                          <h3>Кладбищ пока нет</h3>
                         <% } else { %> 
                           <% for i in object_list.iter() { %>
                             <div style="margin-bottom:10px">
@@ -17,8 +17,8 @@
                                       <h3>
                                           <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list/"><%=i.title %></a>
                                       </h3> 
-                                      <p><%= i.get_loc() %></p>
-                                      <p>Оцифровано: <%= i.count %></p>
+                                      <p class="small"><%= i.get_loc() %></p>
+                                      <p class="small">Оцифровано: <%= i.count %></p>
                                   </div>
                               </div>
                             </div>
@@ -38,59 +38,21 @@
 ymaps.ready(init);
 
 function init() {
+    <%  let center: String;
+        if object_list.len() > 0 {
+            center = object_list[0].lat.to_string() + &",".to_string() + &object_list[0].lon.to_string();
+        } else {
+            center = "55.7522, 37.6156";
+        }
+    %>
     var myMap = new ymaps.Map("map", {
-            center: [55.7522, 37.6156],
-            zoom: 5,
-            controls: []
-        }, {
-            searchControlProvider: 'yandex#search'
-        }),
-    // Создаем геообъект с типом геометрии "Точка".
-        myGeoObject = new ymaps.GeoObject({
-            // Описание геометрии.
-            geometry: {
-                type: "Point",
-                coordinates: [55.8, 37.8]
-            },
-            // Свойства.
-            properties: {
-                // Контент метки.
-                iconContent: 'Я тащусь',
-                hintContent: 'Ну давай уже тащи'
-            }
-        }, {
-            // Опции.
-            // Иконка метки будет растягиваться под размер ее содержимого.
-            preset: 'islands#blackStretchyIcon',
-            // Метку можно перемещать.
-            draggable: true
-        }),
-        myPieChart = new ymaps.Placemark([
-            55.847, 37.6
-        ], {
-            // Данные для построения диаграммы.
-            data: [
-                {weight: 8, color: '#0E4779'},
-                {weight: 6, color: '#1E98FF'},
-                {weight: 4, color: '#82CDFF'}
-            ],
-            iconCaption: "Диаграмма"
-        }, {
-            // Зададим произвольный макет метки.
-            iconLayout: 'default#pieChart',
-            // Радиус диаграммы в пикселях.
-            iconPieChartRadius: 30,
-            // Радиус центральной части макета.
-            iconPieChartCoreRadius: 10,
-            // Стиль заливки центральной части.
-            iconPieChartCoreFillStyle: '#ffffff',
-            // Cтиль линий-разделителей секторов и внешней обводки диаграммы.
-            iconPieChartStrokeStyle: '#ffffff',
-            // Ширина линий-разделителей секторов и внешней обводки диаграммы.
-            iconPieChartStrokeWidth: 3,
-            // Максимальная ширина подписи метки.
-            iconPieChartCaptionMaxWidth: 200
-        });
+        center: [<%= center %>],
+        zoom: 5,
+        controls: []
+    }, {
+        searchControlProvider: 'yandex#search'
+    });
+
     myMap.setType('yandex#satellite');
     //myMap.geoObjects
         //.add(myGeoObject)

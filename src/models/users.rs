@@ -31,6 +31,31 @@ pub struct User {
     pub perm:     i16,
 }
 impl User {
+    pub fn get_suggested_stat(&self) -> (usize, usize, usize) {
+        if self.is_admin() {
+            let org_count = schema::organizations::table
+                .filter(schema::organizations::types.ne(2))
+                .select(schema::organizations::id)
+                .load::<i32>(&_connection)
+                .expect("E.")
+                .len();
+            let place_count = schema::places::table
+                .filter(schema::places::types.ne(2))
+                .select(schema::places::id)
+                .load::<i32>(&_connection)
+                .expect("E.")
+                .len(); 
+            let deceased_count = schema::deceaseds::table
+                .filter(schema::deceaseds::types.ne(2))
+                .select(schema::deceaseds::id)
+                .load::<i32>(&_connection)
+                .expect("E.")
+                .len();
+            return (org_count, place_count, deceased_count);
+        }
+        return (0,0,0)
+    }
+
     pub fn get_all(exclude_user_id: i32) -> Vec<User> {
         let _connection = establish_connection();
         return schema::users::table
@@ -486,7 +511,50 @@ pub struct File {
     pub src:          String,
 }
 
-impl File { 
+impl File {
+    pub fn get_images_ids_for_object(&self) -> Vec<i32> {
+        let _connection = establish_connection();
+        return schema::files::table
+            .filter(schema::files::object_id.eq(self.object_id))
+            .filter(schema::files::object_types.eq(self.object_types))
+            .select(schema::files::id)
+            .load::<i32>(&_connection)
+            .expect("E");
+    }
+    pub fn get_prev_next_images(&self) -> (Option<File>, Option<File>) {
+        let _connection = establish_connection();
+        let ids = schema::files::table
+            .filter(schema::files::object_id.eq(self.object_id))
+            .filter(schema::files::object_types.eq(self.object_types))
+            .select(schema::files::id)
+            .load::<i32>(&_connection)
+            .expect("E");
+        let _images_len = ids.len();
+        let mut prev: Option<File> = None;
+        let mut next: Option<File> = None;
+
+        for (i, obj) in ids.iter().enumerate().rev() {
+            if obj == &*_id { 
+                if (i + 1) != _images_len {
+                    let _next = Some(&ids[i + 1]);
+                    next = Some(schema::files::table
+                        .filter(schema::files::id.eq(_next.unwrap()))
+                        .first::<File>(&_connection)
+                        .expect("E"));
+                };
+                if i != 0 {
+                    let _prev = Some(&ids[i - 1]);
+                    prev = Some(schema::files::table
+                        .filter(schema::files::id.eq(_prev.unwrap()))
+                        .first::<File>(&_connection)
+                        .expect("E"));
+                };
+                break;
+            }
+        };
+        return (prev, next);
+    }
+
     pub fn create (
         object_id:    i32,
         object_types: i16,

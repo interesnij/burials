@@ -430,26 +430,24 @@ pub async fn create_place(req: HttpRequest, mut payload: Multipart) -> impl Resp
     let _user = get_request_user(&req).await;
     if _user.is_some() {
         let _request_user = _user.unwrap();
-        if _request_user.is_admin() {
-            let form = crate::utils::place_form(payload.borrow_mut()).await;
-            Place::create ( 
-                _request_user.id,
-                form.city_id,
-                form.district_id,
-                form.region_id,
-                form.country_id,
-                form.title.clone(),
-                form.description.clone(),
-                form.hours.clone(),
-                form.image.clone(),
-                form.address.clone(),
-                form.director.clone(),
-                form.phone.clone(),
-                form.lat,
-                form.lon,
-                form.images.clone(),
-            );
-        }
+        let form = crate::utils::place_form(payload.borrow_mut()).await;
+        Place::create ( 
+            _request_user.id,
+            form.city_id,
+            form.district_id,
+            form.region_id,
+            form.country_id,
+            form.title.clone(),
+            form.description.clone(),
+            form.hours.clone(),
+            form.image.clone(),
+            form.address.clone(),
+            form.director.clone(),
+            form.phone.clone(),
+            form.lat,
+            form.lon,
+            form.images.clone(),
+        );
     }; 
     HttpResponse::Ok()
 }
@@ -459,26 +457,24 @@ pub async fn edit_place(req: HttpRequest, mut payload: Multipart, _id: web::Path
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         let _place = crate::utils::get_place(*_id).expect("E."); 
-        if _request_user.id == _place.user_id || _request_user.is_admin() {
-            let form = crate::utils::place_form(payload.borrow_mut()).await;
-            _place.edit ( 
-                _request_user.id,
-                form.city_id,
-                form.district_id,
-                form.region_id,
-                form.country_id,
-                form.title.clone(),
-                form.description.clone(),
-                form.hours.clone(),
-                form.image.clone(),
-                form.address.clone(),
-                form.director.clone(),
-                form.phone.clone(),
-                form.lat,
-                form.lon,
-                form.images.clone(),
-            );
-        }
+        let form = crate::utils::place_form(payload.borrow_mut()).await;
+        _place.edit ( 
+            _request_user.id,
+            form.city_id,
+            form.district_id,
+            form.region_id,
+            form.country_id,
+            form.title.clone(),
+            form.description.clone(),
+            form.hours.clone(),
+            form.image.clone(),
+            form.address.clone(),
+            form.director.clone(),
+            form.phone.clone(),
+            form.lat,
+            form.lon,
+            form.images.clone(),
+        );
     };
     HttpResponse::Ok()
 }
@@ -521,9 +517,6 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
-        if !_request_user.is_admin() {
-            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
-        }
 
         let country_list = crate::models::Countrie::get_all();
         let place_list = crate::models::Place::get_all();
@@ -596,11 +589,8 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     }
     let place_list = crate::models::Place::get_all();
 
-    if user_id.is_some() { 
+    if user_id.is_some() {
         let _request_user = user_id.unwrap();
-        if !_request_user.is_admin() {
-            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
-        }
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/edit_place.stpl")]

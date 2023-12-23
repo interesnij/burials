@@ -30,6 +30,27 @@
                         <% } %>
             </div>
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
+                <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                    <h6 class="text-lg font-semibold">
+                        Построить маршрут
+                    </h6>
+                    <p class="font-semibold mt-2">
+                        <br />
+                        <div>
+                            <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
+                            <span id="notice1"></span>
+                        </div>
+                        <div>
+                            <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                              <p id="notice2"></p>
+                              <br />
+                        </div>
+                        <div>
+                            <button class="btn" style="border: 1px solid grey; float: right;margin-top: 10px;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
+                            <span id="notice3"></span>
+                        </div>
+                    </p>
+                </div>
               <% include!("map.stpl"); %>
             </div>
           </div>

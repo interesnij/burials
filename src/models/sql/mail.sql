@@ -11,19 +11,25 @@ CREATE TABLE users (
 ); 
 
 -- Создание таблицы для хранения существующих записей об усопших
+/*
+types
+1  покойник предложен
+2  покойник одобрен
+*/
 CREATE TABLE deceaseds (
-    id            SERIAL PRIMARY KEY,     -- Уникальный идентификатор записи
-    user_id       INT NOT NULL,
-    place_id      INT NOT NULL,           -- Идентификатор места
-    first_name    VARCHAR(100) NOT NULL,  -- Имя усопшего (обязательное поле)
-    middle_name   VARCHAR(100),           -- Отчество усопшего
-    last_name     VARCHAR(100) NOT NULL,  -- Фамилия усопшего (обязательное поле)
-    birth_date    DATE NOT NULL,     -- Дата рождения (обязательное поле)
-    death_date    DATE NOT NULL,     -- Дата смерти (обязательное поле)
-    image         VARCHAR(100),           -- Ссылка на фотографию усопшего
-    memory_words  VARCHAR(500),           -- Памятные слова
-    lat           FLOAT NOT NULL,
-    lon           FLOAT NOT NULL
+    id           SERIAL PRIMARY KEY,     -- Уникальный идентификатор записи
+    user_id      INT NOT NULL,
+    place_id     INT NOT NULL,           -- Идентификатор места
+    first_name   VARCHAR(100) NOT NULL,  -- Имя усопшего (обязательное поле)
+    middle_name  VARCHAR(100),           -- Отчество усопшего
+    last_name    VARCHAR(100) NOT NULL,  -- Фамилия усопшего (обязательное поле)
+    birth_date   DATE NOT NULL,          -- Дата рождения (обязательное поле)
+    death_date   DATE NOT NULL,          -- Дата смерти (обязательное поле)
+    image        VARCHAR(100),           -- Ссылка на фотографию усопшего
+    memory_words VARCHAR(500),           -- Памятные слова
+    lat          FLOAT NOT NULL,
+    lon          FLOAT NOT NULL,
+    types        INT NOT NULL
 );
 
 /*
@@ -92,6 +98,11 @@ CREATE TABLE districts (
 --______________________________________________________________________________________
 
 -- Создание таблицы "organizations" для хранения данных об организации
+/*
+types
+1  организация предложена
+2  организация одобрена
+*/
 CREATE TABLE organizations ( 
     id          SERIAL PRIMARY KEY,     -- Уникальный идентификатор организации
     name        VARCHAR(100) NOT NULL,  -- Название организации
@@ -121,6 +132,11 @@ CREATE TABLE organizations_places (
 --______________________________________________________________________________________
 
 -- Создание таблицы "Places" для хранения данных о местах
+/*
+types
+1  кладбище предложено
+2  кладбище одобрено
+*/
 CREATE TABLE places (
     id           SERIAL PRIMARY KEY,
     user_id      INT NOT NULL,

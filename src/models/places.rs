@@ -65,8 +65,24 @@ pub struct NewPlace {
     pub types:       i16,
 }
 
-// Реализация методов для структуры Place
 impl Place {
+    pub fn suggested() -> Vec<Place> {
+        let _connection = establish_connection();
+        return schema::places::table
+            .filter(schema::places::types.ne(2))
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
+    pub fn count_images(&self) -> usize {
+        let _connection = establish_connection();
+        return schema::files::table
+            .filter(schema::files::object_id.eq(self.id))
+            .filter(schema::files::object_types.eq(2))
+            .select(schema::files::id)
+            .load::<i32>(&_connection)
+            .expect("E")
+            .len();
+    }
     pub fn get_images(&self) -> Vec<File> {
         use crate::schema::files::dsl::files;
 
@@ -282,6 +298,7 @@ impl Place {
         let _connection = establish_connection();
         return places
             .filter(schema::places::country_id.eq(country_id))
+            .filter(schema::places::types.eq(2))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -291,6 +308,7 @@ impl Place {
         let _connection = establish_connection();
         return places
             .filter(schema::places::region_id.eq(region_id))
+            .filter(schema::places::types.eq(2))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -300,6 +318,7 @@ impl Place {
         let _connection = establish_connection();
         return places
             .filter(schema::places::city_id.eq(city_id))
+            .filter(schema::places::types.eq(2))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -308,6 +327,7 @@ impl Place {
 
         let _connection = establish_connection();
         return places
+            .filter(schema::places::types.eq(2))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -323,6 +343,7 @@ impl Place {
             .filter(schema::places::title.ilike(&q))
             .or_filter(schema::places::description.ilike(&q))
             .or_filter(schema::places::address.ilike(&q))
+            .filter(schema::places::types.eq(2))
             .order(schema::places::title.desc())
             .limit(limit)
             .offset(offset)
@@ -334,6 +355,7 @@ impl Place {
     
         let _connection = establish_connection();
         return places
+            .filter(schema::places::types.eq(2))
             .load::<Place>(&_connection)
             .expect("E.");
     }
@@ -361,6 +383,7 @@ impl Place {
         if districts_ids.len() > 0 {
             return schema::places::table
                 .filter(schema::places::district_id.eq_any(districts_ids))
+                .filter(schema::places::types.eq(2))
                 .select(schema::places::id)
                 .load::<i32>(&_connection)
                 .expect("E.");
@@ -368,6 +391,7 @@ impl Place {
         if regions_ids.len() > 0 {
             return schema::places::table
                 .filter(schema::places::region_id.eq_any(regions_ids))
+                .filter(schema::places::types.eq(2))
                 .select(schema::places::id)
                 .load::<i32>(&_connection)
                 .expect("E.");
@@ -375,6 +399,7 @@ impl Place {
         if cities_ids.len() > 0 {
             return schema::places::table
                 .filter(schema::places::city_id.eq_any(cities_ids))
+                .filter(schema::places::types.eq(2))
                 .select(schema::places::id)
                 .load::<i32>(&_connection)
                 .expect("E.");

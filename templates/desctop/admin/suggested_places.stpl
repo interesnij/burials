@@ -1,9 +1,9 @@
 <% include!("../header.stpl"); %>
       <section class="property-five" style="margin-top:100px;height: 100vh;">
         <div class="container">
-        <h4 style="text-decoration: underline">Предложенные фирмы</h4>
+        <h4 style="text-decoration: underline">Предложенные кладбища</h4>
           <div class="row">
-              <% for i in org_list.iter() { %>
+              <% for i in places_list.iter() { %>
                 <div class="col-xl-3 col-lg-3 col-md-12 colum1" style="overflow: scroll;height: 90vh;">
                     <div style="margin-bottom:10px">
                         <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
@@ -12,10 +12,10 @@
                             </div>
                             <div class="text-holder">
                                 <h3> 
-                                    <a style="text-decoration: underline" href="/organization/<%= i.id %>/"><%=i.name %></a>
+                                    <a style="text-decoration: underline" href="/places/<%= i.id %>/deceased_list//"><%=i.title %></a>
                                 </h3>
                                 <p class="small"> 
-                                    <a class="pointer publish_organization" data-pk="<%= i.id %>">
+                                    <a class="pointer publish_place" data-pk="<%= i.id %>">
                                         Опубликовать
                                     </a>
                                 </p>

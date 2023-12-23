@@ -75,6 +75,9 @@
                     <% if request_user.is_superuser() { %>
                     <li class="has-submenu parent-menu-item">
                         <a href="javascript:void(0)">Админ</a><span class="menu-arrow"></span>
+
+                        <% let (org_count, place_count, deceased_count) = request_user.get_suggested_stat(); %>
+
                         <ul class="submenu">
                             <li><a href="/create_country/" class="sub-menu-item">Добавить страну</a></li>
                             <li><a href="/create_region/" class="sub-menu-item">Добавить регион</a></li>
@@ -82,7 +85,9 @@
                             <li><a href="/create_city/" class="sub-menu-item">Добавить город</a></li>
                             <li><a href="/create_place/" class="sub-menu-item">Добавить кладбище</a></li>
                             <li><a href="/create_deceased/" class="sub-menu-item">Добавить покойника</a></li>
-                            <li><a href="/admin/organizations/" class="sub-menu-item">Организации</a></li>
+                            <li><a href="/admin/organizations/" class="sub-menu-item">Предложка организаций (<%= org_count %>)</a></li>
+                            <li><a href="/admin/places/" class="sub-menu-item">Предложка кладбищ (<%= place_count %>)</a></li>
+                            <li><a href="/admin/deceaseds/" class="sub-menu-item">Предложка усопших (<%= deceased_count %>)</a></li>
                             <li><a href="/users/all/" class="sub-menu-item">Пользователи</a></li>
                         </ul>
                     </li>
