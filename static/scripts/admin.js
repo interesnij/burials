@@ -264,37 +264,6 @@ on('body', 'click', '.remove_district', function() {
   this.parentElement.remove();
 });
 
-
-on('body', 'click', '#create_place', function() {
-  let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
-
-  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
-
-  if (!form.querySelector("#id_title").value) {
-      form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите название кладбища");
-      return
-  }
-  else if (!form.querySelector("#id_country").value) {
-    form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите страну кладбища");
-    return
-  }
-
-  form.querySelector("#create_place").setAttribute("disabled", "true");
-  form.querySelector("#create_place").innerHTML = "Идет сохранение";
-
-  form_data = new FormData(form);
-  
-    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'POST', "/create_place/", true );
-    link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      location.reload()
-    }};
-    link.send(form_data);
-});
 on('body', 'click', '#edit_place', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -330,67 +299,6 @@ on('body', 'click', '#edit_place', function() {
 on('body', 'click', '.remove_place', function() {
   delete_item("/delete_place/", this.getAttribute("data-pk"));
   this.parentElement.remove();
-});
-
-
-on('body', 'click', '#create_deceased', function() { 
-  let form = this.parentElement.parentElement.parentElement;
-  form.querySelector("#id_first_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_last_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_birth_date").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_death_date").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#get_my_lat").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#get_my_lon").style.setProperty('border', 'unset', 'important');
-
-  if (!form.querySelector("#id_first_name").value) {
-      form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-      toast_error("Укажите имя усопшего");
-      return
-  }
-  else if (!form.querySelector("#id_last_name").value) {
-    form.querySelector("#id_last_name").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите фамилию усопшего");
-    return
-  }
-  else if (!form.querySelector("#id_birth_date").value) {
-    form.querySelector("#id_birth_date").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите дату рождения усопшего");
-    return
-  }
-  else if (!form.querySelector("#id_death_date").value) {
-    form.querySelector("#id_death_date").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите дату смерти усопшего");
-    return
-  }
-  else if (!form.querySelector("#place_id").value) {
-    form.querySelector("#place_id").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите место захоронения усопшего");
-    return
-  }
-  else if (!form.querySelector("#get_my_lat").value) {
-    form.querySelector("#get_my_lat").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите широту местоположения усопшего");
-    return
-  }
-  else if (!form.querySelector("#get_my_lon").value) {
-    form.querySelector("#get_my_lon").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите долготу местоположения усопшего");
-    return
-  }
-
-  form.querySelector("#create_deceased").setAttribute("disabled", "true");
-  form.querySelector("#create_deceased").innerHTML = "Идет сохранение";
-
-  form_data = new FormData(form);
-  
-    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-    link.open( 'POST', "/create_deceased/", true );
-    link.onreadystatechange = function () {
-    if ( link.readyState == 4 && link.status == 200 ) {
-      location.reload()
-    }};
-    link.send(form_data);
 });
 
 
