@@ -26,10 +26,12 @@
                         <div class="">
                             <h1 class="font-semibold" style="font-size: x-large;">
                                 <%= deceased.last_name %> 
+
+                                <%= deceased.first_name %> 
+
                                 <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
                                 <% } %>
-                                <%= deceased.first_name %> 
                             </h1>
 
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
