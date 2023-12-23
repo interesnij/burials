@@ -167,7 +167,10 @@
                 </div>
             </div>
             </form>
-            <% for i in org_list.iter() { %><p><%= i.name %></p><% } %>
+
+            <% if request_user.is_admin() { %>
+                <% for i in org_list.iter() { %><p><%= i.name %></p><% } %>
+            <% } %>
         </section>
 
 

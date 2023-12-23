@@ -156,6 +156,7 @@
 			</form>
 		</div>
 
+		<% if request_user.is_admin() { %>
 		<div class=""> 
 			<p style="font-size: x-large;margin-top:50px" class="font-semibold">Список созданных покойников: </p>
             <% for (i, obj) in deceased_list.iter().enumerate() { %>
@@ -165,6 +166,7 @@
             </p>
             <% } %>
     	</div>
+		<% } %>
 	</div>
 
 </section>
