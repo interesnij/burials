@@ -271,7 +271,7 @@ pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
     #[derive(TemplateOnce)]
     #[template(path = "desctop/load/image.stpl")]
     struct Template {
-        file:        crate:models::File,
+        file:        crate::models::File,
         description: String,
         prev:        Option<File>,
         next:        Option<File>,
