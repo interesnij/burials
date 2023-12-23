@@ -5,50 +5,78 @@
             <div class="container">
                 <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                     <div class="lg:col-span-6 md:col-span-5">
-                        <div class="sticky top-20">
+                        <div class="top-20">
                             <img src="<%= deceased.get_image() %>" class="rounded-md shadow-md dark:shadow-gray-800" alt="">
                         </div>
+
+                        <% if deceased.get_images().len() > 0 { %>
+                          <hr />
+                            <label style="font-size: x-large;margin-top:20px" class="font-semibold">Галерея: </label>
+                            <div class="grid lg:grid-cols-3 grid-cols-1 gap-5">
+                              <% for i in deceased.get_images().iter() { %>
+                              <div class="show_image" data-pk="<%= i.id %>" style="margin-bottom:15px">
+                                <img src="<%= i.src %>" class="image_fit_200" alt="img">
+                              </div> 
+                              <% } %>
+                            </div>
+                        <% } %>
                     </div>
 
                     <div class="lg:col-span-6 md:col-span-7">
                         <div class="">
-                            <h1 class="font-semibold">
+                            <h1 class="font-semibold" style="font-size: x-large;">
                                 <%= deceased.last_name %> 
-                                <%= deceased.first_name %> 
                                 <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
                                 <% } %>
+                                <%= deceased.first_name %> 
                             </h1>
 
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
-                               
                                     <h6 class="text-lg font-semibold">
                                         Годы жизни
                                     </h6>
                                     <p class="font-semibold mt-2">
                                         <%= deceased.birth_date.format("%d-%m-%Y").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y").to_string() %>
                                     </p>
-
                             </div>
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
-                               
                                     <h6 class="text-lg font-semibold">
                                         Кладбище
                                     </h6>
                                     <p class="font-semibold mt-2">
-                                        <a href="/places/<%= _place.id %>/deceased_list/" class="">
+                                        <a href="/places/<%= _place.id %>/deceased_list/" style="text-decoration: underline;">
                                             <%= _place.title %>
                                         </a> 
                                         <br />
                                         <span class="font-semibold small">
                                           <%=_place.get_loc() %>
                                         </span>
+                                      </p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                                    <h6 class="text-lg font-semibold">
+                                        Построить маршрут
+                                    </h6>
+                                    <p class="font-semibold mt-2">
                                         <br />
-                                        <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
-                                            data-geo="<%= deceased.lat %>, <%= deceased.lon %>"
-                                        >
-                                          Маршрут
-                                        </a>
+                                        <a style="text-decoration: underline; margin-bottom: 10px" class="pointer get_ma"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
+                                        <span> или </span>
+                                        <br />
+                                          <div>
+                                            <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
+                                            <span id="notice1"></span>
+                                          </div>
+                                          <div>
+                                            <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                                            <p id="notice2"></p>
+                                            <br />
+                                          </div>
+                                          <div>
+                                            <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
+                                            <span id="notice3"></span>
+                                          </div>
                                       </p>
                             </div>
 
@@ -256,7 +284,7 @@ function init() {
     })
 
   }
-
+  
   function showResult(ctrl_id) {
     $(ctrl_id).removeClass('input_error');
     $('#notice1').css('display', 'none');

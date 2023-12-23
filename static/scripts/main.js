@@ -341,10 +341,10 @@ on('body', 'change', '.load_regions', function() {
 on('body', 'click', '#create_organization', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_director").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_phone").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -384,8 +384,8 @@ on('body', 'click', '#create_organization', function() {
 on('body', 'click', '#create_place', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_title").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -414,13 +414,13 @@ on('body', 'click', '#create_place', function() {
 
 on('body', 'click', '#create_deceased', function() { 
   let form = this.parentElement.parentElement.parentElement;
-  form.querySelector("#id_first_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_last_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_birth_date").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_death_date").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#get_my_lat").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#get_my_lon").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_first_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_birth_date").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_death_date").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#place_id").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#get_my_lat").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#get_my_lon").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -476,10 +476,10 @@ on('body', 'click', '#edit_organization', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_director").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_phone").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_director").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_phone").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -519,8 +519,8 @@ on('body', 'click', '#edit_organization', function() {
 on('body', 'click', '#create_loc', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#country_id").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_address2").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#country_id").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_address2").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#country_id").value) {
       form.querySelector("#country_id").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -551,8 +551,8 @@ on('body', 'click', '#edit_loc', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_address2").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_address2").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_country").value) {
     form.querySelector("#id_country").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -582,9 +582,9 @@ on('body', 'click', '#edit_loc', function() {
 on('body', 'click', '#create_service', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_price").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_price").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_title").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_price").value) {
       form.querySelector("#id_price").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -620,9 +620,9 @@ on('body', 'click', '#edit_service', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
   
-  form.querySelector("#id_price").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_description").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_price").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_description").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_title").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_price").value) {
       form.querySelector("#id_price").style.setProperty('border', '1px #FF0000 solid', 'important');

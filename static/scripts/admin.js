@@ -65,8 +65,8 @@ on('body', 'click', '.remove_country', function() {
 on('body', 'click', '#create_region', function() {
   let form = this.parentElement.parentElement.parentElement;
   
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -96,8 +96,8 @@ on('body', 'click', '#edit_region', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
     form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -133,8 +133,8 @@ on('body', 'click', '.remove_region', function() {
 on('body', 'click', '#create_city', function() {
   let form = this.parentElement.parentElement.parentElement;
   
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -164,8 +164,8 @@ on('body', 'click', '#edit_city', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
   
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -200,8 +200,8 @@ on('body', 'click', '.remove_city', function() {
 on('body', 'click', '#create_district', function() {
   let form = this.parentElement.parentElement.parentElement;
   
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -231,8 +231,8 @@ on('body', 'click', '#edit_district', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement;
   
-  form.querySelector("#id_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_name").value) {
       form.querySelector("#id_name").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -268,8 +268,8 @@ on('body', 'click', '#edit_place', function() {
   _this = this;
   form = _this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_title").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_country").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_title").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_country").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_title").value) {
       form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
@@ -321,13 +321,13 @@ function get_image_value(_input, _path) {
 on('body', 'click', '#edit_deceased', function() {
   _this = this;  
   form = _this.parentElement.parentElement.parentElement;
-  form.querySelector("#id_first_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_last_name").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_birth_date").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#id_death_date").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#place_id").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#get_my_lat").style.setProperty('border', 'unset', 'important');
-  form.querySelector("#get_my_lon").style.setProperty('border', 'unset', 'important');
+  form.querySelector("#id_first_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_birth_date").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_death_date").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#place_id").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#get_my_lat").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#get_my_lon").style.setProperty('border', 'inherit', 'important');
 
   if (!form.querySelector("#id_first_name").value) {
       form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
