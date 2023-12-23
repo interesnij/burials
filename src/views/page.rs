@@ -248,7 +248,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
 
 pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let _file = crate::utils::get_file(*id).expect("E.");
+    let _file = crate::utils::get_file(*_id).expect("E.");
     let mut _description = String::new();
     match _file.object_types {
         1 => {
@@ -263,7 +263,7 @@ pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             let _deceased = crate::utils::get_deceased(_file.object_id).expect("E.");
             _description == "Изображение усопшего ".to_string() + &_deceased.get_full_name();
         },
-        _ => false,
+        _ => (),
     };
 
     let (_prev, _next) = _file.get_prev_next_images();

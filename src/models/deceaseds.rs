@@ -57,6 +57,26 @@ pub struct NewDeceased {
 }
 
 impl Deceased {
+    pub fn publish(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            diesel::update(self)
+                .set(schema::deceaseds::types.eq(2))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn unpublish(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            diesel::update(self)
+                .set(schema::deceaseds::types.eq(1))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
     pub fn suggested() -> Vec<Deceased> {
         let _connection = establish_connection();
         return schema::deceaseds::table

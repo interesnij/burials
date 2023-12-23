@@ -534,7 +534,7 @@ impl File {
         let mut next: Option<File> = None;
 
         for (i, obj) in ids.iter().enumerate().rev() {
-            if obj == &*_id { 
+            if obj == &self.id { 
                 if (i + 1) != _images_len {
                     let _next = Some(&ids[i + 1]);
                     next = Some(schema::files::table

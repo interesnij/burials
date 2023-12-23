@@ -42,7 +42,7 @@ function init() {
         if object_list.len() > 0 {
             center = object_list[0].lat.to_string() + &",".to_string() + &object_list[0].lon.to_string();
         } else {
-            center = "55.7522, 37.6156";
+            center = "55.7522, 37.6156".to_string();
         }
     %>
     var myMap = new ymaps.Map("map", {
