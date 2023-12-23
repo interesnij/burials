@@ -220,17 +220,19 @@ on('body', 'click', '#logg', function() {
  
 on('body', 'click', '.search_deceaseds', function() {
   form = this.parentElement.parentElement.parentElement;
-  form.querySelector("#id_last_name").style.border = "unset";
-  form.querySelector("#id_last_name").style.border = "unset";
+
+  form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_first_name").style.setProperty('border', 'inherit', 'important');
+
   block = form.nextElementSibling;
   block.innerHTML = "";
   if (!form.querySelector("#id_last_name").value) {
-    toast_warning("Фамилия - обязательное поле");
+    toast_info("Фамилия - обязательное поле");
     form.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
     return
   }
   else if (!form.querySelector("#id_first_name").value) {
-    toast_warning("Имя - обязательное поле");
+    toast_info("Имя - обязательное поле");
     form.querySelector("#id_first_name").style.border = "1px #FF0000 solid";
     return
   }
@@ -244,26 +246,26 @@ on('body', 'click', '.search_deceaseds', function() {
   today = yyyy + '-' + mm + '-' + dd;
 
   if (!birth_date) { 
-    console.log("no birth_date");
+    //console.log("no birth_date");
     birth_date = today;
   }
   if (!death_date) {
-    console.log("no death_date");
+    //console.log("no death_date");
     death_date = today;
   }
   if (!death_date) {
-    console.log("no death_date");
+    //console.log("no death_date");
     death_date = today;
   }
-  console.log("_location len", _location.length);
+  //console.log("_location len", _location.length);
 
   if (_location.length == 0) {
     console.log("no location");
     _location = "xxx";
   } 
-  console.log(birth_date);
-  console.log(death_date);
-  console.log(_location);
+  //console.log(birth_date);
+  //console.log(death_date);
+  //console.log(_location);
 
   url = "/main_search?first_name=" +
         form.querySelector("#id_first_name").value +

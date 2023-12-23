@@ -15,13 +15,13 @@
                             <h5 class="mt-5 text-xl font-semibold mb-0"><%= organization.name %></h5>
                             <% if admin { %>
                             <p>
-                                <a style="text-decoration: underline" href="/edit_organization/<%= organization.id %>/">Редактировать</a>
                                 <a style="text-decoration: underline" href="/create_loc/<%= organization.id %>/">Добавить офис</a>
                                 <a style="text-decoration: underline" href="/create_service/<%= organization.id %>/">Добавить услугу</a>
                             <p>
                             <% } %>
                             <% if request_user.is_admin() && organization.types != 2 { %>
                                 <p>
+                                    <a style="text-decoration: underline" href="/edit_organization/<%= organization.id %>/">Редактировать</a>
                                     <a class="publish_org pointer" data-pk="<%= organization.id %>" style="text-decoration: underline" >Одобрить</a>
                                 <p> 
                             <% } %>
