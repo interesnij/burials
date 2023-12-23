@@ -789,7 +789,7 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         #[template(path = "desctop/admin/suggested_places.stpl")]
         struct Template { 
             request_user: User,
-            places_list:  Vec<Places>,
+            places_list:  Vec<Place>,
         }
         let body = Template {
             request_user: _request_user,

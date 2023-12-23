@@ -33,6 +33,7 @@ pub struct User {
 impl User {
     pub fn get_suggested_stat(&self) -> (usize, usize, usize) {
         if self.is_admin() {
+            let _connection = establish_connection();
             let org_count = schema::organizations::table
                 .filter(schema::organizations::types.ne(2))
                 .select(schema::organizations::id)

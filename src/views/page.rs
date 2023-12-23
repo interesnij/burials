@@ -273,8 +273,8 @@ pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
     struct Template {
         file:        crate::models::File,
         description: String,
-        prev:        Option<File>,
-        next:        Option<File>,
+        prev:        Option<crate::models::File>,
+        next:        Option<crate::models::File>,
     }
     let body = Template {
         file:        _file,
