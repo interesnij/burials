@@ -156,9 +156,13 @@ function init() {
   $('#button2').bind('click', function(e) {
     geocode('#suggest2');
   });
-  $('#button3').bind('click', function(e) {
+  $('#button3').bind('click', function(e) { 
+    addrFrom = document.body.querySelector("#suggest1").value;
+    addrTo = document.body.querySelector("#suggest2").value;
     if (addrFrom && addrTo) {
-      showRoute(addrFrom.getAddressLine(), addrTo.getAddressLine());
+      geocode('#suggest1');
+      geocode('#suggest2');
+      showRoute(addrFrom, addrTo);
     } else {
       $('#notice3').css('display', 'block');
     }
