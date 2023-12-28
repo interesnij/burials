@@ -231,7 +231,7 @@ function init() {
     }
 
     function g_error(err) {
-      console.warn("ERROR. Code: " + err.code + ", message: " err.message);
+      console.warn("ERROR. Code: " + err.code + ", message: " + err.message);
     }
 
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
