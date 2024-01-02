@@ -197,7 +197,7 @@ function init() {
     const g_options = {
       enableHighAccuracy: false,
       timeout: 5000,
-      maximumAge: 0,
+      maximumAge: 0, 
     };
 
     function g_success(pos) {
