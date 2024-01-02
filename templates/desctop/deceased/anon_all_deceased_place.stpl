@@ -2,6 +2,7 @@
 
       <section class="property-five" style="margin-top:90px">
         <div class="container">
+          <a style="text-decoration: underline" href="/create_deceased/">Добавить усопшего</a>
           <div class="row">
             <div class="col-xl-3 col-lg-3 col-md-12 colum1" style="height: 90vh;">
                         <% for i in object_list.iter() { %>
@@ -30,28 +31,28 @@
                         <% } %>
             </div>
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
-
-              <div id="map_header" style="margin-top:50px" class="hidden">
-                <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
-                <button type="submit" id="button1">Проверить</button>
-                <p id="notice1"></p>
-                <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
-                <button type="submit" id="button2">Проверить</button>
-                <p id="notice2"></p>
-              </div>
-              <div id="route" class="hidden">
-                <button type="submit" id="button3">Построить маршрут</button>
-                <p id="notice3"></p>
-              </div>
-
-              <div id="map" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div> 
-
-              <div id="map_footer">
-                <div id="messageHeader1"></div>
-                <div id="message1"></div>
-                <div id="messageHeader2"></div>
-                <div id="message2"></div>
-              </div>
+                <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                    <h6 class="text-lg font-semibold">
+                        Построить маршрут
+                    </h6>
+                    <p class="font-semibold mt-2">
+                        <br />
+                        <div>
+                            <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
+                            <span id="notice1"></span>
+                        </div>
+                        <div>
+                            <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                              <p id="notice2"></p>
+                              <br />
+                        </div>
+                        <div>
+                            <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
+                            <span id="notice3"></span>
+                        </div>
+                    </p>
+                </div>
+              <% include!("map.stpl"); %>
             </div>
           </div>
         </div>
@@ -59,7 +60,6 @@
 
 <% include!("../anon_footer.stpl"); %>
 
-<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
 <script>
 ymaps.ready(init);
 
@@ -105,7 +105,7 @@ function init() {
           .add(new ymaps.Placemark([<%= i.lat %>, <%= i.lon %>], {
           balloonContent: '<%= i.last_name %> <%= i.first_name %>',
           iconCaption: ''
-      }, { 
+      }, {
           preset: 'islands#blueCircleDotIconWithCaption',
           iconCaptionMaxWidth: '50',
           iconLayout: 'default#image',
@@ -150,13 +150,15 @@ function init() {
 
 
   // При клике по кнопке запускаем верификацию введёных данных и построение маршрута
-  $('#button1').bind('click', function(e) {
+  on('body', 'click', '#button1', function() {
     geocode('#suggest1');
   });
-  $('#button2').bind('click', function(e) {
+
+  on('body', 'click', '#button2', function() {
     geocode('#suggest2');
   });
-  $('#button3').bind('click', function(e) { 
+
+  on('body', 'click', '#button3', function() { 
     addrFrom = document.body.querySelector("#suggest1").value;
     addrTo = document.body.querySelector("#suggest2").value;
     if (addrFrom && addrTo) {
@@ -164,12 +166,13 @@ function init() {
       geocode('#suggest2');
       showRoute(addrFrom, addrTo);
     } else {
-      $('#notice3').css('display', 'block');
+      document.body.querySelector("#notice3").style.display = "block";
     }
   });
 
-  $('.get_ma').bind('click', function(e) {
+  on('body', 'click', '.get_ma', function() { 
     addrTo = this.getAttribute("data-geo");
+    //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
     const g_options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -177,15 +180,15 @@ function init() {
     };
 
     function g_success(pos) {
-      const crd = pos.coords; 
+      const crd = pos.coords;
 
-      console.log("Your current position is:");
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
-      console.log(`addrFrom: ${addrFrom}`);
-      console.log(`addrTo: ${addrTo}`);
+      //console.log("Your current position is:");
+      //console.log(`Latitude : ${crd.latitude}`);
+      //console.log(`Longitude: ${crd.longitude}`);
+      //console.log(`More or less ${crd.accuracy} meters.`);
+      //addrFrom = crd.latitude + ", " + crd.longitude;
+      //console.log(`addrFrom: ${addrFrom}`);
+      //console.log(`addrTo: ${addrTo}`);
 
       document.body.querySelector("#suggest1").value = addrFrom;
       document.body.querySelector("#suggest2").value = addrTo;
@@ -196,11 +199,12 @@ function init() {
       var _location = ymaps.geolocation.get({mapStateAutoApply: true});
       _location.then(
         function(result) {
+          // Добавление местоположения на карту.
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
-          console.log(`yandex location: ${result.geoObjects.get(0).properties.get('text')}`);
+          //console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
         },
         function(err) {
-          console.log('yandex location error: ' + err)
+          console.log('Ошибка: ' + err)
         }
       );
 
@@ -214,7 +218,7 @@ function init() {
     }
 
     function g_error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+      console.warn("ERROR. Code: " + err.code + ", message: " + err.message);
     }
 
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
@@ -222,7 +226,8 @@ function init() {
 
 
   function geocode(ctrl_id) {
-    var request = $(ctrl_id).val();
+    document.body.querySelector(ctrl_id)
+    var request = document.body.querySelector(ctrl_id).value;
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
         error, hint;
@@ -268,9 +273,9 @@ function init() {
         showResult(ctrl_id);
       }
       if (addrFrom && addrTo) {
-        $('#notice3').css('display', 'none');
+        document.body.querySelector("#notice3").style.display = "none";
       } else {
-        $('#notice3').css('display', 'block');
+        document.body.querySelector("#notice3").style.display = "block";
       }
     }, function(e) {
       console.log(e)
@@ -279,9 +284,9 @@ function init() {
   }
 
   function showResult(ctrl_id) {
-    $(ctrl_id).removeClass('input_error');
-    $('#notice1').css('display', 'none');
-    $('#notice2').css('display', 'none');
+    document.body.querySelector(ctrl_id).classList.remove("input_error");
+    document.body.querySelector("#notice1").style.display = "none";
+    document.body.querySelector("#notice2").style.display = "none";
     if (ctrl_id == '#suggest1') {
       showMessage(ctrl_id, addrFrom.getAddressLine());
     } else {
@@ -290,61 +295,50 @@ function init() {
   }
 
   function showError(ctrl_id, message) {
-    $(ctrl_id).addClass('input_error');
+    document.body.querySelector(ctrl_id).classList.add("input_error");
     if (ctrl_id == '#suggest1') {
-      $('#notice1').text(message);
-      $('#notice1').css('display', 'block');
+      document.body.querySelector("#notice1").innerHTML = message;
+      document.body.querySelector("#notice1").style.display = "block";
     } else {
-      $('#notice2').text(message);
-      $('#notice2').css('display', 'block');
+      document.body.querySelector("#notice2").innerHTML = message;
+      document.body.querySelector("#notice2").style.display = "block";
     }
-
   }
 
 
   function showRoute(from, to) {
-    // https://tech.yandex.ru/maps/jsbox/2.1/deliveryCalculator 
     routePanelControl.routePanel.state.set({
       from: from,
       to: to
     });
-    // Получим ссылку на маршрут.
     routePanelControl.routePanel.getRouteAsync().then(function(route) {
-      // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
       route.model.setParams({
         results: 1
       }, true);
-      // Повесим обработчик на событие построения маршрута.
       route.model.events.add('requestsuccess', function() {
         var activeRoute = route.getActiveRoute();
         if (activeRoute) {
-          // Получим протяженность маршрута.
           var length = route.getActiveRoute().properties.get("distance");
-          // Вычислим стоимость доставки.
           price = calculate(Math.round(length.value / 1000)),
-            // Создадим макет содержимого балуна маршрута.
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>' +
-              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+              '<span>Расстояние: ' + length.text + '.</span>');
             
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>');
-          // Зададим этот макет для содержимого балуна.
+              '<span>Расстояние: ' + length.text + '.</span>');
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
-          // Откроем балун.
           activeRoute.balloon.open();
         }
       });
     });
-  }
+  } 
 
   function showMessage(ctrl_id, message) {
     if (ctrl_id == '#suggest1') {
-      $('#messageHeader1').html('<b>Пункт отправления:</b>');
-      $('#message1').html(message);
+      document.body.querySelector("#messageHeader1").innerHTML = '<b>Пункт отправления:</b>';
+      document.body.message1("#messageHeader1").innerHTML = message;
     } else {
-      $('#messageHeader2').html('<b>Пункт назначения:</b>');
-      $('#message2').html(message);
+      document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
+      document.body.message1("#message2").innerHTML = message;
     }
   }
 

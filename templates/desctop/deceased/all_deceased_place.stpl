@@ -60,7 +60,6 @@
 
 <% include!("../footer.stpl"); %>
 
-<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
 <script>
 ymaps.ready(init);
 
@@ -151,13 +150,15 @@ function init() {
 
 
   // При клике по кнопке запускаем верификацию введёных данных и построение маршрута
-  $('#button1').bind('click', function(e) {
+  on('body', 'click', '#button1', function() {
     geocode('#suggest1');
   });
-  $('#button2').bind('click', function(e) {
+
+  on('body', 'click', '#button2', function() {
     geocode('#suggest2');
   });
-  $('#button3').bind('click', function(e) { 
+
+  on('body', 'click', '#button3', function() { 
     addrFrom = document.body.querySelector("#suggest1").value;
     addrTo = document.body.querySelector("#suggest2").value;
     if (addrFrom && addrTo) {
@@ -165,11 +166,11 @@ function init() {
       geocode('#suggest2');
       showRoute(addrFrom, addrTo);
     } else {
-      $('#notice3').css('display', 'block');
+      document.body.querySelector("#notice3").style.display = "block";
     }
   });
 
-  $('.get_ma').bind('click', function(e) {
+  on('body', 'click', '.get_ma', function() { 
     addrTo = this.getAttribute("data-geo");
     //addrTo = parseFloat(_addrTo[0]).toFixed(2) + "," + parseFloat(_addrTo[1]).toFixed(2)
     const g_options = {
@@ -181,14 +182,13 @@ function init() {
     function g_success(pos) {
       const crd = pos.coords;
 
-      console.log("Your current position is:");
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-      console.log(`More or less ${crd.accuracy} meters.`);
-      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
+      //console.log("Your current position is:");
+      //console.log(`Latitude : ${crd.latitude}`);
+      //console.log(`Longitude: ${crd.longitude}`);
+      //console.log(`More or less ${crd.accuracy} meters.`);
       //addrFrom = crd.latitude + ", " + crd.longitude;
-      console.log(`addrFrom: ${addrFrom}`);
-      console.log(`addrTo: ${addrTo}`);
+      //console.log(`addrFrom: ${addrFrom}`);
+      //console.log(`addrTo: ${addrTo}`);
 
       document.body.querySelector("#suggest1").value = addrFrom;
       document.body.querySelector("#suggest2").value = addrTo;
@@ -201,7 +201,7 @@ function init() {
         function(result) {
           // Добавление местоположения на карту.
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
-          console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
+          //console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
         },
         function(err) {
           console.log('Ошибка: ' + err)
@@ -218,7 +218,7 @@ function init() {
     }
 
     function g_error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+      console.warn("ERROR. Code: " + err.code + ", message: " + err.message);
     }
 
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
@@ -226,15 +226,13 @@ function init() {
 
 
   function geocode(ctrl_id) {
-    // Забираем запрос из поля ввода.
-    var request = $(ctrl_id).val();
-    // Геокодируем введённые данные.
+    document.body.querySelector(ctrl_id)
+    var request = document.body.querySelector(ctrl_id).value;
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
         error, hint;
 
       if (obj) {
-        // Об оценке точности ответа геокодера можно прочитать тут: https://tech.yandex.ru/maps/doc/geocoder/desc/reference/precision-docpage/
         switch (obj.properties.get('metaDataProperty.GeocoderMetaData.precision')) {
           case 'exact':
             break;
@@ -258,7 +256,6 @@ function init() {
         hint = 'Уточните адрес';
       }
 
-      // Если геокодер возвращает пустой массив или неточный результат, то показываем ошибку.
       if (error) {
         if (ctrl_id == '#suggest1') {
           addrFrom = null
@@ -276,9 +273,9 @@ function init() {
         showResult(ctrl_id);
       }
       if (addrFrom && addrTo) {
-        $('#notice3').css('display', 'none');
+        document.body.querySelector("#notice3").style.display = "none";
       } else {
-        $('#notice3').css('display', 'block');
+        document.body.querySelector("#notice3").style.display = "block";
       }
     }, function(e) {
       console.log(e)
@@ -287,76 +284,61 @@ function init() {
   }
 
   function showResult(ctrl_id) {
-    // Удаляем сообщение об ошибке, если найденный адрес совпадает с поисковым запросом.
-    $(ctrl_id).removeClass('input_error');
-    $('#notice1').css('display', 'none');
-    $('#notice2').css('display', 'none');
-    // полный адрес для сообщения под картой.
+    document.body.querySelector(ctrl_id).classList.remove("input_error");
+    document.body.querySelector("#notice1").style.display = "none";
+    document.body.querySelector("#notice2").style.display = "none";
     if (ctrl_id == '#suggest1') {
       showMessage(ctrl_id, addrFrom.getAddressLine());
     } else {
       showMessage(ctrl_id, addrTo.getAddressLine());
     }
-    // Сохраняем укороченный адрес для подписи метки.
-    //shortAddress = [obj.getThoroughfare(), obj.getPremiseNumber(), obj.getPremise()].join(' ');
   }
 
   function showError(ctrl_id, message) {
-    $(ctrl_id).addClass('input_error');
+    document.body.querySelector(ctrl_id).classList.add("input_error");
     if (ctrl_id == '#suggest1') {
-      $('#notice1').text(message);
-      $('#notice1').css('display', 'block');
+      document.body.querySelector("#notice1").innerHTML = message;
+      document.body.querySelector("#notice1").style.display = "block";
     } else {
-      $('#notice2').text(message);
-      $('#notice2').css('display', 'block');
+      document.body.querySelector("#notice2").innerHTML = message;
+      document.body.querySelector("#notice2").style.display = "block";
     }
-
   }
 
 
   function showRoute(from, to) {
-    // https://tech.yandex.ru/maps/jsbox/2.1/deliveryCalculator 
     routePanelControl.routePanel.state.set({
       from: from,
       to: to
     });
-    // Получим ссылку на маршрут.
     routePanelControl.routePanel.getRouteAsync().then(function(route) {
-      // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
       route.model.setParams({
         results: 1
       }, true);
-      // Повесим обработчик на событие построения маршрута.
       route.model.events.add('requestsuccess', function() {
         var activeRoute = route.getActiveRoute();
         if (activeRoute) {
-          // Получим протяженность маршрута.
           var length = route.getActiveRoute().properties.get("distance");
-          // Вычислим стоимость доставки.
           price = calculate(Math.round(length.value / 1000)),
-            // Создадим макет содержимого балуна маршрута.
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>' +
-              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+              '<span>Расстояние: ' + length.text + '.</span>');
             
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>');
-          // Зададим этот макет для содержимого балуна.
+              '<span>Расстояние: ' + length.text + '.</span>');
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
-          // Откроем балун.
           activeRoute.balloon.open();
         }
       });
     });
-  }
+  } 
 
   function showMessage(ctrl_id, message) {
     if (ctrl_id == '#suggest1') {
-      $('#messageHeader1').html('<b>Пункт отправления:</b>');
-      $('#message1').html(message);
+      document.body.querySelector("#messageHeader1").innerHTML = '<b>Пункт отправления:</b>';
+      document.body.message1("#messageHeader1").innerHTML = message;
     } else {
-      $('#messageHeader2').html('<b>Пункт назначения:</b>');
-      $('#message2').html(message);
+      document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
+      document.body.message1("#message2").innerHTML = message;
     }
   }
 

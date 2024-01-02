@@ -195,7 +195,7 @@ function init() {
   on('body', 'click', '.get_ma', function() { 
     addrTo = this.getAttribute("data-geo");
     const g_options = {
-      enableHighAccuracy: true,
+      enableHighAccuracy: false,
       timeout: 5000,
       maximumAge: 0,
     };
@@ -334,11 +334,10 @@ function init() {
           var length = route.getActiveRoute().properties.get("distance");
           price = calculate(Math.round(length.value / 1000)),
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>' +
-              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+              '<span>Расстояние: ' + length.text + '.</span>');
             
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>');
+              '<span>Расстояние: ' + length.text + '.</span>');
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           activeRoute.balloon.open();
         }

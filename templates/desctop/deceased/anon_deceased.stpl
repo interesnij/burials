@@ -16,6 +16,9 @@
                               <% for i in deceased.get_images().iter() { %>
                               <div class="show_image" data-pk="<%= i.id %>" style="margin-bottom:15px">
                                 <img src="<%= i.src %>" class="image_fit_200" alt="img">
+                                <% if request_user.is_admin() { %>
+                                  <a class="pointer small remove_file" style="margin-top:10px" data-pk="<%= i.id %>">Удалить</a>
+                                <% } %>
                               </div> 
                               <% } %>
                             </div>
@@ -26,23 +29,25 @@
                         <div class="">
                             <h1 class="font-semibold" style="font-size: x-large;">
                                 <%= deceased.last_name %> 
-
+                                
                                 <%= deceased.first_name %> 
-
                                 <% if deceased.middle_name.is_some() { %>
                                     <%= deceased.middle_name.as_deref().unwrap() %>
                                 <% } %>
                             </h1>
 
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                               
                                     <h6 class="text-lg font-semibold">
                                         Годы жизни
                                     </h6>
                                     <p class="font-semibold mt-2">
                                         <%= deceased.birth_date.format("%d-%m-%Y").to_string() %> - <%= deceased.death_date.format("%d-%m-%Y").to_string() %>
                                     </p>
+
                             </div>
                             <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                               
                                     <h6 class="text-lg font-semibold">
                                         Кладбище
                                     </h6>
@@ -91,7 +96,6 @@
 
 <% include!("../anon_footer.stpl"); %>
 
-<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
 <script>
 ymaps.ready(init);
 
@@ -169,14 +173,15 @@ function init() {
     map.controls.add(routePanelControl).add(zoomControl);
   //////////////////////////////////
 
-
-  $('#button1').bind('click', function(e) {
+  on('body', 'click', '#button1', function() {
     geocode('#suggest1');
   });
-  $('#button2').bind('click', function(e) {
+
+  on('body', 'click', '#button2', function() {
     geocode('#suggest2');
   });
-  $('#button3').bind('click', function(e) { 
+
+  on('body', 'click', '#button3', function() { 
     addrFrom = document.body.querySelector("#suggest1").value;
     addrTo = document.body.querySelector("#suggest2").value;
     if (addrFrom && addrTo) {
@@ -184,11 +189,10 @@ function init() {
       geocode('#suggest2');
       showRoute(addrFrom, addrTo);
     } else {
-      $('#notice3').css('display', 'block');
+      document.body.querySelector("#notice3").style.display = "block";
     }
   });
-
-  $('.get_ma').bind('click', function(e) {
+  on('body', 'click', '.get_ma', function() { 
     addrTo = this.getAttribute("data-geo");
     const g_options = {
       enableHighAccuracy: true,
@@ -210,7 +214,7 @@ function init() {
       _location.then( 
         function(result) {
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
-          console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
+          //console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
         },
         function(err) {
           console.log('Ошибка: ' + err)
@@ -227,7 +231,7 @@ function init() {
     }
 
     function g_error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+      console.warn("ERROR. Code: " + err.code + ", message: " + err.message);
     }
 
     navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
@@ -235,7 +239,8 @@ function init() {
 
 
   function geocode(ctrl_id) {
-    var request = $(ctrl_id).val();
+    document.body.querySelector(ctrl_id)
+    var request = document.body.querySelector(ctrl_id).value;
     ymaps.geocode(request).then(function(res) {
       var obj = res.geoObjects.get(0),
         error, hint;
@@ -281,20 +286,20 @@ function init() {
         showResult(ctrl_id);
       }
       if (addrFrom && addrTo) {
-        $('#notice3').css('display', 'none');
+        document.body.querySelector("#notice3").style.display = "none";
       } else {
-        $('#notice3').css('display', 'block');
+        document.body.querySelector("#notice3").style.display = "block";
       }
     }, function(e) {
       console.log(e)
     })
 
   }
-  
+
   function showResult(ctrl_id) {
-    $(ctrl_id).removeClass('input_error');
-    $('#notice1').css('display', 'none');
-    $('#notice2').css('display', 'none');
+    document.body.querySelector(ctrl_id).classList.remove("input_error");
+    document.body.querySelector("#notice1").style.display = "none";
+    document.body.querySelector("#notice2").style.display = "none";
     if (ctrl_id == '#suggest1') {
       showMessage(ctrl_id, addrFrom.getAddressLine());
     } else {
@@ -303,21 +308,20 @@ function init() {
   }
 
   function showError(ctrl_id, message) {
-    $(ctrl_id).addClass('input_error');
+    document.body.querySelector(ctrl_id).classList.add("input_error");
     if (ctrl_id == '#suggest1') {
-      $('#notice1').text(message);
-      $('#notice1').css('display', 'block');
+      document.body.querySelector("#notice1").innerHTML = message;
+      document.body.querySelector("#notice1").style.display = "block";
     } else {
-      $('#notice2').text(message);
-      $('#notice2').css('display', 'block');
+      document.body.querySelector("#notice2").innerHTML = message;
+      document.body.querySelector("#notice2").style.display = "block";
     }
-
   }
 
   function showRoute(from, to) {
     routePanelControl.routePanel.state.set({
       from: from,
-      to: to
+      to: to 
     });
     routePanelControl.routePanel.getRouteAsync().then(function(route) {
       route.model.setParams({
@@ -329,25 +333,24 @@ function init() {
           var length = route.getActiveRoute().properties.get("distance");
           price = calculate(Math.round(length.value / 1000)),
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>' +
-              '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+              '<span>Расстояние: ' + length.text + '.</span>');
             
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span><br/>');
+              '<span>Расстояние: ' + length.text + '.</span>');
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           activeRoute.balloon.open();
         }
       });
     });
-  }
+  } 
 
   function showMessage(ctrl_id, message) {
     if (ctrl_id == '#suggest1') {
-      $('#messageHeader1').html('<b>Пункт отправления:</b>');
-      $('#message1').html(message);
+      document.body.querySelector("#messageHeader1").innerHTML = '<b>Пункт отправления:</b>';
+      document.body.message1("#messageHeader1").innerHTML = message;
     } else {
-      $('#messageHeader2').html('<b>Пункт назначения:</b>');
-      $('#message2').html(message);
+      document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
+      document.body.message1("#message2").innerHTML = message;
     }
   }
   function calculate(routeLength) {
