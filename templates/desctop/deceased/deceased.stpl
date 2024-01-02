@@ -196,7 +196,7 @@ function init() {
     addrTo = this.getAttribute("data-geo");
     const g_options = {
       enableHighAccuracy: false,
-      timeout: 5000,
+      //timeout: 5000,
       maximumAge: 0, 
     };
 
