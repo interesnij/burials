@@ -72,14 +72,14 @@
                                         <span> или </span>
                                         <br />
                                           <div>
-                                            <input value="<%= place.lat %>, <%= place.lon %>" type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
+                                            <input value="<%= _place.lat %>, <%= _place.lon %>" type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
                                             <span id="notice1"></span>
                                           </div>
                                           <div>
                                             <input value="<%= deceased.lat %>, <%= deceased.lon %>" disable type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
                                             <p id="notice2"></p>
                                             <br />
-                                          </div>
+                                          </div> 
                                           <div>
                                             <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
                                             <span id="notice3"></span>
@@ -177,47 +177,15 @@ function init() {
   });
 
   on('body', 'click', '.get_ma', function() { 
-    addrTo = this.getAttribute("data-geo");
-    const g_options = {
-      enableHighAccuracy: false,
-      //timeout: 5000,
-      maximumAge: 0, 
-    };
-
-    function g_success(pos) {
-      const crd = pos.coords;
-      addrFrom = ConvertToDecimal(crd.latitude) + ", " + ConvertToDecimal(crd.longitude);
-
-      document.body.querySelector("#suggest1").value = addrFrom;
-      document.body.querySelector("#suggest2").value = addrTo;
-      geocode('#suggest1');
-      geocode('#suggest2');
-      addrFrom = document.body.querySelector("#suggest1").value;
-
-      var _location = ymaps.geolocation.get({mapStateAutoApply: true});
-      _location.then( 
-        function(result) {
-          addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
-        },
-        function(err) {
-          console.log('Ошибка: ' + err)
-        }
-      );
-
-      addrTo = document.body.querySelector("#suggest2").value;
-      if (addrFrom && addrTo) {
-        showRoute(addrFrom, addrTo);
-      } else {
-        alert("Согласитесь на отслеживание Вашего местоположение");
-      }
-      
+    geocode('#suggest1');
+    geocode('#suggest2');
+    addrFrom = document.body.querySelector("#suggest1").value;
+    addrTo = document.body.querySelector("#suggest2").value;
+    if (addrFrom && addrTo) {
+      showRoute(addrFrom, addrTo);
+    } else {
+      alert("Согласитесь на отслеживание Вашего местоположение");
     }
-
-    function g_error(err) {
-      console.warn("ERROR. Code: " + err.code + ", message: " + err.message);
-    }
-
-    navigator.geolocation.getCurrentPosition(g_success, g_error, g_options);
   });
 
 
