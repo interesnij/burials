@@ -72,11 +72,11 @@
                                         <span> или </span>
                                         <br />
                                           <div>
-                                            <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
+                                            <input value="<%= place.lat %>, <%= place.lon %>" type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
                                             <span id="notice1"></span>
                                           </div>
                                           <div>
-                                            <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                                            <input value="<%= deceased.lat %>, <%= deceased.lon %>" disable type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
                                             <p id="notice2"></p>
                                             <br />
                                           </div>
@@ -99,24 +99,7 @@
 <script>
 ymaps.ready(init);
 
-function successPos(pos) {
-  return pos.coords;
-}
-function getPos() {
-  navigator.geolocation.getCurrentPosition(position => {
-    return position.coords
-  });
-    //navigator.geolocation.getCurrentPosition(successPos);
-}
-function ConvertToDecimal(num) {
-    num = num.toString(); //If it's not already a String
-    return num.slice(0, (num.indexOf(".")) + 3); //With 3 exposing the hundredths place
-}
-
 function init() {
-  var DELIVERY_TARIFF = 20,
-    MINIMUM_COST = 500;
-
   var suggestView = new ymaps.SuggestView('suggest1'),
     suggestView = new ymaps.SuggestView('suggest2'),
     map, routePanelControl,
@@ -173,25 +156,26 @@ function init() {
     map.controls.add(routePanelControl).add(zoomControl);
   //////////////////////////////////
 
-  on('body', 'click', '#button1', function() {
-    geocode('#suggest1');
-  });
-
-  on('body', 'click', '#button2', function() {
-    geocode('#suggest2');
-  });
-
   on('body', 'click', '#button3', function() { 
-    addrFrom = document.body.querySelector("#suggest1").value;
-    addrTo = document.body.querySelector("#suggest2").value;
-    if (addrFrom && addrTo) {
-      geocode('#suggest1');
-      geocode('#suggest2');
-      showRoute(addrFrom, addrTo);
-    } else {
-      document.body.querySelector("#notice3").style.display = "block";
+    addrFrom = document.body.querySelector("#suggest1");
+    addrTo = document.body.querySelector("#suggest2");
+    addrFrom.style.setProperty('border', 'inherit', 'important');
+    addrTo.style.setProperty('border', 'inherit', 'important');
+    if (!addrFrom.value) {
+      addrFrom.style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите адрес назначения");
+      return
     }
+    else if (!addrTo.value) {
+      addrTo.style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите адрес назначения");
+      return
+    }
+    geocode('#suggest1');
+    geocode('#suggest2');
+    showRoute(addrFrom.value, addrTo.value);
   });
+
   on('body', 'click', '.get_ma', function() { 
     addrTo = this.getAttribute("data-geo");
     const g_options = {
@@ -214,7 +198,6 @@ function init() {
       _location.then( 
         function(result) {
           addrFrom = result.geoObjects.get(0).geometry.getCoordinates();
-          //console.log(`location: ${result.geoObjects.get(0).properties.get('text')}`);
         },
         function(err) {
           console.log('Ошибка: ' + err)
@@ -332,7 +315,6 @@ function init() {
         var activeRoute = route.getActiveRoute();
         if (activeRoute) {
           var length = route.getActiveRoute().properties.get("distance");
-          price = calculate(Math.round(length.value / 1000)),
             balloonContentLayout = ymaps.templateLayoutFactory.createClass(
               '<span>Расстояние: ' + length.text + '.</span>');
             
@@ -353,9 +335,6 @@ function init() {
       document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
       document.body.message1("#message2").innerHTML = message;
     }
-  }
-  function calculate(routeLength) {
-    return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
   }
 }
 </script>

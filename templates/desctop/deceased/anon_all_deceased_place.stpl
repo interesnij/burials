@@ -17,15 +17,8 @@
                                   <p class="small">
                                     <%= i.birth_date.format("%d-%m-%Y").to_string() %> - <%= i.death_date.format("%d-%m-%Y").to_string() %>
                                   </p>
-                                  <a class="pointer get_ma text-slate-400 hover:text-indigo-600 duration-500 ms-5"
-                                      data-geo="<%= i.lat %>, <%= i.lon %>"
-                                  >
-                                    Маршрут
-                                  </a>
                                 </div>
-
                               </div>
-                              
                             </div>
                           </div>
                         <% } %>
@@ -42,10 +35,10 @@
                             <span id="notice1"></span>
                         </div>
                         <div>
-                            <input type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                            <input value="<%= place.get_loc() %>" type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
                               <p id="notice2"></p>
                               <br />
-                        </div>
+                        </div> 
                         <div>
                             <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
                             <span id="notice3"></span>
