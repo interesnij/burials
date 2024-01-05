@@ -31,14 +31,16 @@
                     <p class="font-semibold mt-2">
                         <br />
                         <div>
-                            <input type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
+                            <label class="font-semibold" for="suggest1">Адрес отправления:</label>
+                            <input type="text" id="suggest1" class="input form-input">
                             <span id="notice1"></span>
                         </div> 
                         <div>
+                            <label class="font-semibold" for="suggest2">Адрес назначения:</label>
                             <% if place.address.is_some() { %>
-                              <input value="<%= place.get_loc() %>, <%= place.address.as_deref().unwrap() %>" type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                              <input value="<%= place.get_loc() %>, <%= place.address.as_deref().unwrap() %>" type="text" id="suggest2" class="input form-input">
                             <% } else { %>
-                              <input value="<%= place.lat %>, <%= place.lon %>" type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
+                              <input value="<%= place.lat %>, <%= place.lon %>" type="text" id="suggest2" class="input form-input">
                             <% } %>
                             <p id="notice2"></p>
                             <br />

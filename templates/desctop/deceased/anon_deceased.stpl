@@ -65,7 +65,7 @@
                                     </h6>
                                     
                                     <p class="font-semibold mt-2">
-                                      <br />
+                                      <br /> 
                                           <div> 
                                             <label class="font-semibold" for="suggest1">Адрес кладбища:</label>
                                             <% if _place.address.is_some() { %>
