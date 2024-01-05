@@ -67,22 +67,24 @@
                                         Построить маршрут
                                     </h6>
                                     <p class="font-semibold mt-2">
-                                        <br />
-                                        <a style="text-decoration: underline; margin-bottom: 10px" class="pointer get_ma"data-geo="<%= deceased.lat %>, <%= deceased.lon %>">Автоматически</a>
-                                        <span> или </span>
-                                        <br />
-                                          <div>
-                                            <input value="<%= _place.lat %>, <%= _place.lon %>" type="text" id="suggest1" class="input form-input" placeholder="Адрес отправления">
-                                            <span id="notice1"></span>
+                                          <div> 
+                                            <label class="font-semibold" for="suggest1">Адрес кладбища:</label>
+                                            <% if _place.address.is_some() { %>
+                                              <input value="<%= _place.get_loc() %>, <%= _place.address.as_deref().unwrap() %>" type="text" id="suggest1" class="input form-input">
+                                            <% } else { %>
+                                              <input value="<%= _place.lat %>, <%= _place.lon %>" type="text" id="suggest1" class="input form-input">
+                                            <% } %>
+                                            <span style="display:none" id="notice1"></span>
                                           </div>
                                           <div>
-                                            <input value="<%= deceased.lat %>, <%= deceased.lon %>" disable type="text" id="suggest2" class="input form-input" placeholder="Адрес назначения">
-                                            <p id="notice2"></p>
+                                            <label class="font-semibold" for="suggest2">Адрес назначения:</label>
+                                            <input value="<%= deceased.lat %>, <%= deceased.lon %>" disable type="text" id="suggest2" class="input form-input">
+                                            <p style="display:none" id="notice2"></p>
                                             <br />
                                           </div> 
                                           <div>
                                             <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
-                                            <span id="notice3"></span>
+                                            <span style="display:none" id="notice3"></span>
                                           </div>
                                       </p>
                             </div>
