@@ -92,7 +92,7 @@ function init() {
             // Максимальная ширина подписи метки.
             iconPieChartCaptionMaxWidth: 200
         });
-    myMap.setType('yandex#satellite');
+
     //myMap.geoObjects
         //.add(myGeoObject)
         //.add(myPieChart);

@@ -75,7 +75,6 @@ function init() {
     controls: []
   });
   map.setType('yandex#satellite');
-  // Создадим панель маршрутизации.
 
   <% for i in object_list.iter() { %>
       map.geoObjects

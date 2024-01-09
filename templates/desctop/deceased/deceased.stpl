@@ -160,7 +160,7 @@ function init() {
     map.controls.add(routePanelControl).add(zoomControl);
   //////////////////////////////////
 
-  on('body', 'click', '#button3', function() { 
+  function create_path() {
     addrFrom = document.body.querySelector("#suggest1");
     addrTo = document.body.querySelector("#suggest2");
     addrFrom.style.setProperty('border', 'inherit', 'important');
@@ -178,6 +178,10 @@ function init() {
     geocode('#suggest1');
     geocode('#suggest2');
     showRoute(addrFrom.value, addrTo.value);
+  }
+
+  on('body', 'click', '#button3', function() { 
+    create_path();
   });
 
   on('body', 'click', '.get_ma', function() { 
@@ -308,5 +312,6 @@ function init() {
       document.body.message1("#message2").innerHTML = message;
     }
   }
+  create_path();
 }
 </script>

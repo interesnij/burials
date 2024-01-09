@@ -54,7 +54,6 @@ function init() {
         searchControlProvider: 'yandex#search'
     });
 
-    myMap.setType('yandex#satellite');
     //myMap.geoObjects
         //.add(myGeoObject)
         //.add(myPieChart);
