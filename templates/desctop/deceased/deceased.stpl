@@ -163,6 +163,13 @@ function init() {
   function create_path() {
     addrFrom = document.body.querySelector("#suggest1");
     addrTo = document.body.querySelector("#suggest2");
+    
+    geocode('#suggest1');
+    geocode('#suggest2');
+    showRoute(addrFrom.value, addrTo.value);
+  }
+
+  on('body', 'click', '#button3', function() { 
     addrFrom.style.setProperty('border', 'inherit', 'important');
     addrTo.style.setProperty('border', 'inherit', 'important');
     if (!addrFrom.value) {
@@ -175,12 +182,6 @@ function init() {
       toast_error("Укажите адрес назначения");
       return
     }
-    geocode('#suggest1');
-    geocode('#suggest2');
-    showRoute(addrFrom.value, addrTo.value);
-  }
-
-  on('body', 'click', '#button3', function() { 
     create_path();
   });
 
