@@ -167,6 +167,8 @@ function init() {
   }
 
   on('body', 'click', '#button3', function() { 
+    addrFrom = document.body.querySelector("#suggest1").value;
+    addrTo = document.body.querySelector("#suggest2").value;
     addrFrom.style.setProperty('border', 'inherit', 'important');
     addrTo.style.setProperty('border', 'inherit', 'important');
     if (!addrFrom.value) {
