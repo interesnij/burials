@@ -190,7 +190,7 @@ function init() {
     if (addrFrom && addrTo) {
       showRoute(addrFrom, addrTo);
     } else {
-      alert("Согласитесь на отслеживание Вашего местоположение");
+      alert("Согласитесь на использование Вашего местоположение");
     }
   });
 
@@ -209,20 +209,20 @@ function init() {
           case 'number':
           case 'near':
           case 'range':
-            error = 'Неточный адрес, требуется уточнение';
+            error = '';
             hint = 'Уточните номер дома';
             break;
           case 'street':
-            error = 'Неполный адрес, требуется уточнение';
+            error = '';
             hint = 'Уточните номер дома';
             break;
           case 'other':
           default:
-            error = 'Неточный адрес, требуется уточнение';
+            error = '';
             hint = 'Уточните адрес';
         }
       } else {
-        error = 'Адрес не найден';
+        error = '';
         hint = 'Уточните адрес';
       }
 
@@ -303,10 +303,10 @@ function init() {
 
   function showMessage(ctrl_id, message) {
     if (ctrl_id == '#suggest1') {
-      document.body.querySelector("#messageHeader1").innerHTML = '<b>Пункт отправления:</b>';
+      //document.body.querySelector("#messageHeader1").innerHTML = '<b>Пункт отправления:</b>';
       document.body.message1("#messageHeader1").innerHTML = message;
     } else {
-      document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
+      //document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
       document.body.message1("#message2").innerHTML = message;
     }
   }
