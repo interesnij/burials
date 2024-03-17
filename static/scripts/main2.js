@@ -223,7 +223,7 @@ on('body', 'click', '.search_deceaseds', function() {
 
   form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
  
-  block = form.nextElementSibling;
+  block = form.nextElementSibling; 
   block.innerHTML = "";
   if (!form.querySelector("#id_last_name").value) {
     toast_info("Фамилия - обязательное поле");
@@ -250,17 +250,17 @@ on('body', 'click', '.search_deceaseds', function() {
   if (form.querySelector("#deceadeds_id").value) {
     url += "&deceadeds_id=" + form.querySelector("#deceadeds_id").value
   };
-  if (form.querySelector("#is_veteran").value) {
-    url += "&is_veteran=" + form.querySelector("#is_veteran").value
+  if (form.querySelector("#is_veteran").checked) {
+    url += "&is_veteran=true"
+  }; 
+  if (form.querySelector("#is_famous").checked) {
+    url += "&is_famous=true"
   };
-  if (form.querySelector("#is_famous").value) {
-    url += "&is_famous=" + form.querySelector("#is_famous").value
+  if (form.querySelector("#with_photo").checked) {
+    url += "&with_photo=true"
   };
-  if (form.querySelector("#with_photo").value) {
-    url += "&with_photo=" + form.querySelector("#with_photo").value
-  };
-  if (form.querySelector("#with_coordinates").value) {
-    url += "&with_coordinates=" + form.querySelector("#with_coordinates").value
+  if (form.querySelector("#with_coordinates").checked) {
+    url += "&with_coordinates=true"
   };
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
