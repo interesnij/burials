@@ -116,7 +116,7 @@ impl Deceased {
                 2 => 12,
                 3 => 13,
                 _ => 12,
-            }
+            };
             diesel::update(self)
                 .set(schema::deceaseds::types.eq(types))
                 .execute(&_connection)
@@ -132,7 +132,7 @@ impl Deceased {
                 12 => 2,
                 13 => 3,
                 _  => 2,
-            }
+            };
             diesel::update(self)
                 .set(schema::deceaseds::types.eq(types))
                 .execute(&_connection)

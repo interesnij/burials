@@ -1025,7 +1025,7 @@ pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Re
         let _request_user = user_id.unwrap();
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _service = crate::utils::get_service(form.id).expect("E.");
-        _service.delete();
+        _service.delete(_request_user.id);
     };
     HttpResponse::Ok()
 }
