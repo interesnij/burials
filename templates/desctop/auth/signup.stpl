@@ -17,6 +17,7 @@
                                     type="text" 
                                     class="form-input mt-3" 
                                     placeholder="Выберите логин">
+                                </div>
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_first_name">Ваше имя:</label>
                                     <input 
@@ -25,6 +26,7 @@
                                     type="text" 
                                     class="form-input mt-3" 
                                     placeholder="Ваше имя">
+                                </div>
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_last_name">Ваша фамилия:</label>
                                     <input 
@@ -33,6 +35,7 @@
                                     type="text" 
                                     class="form-input mt-3" 
                                     placeholder="Ваша фамилия">
+                                </div>
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_phone">Телефон:</label>
                                     <input 
@@ -41,7 +44,7 @@
                                     type="phone" 
                                     class="form-input mt-3" 
                                     placeholder="Телефон">
-
+                                </div>
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_email">Почта:</label>
                                     <input 
@@ -50,6 +53,7 @@
                                     type="email" 
                                     class="form-input mt-3" 
                                     placeholder="Почта">
+                                </div>
 
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_password">Пароль:</label>
