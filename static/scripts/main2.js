@@ -228,7 +228,7 @@ on('body', 'click', '.search_deceaseds', function() {
   if (!form.querySelector("#id_last_name").value) {
     toast_info("Фамилия - обязательное поле");
     form.querySelector("#id_last_name").style.border = "1px #FF0000 solid";
-    return
+    return 
   }
 
   url = "/main_search?last_name=" + form.querySelector("#id_last_name").value;
@@ -246,6 +246,21 @@ on('body', 'click', '.search_deceaseds', function() {
   };
   if (form.querySelector("#id_location").value) {
     url += "&location=" + form.querySelector("#id_location").value
+  }; 
+  if (form.querySelector("#deceadeds_id").value) {
+    url += "&deceadeds_id=" + form.querySelector("#deceadeds_id").value
+  };
+  if (form.querySelector("#is_veteran").value) {
+    url += "&is_veteran=" + form.querySelector("#is_veteran").value
+  };
+  if (form.querySelector("#is_famous").value) {
+    url += "&is_famous=" + form.querySelector("#is_famous").value
+  };
+  if (form.querySelector("#with_photo").value) {
+    url += "&with_photo=" + form.querySelector("#with_photo").value
+  };
+  if (form.querySelector("#with_coordinates").value) {
+    url += "&with_coordinates=" + form.querySelector("#with_coordinates").value
   };
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
