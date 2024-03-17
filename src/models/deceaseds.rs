@@ -314,17 +314,31 @@ impl Deceased {
             .load::<Deceased>(&_connection)
             .expect("E.");
         for i in list.into_iter() {
-            let mut check = false;
+            let mut check_exists = false;
+            let mut default = true;
 
             if first_name.is_some() {
                 if i.first_name.contains(first_name.as_deref().unwrap()) {
                     check = true;
+                    
                 }
-            } 
-            if check {
-                stack.push(i)
+                default = false;
+            }
+            if middle_name.is_some() && i.middle_name.is_some() {
+                let middle_name = i.middle_name.as_deref().unwrap();
+                if middle_name.contains(middle_name.as_deref().unwrap()) {
+                    check = true;
+                }
+                default = false;
             }
 
+
+            if check {
+                stack.push(i);
+            }
+            if default {
+                stack.push(i);
+            }
         }
         return stack;
 
