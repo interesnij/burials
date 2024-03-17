@@ -164,41 +164,8 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        if params.last_name.is_none() || params.first_name.is_none() {
+        if params.last_name.is_none() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no last_name"));
-        }
-        let birth_date: Option<chrono::NaiveDate>;
-        let death_date: Option<chrono::NaiveDate>;
-        let mut location: Option<String>; 
-        let birth_date_dd = params.birth_date.is_some() && params.birth_date.unwrap().format("%Y-%m-%d").to_string() == "2023-11-25".to_string();
-        let death_date_dd = params.death_date.is_some() && params.death_date.unwrap().format("%Y-%m-%d").to_string() == "2023-11-25".to_string();
-        //println!("birth_date_dd {:?}", birth_date_dd);
-        //println!("death_date_dd {:?}", death_date_dd);
-        //println!("birth_format {:?}", params.birth_date.unwrap().format("%Y-%m-%d").to_string());
-        //println!("death_format {:?}", params.death_date.unwrap().format("%Y-%m-%d").to_string());
-        if birth_date_dd {
-            birth_date = None;
-        }
-        else {
-            birth_date = params.birth_date;
-        }
-        if death_date_dd {
-            death_date = None;
-        }
-        else {
-            death_date = params.death_date;
-        }
-
-        if params.location.is_none() {
-            //println!("location None!!!");
-            location = None;
-        }
-        else {
-            location = params.location.clone();
-            if &location.as_deref().unwrap().to_string() == &"xxx".to_string() {
-                //println!("location empty!!!");
-                location = None;
-            }
         }
 
         let user_id = get_request_user(&req).await;
@@ -206,9 +173,9 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             params.first_name.as_deref().unwrap().to_string(),
             params.middle_name.clone(),
             params.last_name.as_deref().unwrap().to_string(),
-            birth_date,
-            death_date,
-            location,
+            params.birth_date.clone()
+            params.death_date.clone()
+            params.location.clone(),
         );
         if user_id.is_some() {
             let _request_user = user_id.unwrap();

@@ -296,7 +296,7 @@ impl Deceased {
             .expect("E.");
     }
     pub fn main_search ( 
-        first_name:  String,
+        first_name:  Option<String>,
         middle_name: Option<String>,
         last_name:   String,
         birth_date:  Option<chrono::NaiveDate>,
@@ -308,13 +308,26 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
-        //let middle: String;
-        //if middle_name.is_some() {
-        //    middle = "%".to_owned() + middle_name.as_deref().unwrap() + "%";
-        //} 
-        //else { 
-        //    middle = "%".to_owned() + "" + "%";
-        //}
+        let mut stack = Vec::new();
+        let list = deceaseds
+            .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
+            .load::<Deceased>(&_connection)
+            .expect("E.");
+        for i in list.into_iter() {
+            let mut check = false;
+
+            if first_name.is_some() {
+                if i.first_name.contains(first_name.as_deref().unwrap()) {
+                    check = true;
+                }
+            }
+            if check {
+                stack.push(i)
+            }
+
+        }
+        return stack;
+
         if location.is_some() {
             //println!("location exists!!");
             let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
