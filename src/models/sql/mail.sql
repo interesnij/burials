@@ -144,7 +144,7 @@ CREATE TABLE services (
     id       SERIAL PRIMARY KEY,
     title    VARCHAR(100) NOT NULL,
     position SMALLINT NOT NULL
-)
+);
 
 CREATE TABLE organizations_services (
     id              SERIAL PRIMARY KEY,

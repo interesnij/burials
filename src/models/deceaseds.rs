@@ -288,7 +288,7 @@ impl Deceased {
         let _connection = establish_connection();
         return deceaseds
             .filter(schema::deceaseds::place_id.eq(place_id))
-            .filter(schema::deceaseds::types.eq_any(vec!(2, 3))
+            .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
             .order(schema::deceaseds::death_date.desc())
             .limit(limit)
             .offset(offset)
