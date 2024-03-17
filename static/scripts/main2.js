@@ -173,10 +173,9 @@ on('body', 'click', '#logg', function() {
   on('body', 'click', '#signup', function() {
     _this = this;
     form = _this.parentElement.parentElement.parentElement.parentElement;
-    username = form.querySelector("#id_username");
     response = form.parentElement.querySelector(".api_response");
-    if (!username.value){
-      username.style.border = "1px #FF0000 solid";
+    if (!form.querySelector("#id_username").value){
+      form.querySelector("#id_username").style.border = "1px #FF0000 solid";
       toast_error("Логин - обязательное поле!");
       return
     } else if (!form.querySelector("#id_password").value){
