@@ -308,7 +308,7 @@ on('body', 'change', '.load_regions', function() {
 });
 
 on('body', 'click', '.show_dop_search_form', function() {
-  block = this.parentElement.parentElement.nextElementSibling;
+  block = this.parentElement.parentElement.nextElementSibling.nextElementSibling;
   if (block.classList.contains("hidden")) {
     block.classList.remove("hidden")
   } 

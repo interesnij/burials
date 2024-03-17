@@ -57,7 +57,7 @@
             		<button style="margin-top: 23px;" type="button" class="search search_deceaseds btn btn-primary">Искать</button>
 				</div>
 				<div class="col-md-8">
-					<div style="margin-top: 23px;" class="pointer show_dop_search_form">+ доп. парамерты </div>
+					<div style="margin-top: 23px;font-size: x-large;" class="pointer show_dop_search_form">+ доп. парамерты </div>
 				</div>
 			</div>
         </div>
