@@ -3,7 +3,7 @@
         <section class="relative table w-full py-32 lg:py-40 bg-gradient-to-br to-orange-600/20 via-fuchsia-600/20 from-indigo-600/20">
             <div class="container relative">
                 <div class="grid grid-cols-1 text-center mt-10">
-                    <h3 class="text-3xl leading-normal font-medium">Создание организации</h3>
+                    <h3 class="text-3xl leading-normal font-medium">Изменение организации</h3>
                 </div>
             </div>
         </section>
@@ -172,7 +172,7 @@
                             <br>
                             <button type="button" data-pk="<%= organization.id %>" id="edit_organization" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 
                                 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-5">
-                                Добавить
+                                Изменить
                             </button> 
                         </div>
                         </form>
