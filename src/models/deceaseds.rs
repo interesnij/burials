@@ -318,17 +318,12 @@ impl Deceased {
             let mut default = true;
 
             if first_name.is_some() {
-                if i.first_name.contains(first_name.as_deref().unwrap()) {
-                    check = true;
-                    
-                }
+                check = i.first_name.contains(first_name.as_deref().unwrap());
                 default = false;
             }
             if middle_name.is_some() && i.middle_name.is_some() {
-                let middle_name = i.middle_name.as_deref().unwrap();
-                if middle_name.contains(middle_name.as_deref().unwrap()) {
-                    check = true;
-                }
+                let i_middle_name = i.middle_name.as_deref().unwrap();
+                check = i_middle_name.contains(middle_name.as_deref().unwrap());
                 default = false;
             }
 
