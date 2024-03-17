@@ -15,7 +15,7 @@ use crate::utils::{
 use serde::{Serialize, Deserialize};
 
 
-#[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
+#[derive(Debug, PartialEq, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Service {
     pub id:       i32,
     pub title:    String,
