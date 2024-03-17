@@ -219,7 +219,7 @@ on('body', 'click', '#logg', function() {
 
  
 on('body', 'click', '.search_deceaseds', function() {
-  form = this.parentElement.parentElement.parentElement;
+  form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
  
