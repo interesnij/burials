@@ -172,7 +172,7 @@ on('body', 'click', '#logg', function() {
   
   on('body', 'click', '#signup', function() {
     _this = this;
-    form = _this.parentElement.parentElement.parentElement.parentElement;
+    form = _this.parentElement.parentElement.parentElement;
     response = form.parentElement.querySelector(".api_response");
     console.log(form.querySelector("#id_username"));
     if (!form.querySelector("#id_username").value){
