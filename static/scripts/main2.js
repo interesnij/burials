@@ -307,7 +307,15 @@ on('body', 'change', '.load_regions', function() {
   };
 });
 
-
+on('body', 'click', '.show_dop_search_form', function() {
+  block = this.parentElement.parentElement.nextElementSibling;
+  if (block.classList.contains("hidden")) {
+    block.classList.remove("hidden")
+  }
+  else {
+    block.classList.add("hidden");
+  }
+});
 on('body', 'click', '#create_organization', function() {
   let form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
