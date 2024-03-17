@@ -22,13 +22,16 @@ use crate::errors::Error;
 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct User {
-    pub id:       i32,
-    pub username: String, 
-    pub email:    String,
-    pub password: String,
+    pub id:          i32,
+    pub username:    String,
+    pub first_name:  String,
+    pub last_name:   String,
+    pub phone:       String,
+    pub email:       String,
+    pub password:    String,
     pub description: Option<String>,
-    pub image:    Option<String>,
-    pub perm:     i16,
+    pub image:       Option<String>,
+    pub perm:        i16,
 }
 impl User {
     pub fn get_suggested_stat(&self) -> (usize, usize, usize) {
@@ -118,12 +121,15 @@ impl User {
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
-    pub username: String,
-    pub email:    String,
-    pub password: String,
-    pub description:      Option<String>,
-    pub image:    Option<String>,
-    pub perm:     i16,
+    pub username:    String,
+    pub first_name:  String,
+    pub last_name:   String,
+    pub phone:       String,
+    pub email:       String,
+    pub password:    String,
+    pub description: Option<String>,
+    pub image:       Option<String>,
+    pub perm:        i16,
 }
 
 #[derive(Debug, Deserialize)]

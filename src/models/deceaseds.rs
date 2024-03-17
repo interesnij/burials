@@ -20,6 +20,16 @@ use crate::errors::Error;
 
 
 // Структура для хранения данных об усопшем
+/*
+types 
+1  покойник предложен
+2  покойник одобрен
+3  покойник помещен на стену памяти
+
+11  удален покойник предложеный
+12  удален покойник одобреный
+13  удален покойник помещеный на стену памяти
+*/ 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Deceased {
     pub id:           i32,
@@ -73,6 +83,58 @@ impl Deceased {
         if _user.perm > 9 {
             diesel::update(self)
                 .set(schema::deceaseds::types.eq(1))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn wall(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            diesel::update(self)
+                .set(schema::deceaseds::types.eq(3))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn unwall(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            diesel::update(self)
+                .set(schema::deceaseds::types.eq(2))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn delete(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match _user.types {
+                1 => 11,
+                2 => 12,
+                3 => 13,
+                _ => 12,
+            }
+            diesel::update(self)
+                .set(schema::deceaseds::types.eq(types))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+    }
+    pub fn restore(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match _user.types {
+                11 => 1,
+                12 => 2,
+                13 => 3,
+                _  => 2,
+            }
+            diesel::update(self)
+                .set(schema::deceaseds::types.eq(types))
                 .execute(&_connection)
                 .expect("Error.");
         }
@@ -215,19 +277,6 @@ impl Deceased {
 
         return 1;
     }
-    pub fn delete(&self) -> i16 {
-        use crate::schema::deceaseds::dsl::deceaseds;
-
-        let _connection = establish_connection();
-        diesel::delete(deceaseds.filter(schema::deceaseds::id.eq(self.id)))
-            .execute(&_connection)
-            .expect("E");
-
-        let _place = crate::utils::get_place(self.place_id).expect("E.");
-        _place.minus(1);
-        
-        return 1;
-    }
 
     pub fn list (
         place_id: i32,
@@ -239,7 +288,7 @@ impl Deceased {
         let _connection = establish_connection();
         return deceaseds
             .filter(schema::deceaseds::place_id.eq(place_id))
-            .filter(schema::deceaseds::types.eq(2))
+            .filter(schema::deceaseds::types.eq_any(vec!(2, 3))
             .order(schema::deceaseds::death_date.desc())
             .limit(limit)
             .offset(offset)
@@ -259,19 +308,19 @@ impl Deceased {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
-        let middle: String;
-        if middle_name.is_some() {
-            middle = "%".to_owned() + middle_name.as_deref().unwrap() + "%";
-        } 
-        else { 
-            middle = "%".to_owned() + "" + "%";
-        }
+        //let middle: String;
+        //if middle_name.is_some() {
+        //    middle = "%".to_owned() + middle_name.as_deref().unwrap() + "%";
+        //} 
+        //else { 
+        //    middle = "%".to_owned() + "" + "%";
+        //}
         if location.is_some() {
-            println!("location exists!!");
+            //println!("location exists!!");
             let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
             let places_ids = crate::models::Place::search_ids(&loc);
             if birth_date.is_some() && death_date.is_some() {
-                println!("location && birth_date && death_date");
+                //println!("location && birth_date && death_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
@@ -280,20 +329,20 @@ impl Deceased {
                     
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             } 
             else if birth_date.is_some() && death_date.is_none() {
-                println!("location && birth_date");
+                //println!("location && birth_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     //.limit(limit)
                     //.offset(offset)
@@ -301,14 +350,14 @@ impl Deceased {
                     .expect("E.");
             }
             else if death_date.is_some() && birth_date.is_none() {
-                println!("location && death_date");
+                //println!("location && death_date");
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
@@ -317,59 +366,59 @@ impl Deceased {
         }
         
             if birth_date.is_some() && death_date.is_some() {
-                println!("birth_date && death_date");
+                //println!("birth_date && death_date");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
             else if birth_date.is_some() && death_date.is_none() {
-                println!("birth_date");
+                //println!("birth_date");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
             else if death_date.is_some() && birth_date.is_none() {
-                println!("death_date");
+                //println!("death_date");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .or_filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
             else {
-                println!("default!!");
+                //println!("default!!");
                 return deceaseds
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
                     //.or_filter(schema::deceaseds::middle_name.ilike(middle))
                     .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
-                    .filter(schema::deceaseds::types.eq(2))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     //.limit(limit)
                     //.offset(offset)
                     .load::<Deceased>(&_connection)
                     .expect("E.");
             }
         
-        println!("empty");
+        //println!("empty");
         return Vec::new();
     }
 
@@ -397,7 +446,7 @@ impl Deceased {
         let _connection = establish_connection();
         return deceaseds
             .filter(schema::deceaseds::place_id.eq(place_id))
-            .filter(schema::deceaseds::types.eq(2))
+            .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
             .select(schema::deceaseds::id)
             .load::<i32>(&_connection)
             .expect("E.")

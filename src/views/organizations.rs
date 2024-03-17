@@ -48,12 +48,6 @@ pub fn organization_routes(config: &mut web::ServiceConfig) {
     config.route("/edit_organization/{id}/", web::post().to(edit_organization));
     config.route("/delete_organization/", web::post().to(delete_organization));
 
-    config.route("/create_service/{id}/", web::get().to(create_service_page));
-    config.route("/edit_service/{id}/", web::get().to(edit_service_page));
-    config.route("/create_service/{id}/", web::post().to(create_service));
-    config.route("/edit_service/{id}/", web::post().to(edit_service));
-    config.route("/delete_service/", web::post().to(delete_service));
-
     config.route("/create_loc/{id}/", web::get().to(create_loc_page));
     config.route("/edit_loc/{id}/", web::get().to(edit_loc_page));
     config.route("/create_loc/{id}/", web::post().to(create_loc));
@@ -400,6 +394,7 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
         let org_list = Organization::get_all();
+        let service_list = Service::get_all();
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -409,12 +404,14 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
                 org_list:     Vec<Organization>,
+                service_list: Vec<Service>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
                 country_list: country_list,
                 org_list:     org_list,
+                service_list: service_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -428,12 +425,14 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
                 org_list:     Vec<Organization>,
+                service_list: Vec<Service>,
             }
             let body = Template {
                 request_user: _request_user,
                 is_ajax:      is_ajax,
                 country_list: country_list,
                 org_list:     org_list,
+                service_list: service_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -454,6 +453,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
         let org_list = Organization::get_all();
+        let service_list = Service::get_all();
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/organization/edit_organization.stpl")]
@@ -463,6 +463,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
                 org_list:     Vec<Organization>,
+                service_list: Vec<Service>,
             }
             let body = Template {
                 request_user: _request_user,
@@ -470,6 +471,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 is_ajax:      is_ajax,
                 country_list: country_list,
                 org_list:     org_list,
+                service_list: service_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -484,6 +486,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 is_ajax:      i32,
                 country_list: Vec<Countrie>,
                 org_list:     Vec<Organization>,
+                service_list: Vec<Service>,
             }
             let body = Template {
                 request_user: _request_user,
@@ -491,6 +494,7 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 is_ajax:      is_ajax,
                 country_list: country_list,
                 org_list:     org_list,
+                service_list: service_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -517,6 +521,7 @@ pub async fn create_organization(req: HttpRequest, mut payload: Multipart) -> ac
             form.website.clone(),
             form.image.clone(),
             form.images.clone(),
+            form.services.clone(),
         );
         return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()));
     }; 
@@ -539,6 +544,7 @@ pub async fn edit_organization(req: HttpRequest, mut payload: Multipart, _id: we
             form.website.clone(),
             form.image.clone(),
             form.images.clone(),
+            form.services.clone(),
         );
         return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()));
     }; 
@@ -556,161 +562,6 @@ pub async fn delete_organization(req: HttpRequest, mut payload: Multipart) -> im
     };
     HttpResponse::Ok()
 }
-
-pub async fn create_service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
-    let user_id = get_request_user(&req).await;
-    if user_id.is_some() { 
-        let _request_user = user_id.unwrap();
-        let _organization = crate::utils::get_organization(*_id).expect("E."); 
-        if _request_user.id == _organization.user_id || _request_user.is_admin() {
-            if is_desctop {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/service/create_service.stpl")]
-                struct Template {
-                    request_user: User,
-                    is_ajax:      i32,
-                    organization: Organization,
-                }
-                let body = Template {
-                    request_user: _request_user,
-                    is_ajax:      is_ajax,
-                    organization: _organization,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-            else {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/service/create_service.stpl")]
-                struct Template {
-                    request_user: User,
-                    is_ajax:      i32,
-                    organization: Organization,
-                }
-                let body = Template {
-                    request_user: _request_user,
-                    is_ajax:      is_ajax,
-                    organization: _organization,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-        }
-        else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"))
-        }
-    }
-    else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
-    }
-}
-
-pub async fn edit_service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
-    let _service = crate::utils::get_service(*_id).expect("E.");
-    let _organization = crate::utils::get_organization(_service.organization_id).expect("E.");
-    let user_id = get_request_user(&req).await;
-
-    if user_id.is_some() { 
-        let _request_user = user_id.unwrap();
-        if _request_user.id == _organization.user_id || _request_user.is_admin() {
-            if is_desctop {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/service/edit_service.stpl")]
-                struct Template {
-                    request_user: User,
-                    organization: Organization,
-                    is_ajax:      i32,
-                    service:      Service,
-                }
-                let body = Template {
-                    request_user: _request_user,
-                    organization: _organization,
-                    is_ajax:      is_ajax,
-                    service:      _service,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-            else {
-                #[derive(TemplateOnce)]
-                #[template(path = "desctop/service/edit_service.stpl")]
-                struct Template {
-                    request_user: User,
-                    organization: Organization,
-                    is_ajax:      i32,
-                    service:      Service,
-                }
-                let body = Template {
-                    request_user: _request_user,
-                    organization: _organization,
-                    is_ajax:      is_ajax,
-                    service:      _service,
-                }
-                .render_once()
-                .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
-                Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
-            }
-        }
-        else {
-            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
-        }
-    }
-    else {
-        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("anon"))
-    }
-}
-
-pub async fn create_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let _user = get_request_user(&req).await;
-    if _user.is_some() { 
-        let _request_user = _user.unwrap();
-        let form = crate::utils::service_form(payload.borrow_mut()).await;
-        let id = Service::create (  
-            _request_user.id,
-            *_id,
-            form.title.clone(),
-            form.description.clone(),
-            form.image.clone(),
-            form.price,
-        );
-        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()));
-    }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-}
-
-pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
-    let user_id = get_request_user(&req).await;
-    if user_id.is_some() {
-        let _request_user = user_id.unwrap();
-        let _service = crate::utils::get_service(*_id).expect("E.");
-        let form = crate::utils::service_form(payload.borrow_mut()).await;
-        let id = _service.edit (
-            _request_user.id,
-            form.title.clone(),
-            form.description.clone(), 
-            form.image.clone(),
-            form.price,
-        );
-        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(id.to_string()));
-    }; 
-    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
-}
-pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let user_id = get_request_user(&req).await; 
-    if user_id.is_some() {
-        let _request_user = user_id.unwrap();
-        let form = crate::utils::id_form(payload.borrow_mut()).await;
-        let _service = crate::utils::get_service(form.id).expect("E.");
-        _service.delete(_request_user.id);
-    }
-    HttpResponse::Ok()
-}
-
 
 pub async fn create_loc_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);

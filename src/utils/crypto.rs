@@ -35,24 +35,3 @@ pub async fn gen_jwt (id: i32) -> Result<String, jsonwebtoken::errors::Error> {
     .await
     .unwrap()
 }
-
-pub async fn verify_jwt(_token: String)-> Result<Claims, u16>{
-    let claims = block(move || {
-        let decoding_key = DecodingKey::from_secret("MYSECRETKEY".as_bytes());
-
-        decode::<Claims>(&_token, &decoding_key, &Validation::default())
-    })
-    .await
-    .unwrap();
-    if let Err(_) = claims {
-        return Err(403);
-    }
-
-    let claims = claims.unwrap().claims;
-
-    if claims.exp < Utc::now().timestamp(){
-        return Err(419);
-    }
-
-    Ok(claims)
-}

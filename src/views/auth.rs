@@ -114,7 +114,6 @@ pub async fn logout_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
     else {
-        //crate::utils::remove_token(&req);
         crate::views::index_page(req).await
     }
 }
@@ -126,13 +125,13 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
         .first::<User>(&_connection)
         .expect("Error.");
     
-    println!("item.password {:?}", &item.password);
-    println!("password {:?}", &password);
-    println!("item_id {:?}", item.id);
+    //println!("item.password {:?}", &item.password);
+    //println!("password {:?}", &password);
+    //println!("item_id {:?}", item.id);
     if bcrypt::verify(password.as_str(), item.password.as_str()).unwrap() {
         return Ok(item); 
     }
-    println!("AuthError");
+    //println!("AuthError");
     Err(AuthError::NotFound(String::from("User not found")))
 }
 fn user_with_username_exists(username: String) -> bool {
@@ -199,8 +198,8 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Resul
     }
     else {
         let form = login_form(payload.borrow_mut()).await;
-        println!("{:?}", form.username.clone());
-        println!("{:?}", form.password.clone());
+        //println!("{:?}", form.username.clone());
+        //println!("{:?}", form.password.clone());
         let i = handle_sign_in(form, &req).await;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(i.to_string()))
     }
@@ -208,15 +207,21 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Resul
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct NewUserForm {
-    pub username: String,
-    pub email:    String,
-    pub password: String,
+    pub username:   String,
+    pub first_name: String,
+    pub last_name:  String,
+    pub phone:      String,
+    pub email:      String,
+    pub password:   String,
 }
 pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
     let mut form: NewUserForm = NewUserForm {
-        username: "".to_string(),
-        email:    "".to_string(),
-        password: "".to_string(),
+        username:   "".to_string(),
+        first_name: "".to_string(),
+        last_name:  "".to_string(),
+        phone:      "".to_string(),
+        email:      "".to_string(),
+        password:   "".to_string(),
     };
 
     while let Some(item) = payload.next().await {
@@ -227,6 +232,15 @@ pub async fn signup_form(payload: &mut Multipart) -> NewUserForm {
                 let data_string = s.to_string();
                 if field.name() == "username" {
                     form.username = data_string
+                }
+                else if field.name() == "first_name" {
+                    form.first_name = data_string
+                }
+                else if field.name() == "last_name" {
+                    form.last_name = data_string
+                }
+                else if field.name() == "phone" {
+                    form.phone = data_string
                 }
                 else if field.name() == "email" {
                     form.email = data_string
@@ -250,6 +264,9 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
         let _password = bcrypt::hash(form.password.clone(), 8).unwrap();
         let form_user = NewUser {
             username:    form.username.clone(),
+            first_name:  form.first_name.clone(),
+            last_name:   form.last_name.clone(),
+            phone:       form.phone.clone(),
             email:       User::next_count(),
             password:    _password.clone(),
             description: None,
@@ -259,9 +276,9 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
         if user_with_username_exists(form.username.clone()) {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("user_with_username_exists"));
         }
-        println!("{:?}", form.username.clone());
-        println!("{:?}", form.email.clone());
-        println!("{:?}", form.password.clone());
+        //println!("{:?}", form.username.clone());
+        //println!("{:?}", form.email.clone());
+        //println!("{:?}", form.password.clone());
 
         let _new_user = diesel::insert_into(schema::users::table)
             .values(&form_user)

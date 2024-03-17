@@ -3,19 +3,27 @@
 CREATE TABLE users (
     id          SERIAL PRIMARY KEY,
     username    VARCHAR(100) NOT NULL,
+    first_name  VARCHAR(100) NOT NULL,
+    last_name   VARCHAR(100) NOT NULL,
+    phone       VARCHAR(12) NOT NULL,
     email       VARCHAR(100) NOT NULL,
     password    VARCHAR(100) NOT NULL,
     description TEXT,
     image       VARCHAR(100),
     perm        SMALLINT NOT NULL
 ); 
-
+ 
 -- Создание таблицы для хранения существующих записей об усопших
 /*
-types
+types 
 1  покойник предложен
 2  покойник одобрен
-*/
+3  покойник помещен на стену памяти
+
+11  удален покойник предложеный
+12  удален покойник одобреный
+13  удален покойник помещеный на стену памяти
+*/ 
 CREATE TABLE deceaseds (
     id           SERIAL PRIMARY KEY,     -- Уникальный идентификатор записи
     user_id      INT NOT NULL,
@@ -102,6 +110,9 @@ CREATE TABLE districts (
 types
 1  организация предложена
 2  организация одобрена
+
+11  удалена организация предложеная
+12  удалена организация одобреная
 */
 CREATE TABLE organizations ( 
     id          SERIAL PRIMARY KEY,     -- Уникальный идентификатор организации
@@ -127,6 +138,18 @@ CREATE TABLE organizations_places (
     region_id       INT, 
     country_id      INT NOT NULL,
     address2        VARCHAR(500) NOT NULL
+);
+
+CREATE TABLE services (
+    id       SERIAL PRIMARY KEY,
+    title    VARCHAR(100) NOT NULL,
+    position SMALLINT NOT NULL
+)
+
+CREATE TABLE organizations_services (
+    id              SERIAL PRIMARY KEY,
+    organization_id INT NOT NULL,
+    service_id      INT NOT NULL
 );
 
 --______________________________________________________________________________________
@@ -163,14 +186,4 @@ CREATE TABLE reviews (
     user_id    INT NOT NULL,
     content    VARCHAR(1000) NOT NULL,
     created    TIMESTAMP NOT NULL
-);
-
-CREATE TABLE services (
-    id              SERIAL PRIMARY KEY,
-    user_id         INT NOT NULL,
-    organization_id INT NOT NULL,
-    title           VARCHAR(100) NOT NULL,
-    description     VARCHAR(1000) NOT NULL,
-    image           VARCHAR(100),
-    price           INT NOT NULL
 );

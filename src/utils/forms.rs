@@ -339,6 +339,7 @@ pub struct OrganizationForms {
     pub website:     Option<String>,
     pub image:       Option<String>,
     pub images:      Vec<String>,
+    pub services:    Vec<i32>,
 }
 // форма для элементов 
 pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
@@ -351,6 +352,7 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
         website:     None, 
         image:       None,
         images:      Vec::new(),
+        services:    Vec::new(),
     };
 
    
@@ -416,6 +418,15 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
                 };
                 form.images.push(file.path.clone().replace("./","/"));
             }
+        } 
+        else if field.name() == "services[]" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let _int: i32 = s.parse().unwrap();
+                    form.services.push(_int);
+                }
+            }
         }
     }
     form
@@ -424,66 +435,37 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
 //------------------------------ФОРМА УСЛУГ-----------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ServiceForms {
-    pub title:       String,
-    pub description: String,
-    pub image:       Option<String>,
-    pub price:       i32,
+    pub title:    String,
+    pub position: i32,
 }
 // форма для элементов 
 pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
     let mut form: ServiceForms = ServiceForms {
-        title:       "".to_string(),
-        description: "".to_string(),
-        image:       None,
-        price:       0,
+        title:    "".to_string(),
+        position: 0,
     };
 
    
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["title", "description"];
 
-        if string_list.contains(&name) {
-            let mut _content = "".to_string();
+        if name == "title" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
                     let data_string = s.to_string();
-                    if field.name() == "title" {
-                        form.title = data_string;
-                    } else if field.name() == "description" {
-                        form.description = data_string;
-                    }
+                    form.title = data_string;
                 }
             }
         }
-        else if name == "price" {
+        else if name == "position" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
-                    let _int: i32 = s.parse().unwrap();
-                    form.price = _int;
+                    let _int: i16 = s.parse().unwrap();
+                    form.position = _int;
                 }
-            }
-        }
-
-        else if name == "image" {
-            let _new_path = field.content_disposition().get_filename().unwrap();
-            if _new_path != "" {
-                let file = UploadedFiles::new(_new_path.to_string());
-                let file_path = file.path.clone();
-                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
-                    .await
-                    .unwrap();
-                while let Some(chunk) = field.next().await {
-                    let data = chunk.unwrap();
-                    f = web::block(move || f.write_all(&data).map(|_| f))
-                        .await
-                        .unwrap()
-                        .expect("E");
-                }
-                form.image = Some(file.path.clone().replace("./","/"));
             }
         }
     }

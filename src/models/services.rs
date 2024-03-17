@@ -17,98 +17,69 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Service {
-    pub id:              i32,
-    pub user_id:         i32,
-    pub organization_id: i32,
-    pub title:           String,
-    pub description:     String,
-    pub image:           Option<String>,
-    pub price:           i32,
+    pub id:       i32,
+    pub title:    String,
+    pub position: i16,
 } 
 
 // Структура NewService используется для создания новых объектов Service
 #[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "services"]
 pub struct NewService {
-    pub user_id:         i32,
-    pub organization_id: i32,
-    pub title:           String,
-    pub description:     String,
-    pub image:           Option<String>,
-    pub price:           i32,
+    pub title:    String,
+    pub position: i16,
 }
 
 impl Service {
-    pub fn get_image(&self) -> String {
-        if self.image.is_some() {
-            return self.image.as_deref().unwrap().to_string();
-        }
-        else {
-            return "/static/images/img.jpg".to_string();
-        }
-    }
     pub fn create (
-        user_id:         i32,
-        organization_id: i32,
-        title:           String,
-        description:     String,
-        image:           Option<String>,
-        price:           i32,
-    ) -> i32 {
-        let _connection = establish_connection();
-        let _organization = crate::utils::get_organization(organization_id).expect("E.");
-
-        if _organization.user_id == user_id {
-            let new_form = NewService {
-                user_id:         user_id,
-                organization_id: organization_id,
-                title:           title,
-                description:     description,
-                image:           image,
-                price:           price,
-            };
-            diesel::insert_into(schema::services::table)
-                .values(&new_form)
-                .execute(&_connection)
-                .expect("Error.");
+        user_id:  i32,
+        title:    String,
+        position: i16,
+    ) -> i16 {
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm < 10 {
+            return 0;
         }
-        return _organization.id;
+        let _connection = establish_connection();
+        let new_form = NewService {
+            title:    title,
+            position: position,
+        };
+        diesel::insert_into(schema::services::table)
+            .values(&new_form)
+            .execute(&_connection)
+            .expect("Error.");
+        return 1;
     }
     pub fn edit (
         &self,
-        user_id:     i32,
-        title:       String,
-        description: String,
-        image:       Option<String>,
-        price:       i32,
-    ) -> i32 { 
-        use crate::schema::services::dsl::services;
-
-        let _connection = establish_connection();
-        let _organization = crate::utils::get_organization(self.organization_id).expect("E.");
-        if _organization.user_id == user_id {
-            diesel::update(self)
-                .set((
-                    schema::services::title.eq(title),
-                    schema::services::description.eq(description),
-                    schema::services::image.eq(image),
-                    schema::services::price.eq(price),
-                ))
-                .execute(&_connection)
-                .expect("Error.");
+        user_id:  i32,
+        title:    String,
+        position: i16,
+    ) -> i16 { 
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm < 10 {
+            return 0;
         }
-        return _organization.id;
+
+        diesel::update(self)
+            .set((
+                schema::services::title.eq(title),
+                schema::services::position.eq(position),
+            ))
+            .execute(&_connection)
+            .expect("Error.");
+        return 1;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
-        use crate::schema::services::dsl::services;
-
-        let _connection = establish_connection();
-        let _organization = crate::utils::get_organization(self.organization_id).expect("E.");
-        if _organization.user_id == user_id {
-            diesel::delete(services.filter(schema::services::id.eq(self.id)))
-                .execute(&_connection)
-                .expect("E");
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm < 10 {
+            return 0;
         }
+        let _connection = establish_connection();            
+        diesel::delete(services.filter(schema::services::id.eq(self.id)))
+            .execute(&_connection)
+            .expect("E");
         return 1;
     }
 
@@ -157,5 +128,14 @@ impl Service {
             .load::<i32>(&_connection)
             .expect("E.")
             .len();
+    }
+
+    pub fn get_all() -> Vec<Service> {
+        use crate::schema::services::dsl::services;
+
+        let _connection = establish_connection();
+        return services
+            .load::<Service>(&_connection)
+            .expect("E.");
     }
 }

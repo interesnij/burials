@@ -79,6 +79,7 @@
                         <% let (org_count, place_count, deceased_count) = request_user.get_suggested_stat(); %>
 
                         <ul class="submenu">
+                            <li><a href="/create_service/" class="sub-menu-item">Добавить услугу</a></li>
                             <li><a href="/create_country/" class="sub-menu-item">Добавить страну</a></li>
                             <li><a href="/create_region/" class="sub-menu-item">Добавить регион</a></li>
                             <li><a href="/create_district/" class="sub-menu-item">Добавить район</a></li>

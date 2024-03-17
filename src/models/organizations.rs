@@ -1,5 +1,9 @@
 use crate::schema;
-use crate::schema::{organizations, organizations_places};
+use crate::schema::{
+    organizations,
+    organizations_places,
+    organizations_services
+};
 use diesel::{
     Queryable,
     Insertable,
@@ -119,6 +123,7 @@ impl Organization {
         website:     Option<String>,
         image:       Option<String>,
         images:      Vec<String>,
+        services:    Vec<i32>,
     ) -> i32 {
         use crate::schema::organizations::dsl::organizations;
 
@@ -148,6 +153,7 @@ impl Organization {
             .expect("Error.");
 
         crate::models::File::create(_new.id, 1, images);
+        crate::models::OrganizationsService::create(_new.id, services);
 
         return _new.id;
     }
@@ -162,6 +168,7 @@ impl Organization {
         website:     Option<String>,
         image:       Option<String>,
         images:      Vec<String>,
+        services:    Vec<i32>,
     ) -> i32 {
         use crate::schema::organizations::dsl::organizations;
         let _user = crate::utils::get_user(user_id).expect("E.");
@@ -185,6 +192,7 @@ impl Organization {
                 .expect("E");
 
             crate::models::File::create(self.id, 1, images);
+            crate::models::OrganizationsService::create(self.id, services);
         }
         return self.id;
     }
@@ -259,8 +267,13 @@ impl Organization {
     }
     pub fn get_services(&self) -> Vec<Service> {
         let _connection = establish_connection();
+        let services_ids = schema::organizations_services::table
+            .filter(schema::organizations_services::organization_id.eq(self.id))
+            .select(schema::organizations_services::service_id)
+            .load::<i32>(&_connection)
+            .expect("E.");
         return schema::services::table
-            .filter(schema::services::organization_id.eq(self.id))
+            .filter(schema::services::id.eq_any(services_ids))
             .load::<Service>(&_connection)
             .expect("E."); 
     }
@@ -291,9 +304,7 @@ impl Organization {
     }
     pub fn get_places(&self) -> Vec<PlaceSmall> {
         let mut places_stack: Vec<PlaceSmall> = Vec::new();
-
         let _connection = establish_connection();
-        let mut places_stack: Vec<PlaceSmall> = Vec::new();
 
         let places_vec = schema::organizations_places::table
             .filter(schema::organizations_places::organization_id.eq(self.id))
@@ -462,4 +473,48 @@ impl OrganizationsPlace {
         return 1;
     }
 
+}
+
+
+#[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
+pub struct OrganizationsService {
+    pub id:              i32,
+    pub organization_id: i32,
+    pub service_id:      i32,
+}
+
+impl OrganizationsService {
+    pub fn create (
+        object_id: i32,
+        services:  Vec<i32>,
+    ) -> i16 {
+        if services.len() > 0 {
+            let _connection = establish_connection();
+
+            diesel::delete(schema::organizations_services::table.filter(schema::organizations_services::organization_id.eq(object_id)))
+                .execute(&_connection)
+                .expect("E");
+
+            for i in services.into_iter() {
+                let new_form = NewOrganizationsService {
+                    organization_id: object_id,
+                    service_id:      i,
+                };
+                let _new = diesel::insert_into(schema::organizations_services::table)
+                    .values(&new_form)
+                    .execute(&_connection)
+                    .expect("Error.");
+            }
+
+        }
+        
+        return 1;
+    }
+}
+
+#[derive(Serialize, Deserialize, Insertable)]
+#[table_name = "organizations_services"]
+pub struct NewOrganizationsService {
+    pub organization_id: i32,
+    pub service_id:      i32,
 }

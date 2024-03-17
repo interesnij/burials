@@ -53,6 +53,8 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/edit_district/{id}/", web::get().to(edit_district_page));
     config.route("/create_city/", web::get().to(create_city_page));
     config.route("/edit_city/{id}/", web::get().to(edit_city_page));
+    config.route("/create_service/", web::get().to(create_service_page));
+    config.route("/edit_service/{id}/", web::get().to(edit_service_page));
 
     config.route("/create_country/", web::post().to(create_country));
     config.route("/edit_country/{id}/", web::post().to(edit_country));
@@ -81,6 +83,12 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/place/unpublish/", web::post().to(unpublish_place));
     config.route("/deceased/publish/", web::post().to(publish_deceased));
     config.route("/deceased/unpublish/", web::post().to(unpublish_deceased));
+    config.route("/deceased/wall/", web::post().to(wall_deceased));
+    config.route("/deceased/unwall/", web::post().to(unwall_deceased));
+
+    config.route("/create_service/", web::post().to(create_service));
+    config.route("/edit_service/{id}/", web::post().to(edit_service));
+    config.route("/delete_service/", web::post().to(delete_service));
 }
 
 
@@ -525,6 +533,63 @@ pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web:
     }
 }
 
+pub async fn create_service_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let service_list = Service::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/create_service.stpl")]
+        struct Template { 
+            request_user: User,
+            service_list: Vec<Service>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            service_list: service_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+pub async fn edit_service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        } 
+        let object = crate::utils::get_service(*_id).expect("E.");
+        let service_list = Service::get_all();
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/edit_service.stpl")]
+        struct Template { 
+            request_user: User,
+            object:       Service,
+            service_list: Vec<Service>,
+        }
+        let body = Template {
+            request_user: _request_user,
+            object:       object,
+            service_list: service_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
 
 pub async fn create_district(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let _user = get_request_user(&req).await;
@@ -592,6 +657,7 @@ pub async fn create_city(req: HttpRequest, mut payload: Multipart) -> impl Respo
     }; 
     HttpResponse::Ok()
 }
+
 pub async fn edit_city(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
@@ -898,6 +964,68 @@ pub async fn unpublish_deceased(req: HttpRequest, mut payload: Multipart) -> imp
         let _deceased = crate::utils::get_deceased(form.id).expect("E.");
         _deceased.unpublish(_request_user.id);
         
+    };
+    HttpResponse::Ok()
+}
+
+pub async fn wall_deceased(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _deceased = crate::utils::get_deceased(form.id).expect("E.");
+        _deceased.wall(_request_user.id);
+        
+    };
+    HttpResponse::Ok()
+}
+pub async fn unwall_deceased(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _deceased = crate::utils::get_deceased(form.id).expect("E.");
+        _deceased.unwall(_request_user.id);
+        
+    };
+    HttpResponse::Ok()
+}
+
+pub async fn create_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let _user = get_request_user(&req).await;
+    if _user.is_some() {
+        let _request_user = _user.unwrap();
+        let form = crate::utils::service_form(payload.borrow_mut()).await;
+        Service::create (  
+            _user.id,
+            form.title.clone(),
+            form.position,
+        );
+    }; 
+    HttpResponse::Ok()
+}
+
+pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Path<i32>) -> impl Responder {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let _service = crate::utils::get_service(*_id).expect("E."); 
+            let form = crate::utils::service_form(payload.borrow_mut()).await;
+            _service.edit (
+                _user.id,
+                form.title.clone(),
+                form.position,
+            );
+    };
+    HttpResponse::Ok()
+}
+pub async fn delete_service(req: HttpRequest, mut payload: Multipart) -> impl Responder {
+    let user_id = get_request_user(&req).await; 
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        let form = crate::utils::id_form(payload.borrow_mut()).await;
+        let _service = crate::utils::get_service(form.id).expect("E.");
+        _service.delete();
     };
     HttpResponse::Ok()
 }

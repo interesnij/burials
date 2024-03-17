@@ -11,6 +11,55 @@ function delete_item(url, id) {
     link.send(form_data);
 };
 
+on('body', 'click', '#create_service', function() {
+  let form = this.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_title").value) {
+      form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название");
+      return
+  }
+  if (!form.querySelector("#id_position").value) {
+    form.querySelector("#id_position").value = 1;
+  }
+
+  form.querySelector("#create_service").setAttribute("disabled", "true");
+  form.querySelector("#create_service").innerHTML = "Идет сохранение";
+
+  form_data = new FormData(form);
+  
+  link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'POST', "/create_service/", true );
+  link.onreadystatechange = function () {
+  if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+  }};
+  link.send(form_data);
+});
+on('body', 'click', '#edit_service', function() {
+  _this = this;
+  form = _this.parentElement.parentElement.parentElement;
+  if (!form.querySelector("#id_title").value) {
+      form.querySelector("#id_title").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите название");
+      return
+  }
+  if (!form.querySelector("#id_position").value) {
+    form.querySelector("#id_position").value = 1;
+  }
+
+  form.querySelector("#edit_service").setAttribute("disabled", "true");
+  form.querySelector("#edit_service").innerHTML = "Идет сохранение";
+
+    form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/edit_service/" + _this.getAttribute("data-pk") + "/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});
 
 on('body', 'click', '#create_country', function() {
     let form = this.parentElement.parentElement.parentElement;
