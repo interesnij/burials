@@ -351,7 +351,7 @@ impl Deceased {
                     .select(schema::deceaseds::id)
                     .load::<i32>(&_connection)
                     .expect("E.");
-                check_exists = deceaseds_ids.iter().any(|a| a==i.id);
+                check_exists = deceaseds_ids.iter().any(|a| a==&i.id);
                 default = false;
             }
 
