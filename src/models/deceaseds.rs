@@ -328,10 +328,7 @@ impl Deceased {
             }
 
 
-            if check_exists {
-                stack.push(i);
-            }
-            if default {
+            if check_exists || default {
                 stack.push(i);
             }
         }
