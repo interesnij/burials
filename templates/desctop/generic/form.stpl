@@ -53,11 +53,11 @@
 		</div> 
 		<div class="submit-col col-md-12 col-lg-2">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-4">
             		<button style="margin-top: 23px;" type="button" class="search search_deceaseds btn btn-primary">Искать</button>
 				</div>
-				<div class="col-md-6">
-					<div class="pointer show_dop_search_form">+ доп. парамерты </div>
+				<div class="col-md-8">
+					<div style="margin-top: 23px;" class="pointer show_dop_search_form">+ доп. парамерты </div>
 				</div>
 			</div>
         </div>
