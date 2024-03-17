@@ -111,7 +111,7 @@ impl Deceased {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
-            let types = match _user.types {
+            let types = match self.types {
                 1 => 11,
                 2 => 12,
                 3 => 13,
@@ -127,7 +127,7 @@ impl Deceased {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
-            let types = match _user.types {
+            let types = match self.types {
                 11 => 1,
                 12 => 2,
                 13 => 3,
@@ -189,7 +189,7 @@ impl Deceased {
 
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
-        let types: i16;
+        let types: i32;
         if _user.perm > 9 {
             types = 2;
         } else {

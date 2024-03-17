@@ -198,7 +198,7 @@ impl Place {
 
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
-        let types: i16;
+        let types: i32;
         if _user.perm > 9 {
             types = 2;
         } else {
