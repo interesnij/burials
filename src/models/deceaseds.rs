@@ -296,14 +296,17 @@ impl Deceased {
             .expect("E.");
     }
     pub fn main_search ( 
-        first_name:  Option<String>,
-        middle_name: Option<String>,
-        last_name:   String,
-        birth_date:  Option<chrono::NaiveDate>,
-        death_date:  Option<chrono::NaiveDate>,
-        location:    Option<String>,
-        //limit:       i64,
-        //offset:      i64,
+        first_name:       Option<String>,
+        middle_name:      Option<String>,
+        last_name:        String,
+        birth_date:       Option<chrono::NaiveDate>,
+        death_date:       Option<chrono::NaiveDate>,
+        location:         Option<String>,
+        deceadeds_id:     Option<i32>,
+        is_veteran:       Option<bool>,
+        is_famous:        Option<bool>,
+        with_photo:       Option<bool>,
+        with_coordinates: Option<bool>,
     ) -> Vec<Deceased> { 
         use crate::schema::deceaseds::dsl::deceaseds;
 
@@ -324,6 +327,31 @@ impl Deceased {
             if middle_name.is_some() && i.middle_name.is_some() {
                 let i_middle_name = i.middle_name.as_deref().unwrap();
                 check_exists = i_middle_name.contains(middle_name.as_deref().unwrap());
+                default = false;
+            }
+            if birth_date.is_some() {
+                check_exists = i.birth_date == birth_date.unwrap();
+                default = false;
+            }
+            if death_date.is_some() {
+                check_exists = i.death_date == death_date.unwrap();
+                default = false;
+            }
+            if with_photo.is_some() {
+                check_exists == i.image.is_some();
+                default = false;
+            }
+
+            if location.is_some() {
+                let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
+                let places_ids = crate::models::Place::search_ids(&loc);
+                let deceaseds_ids = deceaseds
+                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
+                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
+                    .select(schema::deceaseds::id)
+                    .load::<i32>(&_connection)
+                    .expect("E.");
+                check_exists = deceaseds_ids.iter().any(|i| i==i.id);
                 default = false;
             }
 

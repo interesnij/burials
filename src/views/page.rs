@@ -153,12 +153,17 @@ pub async fn not_found(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Resu
 
 #[derive(Deserialize)]
 pub struct SeacrhData {
-    pub first_name:  Option<String>,
-    pub middle_name: Option<String>,
-    pub last_name:   Option<String>,
-    pub birth_date:  Option<chrono::NaiveDate>,
-    pub death_date:  Option<chrono::NaiveDate>,
-    pub location:    Option<String>,
+    pub first_name:      Option<String>,
+    pub middle_name:      Option<String>,
+    pub last_name:        Option<String>,
+    pub birth_date:       Option<chrono::NaiveDate>,
+    pub death_date:       Option<chrono::NaiveDate>,
+    pub location:         Option<String>,
+    pub deceadeds_id:     Option<i32>,
+    pub is_veteran:       Option<bool>,
+    pub is_famous:        Option<bool>,
+    pub with_photo:       Option<bool>,
+    pub with_coordinates: Option<bool>,
 }  
 pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
@@ -176,6 +181,11 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             params.birth_date.clone(),
             params.death_date.clone(),
             params.location.clone(),
+            params.deceadeds_id,
+            params.is_veteran,
+            params.is_famous,
+            params.with_photo,
+            params.with_coordinates,
         );
         if user_id.is_some() {
             let _request_user = user_id.unwrap();
