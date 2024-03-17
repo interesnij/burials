@@ -13,9 +13,7 @@
     </a>
   <% } %>
   </span>
-  <p>
-    <%= description %>
-  <p>
+
   <div class="card rounded-0 border-0 mb-3">
     <img style="width: 100%;" src="<%= file.src %>" alt="image">
   </div>

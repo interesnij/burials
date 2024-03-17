@@ -404,7 +404,7 @@ pub async fn delete_deceased(req: HttpRequest, mut payload: Multipart) -> impl R
         let form = crate::utils::id_form(payload.borrow_mut()).await;
         let _deceased = crate::utils::get_deceased(form.id).expect("E.");
         if _request_user.id == _deceased.user_id || _request_user.is_admin() {
-            _deceased.delete();
+            _deceased.delete(_request_user.id);
         }
     };
     HttpResponse::Ok()

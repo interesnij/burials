@@ -92,8 +92,6 @@ impl Service {
 
         let _connection = establish_connection();
         return services
-            .filter(schema::services::organization_id.eq(organization_id))
-            .order(schema::services::price.asc())
             .limit(limit)
             .offset(offset)
             .load::<Service>(&_connection)
@@ -109,10 +107,7 @@ impl Service {
 
         let _connection = establish_connection();
         return services
-            .filter(schema::services::organization_id.eq(organization_id))
             .filter(schema::services::title.ilike(&q))
-            .filter(schema::services::description.ilike(&q))
-            .order(schema::services::price.asc())
             .limit(limit) 
             .offset(offset)
             .load::<Service>(&_connection)
@@ -123,7 +118,6 @@ impl Service {
 
         let _connection = establish_connection();
         return services
-            .filter(schema::services::organization_id.eq(organization_id))
             .select(schema::services::id)
             .load::<i32>(&_connection)
             .expect("E.")
