@@ -255,15 +255,14 @@ pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
     #[derive(TemplateOnce)]
     #[template(path = "desctop/load/image.stpl")]
     struct Template {
-        file:        crate::models::File,
-        description: String,
-        prev:        Option<crate::models::File>,
-        next:        Option<crate::models::File>,
+        file: crate::models::File,
+        prev: Option<crate::models::File>,
+        next: Option<crate::models::File>,
     }
     let body = Template {
-        file:        _file,
-        prev:        _prev,
-        next:        _next,
+        file: _file,
+        prev: _prev,
+        next: _next,
     }
     .render_once()
     .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

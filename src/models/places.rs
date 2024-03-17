@@ -40,12 +40,12 @@ pub struct Place {
     pub phone:       Option<String>,
     pub lat:         f64,
     pub lon:         f64,
-    pub types:       i16,
+    pub types:       i32,
 }
 
 // Структура для создания новой записи Place
 #[derive(Serialize, Deserialize, Insertable)]
-#[table_name = "places"]
+#[table_name = "places"] 
 pub struct NewPlace {
     pub user_id:     i32,
     pub city_id:     Option<i32>,
@@ -62,7 +62,7 @@ pub struct NewPlace {
     pub phone:       Option<String>,
     pub lat:         f64,
     pub lon:         f64,
-    pub types:       i16,
+    pub types:       i32,
 }
 
 impl Place {
