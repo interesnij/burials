@@ -2,13 +2,13 @@
 	<div class="row">
 		<div class="col-md-12 col-lg-4">
 			<div class="form-group">
-                <label for="id_last_name" class="">Искомая фамилия</label>
+                <label for="id_last_name" class="">Искомая фамилия <span class="text-red-600">*</span></label>
                 <input name="last_name" id="id_last_name" type="text" class="form-control">
             </div>
 		</div>
 		<div class="col-md-12 col-lg-4">
 			<div class="form-group">
-                <label for="id_first_name" class="">Искомое имя <span class="text-red-600">*</span></label>
+                <label for="id_first_name" class="">Искомое имя</label>
                 <input name="first_name" id="id_first_name" type="text" class="form-control">
             </div>
 		</div>
