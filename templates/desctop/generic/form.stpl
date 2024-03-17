@@ -8,7 +8,7 @@
 		</div>
 		<div class="col-md-12 col-lg-4">
 			<div class="form-group">
-                <label for="id_first_name" class="">Искомое имя</label>
+                <label for="id_first_name" class="">Искомое имя <span class="text-red-600">*</span></label>
                 <input name="first_name" id="id_first_name" type="text" class="form-control">
             </div>
 		</div>
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="col-sm-12">
-					<div class="small mb-3">Оставьте эти поля пустыми, если даты неизвестны</div>
+					<div class="small mb-3"></div>
 				</div>
 			</div>
 		</div>
@@ -48,7 +48,6 @@
 				<div class="blur flex-no-wrap flex-grow-1 input-group">
 					<input id="id_location" class="form-control" name="location" type="text">
 				</div> 
-                <small>Впишите название района/области</small>
 			</div> 
 		</div>
 		<div class="submit-col col-md-12 col-lg-2"> 
