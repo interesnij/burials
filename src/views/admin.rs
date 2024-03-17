@@ -997,7 +997,7 @@ pub async fn create_service(req: HttpRequest, mut payload: Multipart) -> impl Re
         let _request_user = _user.unwrap();
         let form = crate::utils::service_form(payload.borrow_mut()).await;
         Service::create (  
-            _user.id,
+            _request_user.id,
             form.title.clone(),
             form.position,
         );
@@ -1012,7 +1012,7 @@ pub async fn edit_service(req: HttpRequest, mut payload: Multipart, _id: web::Pa
         let _service = crate::utils::get_service(*_id).expect("E."); 
             let form = crate::utils::service_form(payload.borrow_mut()).await;
             _service.edit (
-                _user.id,
+                _request_user.id,
                 form.title.clone(),
                 form.position,
             );

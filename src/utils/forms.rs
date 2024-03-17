@@ -436,7 +436,7 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ServiceForms {
     pub title:    String,
-    pub position: i32,
+    pub position: i16,
 }
 // форма для элементов 
 pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
