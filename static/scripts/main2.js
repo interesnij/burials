@@ -174,6 +174,7 @@ on('body', 'click', '#logg', function() {
     _this = this;
     form = _this.parentElement.parentElement.parentElement.parentElement;
     response = form.parentElement.querySelector(".api_response");
+    console.log(form.querySelector("#id_username"));
     if (!form.querySelector("#id_username").value){
       form.querySelector("#id_username").style.border = "1px #FF0000 solid";
       toast_error("Логин - обязательное поле!");
