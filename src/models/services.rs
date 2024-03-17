@@ -57,10 +57,12 @@ impl Service {
         title:    String,
         position: i16,
     ) -> i16 { 
+
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm < 10 {
             return 0;
         }
+        let _connection = establish_connection();  
 
         diesel::update(self)
             .set((
@@ -77,7 +79,7 @@ impl Service {
             return 0;
         }
         let _connection = establish_connection();            
-        diesel::delete(services.filter(schema::services::id.eq(self.id)))
+        diesel::delete(schema::services::table.filter(schema::services::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");
         return 1;
