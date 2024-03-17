@@ -17,7 +17,7 @@
                                     type="text" 
                                     class="form-input mt-3" 
                                     placeholder="Выберите логин">
-                                </div>
+                                </div> 
                                 <div class="mb-4">
                                     <label class="font-semibold" for="id_first_name">Ваше имя:</label>
                                     <input 
