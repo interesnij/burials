@@ -36,11 +36,11 @@ pub struct Organization {
     pub website:     Option<String>,
     pub image:       Option<String>,
     pub user_id:     i32,
-    pub types:       i16,
+    pub types:       i32,
 }
 
 // Структура для создания новой организации
-#[derive(Serialize, Deserialize, Insertable)]
+#[derive(Serialize, Deserialize, Insertable)] 
 #[table_name = "organizations"]
 pub struct NewOrganization {
     pub name:        String,
@@ -51,7 +51,7 @@ pub struct NewOrganization {
     pub website:     Option<String>,
     pub image:       Option<String>,
     pub user_id:     i32,
-    pub types:       i16,
+    pub types:       i32,
 }
 
 pub struct PlaceSmall {

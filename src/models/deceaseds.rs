@@ -44,13 +44,13 @@ pub struct Deceased {
     pub memory_words: Option<String>,
     pub lat:          f64,
     pub lon:          f64,
-    pub types:        i16,
+    pub types:        i32,
 
 }
 
 // Структура для создания новых записей об усопших
 #[derive(Deserialize, Insertable)]
-#[table_name="deceaseds"]
+#[table_name="deceaseds"] 
 pub struct NewDeceased {
     pub user_id:      i32,
     pub place_id:     i32,
@@ -63,7 +63,7 @@ pub struct NewDeceased {
     pub memory_words: Option<String>,
     pub lat:          f64,
     pub lon:          f64,
-    pub types:        i16,
+    pub types:        i32,
 }
 
 impl Deceased {
