@@ -170,11 +170,11 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
-            params.first_name.as_deref().unwrap().to_string(),
+            params.first_name.clone(),
             params.middle_name.clone(),
             params.last_name.as_deref().unwrap().to_string(),
-            params.birth_date.clone()
-            params.death_date.clone()
+            params.birth_date.clone(),
+            params.death_date.clone(),
             params.location.clone(),
         );
         if user_id.is_some() {

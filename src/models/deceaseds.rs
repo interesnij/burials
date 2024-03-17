@@ -354,7 +354,6 @@ impl Deceased {
                 return deceaseds
                     .filter(schema::deceaseds::place_id.eq_any(places_ids))
                     .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::first_name.ilike("%".to_owned() + &first_name + "%"))
                     .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
                     .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                     .load::<Deceased>(&_connection)
