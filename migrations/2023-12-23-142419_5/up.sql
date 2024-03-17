@@ -1,4 +1,0 @@
--- Your SQL goes here
-
-ALTER TABLE deceaseds ADD COLUMN types
-SMALLINT NOT NULL DEFAULT 2;
