@@ -289,7 +289,7 @@ on('body', 'click', '.search_organizations', function() {
     return 
   }
 
-  url = "/org_search?name=" + form.querySelector("#id_last_name").value;
+  url = "/org_search?name=" + form.querySelector("#id_name").value;
   if (form.getAttribute("service-pk")) {
     url += "&service=" + form.getAttribute("service-pk")
   };
