@@ -107,7 +107,7 @@ impl Organization {
                         let pl_loc = pl.get_loc();
                         println!("loc {:?}", loc);
                         println!("pl_loc {:?}", pl_loc);
-                        println!("contains {:?}", pl_loc.icontains(loc));
+                        println!("contains {:?}", pl_loc.contains(loc));
                         check_exists == pl_loc.contains(loc);
                     }  
                 }
