@@ -267,7 +267,7 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
             first_name:  form.first_name.clone(),
             last_name:   form.last_name.clone(),
             phone:       form.phone.clone(),
-            email:       User::next_count(),
+            email:       form.email.clone(),
             password:    _password.clone(),
             description: None,
             image:       None,

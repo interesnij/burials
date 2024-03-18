@@ -82,7 +82,7 @@ pub async fn edit_profile(req: HttpRequest, mut payload: Multipart) -> impl Resp
             form.first_name.clone(),
             form.last_name.clone(),
             form.phone.clone(),
-            form.email.clone(),
+            form.email.clone(), 
             form.image.clone(),
         );
     };
