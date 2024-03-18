@@ -338,7 +338,7 @@ impl Deceased {
 
         let _connection = establish_connection();
         let mut stack = Vec::new();
-        let list: Deceased;
+        let list: Vec<Deceased>;
         if types == "wall".to_string() {
             list = deceaseds
                 .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
