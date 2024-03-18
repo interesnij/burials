@@ -245,7 +245,7 @@ on('body', 'click', '.search_deceaseds', function() {
     url += "&death_date=" + form.querySelector("#id_death_date").value
   };
   if (form.querySelector("#id_location") && form.querySelector("#id_location").value) {
-    url += "&location=" + form.querySelector("#id_location").value
+    url += "&location=" + form.querySelector("#id_location").value.stripe()
   }; 
   if (form.querySelector("#deceadeds_id") && form.querySelector("#deceadeds_id").value) {
     url += "&deceadeds_id=" + form.querySelector("#deceadeds_id").value
@@ -294,7 +294,7 @@ on('body', 'click', '.search_organizations', function() {
     url += "&service=" + form.getAttribute("service-pk")
   };
   if (form.querySelector("#id_location") && form.querySelector("#id_location").value) {
-    url += "&location=" + form.querySelector("#id_location").value
+    url += "&location=" + form.querySelector("#id_location").value.stripe()
   }; 
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
