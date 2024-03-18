@@ -46,7 +46,7 @@ impl User {
         let _connection = establish_connection();
         diesel::update(self)
             .set((
-                schema::users::username.eq(first_name),
+                schema::users::username.eq(username),
                 schema::users::first_name.eq(first_name),
                 schema::users::last_name.eq(last_name),
                 schema::users::phone.eq(phone),
