@@ -294,7 +294,7 @@ on('body', 'click', '.search_organizations', function() {
     url += "&service=" + form.getAttribute("service-pk")
   };
   if (form.querySelector("#id_location") && form.querySelector("#id_location").value) {
-    url += "&location=" + form.querySelector("#id_location").value.stripe()
+    url += "&location=" + form.querySelector("#id_location").value.split(" ", "")
   }; 
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
