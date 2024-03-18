@@ -276,6 +276,40 @@ on('body', 'click', '.search_deceaseds', function() {
 });
 
 
+on('body', 'click', '.search_organizations', function() {
+  form = this.parentElement.parentElement.parentElement.parentElement;
+
+  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+ 
+  block = form.nextElementSibling;
+  block.innerHTML = "";
+  if (!form.querySelector("#id_name").value) {
+    toast_info("Название фирмы - обязательное поле");
+    form.querySelector("#id_name").style.border = "1px #FF0000 solid";
+    return 
+  }
+
+  url = "/org_search?name=" + form.querySelector("#id_last_name").value;
+  if (form.getAttribute("service-pk")) {
+    url += "&service=" + form.getAttribute("service-pk")
+  };
+  if (form.querySelector("#id_location") && form.querySelector("#id_location").value) {
+    url += "&location=" + form.querySelector("#id_location").value
+  }; 
+
+  var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+  link.open( 'GET', url, true );
+  link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  link.onreadystatechange = function () {
+    if ( this.readyState == 4 && this.status == 200 ) {
+        console.log("success!");
+        block.innerHTML = link.responseText;
+    } else { console.log("status", this.status);  };
+  };
+  link.send( null );
+});
+
+
 on('body', 'change', '.load_region_items', function() {
   var val = this.value; 
   block = this.parentElement.nextElementSibling;
