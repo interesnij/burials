@@ -25,7 +25,7 @@ pub struct User {
     pub id:          i32,
     pub username:    String,
     pub first_name:  String,
-    pub last_name:   String,
+    pub last_name:   String, 
     pub phone:       String,
     pub email:       String,
     pub password:    String,
@@ -34,6 +34,35 @@ pub struct User {
     pub perm:        i16,
 }
 impl User {
+    pub fn edit (   
+        &self,
+        username:   String,
+        first_name: String,
+        last_name:  String,
+        phone:      String,
+        email:      String,
+        image:      Option<String>,
+    ) -> i16 {
+        let _connection = establish_connection();
+        diesel::update(self)
+            .set((
+                schema::users::username.eq(first_name),
+                schema::users::first_name.eq(first_name),
+                schema::users::last_name.eq(last_name),
+                schema::users::phone.eq(phone),
+                schema::users::email.eq(email),
+            ))
+            .execute(&_connection)
+            .expect("Error.");
+        
+        if image.is_some() {
+            diesel::update(self)
+                .set(schema::users::image.eq(image))
+                .execute(&_connection)
+                .expect("Error.");
+        }
+        return 1;
+    }
     pub fn get_suggested_stat(&self) -> (usize, usize, usize) {
         if self.is_admin() {
             let _connection = establish_connection();

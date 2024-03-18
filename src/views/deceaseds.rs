@@ -44,6 +44,8 @@ pub fn deceased_routes(config: &mut web::ServiceConfig) {
     config.route("/create_deceased/", web::post().to(create_deceased));
     config.route("/edit_deceased/{id}/", web::post().to(edit_deceased));
     config.route("/delete_deceased/", web::post().to(delete_deceased));
+
+    config.route("/wall/", web::get().to(wall_page));
 }
 
 
@@ -408,4 +410,108 @@ pub async fn delete_deceased(req: HttpRequest, mut payload: Multipart) -> impl R
         }
     };
     HttpResponse::Ok()
+}
+
+
+pub async fn wall_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+
+    let user_id = get_request_user(&req).await;
+    let page = crate::utils::get_page(&req);
+    let count = Deceased::wall_count(); 
+
+    let mut next_page_number = 0;
+    let have_next: i32;
+    let object_list: Vec<Deceased>;
+
+    if page > 1 {
+        let step = (page - 1) * 20;
+        have_next = page * 20 + 1;
+        object_list = Deceased::wall_list(20, step.into());
+    }
+    else {
+        have_next = 20 + 1;
+        object_list = Deceased::wall_list(20, 0);
+    }
+    if count > (have_next as usize) {
+        next_page_number = page + 1;
+    }
+
+    if user_id.is_some() { 
+        let _request_user = user_id.unwrap();
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/deceased/wall.stpl")]
+            struct Template {
+                request_user:     User,
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
+            }
+            let body = Template {
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/deceased/wall.stpl")]
+            struct Template {
+                request_user:     User,
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
+            }
+            let body = Template {
+                request_user:     _request_user,
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/deceased/anon_wall.stpl")]
+            struct Template {
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
+            }
+            let body = Template {
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/deceased/anon_wall.stpl")]
+            struct Template {
+                object_list:      Vec<Deceased>,
+                next_page_number: i32,
+                is_ajax:          i32,
+            }
+            let body = Template {
+                object_list:      object_list,
+                next_page_number: next_page_number,
+                is_ajax:          is_ajax,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
 }

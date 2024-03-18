@@ -137,6 +137,12 @@
             <p> <%= i + 1 %>) <%= obj.first_name %> <%= obj.last_name %>
                 | <a class="ajax" href="/edit_deceased/<%= obj.id %>/">Изменить</a>
                 | <a class="pointer remove_deceased" data-pk="<%= obj.id %>">Удалить</a>
+				| 
+				<% if obj.types == 3 { %>
+					<a class="pointer toggle_wall <% if obj.types == 3 { %>wall<% } %>" data-pk="<%= obj.id %>">Убрать со стены</a>
+				<% } else { %>  
+					<a class="pointer toggle_wall <% if obj.types == 3 { %>wall<% } %>" data-pk="<%= obj.id %>">На стену памяти</a>
+				<% } %>
             </p>
             <% } %>
     </div>

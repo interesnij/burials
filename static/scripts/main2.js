@@ -700,3 +700,53 @@ on('body', 'click', '.remove_file', function() {
   delete_item("/delete_file/", this.getAttribute("data-pk"));
   this.parentElement.remove();
 }); 
+
+
+on('body', 'click', '#edit_profile', function() {
+  _this = this;
+  form = _this.parentElement.parentElement.parentElement;
+  form.querySelector("#id_username").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_first_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_phone").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_email").style.setProperty('border', 'inherit', 'important');
+
+  if (!form.querySelector("#id_username").value) {
+      form.querySelector("#id_username").style.setProperty('border', '1px #FF0000 solid', 'important');
+      toast_error("Укажите логин");
+      return
+  }
+  else if (!form.querySelector("#id_first_name").value) {
+    form.querySelector("#id_first_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите имя усопшего");
+    return
+  }
+  else if (!form.querySelector("#id_last_name").value) {
+    form.querySelector("#id_last_name").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите фамилию усопшего");
+    return
+  }
+  else if (!form.querySelector("#id_phone").value) {
+    form.querySelector("#id_phone").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите телефон");
+    return
+  }
+  else if (!form.querySelector("#id_email").value) {
+    form.querySelector("#id_email").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите почту");
+    return
+  }
+  
+  form.querySelector("#edit_profile").setAttribute("disabled", "true");
+  form.querySelector("#edit_profile").innerHTML = "Идет сохранение";
+
+  form_data = new FormData(form);
+  
+    link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
+    link.open( 'POST', "/edit_profile/", true );
+    link.onreadystatechange = function () {
+    if ( link.readyState == 4 && link.status == 200 ) {
+      location.reload()
+    }};
+    link.send(form_data);
+});

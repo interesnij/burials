@@ -10,7 +10,7 @@
                             <div class="ms-3 flex-1">
                                 <a><%= i.username %></a>
                                 
-                                <p class="small"> 
+                                <p class="small">  
                                     <% if i.is_admin() { %>
                                         <a class="pointer toggle_admin <% if i.is_admin() { %>admin<% } %>" data-pk="<%= i.id %>">
                                             Убрать из админов

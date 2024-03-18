@@ -838,3 +838,71 @@ pub async fn loc_form(payload: &mut Multipart) -> LocForms {
     }
     form
 }
+
+
+#[derive(Deserialize, Serialize, Debug)]
+pub struct UserForms {
+    pub username:   String,
+    pub first_name: String,
+    pub last_name:  String,
+    pub phone:      String,
+    pub email:      String,
+    pub image:      Option<String>,
+}
+// форма для элементов 
+pub async fn user_form(payload: &mut Multipart) -> UserForms {
+    let mut form: UserForms = UserForms {
+        username:   "".to_string(),
+        first_name: "".to_string(),
+        last_name:  "".to_string(),
+        phone:      "".to_string(),
+        email:      "".to_string(),
+        image:      None,
+    }; 
+
+    while let Some(item) = payload.next().await {
+        let mut field: Field = item.expect("split_payload err");
+        let name = field.name();
+        let string_list = ["username", "first_name", "last_name", "phone", "email"];
+
+        if string_list.contains(&name) {
+            let mut _content = "".to_string();
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    if field.name() == "first_name" {
+                        form.first_name = data_string;
+                    } else if field.name() == "last_name" {
+                        form.last_name = data_string;
+                    } else if field.name() == "username" {
+                        form.username = data_string;
+                    } else if field.name() == "phone" {
+                        form.phone = data_string;
+                    } else if field.name() == "email" {
+                        form.email = data_string;
+                    }
+                }
+            }
+        }
+        else if name == "image" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string());
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                }
+                form.image = Some(file.path.clone().replace("./","/"));
+            }
+        }
+    }
+    form
+}

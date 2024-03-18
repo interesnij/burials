@@ -453,6 +453,19 @@ on('body', 'click', '.toggle_admin', function() {
   }
   console.log("click");
 });
+on('body', 'click', '.toggle_wall', function() {
+  _this = this;
+  if (_this.classList.contains("wall")) {
+    delete_item("/deceased/unwall/", _this.getAttribute("data-pk"));
+    _this.classList.remove("wall");
+    _this.innerHTML = "На стену памяти";
+  }else {
+    delete_item("/deceased/wall/", _this.getAttribute("data-pk"));
+    _this.classList.add("wall");
+    _this.innerHTML = "Убрать со стены";
+  }
+  console.log("click");
+});
 
 
 on('body', 'click', '.publish_deceased', function() {

@@ -295,6 +295,30 @@ impl Deceased {
             .load::<Deceased>(&_connection)
             .expect("E.");
     }
+    pub fn wall_list (
+        limit:  i64,
+        offset: i64,
+    ) -> Vec<Deceased> {
+        use crate::schema::deceaseds::dsl::deceaseds;
+
+        let _connection = establish_connection();
+        return deceaseds
+            .filter(schema::deceaseds::types.eq(3))
+            .limit(limit)
+            .offset(offset)
+            .load::<Deceased>(&_connection)
+            .expect("E.");
+    }
+    pub fn wall_count() -> usize {
+        use crate::schema::deceaseds::dsl::deceaseds;
+
+        let _connection = establish_connection();
+        return deceaseds
+            .filter(schema::deceaseds::types.eq(3))
+            .select(schema::deceaseds::id)
+            .load::<i32>(&_connection)
+            .expect("E.");
+    }
     pub fn main_search ( 
         first_name:       Option<String>,
         middle_name:      Option<String>,
