@@ -317,7 +317,8 @@ impl Deceased {
             .filter(schema::deceaseds::types.eq(3))
             .select(schema::deceaseds::id)
             .load::<i32>(&_connection)
-            .expect("E.");
+            .expect("E.")
+            .len();
     }
     pub fn main_search ( 
         first_name:       Option<String>,
