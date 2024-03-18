@@ -53,6 +53,8 @@ pub fn organization_routes(config: &mut web::ServiceConfig) {
     config.route("/create_loc/{id}/", web::post().to(create_loc));
     config.route("/edit_loc/{id}/", web::post().to(edit_loc));
     config.route("/delete_loc/", web::post().to(delete_loc));
+
+    config.route("/services/{id}/", web::get().to(service_page));
 }
 
 
@@ -722,4 +724,81 @@ pub async fn delete_loc(req: HttpRequest, mut payload: Multipart) -> impl Respon
         _loc.delete(_request_user.id);
     } 
     HttpResponse::Ok()
+}
+
+
+pub async fn service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let _service = crate::utils::get_service(*_id).expect("E.");
+    let organizations_list = _service.get_organizations();
+    let user_id = get_request_user(&req).await;
+    if user_id.is_some() {
+        let _request_user = user_id.unwrap();
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/services/service.stpl")]
+            struct Template {
+                request_user:       User,
+                service:            Organization,
+                organizations_list: Vec<Organization>,
+            }
+            let body = Template {
+                request_user:       _request_user,
+                service:            _service,
+                organizations_list: organizations_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/services/service.stpl")]
+            struct Template {
+                request_user:       User,
+                service:            Organization,
+                organizations_list: Vec<Organization>,
+            }
+            let body = Template {
+                request_user:       _request_user,
+                service:            _service,
+                organizations_list: organizations_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        if is_desctop {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/services/anon_service.stpl")]
+            struct Template {
+                service:            Organization,
+                organizations_list: Vec<Organization>,
+            }
+            let body = Template {
+                service:            _service,
+                organizations_list: organizations_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/services/anon_service.stpl")]
+            struct Template {
+                service:            Organization,
+                organizations_list: Vec<Organization>,
+            }
+            let body = Template {
+                service:            _service,
+                organizations_list: organizations_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
 }

@@ -21,8 +21,7 @@
 							<input 
 								id="id_description" 
 								name="description" 
-								type="text" 
-								value="1" 
+								type="text"
 								class="form-input mt-3"
 								<% if object.description.is_some() { %>
 									value="<%= object.description.as_deref().unwrap() %>"

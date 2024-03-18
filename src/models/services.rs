@@ -35,6 +35,18 @@ pub struct NewService {
 }
 
 impl Service {
+    pub fn get_organizations(&self) -> Vec<Organization> {
+        let _connection = establish_connection();
+        let organizations_ids = schema::organizations_services::table
+            .filter(schema::organizations_services::service_id.eq(self.id))
+            .select(schema::organizations_services::organization_id)
+            .load::<i32>(&_connection)
+            .expect("E.");
+        return schema::organizations::table
+            .filter(schema::organizations::id.eq_any(organizations_ids))
+            .load::<Organization>(&_connection)
+            .expect("E."); 
+    }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
             return self.image.as_deref().unwrap().to_string();
