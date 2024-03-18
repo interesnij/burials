@@ -27,14 +27,16 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="<%= i.get_image() %>" class="h-11 w-11 shadow" alt="img">
-                        </div>
+                            <img src="<%= i.get_image() %>" class="image_fit_200 shadow" alt="img">
+                        </div> 
                         <div class="col-md-8">
                             <div class="ms-3 flex-1">
-                                <a href="/deceased/<%= i.id %>/" class="">
-                                    <%= i.last_name %> <%= i.first_name %>
-                                </a>
-                                <p class="small">
+                                <h6>
+                                    <a href="/deceased/<%= i.id %>/" style="text-decoration: underline;">
+                                        <%= i.last_name %> <%= i.first_name %>
+                                    </a>
+                                </h6>
+                                <p>
                                     <%= i.birth_date.format("%d-%m-%Y").to_string() %>  <%= i.death_date.format("%d-%m-%Y").to_string() %>
                                 </p>
                             </div>
