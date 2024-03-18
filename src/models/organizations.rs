@@ -65,7 +65,7 @@ pub struct PlaceSmall {
 impl Organization {
     pub fn main_search (
         service_id: Option<i32>,
-        name:       Option<String>,
+        name:       String,
         location:   Option<String>,
     ) -> Vec<Organization> { 
         use crate::schema::organizations::dsl::organizations;
@@ -75,9 +75,9 @@ impl Organization {
         let list: Vec<Organization>;
         if service_id.is_some() {
             let org_ids = schema::organizations_services::table
-                .filter(schema::organizations_services::service_id.eq(service_id))
+                .filter(schema::organizations_services::service_id.eq(service_id.unwrap()))
                 .select(schema::organizations_services::organization_id)
-                .load::<i32>(&_connection)
+                .load::<i32>(&_connection) 
                 .expect("E.");
             list = organizations
                 .filter(schema::organizations::id.eq_any(org_ids))
