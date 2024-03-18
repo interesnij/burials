@@ -60,11 +60,11 @@
                                     <li class="flex mt-2 items-center font-medium" style="border: 1px dashed #ccc">
                                         <%= i.address %>
                                         <% if admin { %> 
-                                        <p class="small">
-                                            <a style="text-decoration: underline" href="/edit_loc/<%= i.id %>/">Изменить</a>
-                                            <a style="text-decoration: underline" class="delete_loc pointer" data-pk="<%= i.id %>">Удалить</a>
-                                        <p>
-                                <% } %> 
+                                            <p class="small">
+                                                <a style="text-decoration: underline" href="/edit_loc/<%= i.id %>/">Изменить</a>
+                                                <a style="text-decoration: underline" class="delete_loc pointer" data-pk="<%= i.id %>">Удалить</a>
+                                            <p>
+                                        <% } %> 
                                     </li>
                                 <% } %>
                             </ul>

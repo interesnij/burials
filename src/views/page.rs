@@ -28,8 +28,9 @@ use crate::utils::{
 
 pub fn page_routes(config: &mut web::ServiceConfig) {
     config.route("/", web::get().to(index_page));
-    config.route("/main_search", web::get().to(main_search));
+    config.route("/main_search", web::get().to(main_search_page));
     config.route("/image/{id}/", web::get().to(image_page));
+    config.route("/org_search", web::get().to(org_search_page));
 }
 
 pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
@@ -180,7 +181,7 @@ pub struct SeacrhData {
     pub with_photo:       Option<bool>,
     pub with_coordinates: Option<bool>,
 }  
-pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+pub async fn main_search_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
         let params = params_some.unwrap();
@@ -239,6 +240,61 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     }
 }
 
+#[derive(Deserialize)]
+pub struct OrgSeacrhData {
+    pub service:  Option<i32>,
+    pub name:     Option<String>,
+    pub location: Option<String>,
+}  
+pub async fn org_search_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let params_some = web::Query::<OrgSeacrhData>::from_query(&req.query_string());
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.name.is_none() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no firm name"));
+        }
+
+        let user_id = get_request_user(&req).await;
+        let object_list = Organization::main_search (
+            params.service,
+            params.name.as_deref().unwrap().to_string(),
+            params.location.clone(),
+        );
+        if user_id.is_some() {
+            let _request_user = user_id.unwrap();
+
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/organization/search.stpl")]
+            struct Template {
+                request_user: User,
+                object_list:  Vec<Organization>,
+            }
+            let body = Template {
+                request_user: _request_user,
+                object_list:  object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+        else {
+            #[derive(TemplateOnce)]
+            #[template(path = "desctop/organization/anon_search.stpl")]
+            struct Template {
+                object_list: Vec<Organization>,
+            }
+            let body = Template {
+                object_list: object_list,
+            }
+            .render_once()
+            .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+            Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+        }
+    }
+    else {
+        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no params"));
+    }
+}
 
 pub async fn image_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let _file = crate::utils::get_file(*_id).expect("E.");

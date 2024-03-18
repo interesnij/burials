@@ -395,81 +395,11 @@ impl Deceased {
                 default = false;
             }
 
-
             if check_exists || default {
                 stack.push(i);
             }
         }
         return stack;
-
-        if location.is_some() {
-            let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
-            let places_ids = crate::models::Place::search_ids(&loc);
-            if birth_date.is_some() && death_date.is_some() {
-                return deceaseds
-                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            } 
-            else if birth_date.is_some() && death_date.is_none() {
-                return deceaseds
-                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            }
-            else if death_date.is_some() && birth_date.is_none() {
-                return deceaseds
-                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            }
-        }
-        
-            if birth_date.is_some() && death_date.is_some() {
-                return deceaseds
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            }
-            else if birth_date.is_some() && death_date.is_none() {
-                return deceaseds
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            }
-            else if death_date.is_some() && birth_date.is_none() {
-                return deceaseds
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            }
-            else {
-                return deceaseds
-                    .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .load::<Deceased>(&_connection)
-                    .expect("E.");
-            }
-        
-        //println!("empty");
-        return Vec::new();
     }
 
     pub fn get_all() -> Vec<Deceased> {

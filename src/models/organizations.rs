@@ -63,6 +63,57 @@ pub struct PlaceSmall {
 
 // Реализация методов для структуры Organization
 impl Organization {
+    pub fn main_search (
+        service_id: Option<i32>
+        name:       Option<String>,
+        location:   Option<String>,
+    ) -> Vec<Organization> { 
+        use crate::schema::organizations::dsl::organizations;
+
+        let _connection = establish_connection();
+        let mut stack = Vec::new();
+        let list: Vec<Organization>;
+        if service_id.is_some() {
+            let org_ids = schema::organizations_services::table
+                .filter(schema::organizations_services::service_id.eq(service_id))
+                .select(schema::organizations_services::organization_id)
+                .load::<i32>(&_connection)
+                .expect("E.");
+            list = organizations
+                .filter(schema::organizations::id.eq_any(org_ids))
+                .filter(schema::organizations::name.ilike("%".to_owned() + &name + "%"))
+                .load::<Organization>(&_connection)
+                .expect("E.");
+        }
+        else {
+            list = organizations
+                .filter(schema::organizations::name.ilike("%".to_owned() + &name + "%"))
+                .load::<Organization>(&_connection)
+                .expect("E.");
+        }
+
+        for i in list.into_iter() {
+            let mut check_exists = false;
+            let mut default = true;
+
+            if location.is_some() {
+                let loc = location.as_deref().unwrap(); 
+                let places_vec = schema::organizations_places::table
+                    .filter(schema::organizations_places::organization_id.eq(i.id))
+                    .load::<OrganizationsPlace>(&_connection)
+                    .expect("E."); 
+                for pl in places_vec.iter() {
+                    check_exists == pl.contains(loc);
+                }
+                default = false;
+            }
+
+            if check_exists || default {
+                stack.push(i);
+            }
+        }
+        return stack;
+    }
     pub fn count_images(&self) -> usize {
         let _connection = establish_connection();
         return schema::files::table
