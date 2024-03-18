@@ -65,7 +65,7 @@
                                 <p>
                                     Телефон:     <%= i.phone %>
                                 </p>
-                                <% if service.website.is_some() { %>
+                                <% if i.website.is_some() { %>
                                 <p>
                                     Веб-сайт:    <%= i.website.as_deref().unwrap() %>
                                 </p>
