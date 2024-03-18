@@ -8,7 +8,7 @@ use actix_web::{
 };
 use crate::errors::Error;
 use crate::models::{
-    User, Deceased, Service,
+    User, Deceased, Service, Organization,
 };
 use sailfish::TemplateOnce;
 use diesel::{
@@ -252,7 +252,7 @@ pub async fn org_search_page(req: HttpRequest) -> actix_web::Result<HttpResponse
         let params = params_some.unwrap();
         if params.name.is_none() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no firm name"));
-        }
+        } 
 
         let user_id = get_request_user(&req).await;
         let object_list = Organization::main_search (

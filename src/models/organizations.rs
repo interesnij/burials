@@ -64,7 +64,7 @@ pub struct PlaceSmall {
 // Реализация методов для структуры Organization
 impl Organization {
     pub fn main_search (
-        service_id: Option<i32>
+        service_id: Option<i32>,
         name:       Option<String>,
         location:   Option<String>,
     ) -> Vec<Organization> { 
