@@ -17,7 +17,7 @@
                         <img src="<%= i.get_image() %>" alt="img" />
                     </div>
                     <div class="mt-4">
-                        <a href="" class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                        <a href="/services/<%=i.id %>/" class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
                             <%=i.title %>
                         </a>
                         <p class="text-slate-400 mt-2">
