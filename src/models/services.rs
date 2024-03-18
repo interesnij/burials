@@ -12,7 +12,8 @@ use crate::schema::services;
 use crate::utils::{
     establish_connection,
 };
-use serde::{Serialize, Deserialize, Organization};
+use serde::{Serialize, Deserialize};
+use crate::models::Organization;
 
 
 #[derive(Debug, PartialEq, Queryable, Serialize, Deserialize, Identifiable)]
