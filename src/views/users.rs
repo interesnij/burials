@@ -5,6 +5,7 @@ use actix_web::{
     HttpResponse,
     error::InternalError,
     http::StatusCode,
+    Responder,
 };
 use crate::errors::Error;
 use crate::models::{
@@ -70,7 +71,7 @@ pub async fn profile_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 }
 
 pub async fn edit_profile(req: HttpRequest, mut payload: Multipart) -> impl Responder {
-    let _user = get_request_user(&req).await;
+    let _user = crate::utils::get_request_user(&req).await;
     if _user.is_some() {
         let _request_user = _user.unwrap();
 
