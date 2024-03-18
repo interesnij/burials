@@ -8,7 +8,7 @@ use actix_web::{
 };
 use crate::errors::Error;
 use crate::models::{
-    User, Deceased,
+    User, Deceased, Service,
 };
 use sailfish::TemplateOnce;
 use diesel::{
@@ -35,6 +35,8 @@ pub fn page_routes(config: &mut web::ServiceConfig) {
 pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
     let user_id = get_request_user(&req).await;
+    let service_list = Service::get_all();
+
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
         if _request_user.id == 1 {
@@ -46,10 +48,12 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/mainpage.stpl")]
             struct Template {
-                request_user:   User,
+                request_user: User,
+                service_list: Vec<Service>,
             }
             let body = Template {
-                request_user:   _request_user,
+                request_user: _request_user,
+                service_list: service_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -59,10 +63,12 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/mainpage.stpl")]
             struct Template {
-                request_user:   User,
+                request_user: User,
+                service_list: Vec<Service>,
             }
             let body = Template {
-                request_user:   _request_user,
+                request_user: _request_user,
+                service_list: service_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -76,8 +82,12 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         if is_desctop {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/anon_mainpage.stpl")]
-            struct Template {}
-            let body = Template {}
+            struct Template {
+                service_list: Vec<Service>,
+            }
+            let body = Template {
+                service_list: service_list,
+            }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
@@ -85,8 +95,12 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         else {
             #[derive(TemplateOnce)]
             #[template(path = "desctop/main/anon_mainpage.stpl")]
-            struct Template {}
-            let body = Template {}
+            struct Template {
+                service_list: Vec<Service>,
+            }
+            let body = Template {
+                service_list: service_list,
+            }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
             Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))

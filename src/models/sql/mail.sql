@@ -141,9 +141,11 @@ CREATE TABLE organizations_places (
 );
 
 CREATE TABLE services (
-    id       SERIAL PRIMARY KEY,
-    title    VARCHAR(100) NOT NULL,
-    position SMALLINT NOT NULL
+    id          SERIAL PRIMARY KEY,
+    title       VARCHAR(100) NOT NULL,
+    position    SMALLINT NOT NULL,
+    image       VARCHAR(100),
+    description VARCHAR(300),
 );
 
 CREATE TABLE organizations_services (

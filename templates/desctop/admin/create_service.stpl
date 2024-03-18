@@ -17,6 +17,22 @@
 							<input id="id_position" name="position" type="number" value="1" class="form-input mt-3" placeholder="" />
 						</div>
 						<div class="mb-4">
+							<label class="font-semibold" for="id_description">Описание:</label>
+							<input id="id_description" name="description" type="text" value="1" class="form-input mt-3" placeholder="" />
+						</div>
+						<div class="mb-4 profile-pic w-[112px]">
+							<label class="font-semibold">Портрет покойника: </label>
+							<input id="pro-img" accept="image/*" name="image" type="file" class="hidden" onchange="loadFile(event)" />
+							<div>
+								<div class="relative h-28 w-28 rounded-full shadow-md dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800 overflow-hidden">
+									<img src="/static/images/upload.png" class="rounded-full" id="image" alt="img">
+									<div class="absolute inset-0 group-hover:bg-slate-900/10 duration-500"></div>
+									<label class="absolute inset-0 cursor-pointer" for="pro-img"></label>
+								</div>
+							</div>
+						</div>
+						
+						<div class="mb-4">
 							<button type="button" id="create_service" class="btn bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full" >
 								Создать
 							</button> 

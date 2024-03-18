@@ -1,0 +1,33 @@
+<section class="relative md:pb-24 pb-16">
+    <div class="container">
+        <div class="grid grid-cols-1 pb-8 text-center">
+            <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-black dark:text-white">
+                Предоставляем услуги
+            </h3>
+            <p class="text-slate-400 max-w-xl mx-auto">
+                Этот сайт является агрегатором ритуальных услуг со всех городов, а
+                так же предоставляет электронную регистрацию мест захоронений.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
+            <% for i in service_list.iter() { %>
+                <div class="group transition-all duration-500 ease-in-out text-center">
+                    <div class="flex align-middle mx-auto justify-center items-center w-14 h-14 mt-1 bg-indigo-600/5 group-hover:bg-indigo-600 group-hover:text-white border-2 border-indigo-600/20 text-indigo-600 rounded-lg text-2xl shadow-sm dark:shadow-gray-800 transition-all duration-500 ease-in-out">
+                        <img src="<%= i.get_image() %>" alt="img" />
+                    </div>
+                    <div class="mt-4">
+                        <a href="" class="text-xl font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                            <%=i.title %>
+                        </a>
+                        <p class="text-slate-400 mt-2">
+                            <% if i.description.is_some() { %>
+                                <%= object.description.as_deref().unwrap() %>
+                            <% } %>
+                        </p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</section>

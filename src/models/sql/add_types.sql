@@ -1,7 +1,8 @@
-ALTER TABLE organizations ADD COLUMN types
-SMALLINT NOT NULL DEFAULT 1;
-ALTER TABLE deceaseds ADD COLUMN types
-SMALLINT NOT NULL DEFAULT 2;
+ALTER TABLE services ADD COLUMN image
+VARCHAR(100);
+ALTER TABLE services ADD COLUMN description
+VARCHAR(300);
+
 
 ALTER TABLE organizations_places DROP COLUMN district_id;
 ALTER TABLE organizations_places DROP COLUMN lat;

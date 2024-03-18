@@ -435,14 +435,18 @@ pub async fn organization_form(payload: &mut Multipart) -> OrganizationForms {
 //------------------------------ФОРМА УСЛУГ-----------------
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ServiceForms {
-    pub title:    String,
-    pub position: i16,
+    pub title:       String,
+    pub position:    i16,
+    pub image:       Option<String>,
+    pub description: Option<String>,
 }
 // форма для элементов 
 pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
     let mut form: ServiceForms = ServiceForms {
-        title:    "".to_string(),
-        position: 0,
+        title:       "".to_string(),
+        position:    0,
+        image:       None,
+        description: None,
     };
 
    
@@ -459,6 +463,15 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                 }
             }
         }
+        if name == "description" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    let data_string = s.to_string();
+                    form.description = Some(data_string);
+                }
+            }
+        }
         else if name == "position" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
@@ -466,6 +479,24 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                     let _int: i16 = s.parse().unwrap();
                     form.position = _int;
                 }
+            }
+        }
+        else if name == "image" {
+            let _new_path = field.content_disposition().get_filename().unwrap();
+            if _new_path != "" {
+                let file = UploadedFiles::new(_new_path.to_string());
+                let file_path = file.path.clone();
+                let mut f = web::block(move || std::fs::File::create(&file_path).expect("E"))
+                    .await
+                    .unwrap();
+                while let Some(chunk) = field.next().await {
+                    let data = chunk.unwrap();
+                    f = web::block(move || f.write_all(&data).map(|_| f))
+                        .await
+                        .unwrap()
+                        .expect("E");
+                }
+                form.image = Some(file.path.clone().replace("./","/"));
             }
         }
     }

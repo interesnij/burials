@@ -17,24 +17,38 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Debug, PartialEq, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Service {
-    pub id:       i32,
-    pub title:    String,
-    pub position: i16,
+    pub id:          i32,
+    pub title:       String,
+    pub position:    i16,
+    pub image:       Option<String>,
+    pub description: Option<String>,
 } 
 
 // Структура NewService используется для создания новых объектов Service
 #[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "services"]
 pub struct NewService {
-    pub title:    String,
-    pub position: i16,
+    pub title:       String,
+    pub position:    i16,
+    pub image:       Option<String>,
+    pub description: Option<String>,
 }
 
 impl Service {
+    pub fn get_image(&self) -> String {
+        if self.image.is_some() {
+            return self.image.as_deref().unwrap().to_string();
+        }
+        else {
+            return "/static/images/img.jpg".to_string();
+        }
+    }
     pub fn create (
-        user_id:  i32,
-        title:    String,
-        position: i16,
+        user_id:     i32,
+        title:       String,
+        position:    i16,
+        image:       Option<String>,
+        description: Option<String>,
     ) -> i16 {
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm < 10 {
@@ -42,8 +56,10 @@ impl Service {
         }
         let _connection = establish_connection();
         let new_form = NewService {
-            title:    title,
-            position: position,
+            title:       title,
+            position:    position,
+            image:       image,
+            description: description,
         };
         diesel::insert_into(schema::services::table)
             .values(&new_form)
@@ -53,9 +69,11 @@ impl Service {
     }
     pub fn edit (
         &self,
-        user_id:  i32,
-        title:    String,
-        position: i16,
+        user_id:     i32,
+        title:       String,
+        position:    i16,
+        image:       Option<String>,
+        description: Option<String>,
     ) -> i16 { 
 
         let _user = crate::utils::get_user(user_id).expect("E.");
@@ -68,9 +86,17 @@ impl Service {
             .set((
                 schema::services::title.eq(title),
                 schema::services::position.eq(position),
+                schema::services::description.eq(description),
             ))
             .execute(&_connection)
-            .expect("Error.");
+        .expect("Error.");
+
+        if image.is_some() {
+            diesel::update(self)
+                .set(schema::services::image.eq(image))
+                .execute(&_connection)
+                .expect("Error.");
+        }
         return 1;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
@@ -85,37 +111,7 @@ impl Service {
         return 1;
     }
 
-    pub fn list (
-        organization_id: i32,
-        limit:           i64,
-        offset:          i64,
-    ) -> Vec<Service> {
-        use crate::schema::services::dsl::services;
-
-        let _connection = establish_connection();
-        return services
-            .limit(limit)
-            .offset(offset)
-            .load::<Service>(&_connection)
-            .expect("E.");
-    }
-    pub fn search (
-        organization_id: i32,
-        q:               &String,
-        limit:           i64,
-        offset:          i64,
-    ) -> Vec<Service> {
-        use crate::schema::services::dsl::services;
-
-        let _connection = establish_connection();
-        return services
-            .filter(schema::services::title.ilike(&q))
-            .limit(limit) 
-            .offset(offset)
-            .load::<Service>(&_connection)
-            .expect("E.");
-    }
-    pub fn count(organization_id: i32) -> usize {
+    pub fn count() -> usize {
         use crate::schema::services::dsl::services;
 
         let _connection = establish_connection();
@@ -131,6 +127,7 @@ impl Service {
 
         let _connection = establish_connection();
         return services
+            .order(schema::services::position.asc())
             .load::<Service>(&_connection)
             .expect("E.");
     }

@@ -182,7 +182,6 @@ impl Organization {
                     schema::organizations::phone.eq(phone),
                     schema::organizations::hours.eq(hours),
                     schema::organizations::website.eq(website),
-                    schema::organizations::image.eq(image),
                 ))
                 .execute(&_connection)
                 .expect("Error.");
@@ -193,6 +192,13 @@ impl Organization {
 
             crate::models::File::create(self.id, 1, images);
             crate::models::OrganizationsService::create(self.id, services);
+
+            if image.is_some() {
+                diesel::update(self)
+                    .set(schema::organizations::image.eq(image))
+                    .execute(&_connection)
+                    .expect("Error.");
+            }
         }
         return self.id;
     }
