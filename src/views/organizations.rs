@@ -736,10 +736,10 @@ pub async fn service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::R
         let _request_user = user_id.unwrap();
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/services/service.stpl")]
+            #[template(path = "desctop/service/service.stpl")]
             struct Template {
                 request_user:       User,
-                service:            Organization,
+                service:            Service,
                 organizations_list: Vec<Organization>,
             }
             let body = Template {
@@ -753,10 +753,10 @@ pub async fn service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::R
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/services/service.stpl")]
+            #[template(path = "desctop/service/service.stpl")]
             struct Template {
                 request_user:       User,
-                service:            Organization,
+                service:            Service,
                 organizations_list: Vec<Organization>,
             }
             let body = Template {
@@ -772,9 +772,9 @@ pub async fn service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::R
     else {
         if is_desctop {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/services/anon_service.stpl")]
+            #[template(path = "desctop/service/anon_service.stpl")]
             struct Template {
-                service:            Organization,
+                service:            Service,
                 organizations_list: Vec<Organization>,
             }
             let body = Template {
@@ -787,9 +787,9 @@ pub async fn service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::R
         }
         else {
             #[derive(TemplateOnce)]
-            #[template(path = "desctop/services/anon_service.stpl")]
+            #[template(path = "desctop/service/anon_service.stpl")]
             struct Template {
-                service:            Organization,
+                service:            Service,
                 organizations_list: Vec<Organization>,
             }
             let body = Template {
