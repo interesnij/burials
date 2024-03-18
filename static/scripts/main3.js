@@ -221,7 +221,7 @@ on('body', 'click', '#logg', function() {
 on('body', 'click', '.search_deceaseds', function() {
   form = this.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_last_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_last_name").style.setProperty('border', '1px solid #ced4da', 'important');
  
   block = form.nextElementSibling; 
   block.innerHTML = "";
@@ -279,7 +279,7 @@ on('body', 'click', '.search_deceaseds', function() {
 on('body', 'click', '.search_organizations', function() {
   form = this.parentElement.parentElement.parentElement.parentElement;
 
-  form.querySelector("#id_name").style.setProperty('border', 'inherit', 'important');
+  form.querySelector("#id_name").style.setProperty('border', '1px solid #ced4da', 'important');
  
   block = form.nextElementSibling;
   block.innerHTML = "";
