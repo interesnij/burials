@@ -293,8 +293,8 @@ on('body', 'click', '.search_organizations', function() {
   if (form.getAttribute("service-pk")) {
     url += "&service=" + form.getAttribute("service-pk")
   };
-  if (form.querySelector("#id_location") && form.querySelector("#id_location").value) {
-    url += "&location=" + form.querySelector("#id_location").value.split(" ", "")
+  if (form.querySelector("#id_location") && form.querySelector("#id_location").value.length > 2) {
+    url += "&location=" + form.querySelector("#id_location").value.replace(/\s+/g, ' ')
   }; 
 
   var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
