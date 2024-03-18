@@ -103,7 +103,7 @@ impl Organization {
                     .load::<OrganizationsPlace>(&_connection)
                     .expect("E."); 
                 for pl in places_vec.iter() {
-                    check_exists == pl.contains(loc);
+                    check_exists == pl.get_loc().contains(loc);
                 }
                 default = false;
             }
