@@ -62,7 +62,7 @@
                 <!-- Navigation Menu-->   
                 <ul class="navigation-menu">
                     <li> 
-                        <a href="/wall/" class="sub-menu-item wall_link">Стена памяти</a></li> 
+                        <a href="/wall/" style="color: #0d6efd !important;" class="sub-menu-item wall_link">Стена памяти</a></li> 
     
                     <li class="has-submenu parent-parent-menu-item">
                         <a href="/places/">Захоронения</a>
