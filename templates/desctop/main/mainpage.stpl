@@ -43,9 +43,7 @@
           </div>
       </section>  
 
-    <% include!("../generic/services.stpl"); %>
-    
-
+      <% include!("services.stpl"); %>
 
       <!-- Start Section-->
       <section class="relative md:py-24 py-16">
