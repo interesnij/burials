@@ -452,9 +452,8 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
    
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
-        let name = field.name();
 
-        if name == "title" {
+        if field.name() == "title" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
@@ -463,7 +462,7 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                 }
             }
         }
-        if name == "description" {
+        if field.name() == "description" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
@@ -472,7 +471,7 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                 }
             }
         }
-        else if name == "position" {
+        else if field.name() == "position" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
                 if let Ok(s) = str::from_utf8(&data) {
@@ -481,7 +480,7 @@ pub async fn service_form(payload: &mut Multipart) -> ServiceForms {
                 }
             }
         }
-        else if name == "image" {
+        else if field.name() == "image" {
             let _new_path = field.content_disposition().get_filename().unwrap();
             if _new_path != "" {
                 let file = UploadedFiles::new(_new_path.to_string());
