@@ -13,10 +13,10 @@
             <div class="container">
                 <div class="grid grid-cols-1">
                 <div class="text-center">
-                    <div class="d-flex flex-row align-items-center">
+                    <div class="flex-row align-items-center">
                         <div>
                             <h1 class="font-bold text-white lg:leading-normal leading-normal text-4xl lg:text-5xl mb-6">Стена памяти</h1>
-                            <p class="text-white/70 text-xl max-w-xl">Ушедшие живы, пока есть живые, чтобы о них вспоминать.</p>
+                            <p class="text-white/70 text-xl">Ушедшие живы, пока есть живые, чтобы о них вспоминать.</p>
                         </div>
                     </div>
                 </div>

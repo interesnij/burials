@@ -244,10 +244,10 @@ on('body', 'click', '.search_deceaseds', function() {
   if (form.querySelector("#id_death_date").value) {
     url += "&death_date=" + form.querySelector("#id_death_date").value
   };
-  if (form.querySelector("#id_location").value) {
+  if (form.querySelector("#id_location") && form.querySelector("#id_location").value) {
     url += "&location=" + form.querySelector("#id_location").value
   }; 
-  if (form.querySelector("#deceadeds_id").value) {
+  if (form.querySelector("#deceadeds_id") && form.querySelector("#deceadeds_id").value) {
     url += "&deceadeds_id=" + form.querySelector("#deceadeds_id").value
   };
   if (form.querySelector("#is_veteran").checked) {
@@ -256,10 +256,10 @@ on('body', 'click', '.search_deceaseds', function() {
   if (form.querySelector("#is_famous").checked) {
     url += "&is_famous=true"
   };
-  if (form.querySelector("#with_photo").checked) {
+  if (form.querySelector("#with_photo") && form.querySelector("#with_photo").checked) {
     url += "&with_photo=true"
   };
-  if (form.querySelector("#with_coordinates").checked) {
+  if (form.querySelector("#with_coordinates") && form.querySelector("#with_coordinates").checked) {
     url += "&with_coordinates=true"
   };
 
