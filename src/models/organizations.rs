@@ -97,21 +97,22 @@ impl Organization {
             let mut default = true; 
 
             if location.is_some() {
+                default = false;
                 let loc = location.as_deref().unwrap(); 
                 let places_vec = schema::organizations_places::table
                     .filter(schema::organizations_places::organization_id.eq(i.id))
                     .load::<OrganizationsPlace>(&_connection)
                     .expect("E."); 
                 for pl in places_vec.iter() {
-                    if !check_exists {
-                        let pl_loc = pl.get_loc();
-                        println!("loc {:?}", loc);
-                        println!("pl_loc {:?}", pl_loc);
-                        println!("contains {:?}", pl_loc.contains(loc));
-                        check_exists == pl_loc.contains(loc);
-                    }  
+                    let pl_loc = pl.get_loc();
+                    println!("loc {:?}", loc);
+                    println!("pl_loc {:?}", pl_loc);
+                    println!("contains {:?}", pl_loc.contains(loc));
+                    check_exists == pl_loc.contains(loc);
+                    if check_exists {
+                        break;
+                    }
                 }
-                default = false;
             }
 
             println!("Совпадение есть {:?}", check_exists);
