@@ -94,7 +94,7 @@ impl Organization {
 
         for i in list.into_iter() {
             let mut check_exists = false;
-            let mut default = true;
+            let mut default = true; 
 
             if location.is_some() {
                 let loc = location.as_deref().unwrap(); 
@@ -107,12 +107,15 @@ impl Organization {
                         let pl_loc = pl.get_loc();
                         println!("loc {:?}", loc);
                         println!("pl_loc {:?}", pl_loc);
-                        println!("contains {:?}", pl_loc.contains(loc));
+                        println!("contains {:?}", pl_loc.icontains(loc));
                         check_exists == pl_loc.contains(loc);
                     }  
                 }
                 default = false;
             }
+
+            println!("Совпадение есть {:?}", check_exists);
+            println!("парамертов нет {:?}", default);
 
             if check_exists || default {
                 stack.push(i);
