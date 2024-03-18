@@ -22,7 +22,7 @@
                         </a>
                         <p class="text-slate-400 mt-2">
                             <% if i.description.is_some() { %>
-                                <%= object.description.as_deref().unwrap() %>
+                                <%= i.description.as_deref().unwrap() %>
                             <% } %>
                         </p>
                     </div>
