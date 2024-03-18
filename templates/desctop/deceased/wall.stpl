@@ -1,27 +1,47 @@
 <% include!("../header.stpl"); %>
 
-<section class="relative table w-full py-32 lg:py-40 bg-gradient-to-br to-orange-600/20 via-fuchsia-600/20 from-indigo-600/20">
-	<div class="absolute text-center z-10 bottom-5 start-0 end-0 mx-3">
-		<ul class="tracking-[0.5px] mb-0 inline-block">
-			<li class="inline-block uppercase text-[13px] font-bold duration-500 ease-in-out hover:text-indigo-600">
-				<a href="/">Главная</a>
-			</li> 
-			<li class="inline-block text-base text-slate-950 dark:text-white mx-0.5 ltr:rotate-0 rtl:rotate-180"><i class="uil uil-angle-right-b"></i></li>
-			<li class="inline-block uppercase text-[13px] font-bold text-indigo-600" aria-current="page">Стена памяти</li>
-		</ul>
-	</div>
+<!-- Hero Start -->
+<section class="relative mt-20">
+    <div class="container-fluid md:mx-4 mx-2">
+        <div class="relative pt-48 pb-60 table w-full rounded-2xl shadow-md overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="image-wrap absolute -top-[350px] -bottom-[350px] -left-[100px] -right-[100px] min-w-full w-auto min-h-full h-auto overflow-hidden m-auto" id="home">
+            
+            </div>
+        </div>
+        <div class="absolute inset-0 bg-black/60"></div>
+            <div class="container">
+                <div class="grid grid-cols-1">
+                <div class="text-center">
+                    <div class="d-flex flex-row align-items-center">
+                        <div>
+                            <h1 class="font-bold text-white lg:leading-normal leading-normal text-4xl lg:text-5xl mb-6">Стена памяти</h1>
+                            <p class="text-white/70 text-xl max-w-xl">Ушедшие живы, пока есть живые, чтобы о них вспоминать.</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-<!--end section-->
-<div class="relative">
-	<div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden z-1 text-white dark:text-slate-900">
-		<svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-		</svg>
-	</div>
-</div>
+
+<section class="relative md:pb-24 pb-16">
+    <div class="container">
+        <div class="grid grid-cols-1 justify-center">
+            <div class="relative -mt-32">
+                <div class="grid grid-cols-1">
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-md shadow-md dark:shadow-gray-800">
+                        <% include!("../generic/wall_form.stpl"); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>  
 
 <section class="property-five" style="margin-top:90px; margin-bottom:90px">
-    <div class="container">
+    <div class="container" style="margin-bottom:90px">
         <div class="row">
             <% for i in object_list.iter() { %>
                 <div class="col-md-6">

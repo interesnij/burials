@@ -320,7 +320,8 @@ impl Deceased {
             .expect("E.")
             .len();
     }
-    pub fn main_search ( 
+    pub fn main_search (
+        types:            String,
         first_name:       Option<String>,
         middle_name:      Option<String>,
         last_name:        String,
@@ -337,6 +338,20 @@ impl Deceased {
 
         let _connection = establish_connection();
         let mut stack = Vec::new();
+        let list: Deceased;
+        if types == "wall".to_string() {
+            list = deceaseds
+                .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
+                .filter(schema::deceaseds::types.eq(3))
+                .load::<Deceased>(&_connection)
+                .expect("E.");
+        }
+        else {
+            list = deceaseds
+                .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
+                .load::<Deceased>(&_connection)
+                .expect("E.");
+        }
         let list = deceaseds
             .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
             .load::<Deceased>(&_connection)

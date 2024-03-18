@@ -153,6 +153,7 @@ pub async fn not_found(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Resu
 
 #[derive(Deserialize)]
 pub struct SeacrhData {
+    pub types:            Option<String>,
     pub first_name:       Option<String>,
     pub middle_name:      Option<String>,
     pub last_name:        Option<String>,
@@ -175,6 +176,7 @@ pub async fn main_search(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
+            params.types.as_deref().unwrap().to_string(),
             params.first_name.clone(),
             params.middle_name.clone(),
             params.last_name.as_deref().unwrap().to_string(),
