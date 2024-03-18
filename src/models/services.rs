@@ -12,7 +12,7 @@ use crate::schema::services;
 use crate::utils::{
     establish_connection,
 };
-use serde::{Serialize, Deserialize};
+use serde::{Serialize, Deserialize, Organization};
 
 
 #[derive(Debug, PartialEq, Queryable, Serialize, Deserialize, Identifiable)]
