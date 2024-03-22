@@ -69,12 +69,12 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             struct Template {
                 request_user:     User,
                 service_list:     Vec<Service>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 service_list:     service_list,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -90,11 +90,11 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             #[template(path = "desctop/main/anon_mainpage.stpl")]
             struct Template {
                 service_list:     Vec<Service>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 service_list:     service_list,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -105,11 +105,11 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             #[template(path = "desctop/main/anon_mainpage.stpl")]
             struct Template {
                 service_list:     Vec<Service>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 service_list:     service_list,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

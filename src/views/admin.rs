@@ -230,14 +230,17 @@ pub async fn load_region_cities(req: HttpRequest, _id: web::Path<i32>) -> actix_
     else {
         let _request_user = user_id.unwrap();
         let city_list = Citie::get_region_all(*_id);
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/load/load_cities.stpl")]
         struct Template { 
-            city_list: Vec<Citie>,
+            city_list:        Vec<Citie>,
+            services_enabled: bool,
         }
         let body = Template {
-            city_list: city_list,
+            city_list:        city_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -252,14 +255,17 @@ pub async fn load_country_cities(req: HttpRequest, _id: web::Path<i32>) -> actix
     else {
         let _request_user = user_id.unwrap();
         let city_list = Citie::get_country_all(*_id);
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/load/load_cities.stpl")]
         struct Template { 
-            city_list: Vec<Citie>,
+            city_list:        Vec<Citie>,
+            services_enabled: bool,
         }
         let body = Template {
-            city_list: city_list,
+            city_list:        city_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -275,16 +281,19 @@ pub async fn load_region_geo_items(req: HttpRequest, _id: web::Path<i32>) -> act
         let _request_user = user_id.unwrap();
         let city_list = Citie::get_region_all(*_id);
         let district_list = District::get_region_all(*_id);
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/load/load_districts_cities.stpl")]
         struct Template { 
-            city_list:     Vec<Citie>,
-            district_list: Vec<District>,
+            city_list:        Vec<Citie>,
+            district_list:    Vec<District>,
+            services_enabled: bool,
         }
         let body = Template {
-            city_list:     city_list,
-            district_list: district_list,
+            city_list:        city_list,
+            district_list:    district_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -304,16 +313,19 @@ pub async fn create_country_page(req: HttpRequest) -> actix_web::Result<HttpResp
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let country_list = Countrie::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_country.stpl")]
         struct Template { 
-            request_user: User,
-            country_list: Vec<Countrie>,
+            request_user:     User,
+            country_list:     Vec<Countrie>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            country_list: country_list,
+            request_user:     _request_user,
+            country_list:     country_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -332,18 +344,21 @@ pub async fn edit_country_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         }
         let object = crate::utils::get_country(*_id).expect("E.");
         let country_list = Countrie::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_country.stpl")]
         struct Template { 
-            request_user: User,
-            object:       Countrie,
-            country_list: Vec<Countrie>,
+            request_user:     User,
+            object:           Countrie,
+            country_list:     Vec<Countrie>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            object:       object,
-            country_list: country_list,
+            request_user:     _request_user,
+            object:           object,
+            country_list:     country_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -363,18 +378,21 @@ pub async fn create_region_page(req: HttpRequest) -> actix_web::Result<HttpRespo
         }
         let country_list = Countrie::get_all();
         let region_list = Region::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_region.stpl")]
         struct Template { 
-            request_user: User,
-            country_list: Vec<Countrie>,
-            region_list:  Vec<Region>,
+            request_user:     User,
+            country_list:     Vec<Countrie>,
+            region_list:      Vec<Region>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            country_list: country_list,
-            region_list:  region_list,
+            request_user:     _request_user,
+            country_list:     country_list,
+            region_list:      region_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -394,20 +412,23 @@ pub async fn edit_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_we
         let object = crate::utils::get_region(*_id).expect("E.");
         let country_list = Countrie::get_all();
         let region_list = Region::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_region.stpl")]
         struct Template { 
-            request_user: User,
-            object:       Region,
-            country_list: Vec<Countrie>,
-            region_list:  Vec<Region>,
+            request_user:     User,
+            object:           Region,
+            country_list:     Vec<Countrie>,
+            region_list:      Vec<Region>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            object:       object,
-            country_list: country_list,
-            region_list:  region_list,
+            request_user:     _request_user,
+            object:           object,
+            country_list:     country_list,
+            region_list:      region_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -427,18 +448,21 @@ pub async fn create_district_page(req: HttpRequest) -> actix_web::Result<HttpRes
         }
         let country_list = Countrie::get_all();
         let district_list = District::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_district.stpl")]
         struct Template { 
-            request_user:  User,
-            country_list:  Vec<Countrie>,
-            district_list: Vec<District>,
+            request_user:     User,
+            country_list:     Vec<Countrie>,
+            district_list:    Vec<District>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user:  _request_user,
-            country_list:  country_list,
-            district_list: district_list,
+            request_user:     _request_user,
+            country_list:     country_list,
+            district_list:    district_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -459,22 +483,25 @@ pub async fn edit_district_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
         let country_list = Countrie::get_all();
         let region_list = Region::get_country_all(object.country_id);
         let district_list = District::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_district.stpl")]
         struct Template { 
-            request_user:  User,
-            object:        District,
-            country_list:  Vec<Countrie>,
-            region_list:   Vec<Region>,
-            district_list: Vec<District>,
+            request_user:     User,
+            object:           District,
+            country_list:     Vec<Countrie>,
+            region_list:      Vec<Region>,
+            district_list:    Vec<District>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user:  _request_user,
-            object:        object,
-            country_list:  country_list,
-            region_list:   region_list,
-            district_list: district_list,
+            request_user:     _request_user,
+            object:           object,
+            country_list:     country_list,
+            region_list:      region_list,
+            district_list:    district_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -494,18 +521,21 @@ pub async fn create_city_page(req: HttpRequest) -> actix_web::Result<HttpRespons
         }
         let country_list = Countrie::get_all();
         let city_list = Citie::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_city.stpl")]
         struct Template { 
-            request_user: User,
-            country_list: Vec<Countrie>,
-            city_list:    Vec<Citie>,
+            request_user:     User,
+            country_list:     Vec<Countrie>,
+            city_list:        Vec<Citie>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            country_list: country_list,
-            city_list:    city_list,
+            request_user:     _request_user,
+            country_list:     country_list,
+            city_list:        city_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -526,22 +556,25 @@ pub async fn edit_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web:
         let country_list = Countrie::get_all();
         let region_list = Region::get_country_all(object.country_id);
         let city_list = Citie::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_city.stpl")]
         struct Template { 
-            request_user: User,
-            object:       Citie,
-            country_list: Vec<Countrie>,
-            region_list:  Vec<Region>,
-            city_list:    Vec<Citie>,
+            request_user:     User,
+            object:           Citie,
+            country_list:     Vec<Countrie>,
+            region_list:      Vec<Region>,
+            city_list:        Vec<Citie>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            object:       object,
-            country_list: country_list,
-            region_list:  region_list,
-            city_list:    city_list,
+            request_user:     _request_user,
+            object:           object,
+            country_list:     country_list,
+            region_list:      region_list,
+            city_list:        city_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -560,16 +593,19 @@ pub async fn create_service_page(req: HttpRequest) -> actix_web::Result<HttpResp
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let service_list = Service::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/create_service.stpl")]
         struct Template { 
-            request_user: User,
-            service_list: Vec<Service>,
+            request_user:     User,
+            service_list:     Vec<Service>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            service_list: service_list,
+            request_user:     _request_user,
+            service_list:     service_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -588,18 +624,21 @@ pub async fn edit_service_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
         } 
         let object = crate::utils::get_service(*_id).expect("E.");
         let service_list = Service::get_all();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/edit_service.stpl")]
         struct Template { 
-            request_user: User,
-            object:       Service,
-            service_list: Vec<Service>,
+            request_user:     User,
+            object:           Service,
+            service_list:     Vec<Service>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            object:       object,
-            service_list: service_list,
+            request_user:     _request_user,
+            object:           object,
+            service_list:     service_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -828,16 +867,19 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let org_list = Organization::suggested_list();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_organizations.stpl")]
         struct Template { 
-            request_user: User,
-            org_list:     Vec<Organization>,
+            request_user:     User,
+            org_list:         Vec<Organization>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            org_list:     org_list,
+            request_user:     _request_user,
+            org_list:         org_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -858,16 +900,19 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let places_list = Place::suggested_list();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_places.stpl")]
         struct Template { 
-            request_user: User,
-            places_list:  Vec<Place>,
+            request_user:     User,
+            places_list:      Vec<Place>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user: _request_user,
-            places_list:  places_list,
+            request_user:     _request_user,
+            places_list:      places_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -888,16 +933,19 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let deceaseds_list = Deceased::suggested_list();
+        let services_enabled = false;
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_deceaseds.stpl")]
         struct Template { 
-            request_user: User,
-            deceaseds_list:  Vec<Deceased>,
+            request_user:     User,
+            deceaseds_list:   Vec<Deceased>,
+            services_enabled: bool,
         }
         let body = Template {
-            request_user:   _request_user,
-            deceaseds_list: deceaseds_list,
+            request_user:     _request_user,
+            deceaseds_list:   deceaseds_list,
+            services_enabled: services_enabled,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
