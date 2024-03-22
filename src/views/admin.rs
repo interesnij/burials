@@ -657,7 +657,7 @@ pub async fn create_district(req: HttpRequest, mut payload: Multipart) -> impl R
                 form.country_id,
                 form.name.clone(),
                 form.cord.clone(),
-            );
+            ); 
         }
     };
     HttpResponse::Ok()

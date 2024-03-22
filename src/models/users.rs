@@ -457,7 +457,6 @@ impl District {
         country_id: i32,
         name:       String,
         cord:       Option<String>,
-        lon:        Option<f64>,
     ) -> i16 {
         let _connection = establish_connection();
         let new_form = NewDistrict {

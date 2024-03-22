@@ -162,8 +162,8 @@ pub async fn search_places_page(req: HttpRequest) -> actix_web::Result<HttpRespo
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no name valuee")); 
         }
 
-        let object_list = block(move || Place::search(params.name.as_deref().unwrap())).await?;
-        #[derive(TemplateOnce)]
+        let object_list = block(move || Place::search(params.name.as_deref().unwrap(), 20, 0)).await?;
+        #[derive(TemplateOnce)] 
         #[template(path = "desctop/place/search.stpl")]
         struct Template {
             object_list: Vec<Place>,

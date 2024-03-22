@@ -27,9 +27,9 @@
 <% 
   let cord: String;
   if place.cord.is_some() {
-    cord = place.cord.as_deref().unwrap();
+    cord = place.cord.as_deref().unwrap().to_string();
   }
-  else {
+  else { 
     cord = "".to_string();
   }
 %>
