@@ -247,7 +247,7 @@ impl Deceased {
         
         return 1;
     }
-    pub fn edit (  
+    pub fn edit ( 
         &self,
         user_id:         i32,
         first_name:      String,
@@ -257,7 +257,8 @@ impl Deceased {
         death_date:      String,
         image:           Option<String>,
         memory_words:    Option<String>,
-        cord:            Option<String>,
+        description:     Option<String>,
+        cord:            Option<String>, 
         is_veteran:      bool,
         is_famous:       bool,
         is_wow_monument: bool,
@@ -279,6 +280,7 @@ impl Deceased {
                 schema::deceaseds::birth_date.eq(chrono::NaiveDate::parse_from_str(&birth_date, "%Y-%m-%d").unwrap()),
                 schema::deceaseds::death_date.eq(chrono::NaiveDate::parse_from_str(&death_date, "%Y-%m-%d").unwrap()),
                 schema::deceaseds::memory_words.eq(memory_words),
+                schema::deceaseds::description.eq(description),
                 schema::deceaseds::cord.eq(cord),
                 schema::deceaseds::is_veteran.eq(is_veteran),
                 schema::deceaseds::is_famous.eq(is_famous),

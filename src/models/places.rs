@@ -371,9 +371,9 @@ impl Place {
             .expect("E.");
     }
     pub fn search (
-        q:        &String,
+        q:        String,
         limit:    i64,
-        offset:   i64,
+        offset:   i64, 
     ) -> Vec<Place> {
         use crate::schema::places::dsl::places;
 

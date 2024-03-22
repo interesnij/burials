@@ -434,7 +434,7 @@ pub async fn edit_deceased(req: HttpRequest, mut payload: Multipart, _id: web::P
         let _deceased = crate::utils::get_deceased(*_id).expect("E."); 
         let form = crate::utils::deceased_form(payload.borrow_mut()).await;
         _deceased.edit (
-            _request_user.id,
+            _request_user.id, 
             form.first_name.clone(),
             form.middle_name.clone(),
             form.last_name.clone(),

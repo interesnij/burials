@@ -58,8 +58,8 @@ impl Review {
         return 1;
     }
     pub fn edit (
-        user_id: i32,
         &self,
+        user_id: i32,
         content: String,
     ) -> i16 {
         use crate::schema::reviews::dsl::reviews;

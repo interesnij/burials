@@ -723,7 +723,7 @@ pub async fn country_form(payload: &mut Multipart) -> CountryForms {
                     if field.name() == "name" {
                         form.name = data_string;
                     }
-                    if field.name() == "cord" {
+                    else if field.name() == "cord" {
                         form.cord = Some(data_string);
                     }
                 }
