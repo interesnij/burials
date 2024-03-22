@@ -44,8 +44,9 @@ CREATE TABLE deceaseds (
     is_veteran      BOOLEAN NOT NULL DEFAULT FALSE,
     is_famous       BOOLEAN NOT NULL DEFAULT FALSE,
     is_wow_monument BOOLEAN NOT NULL DEFAULT FALSE,
+    deceased_id     INT,
     types           INT NOT NULL,
-    created         TIMESTAMP NOT NULL
+    created         TIMESTAMP NOT NULL 
 );
 
 /*
@@ -142,7 +143,8 @@ CREATE TABLE organizations_places (
     city_id         INT NOT NULL,
     region_id       INT, 
     country_id      INT NOT NULL,
-    address2        VARCHAR(500) NOT NULL
+    address2        VARCHAR(500) NOT NULL,
+    created         TIMESTAMP NOT NULL
 );
 
 CREATE TABLE services (

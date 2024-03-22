@@ -10,11 +10,7 @@
                         </div> 
                         <div>
                             <label class="font-semibold" for="suggest2">Адрес назначения:</label>
-                            <% if place.address.is_some() { %>
-                              <input value="<%= place.get_loc() %>, <%= place.address.as_deref().unwrap() %>" type="text" id="suggest2" class="input form-input">
-                            <% } else { %>
-                              <input value="<%= place.lat %>, <%= place.lon %>" type="text" id="suggest2" class="input form-input">
-                            <% } %>
+                              <input value="" type="text" id="suggest2" class="input form-input">
                             <p id="notice2"></p>
                             <br />
                         </div>
@@ -44,7 +40,7 @@ function init() {
   });
   map.setType('yandex#satellite');
 
-  //<% for i in object_list.iter() { %>
+  // for i in object_list.iter() 
   //    map.geoObjects
   //        .add(new ymaps.Placemark([<%= i.cord %>], {
   //        balloonContent: '<%= i.last_name %> <%= i.first_name %>',
@@ -57,7 +53,7 @@ function init() {
   //        icon_imagesize: [30, 42],
   //        iconImageOffset: [-3, -42]
   //    }));
-  //<% } %>
+  //  
 
   //////////////////////////////////
   routePanelControl = new ymaps.control.RoutePanel({

@@ -58,14 +58,14 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 pub async fn place_map(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let services_enabled = false;
     let _place = crate::utils::get_place(*_id).expect("E.");
-    #[derive(TemplateOnce)]
+    #[derive(TemplateOnce)] 
     #[template(path = "desctop/place/map.stpl")]
     struct Template {                
-        deceased:         Place,
+        place:            Place,
         services_enabled: bool,
     }
     let body = Template {
-        deceased:         _place,
+        place:            _place,
         services_enabled: services_enabled,
     }
     .render_once()
@@ -86,12 +86,14 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_places.stpl")]
             struct Template {
-                request_user: User,
-                object_list:  Vec<Place>,
+                request_user:     User,
+                object_list:      Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                request_user: _request_user,
-                object_list:  object_list,
+                request_user:     _request_user,
+                object_list:      object_list,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -101,12 +103,14 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_places.stpl")]
             struct Template {
-                request_user: User,
-                object_list:  Vec<Place>,
+                request_user:     User,
+                object_list:      Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                request_user: _request_user,
-                object_list:  object_list,
+                request_user:     _request_user,
+                object_list:      object_list,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -118,10 +122,12 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_places.stpl")]
             struct Template {
-                object_list: Vec<Place>,
+                object_list:      Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                object_list: object_list,
+                object_list:      object_list,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -131,10 +137,12 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_places.stpl")]
             struct Template {
-                object_list: Vec<Place>,
+                object_list:      Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                object_list: object_list,
+                object_list:      object_list,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -185,14 +193,16 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_city.stpl")]
             struct Template {
-                request_user: User,
-                city:         Citie,
-                all_places:   Vec<Place>,
+                request_user:     User,
+                city:             Citie,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                request_user: _request_user,
-                city:         _city,
-                all_places:   _places,
+                request_user:     _request_user,
+                city:             _city,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -202,14 +212,16 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_city.stpl")]
             struct Template {
-                request_user: User,
-                city:         Citie,
-                all_places:   Vec<Place>,
+                request_user:     User,
+                city:             Citie,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                request_user: _request_user,
-                city:         _city,
-                all_places:   _places,
+                request_user:     _request_user,
+                city:             _city,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -221,12 +233,14 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
-                city:       Citie,
-                all_places: Vec<Place>,
+                city:             Citie,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                city:       _city,
-                all_places: _places,
+                city:             _city,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -236,12 +250,14 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
-                city:       Citie,
-                all_places: Vec<Place>,
+                city:             Citie,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                city:       _city,
-                all_places: _places,
+                city:             _city,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -263,14 +279,16 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_region.stpl")]
             struct Template {
-                request_user: User,
-                region:       Region,
-                all_places:   Vec<Place>,
+                request_user:     User,
+                region:           Region,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                request_user: _request_user,
-                region:       _region,
-                all_places:   _places,
+                request_user:     _request_user,
+                region:           _region,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -280,14 +298,16 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/all_place_region.stpl")]
             struct Template {
-                request_user: User,
-                region:       Region,
-                all_places:   Vec<Place>,
+                request_user:     User,
+                region:           Region,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                request_user: _request_user,
-                region:       _region,
-                all_places:   _places,
+                request_user:     _request_user,
+                region:           _region,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -299,12 +319,14 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
-                region:     Region,
-                all_places: Vec<Place>,
+                region:           Region,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                region:     _region,
-                all_places: _places,
+                region:           _region,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -314,12 +336,14 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
-                region:     Region,
-                all_places: Vec<Place>,
+                region:           Region,
+                all_places:       Vec<Place>,
+                services_enabled: bool;
             }
             let body = Template {
-                region:     _region,
-                all_places: _places,
+                region:           _region,
+                all_places:       _places,
+                services_enabled: services_enabled;
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

@@ -52,7 +52,6 @@ pub struct DeceasedForms {
     pub memory_words:    Option<String>,
     pub cord:            Option<String>,
     pub is_veteran:      bool,
-    pub is_veteran:      bool,
     pub is_famous:       bool,
     pub is_wow_monument: bool,
     pub images:          Vec<String>,
@@ -69,9 +68,9 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
         image:           None,
         memory_words:    None,
         cord:            None,
-        is_veteran:      is_veteran,
-        is_famous:       is_famous,
-        is_wow_monument: is_wow_monument,
+        is_veteran:      false,
+        is_famous:       false,
+        is_wow_monument: false,
         images:          Vec::new(),
     };
 

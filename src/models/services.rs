@@ -111,7 +111,7 @@ impl Service {
                 .execute(&_connection)
                 .expect("Error.");
         }
-        crate::models::Log::create(user_id, _new.id, 7, 2);
+        crate::models::Log::create(user_id, self.id, 7, 2);
         return 1;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
@@ -120,7 +120,7 @@ impl Service {
             return 0;
         }
         let _connection = establish_connection();
-        crate::models::Log::create(user_id, _new.id, 7, 3);       
+        crate::models::Log::create(user_id, self.id, 7, 3);       
         diesel::delete(schema::services::table.filter(schema::services::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");
