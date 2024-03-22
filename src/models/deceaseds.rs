@@ -489,7 +489,7 @@ impl Deceased {
                 check_exists == i.is_famous;
                 default = false;
             }
-            if case != 10 && with_coordinates.is_some() {
+            if case != 10 && with_cord.is_some() {
                 check_exists == i.cord.is_some();
                 default = false;
             }

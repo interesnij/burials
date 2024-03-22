@@ -59,21 +59,21 @@ function init() {
 
   var map; 
   map = new ymaps.Map('map', {
-    center: [<%= deceased.lat %>, <%= deceased.lon %>],
+    center: ["", ""],
     zoom: 18,
     controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
   });
 
   map.setType('yandex#satellite');
       map.geoObjects
-          .add(new ymaps.Placemark([<%= deceased.lat %>, <%= deceased.lon %>], {
-          balloonContent: '<%= deceased.last_name %> <%= deceased.first_name %>',
+          .add(new ymaps.Placemark(["", ""], {
+          balloonContent: '',
           iconCaption: ''
       }, {
           preset: 'islands#blueCircleDotIconWithCaption',
           iconCaptionMaxWidth: '50',
           iconLayout: 'default#image',
-          iconImageHref: '<%= deceased.get_image() %>',
+          //iconImageHref: '',
           icon_imagesize: [30, 42],
           iconImageOffset: [-3, -42]
       }));

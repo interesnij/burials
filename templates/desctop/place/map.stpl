@@ -40,21 +40,6 @@ function init() {
   });
   map.setType('yandex#satellite');
 
-  // for i in object_list.iter() 
-  //    map.geoObjects
-  //        .add(new ymaps.Placemark([<%= i.cord %>], {
-  //        balloonContent: '<%= i.last_name %> <%= i.first_name %>',
-  //        iconCaption: ''
-  //    }, {
-  //        preset: 'islands#blueCircleDotIconWithCaption',
-  //        iconCaptionMaxWidth: '50',
-  //        iconLayout: 'default#image',
-  //        iconImageHref: '<%= i.get_image() %>',
-  //        icon_imagesize: [30, 42],
-  //        iconImageOffset: [-3, -42]
-  //    }));
-  //  
-
   //////////////////////////////////
   routePanelControl = new ymaps.control.RoutePanel({
       options: {

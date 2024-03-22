@@ -74,13 +74,6 @@ pub struct SmallPlace {
 }
 
 impl Place {
-    pub fn search(name: String) -> Vec<Place> {
-        let _connection = establish_connection();
-        return schema::places::table
-            .filter(schema::places::title.ilike("%".to_owned() + &name + "%"))
-            .load::<Place>(&_connection)
-            .expect("E.");
-    }
     pub fn suggested_list() -> Vec<Place> {
         let _connection = establish_connection();
         return schema::places::table

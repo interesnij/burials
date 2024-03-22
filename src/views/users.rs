@@ -45,11 +45,11 @@ pub async fn profile_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             #[template(path = "desctop/user/user.stpl")]
             struct Template {
                 request_user:     User,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -60,11 +60,11 @@ pub async fn profile_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
             #[template(path = "desctop/user/user.stpl")]
             struct Template {
                 request_user:     User,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

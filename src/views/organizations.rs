@@ -74,14 +74,14 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
                 city:              Citie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             } 
             let body = Template {
                 request_user:      _request_user,
                 city:              _city,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -95,14 +95,14 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
                 city:              Citie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 request_user:      _request_user,
                 city:              _city,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -117,13 +117,13 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
                 city:              Citie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 city:              _city,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -136,13 +136,13 @@ pub async fn all_organization_city_page(req: HttpRequest, _id: web::Path<i32>) -
                 city:              Citie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 city:              _city,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -168,14 +168,14 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
                 region:            Region,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 request_user:      _request_user,
                 region:            _region,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -189,14 +189,14 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
                 region:            Region,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 request_user:      _request_user,
                 region:            _region,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -211,13 +211,13 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
                 region:            Region,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 region:            _region,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -230,13 +230,13 @@ pub async fn all_organization_region_page(req: HttpRequest, _id: web::Path<i32>)
                 region:            Region,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 region:            _region,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -262,14 +262,14 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
                 country:           Countrie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 request_user:      _request_user,
                 country:           _country,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -283,14 +283,14 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
                 country:           Countrie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 request_user:      _request_user,
                 country:           _country,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -305,13 +305,13 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
                 country:           Countrie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 country:           _country,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -324,13 +324,13 @@ pub async fn all_organization_country_page(req: HttpRequest, _id: web::Path<i32>
                 country:           Countrie,
                 all_organizations: Vec<Organization>,
                 all_places:        Vec<PlaceSmall>,
-                services_enabled:  bool;
+                services_enabled:  bool,
             }
             let body = Template {
                 country:           _country,
                 all_organizations: _organizations,
                 all_places:        all_places,
-                services_enabled:  services_enabled;
+                services_enabled:  services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -354,13 +354,13 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
                 request_user:     User,
                 organization:     Organization,
                 all_places:       Vec<PlaceSmall>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 organization:     _organization,
                 all_places:       all_places,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -373,13 +373,13 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
                 request_user:     User,
                 organization:     Organization,
                 all_places:       Vec<PlaceSmall>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 organization:     _organization,
                 all_places:       all_places,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -393,12 +393,12 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             struct Template {
                 organization:     Organization,
                 all_places:       Vec<PlaceSmall>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {
                 organization:     _organization,
                 all_places:       all_places,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -410,12 +410,12 @@ pub async fn organization_page(req: HttpRequest, _id: web::Path<i32>) -> actix_w
             struct Template {
                 organization:     Organization,
                 all_places:       Vec<PlaceSmall>,
-                services_enabled: bool;
+                services_enabled: bool,
             }
             let body = Template {                
                 organization:     _organization,
                 all_places:       all_places,
-                services_enabled: services_enabled;
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

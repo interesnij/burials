@@ -540,7 +540,7 @@ impl OrganizationsPlace {
             };
             let _new = diesel::insert_into(schema::organizations_places::table)
                 .values(&new_form)
-                .execute(&_connection)
+                .get_result::<OrganizationsPlace>(&_connection)
                 .expect("Error.");
         } 
         crate::models::Log::create(user_id, _new.id, 6, 1);
