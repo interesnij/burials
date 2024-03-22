@@ -440,12 +440,12 @@ impl Deceased {
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             9  => schema::deceaseds::table
-                .filter(schema::deceaseds::image.is_not_null()))
+                .filter(schema::deceaseds::image.is_not_null())
                 .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             10 => schema::deceaseds::table
-                .filter(schema::deceaseds::cord.is_not_null()))
+                .filter(schema::deceaseds::cord.is_not_null())
                 .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),

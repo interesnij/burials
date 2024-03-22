@@ -2,7 +2,7 @@
 -- Таблица для хранения данных о пользователях
 CREATE TABLE users (
     id          SERIAL PRIMARY KEY,
-    username    VARCHAR(100) NOT NULL UNI,
+    username    VARCHAR(100) NOT NULL,
     first_name  VARCHAR(100) NOT NULL,
     last_name   VARCHAR(100) NOT NULL,
     phone       VARCHAR(12) NOT NULL,
@@ -205,7 +205,7 @@ CREATE TABLE reviews (
     4. Покойник             |   4. Одобрил (например, предложенное кладбище)
     5. Отзыв                |   5. Добавил на стену памяти
     6. Локация офиса        |   6. Удалил со стены памяти
-                            |   7. Восстановил
+    7. Услуга               |   7. Восстановил
                                 8. Вернул в предложенный объект
 */
 CREATE TABLE logs (
