@@ -667,23 +667,23 @@ impl Log {
         let types: String = match self.types {
             1 => "профиль".to_string(),
             2 => {
-                let obj = crate::get_organization(self.object_id).expect("E.");
+                let obj = crate::utils::get_organization(self.object_id).expect("E.");
                 "организацию ".to_string() + &"<a href='/organization/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string();
             },
             3 => {
-                let obj = crate::get_place(self.object_id).expect("E.");
+                let obj = crate::utils::get_place(self.object_id).expect("E.");
                 "кладбище ".to_string() + &"<a href='/place/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.title + &"</a>".to_string();
             },
             4 => {
-                let obj = crate::get_deceased(self.object_id).expect("E.");
+                let obj = crate::utils::get_deceased(self.object_id).expect("E.");
                 "покойника ".to_string() + &"<a href='/deceased/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.get_full_name() + &"</a>".to_string();
             },
             5 => {
-                let obj = crate::get_review(self.object_id).expect("E.");
+                let obj = crate::utils::get_review(self.object_id).expect("E.");
                 "отзыв ".to_string() + &"<a href='/review/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string();
             },
             6 => {
-                let obj = crate::get_organization_loc(self.object_id).expect("E.");
+                let obj = crate::utils::get_organization_loc(self.object_id).expect("E.");
                 "офис ".to_string();
             },
         };
@@ -697,6 +697,7 @@ impl Log {
         types:     i16,
         verb:      i16,
     ) -> i16 {
+        let _connection = establish_connection();
         let new_form = NewLog {
             user_id:   user_id,
             object_id: object_id,
@@ -718,10 +719,10 @@ impl Log {
     ) -> Vec<LogResp> {
         use crate::utils::get_user;
         let _connection = establish_connection();
-        let _user = crate::get_user(user_id).expect("E.");
+        let _user = crate::utils::get_user(user_id).expect("E.");
         let mut stack = Vec::new();
         if _user.perm > 9 {
-            let list = logs
+            let list = schema::logs::table
                 .order(schema::logs::created.desc())
                 .limit(limit)
                 .offset(offset)

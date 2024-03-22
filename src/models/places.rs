@@ -337,17 +337,6 @@ impl Place {
         }
     }
 
-    pub fn delete(&self) -> i16 {
-        use crate::schema::places::dsl::places;
-
-        let _connection = establish_connection();
-        crate::models::Log::create(user_id, self.id, 3, 3);
-        diesel::delete(places.filter(schema::places::id.eq(self.id)))
-            .execute(&_connection)
-            .expect("E");
-        
-        return 1;
-    }
     pub fn country_list(country_id: i32) -> Vec<Place> {
         use crate::schema::places::dsl::places;
 

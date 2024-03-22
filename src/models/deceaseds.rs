@@ -401,52 +401,52 @@ impl Deceased {
         let list: Vec<Deceased> = match case {
             1  => schema::deceaseds::table
                 .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name.as_deref().unwrap() + "%"))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             2  => schema::deceaseds::table
                 .filter(schema::deceaseds::place_id.eq(place.unwrap()))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             3  => schema::deceaseds::table
                 .filter(schema::deceaseds::birth_date.eq(birth_date.as_deref().unwrap()))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             4  => schema::deceaseds::table
                 .filter(schema::deceaseds::death_date.eq(death_date.as_deref().unwrap()))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             5  => schema::deceaseds::table
                 .filter(schema::deceaseds::first_name.eq("%".to_owned() + &first_name.as_deref().unwrap() + "%"))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             6  => schema::deceaseds::table
                 .filter(schema::deceaseds::middle_name.eq("%".to_owned() + &middle_name.as_deref().unwrap() + "%"))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             7  => schema::deceaseds::table
                 .filter(schema::deceaseds::is_veteran.eq(is_veteran.unwrap()))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             8  => schema::deceaseds::table
                 .filter(schema::deceaseds::is_famous.eq(is_famous.unwrap()))
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             9  => schema::deceaseds::table
                 .filter(schema::deceaseds::image.is_not_null())
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             10 => schema::deceaseds::table
                 .filter(schema::deceaseds::cord.is_not_null())
-                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             _ => Vec::new(),

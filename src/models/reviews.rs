@@ -58,7 +58,9 @@ impl Review {
         return 1;
     }
     pub fn edit (
-        &self, content:   String,
+        user_id: i32,
+        &self,
+        content: String,
     ) -> i16 {
         use crate::schema::reviews::dsl::reviews;
 
@@ -71,7 +73,7 @@ impl Review {
         
         return 1;
     }
-    pub fn delete(&self) -> i16 {
+    pub fn delete(&self, user_id: i32) -> i16 {
         use crate::schema::reviews::dsl::reviews;
 
         let _connection = establish_connection();
