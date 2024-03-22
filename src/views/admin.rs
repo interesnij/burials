@@ -53,8 +53,8 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/edit_district/{id}/", web::get().to(edit_district_page));
     config.route("/create_city/", web::get().to(create_city_page));
     config.route("/edit_city/{id}/", web::get().to(edit_city_page));
-    config.route("/create_service/", web::get().to(create_service_page));
-    config.route("/edit_service/{id}/", web::get().to(edit_service_page));
+    //config.route("/create_service/", web::get().to(create_service_page));
+    //config.route("/edit_service/{id}/", web::get().to(edit_service_page));
 
     config.route("/create_country/", web::post().to(create_country));
     config.route("/edit_country/{id}/", web::post().to(edit_country));
@@ -86,9 +86,9 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/deceased/wall/", web::post().to(wall_deceased));
     config.route("/deceased/unwall/", web::post().to(unwall_deceased));
 
-    config.route("/create_service/", web::post().to(create_service));
-    config.route("/edit_service/{id}/", web::post().to(edit_service));
-    config.route("/delete_service/", web::post().to(delete_service));
+    //config.route("/create_service/", web::post().to(create_service));
+    //config.route("/edit_service/{id}/", web::post().to(edit_service));
+    //config.route("/delete_service/", web::post().to(delete_service));
 }
 
 
@@ -601,8 +601,7 @@ pub async fn create_district(req: HttpRequest, mut payload: Multipart) -> impl R
                 form.region_id,
                 form.country_id,
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     };
@@ -619,8 +618,7 @@ pub async fn edit_district(req: HttpRequest, mut payload: Multipart, _id: web::P
                 form.region_id,
                 form.country_id,
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     };
@@ -650,8 +648,7 @@ pub async fn create_city(req: HttpRequest, mut payload: Multipart) -> impl Respo
                 form.region_id,
                 form.country_id,
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     }; 
@@ -669,8 +666,7 @@ pub async fn edit_city(req: HttpRequest, mut payload: Multipart, _id: web::Path<
                 form.region_id,
                 form.country_id,
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     };
@@ -699,8 +695,7 @@ pub async fn create_region(req: HttpRequest, mut payload: Multipart) -> impl Res
             Region::create (  
                 form.country_id,
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     }; 
@@ -716,8 +711,7 @@ pub async fn edit_region(req: HttpRequest, mut payload: Multipart, _id: web::Pat
             _region.edit (
                 form.country_id,
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     };
@@ -745,8 +739,7 @@ pub async fn create_country(req: HttpRequest, mut payload: Multipart) -> impl Re
             let form = crate::utils::country_form(payload.borrow_mut()).await;
             Countrie::create (  
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     }; 
@@ -761,8 +754,7 @@ pub async fn edit_country(req: HttpRequest, mut payload: Multipart, _id: web::Pa
             let form = crate::utils::country_form(payload.borrow_mut()).await;
             _country.edit (
                 form.name.clone(),
-                form.lat,
-                form.lon,
+                form.cord.clone(),
             );
         }
     };
@@ -819,7 +811,7 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let org_list = Organization::suggested();
+        let org_list = Organization::suggested_list();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_organizations.stpl")]
@@ -849,7 +841,7 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let places_list = Place::suggested();
+        let places_list = Place::suggested_list();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_places.stpl")]
@@ -879,7 +871,7 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let deceaseds_list = Deceased::suggested();
+        let deceaseds_list = Deceased::suggested_list();
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_deceaseds.stpl")]

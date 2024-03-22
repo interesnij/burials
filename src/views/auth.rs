@@ -124,14 +124,9 @@ fn find_user(username: String, password: String) -> Result<User, AuthError> {
         .filter(schema::users::username.eq(username))
         .first::<User>(&_connection)
         .expect("Error.");
-    
-    //println!("item.password {:?}", &item.password);
-    //println!("password {:?}", &password);
-    //println!("item_id {:?}", item.id);
     if bcrypt::verify(password.as_str(), item.password.as_str()).unwrap() {
         return Ok(item); 
     }
-    //println!("AuthError");
     Err(AuthError::NotFound(String::from("User not found")))
 }
 fn user_with_username_exists(username: String) -> bool {
@@ -198,8 +193,6 @@ pub async fn login(mut payload: Multipart, req: HttpRequest) -> actix_web::Resul
     }
     else {
         let form = login_form(payload.borrow_mut()).await;
-        //println!("{:?}", form.username.clone());
-        //println!("{:?}", form.password.clone());
         let i = handle_sign_in(form, &req).await;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(i.to_string()))
     }
@@ -272,20 +265,19 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
             description: None,
             image:       None,
             perm:        1,
+            created:     chrono::Local::now().naive_utc(),
         };
         if user_with_username_exists(form.username.clone()) {
-            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("user_with_username_exists"));
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("Пользователь с таким логинов уже существует"));
         }
-        //println!("{:?}", form.username.clone());
-        //println!("{:?}", form.email.clone());
-        //println!("{:?}", form.password.clone());
 
         let _new_user = diesel::insert_into(schema::users::table)
             .values(&form_user)
             .get_result::<User>(&_connection)
             .expect("Error saving user.");
 
-        //set_current_user(&_user);
+        crate::models::Log::create(_new_user.id, _new_user.id, 1, 1);
+
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(_new_user.id.to_string()))
     }
 }

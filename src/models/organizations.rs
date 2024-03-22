@@ -28,7 +28,7 @@ types
 #[derive(Debug, Queryable, Serialize, PartialEq, Deserialize, Identifiable)]
 pub struct Organization {
     pub id:          i32,
-    pub name:        String, 
+    pub name:        String,
     pub description: String,
     pub director:    String,
     pub phone:       String,
@@ -37,7 +37,8 @@ pub struct Organization {
     pub image:       Option<String>,
     pub user_id:     i32,
     pub types:       i32,
-}
+    pub created:     chrono::NaiveDateTime,
+} 
 
 // Структура для создания новой организации
 #[derive(Serialize, Deserialize, Insertable)] 
@@ -52,6 +53,7 @@ pub struct NewOrganization {
     pub image:       Option<String>,
     pub user_id:     i32,
     pub types:       i32,
+    pub created:     chrono::NaiveDateTime,
 }
 
 pub struct PlaceSmall {
@@ -158,6 +160,7 @@ impl Organization {
                 .set(schema::organizations::types.eq(2))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 2, 4);
         }
     }
     pub fn unpublish(&self, user_id: i32) -> () {
@@ -168,10 +171,11 @@ impl Organization {
                 .set(schema::organizations::types.eq(1))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 2, 8);
         }
     }
 
-    pub fn create ( 
+    pub fn create (  
         user_id:     i32,
         name:        String,
         description: String,
@@ -204,14 +208,20 @@ impl Organization {
             image:       image,
             user_id:     user_id,
             types:       types,
+            created:     chrono::Local::now().naive_utc(),
         };
         let _new = diesel::insert_into(schema::organizations::table)
             .values(&new_form)
             .get_result::<Organization>(&_connection)
             .expect("Error.");
 
-        crate::models::File::create(_new.id, 1, images);
-        crate::models::OrganizationsService::create(_new.id, services);
+        if images.len() > 0 {
+            crate::models::File::create(_new.id, 1, images);
+        }
+        if services.len() > 0 {
+            crate::models::OrganizationsService::create(_new.id, services);
+        }
+        crate::models::Log::create(user_id, _new.id, 2, 1);
 
         return _new.id;
     }
@@ -247,9 +257,13 @@ impl Organization {
             diesel::delete(schema::organizations_places::table.filter(schema::organizations_places::organization_id.eq(self.id)))
                 .execute(&_connection)
                 .expect("E");
-
-            crate::models::File::create(self.id, 1, images);
-            crate::models::OrganizationsService::create(self.id, services);
+            
+            if images.len() > 0 {
+                crate::models::File::create(self.id, 1, images);
+            }
+            if services.len() > 0 {
+                crate::models::OrganizationsService::create(self.id, services);
+            }
 
             if image.is_some() {
                 diesel::update(self)
@@ -257,20 +271,42 @@ impl Organization {
                     .execute(&_connection)
                     .expect("Error.");
             }
+            crate::models::Log::create(user_id, self.id, 2, 2);
         }
         return self.id;
     }
-    pub fn delete(&self, user_id: i32) -> i16 {
-        use crate::schema::organizations::dsl::organizations;
 
+    pub fn delete(&self, user_id: i32) -> () {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
-        if self.user_id == user_id || _user.perm > 9 {
-            diesel::delete(organizations.filter(schema::organizations::id.eq(self.id)))
+        if _user.perm > 9 {
+            let types = match self.types {
+                1 => 11,
+                2 => 12,
+                _ => 12,
+            };
+            diesel::update(self)
+                .set(schema::organizations::types.eq(types))
                 .execute(&_connection)
-                .expect("E");
+                .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 2, 3);
         }
-        return 1;
+    }
+    pub fn restore(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match self.types {
+                11 => 1,
+                12 => 2,
+                _  => 2,
+            }; 
+            diesel::update(self)
+                .set(schema::organizations::types.eq(types))
+                .execute(&_connection)
+                .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 2, 7);
+        }
     }
 
     pub fn search (
@@ -322,7 +358,7 @@ impl Organization {
             .load::<Organization>(&_connection)
             .expect("E."); 
     }
-    pub fn suggested() -> Vec<Organization> {
+    pub fn suggested_list() -> Vec<Organization> {
         let _connection = establish_connection();
         return schema::organizations::table
             .filter(schema::organizations::types.ne(2))
@@ -437,6 +473,7 @@ pub struct OrganizationsPlace {
     pub region_id:       Option<i32>,
     pub country_id:      i32,
     pub address2:        String,
+    pub created:         chrono::NaiveDateTime,
 }
 
 // Структура для создания новой организации
@@ -448,6 +485,7 @@ pub struct NewOrganizationsPlace {
     pub region_id:       Option<i32>,
     pub country_id:      i32,
     pub address2:        String,
+    pub created:         chrono::NaiveDateTime,
 }
 
 impl OrganizationsPlace {
@@ -498,12 +536,14 @@ impl OrganizationsPlace {
                 region_id:       region_id,
                 country_id:      country_id,
                 address2:        address2,
+                created:         chrono::Local::now().naive_utc(),
             };
             let _new = diesel::insert_into(schema::organizations_places::table)
                 .values(&new_form)
                 .execute(&_connection)
                 .expect("Error.");
         }
+        crate::models::Log::create(user_id, self.id, 6, 1);
         return _organization.id;
     }
 
@@ -521,6 +561,7 @@ impl OrganizationsPlace {
                 .execute(&_connection)
                 .expect("Error.");
         }
+        crate::models::Log::create(user_id, self.id, 6, 2);
         return _organization.id;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
@@ -529,6 +570,8 @@ impl OrganizationsPlace {
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         let _organization = crate::utils::get_organization(self.organization_id).expect("E.");
+        crate::models::Log::create(user_id, self.id, 6, 3);
+
         if _organization.user_id == user_id || _user.perm > 9 {
             diesel::delete(organizations_places.filter(schema::organizations_places::id.eq(self.id)))
                 .execute(&_connection)
@@ -536,7 +579,6 @@ impl OrganizationsPlace {
         }
         return 1;
     }
-
 }
 
 

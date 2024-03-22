@@ -15,7 +15,7 @@
         <link rel="shortcut icon" href="/static/images/main/favicon.ico">
         <link href="/static/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
         <link href="/static/libs/@iconscout/unicons/css/line.css" rel="stylesheet">
-        <link href="/static/styles/bootstrap.min.css?ver2" rel="stylesheet">
+        <link href="/static/styles/bootstrap.css?ver2" rel="stylesheet">
         <link rel="stylesheet" href="/static/styles/tailwind.min.css">
         <style>
             .rounded-full {

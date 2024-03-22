@@ -32,7 +32,7 @@
             <div class="relative -mt-32">
                 <div class="grid grid-cols-1">
                     <div class="p-6 bg-white dark:bg-slate-900 rounded-md shadow-md dark:shadow-gray-800">
-                        <% include!("../generic/wall_form.stpl"); %>
+                        <% include!("../generic/form.stpl"); %>
                     </div>
                 </div>
             </div>

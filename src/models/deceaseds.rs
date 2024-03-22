@@ -32,38 +32,45 @@ types
 */ 
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Deceased {
-    pub id:           i32,
-    pub user_id:      i32,
-    pub place_id:     i32,
-    pub first_name:   String,
-    pub middle_name:  Option<String>,
-    pub last_name:    String, 
-    pub birth_date:   NaiveDate,
-    pub death_date:   NaiveDate,
-    pub image:        Option<String>,
-    pub memory_words: Option<String>,
-    pub lat:          f64,
-    pub lon:          f64,
-    pub types:        i32,
-
+    pub id:              i32,
+    pub user_id:         i32,
+    pub place_id:        i32,
+    pub first_name:      String,
+    pub middle_name:     Option<String>,
+    pub last_name:       String,
+    pub birth_date:      NaiveDate,
+    pub death_date:      NaiveDate,
+    pub image:           Option<String>,
+    pub memory_words:    Option<String>,
+    pub cord:            Option<String>,
+    pub is_veteran:      bool,
+    pub is_famous:       bool,
+    pub is_wow_monument: bool,
+    pub deceased_id:     Option<i32>,
+    pub types:           i32,
+    pub created:         chrono::NaiveDateTime,
 }
 
 // Структура для создания новых записей об усопших
 #[derive(Deserialize, Insertable)]
-#[table_name="deceaseds"] 
-pub struct NewDeceased {
-    pub user_id:      i32,
-    pub place_id:     i32,
-    pub first_name:   String,
-    pub middle_name:  Option<String>,
-    pub last_name:    String,
-    pub birth_date:   NaiveDate,
-    pub death_date:   NaiveDate,
-    pub image:        Option<String>,
-    pub memory_words: Option<String>,
-    pub lat:          f64,
-    pub lon:          f64,
-    pub types:        i32,
+#[table_name="deceaseds"]
+pub struct NewDeceased {  
+    pub user_id:         i32,
+    pub place_id:        i32,
+    pub first_name:      String,
+    pub middle_name:     Option<String>,
+    pub last_name:       String,
+    pub birth_date:      NaiveDate,
+    pub death_date:      NaiveDate,
+    pub image:           Option<String>,
+    pub memory_words:    Option<String>,
+    pub cord:            Option<String>,
+    pub is_veteran:      bool,
+    pub is_famous:       bool,
+    pub is_wow_monument: bool,
+    pub deceased_id:     Option<i32>,
+    pub types:           i32,
+    pub created:         chrono::NaiveDateTime,
 }
 
 impl Deceased {
@@ -75,6 +82,7 @@ impl Deceased {
                 .set(schema::deceaseds::types.eq(2))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 4, 4);
         }
     }
     pub fn unpublish(&self, user_id: i32) -> () {
@@ -85,6 +93,7 @@ impl Deceased {
                 .set(schema::deceaseds::types.eq(1))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 4, 8);
         }
     }
     pub fn wall(&self, user_id: i32) -> () {
@@ -95,6 +104,7 @@ impl Deceased {
                 .set(schema::deceaseds::types.eq(3))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 4, 5);
         }
     }
     pub fn unwall(&self, user_id: i32) -> () {
@@ -105,6 +115,7 @@ impl Deceased {
                 .set(schema::deceaseds::types.eq(2))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 4, 6);
         }
     }
     pub fn delete(&self, user_id: i32) -> () {
@@ -121,6 +132,7 @@ impl Deceased {
                 .set(schema::deceaseds::types.eq(types))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 4, 3);
         }
     }
     pub fn restore(&self, user_id: i32) -> () {
@@ -132,19 +144,20 @@ impl Deceased {
                 12 => 2,
                 13 => 3,
                 _  => 2,
-            };
+            }; 
             diesel::update(self)
                 .set(schema::deceaseds::types.eq(types))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 4, 7);
         }
-    }
-    pub fn suggested() -> Vec<Deceased> {
+    } 
+    pub fn suggested_list() -> Vec<Deceased> {
         let _connection = establish_connection();
         return schema::deceaseds::table
             .filter(schema::deceaseds::types.ne(2))
             .load::<Deceased>(&_connection)
-            .expect("E."); 
+            .expect("E.");
     }
     pub fn count_images(&self) -> usize {
         let _connection = establish_connection();
@@ -172,18 +185,20 @@ impl Deceased {
         }
     }
     pub fn create ( 
-        user_id:      i32, 
-        place_id:     i32,
-        first_name:   String,
-        middle_name:  Option<String>,
-        last_name:    String,
-        birth_date:   String,
-        death_date:   String,
-        image:        Option<String>,
-        memory_words: Option<String>,
-        lat:          f64,
-        lon:          f64,
-        images:       Vec<String>,
+        user_id:         i32, 
+        place_id:        i32,
+        first_name:      String,
+        middle_name:     Option<String>,
+        last_name:       String,
+        birth_date:      String,
+        death_date:      String,
+        image:           Option<String>,
+        memory_words:    Option<String>,
+        cord:            Option<String>,
+        is_veteran:      bool,
+        is_famous:       bool,
+        is_wow_monument: bool,
+        images:          Vec<String>,
     ) -> i16 { 
         use crate::schema::deceaseds::dsl::deceaseds;
 
@@ -197,18 +212,22 @@ impl Deceased {
         }
 
         let new_form = NewDeceased {
-            user_id:       user_id,
-            place_id:      place_id,
-            first_name:    first_name,
-            middle_name:   middle_name,
-            last_name:     last_name,
-            birth_date:    chrono::NaiveDate::parse_from_str(&birth_date, "%Y-%m-%d").unwrap(),
-            death_date:    chrono::NaiveDate::parse_from_str(&death_date, "%Y-%m-%d").unwrap(),
-            image:         image,
-            memory_words:  memory_words,
-            lat:           lat,
-            lon:           lon,
-            types:         types,
+            user_id:         user_id,
+            place_id:        place_id,
+            first_name:      first_name,
+            middle_name:     middle_name,
+            last_name:       last_name,
+            birth_date:      chrono::NaiveDate::parse_from_str(&birth_date, "%Y-%m-%d").unwrap(),
+            death_date:      chrono::NaiveDate::parse_from_str(&death_date, "%Y-%m-%d").unwrap(),
+            image:           image,
+            memory_words:    memory_words,
+            cord:            cord,
+            is_veteran:      is_veteran,
+            is_famous:       is_famous,
+            is_wow_monument: is_wow_monument,
+            deceased_id:     None,
+            types:           types,
+            created:         chrono::Local::now().naive_utc(),
         };
         let _new = diesel::insert_into(schema::deceaseds::table)
             .values(&new_form)
@@ -217,23 +236,28 @@ impl Deceased {
         let _place = crate::utils::get_place(place_id).expect("E.");
         _place.plus(1);
 
-        crate::models::File::create(_new.id, 3, images);
+        if images.len() > 0 {
+            crate::models::File::create(_new.id, 3, images);
+        }
+        crate::models::Log::create(user_id, _new.id, 4, 1);
         
         return 1;
     }
     pub fn edit (  
         &self,
-        user_id:      i32,
-        first_name:   String,
-        middle_name:  Option<String>,
-        last_name:    String,
-        birth_date:   String,
-        death_date:   String,
-        image:        Option<String>,
-        memory_words: Option<String>,
-        lat:          f64,
-        lon:          f64,
-        images:       Vec<String>,
+        user_id:         i32,
+        first_name:      String,
+        middle_name:     Option<String>,
+        last_name:       String,
+        birth_date:      String,
+        death_date:      String,
+        image:           Option<String>,
+        memory_words:    Option<String>,
+        cord:            Option<String>,
+        is_veteran:      bool,
+        is_famous:       bool,
+        is_wow_monument: bool,
+        images:          Vec<String>,
     ) -> i16 {
         use crate::schema::deceaseds::dsl::deceaseds;
 
@@ -251,8 +275,10 @@ impl Deceased {
                 schema::deceaseds::birth_date.eq(chrono::NaiveDate::parse_from_str(&birth_date, "%Y-%m-%d").unwrap()),
                 schema::deceaseds::death_date.eq(chrono::NaiveDate::parse_from_str(&death_date, "%Y-%m-%d").unwrap()),
                 schema::deceaseds::memory_words.eq(memory_words),
-                schema::deceaseds::lat.eq(lat),
-                schema::deceaseds::lon.eq(lon),
+                schema::deceaseds::cord.eq(cord),
+                schema::deceaseds::is_veteran.eq(is_veteran),
+                schema::deceaseds::is_famous.eq(is_famous),
+                schema::deceaseds::is_wow_monument.eq(is_wow_monument),
             ))
             .execute(&_connection)
             .expect("Error.");
@@ -264,16 +290,9 @@ impl Deceased {
                 .expect("Error.");
         }
         if images.len() > 0 {
-            //diesel::delete(
-            //    schema::files::table.filter(
-            //        schema::files::object_id.eq(_new.id),
-            //         schema::files::object_types.eq(3),
-            //    ))
-            //    .execute(&_connection)
-            //    .expect("E");
-
             crate::models::File::create(self.id, 3, images);
         }
+        crate::models::Log::create(user_id, self.id, 4, 2);
 
         return 1;
     }
@@ -321,77 +340,157 @@ impl Deceased {
             .len();
     }
     pub fn main_search (
-        types:            String,
-        first_name:       Option<String>,
-        middle_name:      Option<String>,
-        last_name:        String,
-        birth_date:       Option<chrono::NaiveDate>,
-        death_date:       Option<chrono::NaiveDate>,
-        location:         Option<String>,
-        deceadeds_id:     Option<i32>,
-        is_veteran:       Option<bool>,
-        is_famous:        Option<bool>,
-        with_photo:       Option<bool>,
-        with_coordinates: Option<bool>,
+        first_name:  Option<String>, 
+        middle_name: Option<String>,
+        last_name:   String,
+        birth_date:  Option<chrono::NaiveDate>,
+        death_date:  Option<chrono::NaiveDate>,
+        place:       Option<i32>,
+        is_veteran:  Option<bool>,
+        is_famous:   Option<bool>,
+        with_photo:  Option<bool>,
+        with_cord:   Option<bool>,
     ) -> Vec<Deceased> { 
-        use crate::schema::deceaseds::dsl::deceaseds;
-
+        /*
+            case switch 
+            1 last_name exists
+            2 place exists
+            3 birth_date exists
+            4 death_date exists
+            5 first_name exists
+            6 middle_name exists
+            7 is_veteran exists
+            8 is_famous exists
+            9 with_photo exists
+            10 with_cord exists
+        */
         let _connection = establish_connection();
         let mut stack = Vec::new();
-        let list: Vec<Deceased>;
-        if types == "wall".to_string() {
-            list = deceaseds
-                .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                .filter(schema::deceaseds::types.eq(3))
-                .load::<Deceased>(&_connection)
-                .expect("E.");
+        let mut case = 0;
+
+        if last_name.is_some() {
+            case = 1;
         }
-        else {
-            list = deceaseds
-                .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-                .load::<Deceased>(&_connection)
-                .expect("E.");
+        if place.is_some() {
+            case = 2;
         }
-        let list = deceaseds
-            .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name + "%"))
-            .load::<Deceased>(&_connection)
-            .expect("E.");
+        if birth_date.is_some() {
+            case = 3;
+        }
+        if death_date.is_some() {
+            case = 4;
+        }
+        if first_name.is_some() {
+            case = 5;
+        }
+        if middle_name.is_some() {
+            case = 6;
+        }
+        if is_veteran.is_some() {
+            case = 7;
+        }
+        if is_famous.is_some() {
+            case = 8;
+        }
+        if with_photo.is_some() {
+            case = 9;
+        }
+        if with_cord.is_some() {
+            case = 10;
+        }
+        let list: Vec<Deceased> = match case {
+            1  => schema::deceaseds::table
+                .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name.as_deref().unwrap() + "%"))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            2  => schema::deceaseds::table
+                .filter(schema::deceaseds::place_id.eq(place.unwrap()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            3  => schema::deceaseds::table
+                .filter(schema::deceaseds::birth_date.eq(birth_date.as_deref().unwrap()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            4  => schema::deceaseds::table
+                .filter(schema::deceaseds::death_date.eq(death_date.as_deref().unwrap()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            5  => schema::deceaseds::table
+                .filter(schema::deceaseds::first_name.eq("%".to_owned() + &first_name.as_deref().unwrap() + "%"))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            6  => schema::deceaseds::table
+                .filter(schema::deceaseds::middle_name.eq("%".to_owned() + &middle_name.as_deref().unwrap() + "%"))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            7  => schema::deceaseds::table
+                .filter(schema::deceaseds::is_veteran.eq(is_veteran.unwrap()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            8  => schema::deceaseds::table
+                .filter(schema::deceaseds::is_famous.eq(is_famous.unwrap()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            9  => schema::deceaseds::table
+                .filter(schema::deceaseds::image.is_not_null()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            10 => schema::deceaseds::table
+                .filter(schema::deceaseds::cord.is_not_null()))
+                .filter(schema::deceaseds::types.eq_any(vec(2, 3)))
+                .load::<Deceased>(&_connection)
+                .expect("E."),
+            _ => Vec::new(),
+        };
+       
         for i in list.into_iter() {
             let mut check_exists = false;
             let mut default = true;
 
-            if first_name.is_some() {
+            if case != 5 && first_name.is_some() {
                 check_exists = i.first_name.contains(first_name.as_deref().unwrap());
                 default = false;
-            }
-            if middle_name.is_some() && i.middle_name.is_some() {
+            } 
+            if case != 6 && middle_name.is_some() && i.middle_name.is_some() {
                 let i_middle_name = i.middle_name.as_deref().unwrap();
                 check_exists = i_middle_name.contains(middle_name.as_deref().unwrap());
                 default = false;
             }
-            if birth_date.is_some() {
-                check_exists = i.birth_date == birth_date.unwrap();
+            if case != 3 && birth_date.is_some() { 
+                check_exists = i.birth_date == birth_date.as_deref().unwrap();
                 default = false;
             }
-            if death_date.is_some() {
-                check_exists = i.death_date == death_date.unwrap();
+            if case != 4 && death_date.is_some() {
+                check_exists = i.death_date == death_date.as_deref().unwrap();
                 default = false;
             }
-            if with_photo.is_some() {
+            if case != 9 && with_photo.is_some() {
                 check_exists == i.image.is_some();
                 default = false;
             }
-
-            if location.is_some() {
-                let loc = "%".to_owned() + location.as_deref().unwrap() + "%"; 
-                let places_ids = crate::models::Place::search_ids(&loc);
-                let deceaseds_ids = deceaseds
-                    .filter(schema::deceaseds::place_id.eq_any(places_ids))
-                    .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
-                    .select(schema::deceaseds::id)
-                    .load::<i32>(&_connection)
-                    .expect("E.");
-                check_exists = deceaseds_ids.iter().any(|a| a==&i.id);
+            if case != 2 && place.is_some() {
+                check_exists == i.place_id = place.unwrap();
+                default = false;
+            }
+            if case != 7 && is_veteran.is_some() {
+                check_exists == i.is_veteran;
+                default = false; 
+            }
+            if case != 8 && is_famous.is_some() {
+                check_exists == i.is_famous;
+                default = false;
+            }
+            if case != 10 && with_coordinates.is_some() {
+                check_exists == i.cord.is_some();
                 default = false;
             }
 

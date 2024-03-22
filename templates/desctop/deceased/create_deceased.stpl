@@ -89,12 +89,8 @@
                         </div>
 
 						<div class="md:col-span-6 col-span-12 text-start">
-							<label class="font-semibold" for="get_my_lat">Широта: <span class="text-red-600">*</span></label>
-							<input id="get_my_lat" name="lat" type="text" class="form-input mt-3" />
-						</div>
-						<div class="md:col-span-6 col-span-12 text-start">
-							<label class="font-semibold" for="get_my_lat">Долгота: <span class="text-red-600">*</span></label>
-							<input id="get_my_lon" name="lon" type="text" class="form-input mt-3" />
+							<label class="font-semibold" for="id_cord">Координаты:</label>
+							<input id="id_cord" name="cord" type="text" class="form-input mt-3" />
 						</div>
 
 						<br> 

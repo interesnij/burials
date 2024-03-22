@@ -106,14 +106,10 @@
                                 </div>
                             </div>
 
-                            <div class="md:col-span-6 col-span-12 text-start">
-                                <label class="font-semibold" for="id_lat">Широта: <span class="text-red-600">*</span></label>
-                                <input id="id_lat" name="lat" type="text" class="form-input mt-3" />
-                            </div>
-                            <div class="md:col-span-6 col-span-12 text-start">
-                                <label class="font-semibold" for="id_lon">Долгота: <span class="text-red-600">*</span></label>
-                                <input id="id_lon" name="lon" type="text" class="form-input mt-3" />
-                            </div>
+                            <div class="grid grid-cols-1">
+                                <label class="font-semibold" for="id_cord">Координаты:</label>
+                                <input id="id_cord" name="cord" type="text" class="form-input mt-3" />
+						    </div>
 
                             <br>
                             <div class="grid lg:grid-cols-2 grid-cols-1 gap-5" >

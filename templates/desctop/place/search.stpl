@@ -1,0 +1,4 @@
+<option value="">Выберите кладбище</option>
+<% for i in object_list.iter() { %>
+    <option value="<%= i.id %>"><%= i.title %> (<%= i.get_loc() %>)</option>
+<% } %>

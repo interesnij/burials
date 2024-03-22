@@ -24,49 +24,63 @@ types
 */
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct Place {
-    pub id:          i32, 
-    pub user_id:     i32,
-    pub city_id:     Option<i32>,
-    pub district_id: Option<i32>,
-    pub region_id:   Option<i32>,
-    pub country_id:  i32,
-    pub title:       String,
-    pub description: Option<String>,
-    pub hours:       Option<String>,
-    pub image:       Option<String>,
-    pub address:     Option<String>,
-    pub count:       i16,
-    pub director:    Option<String>,
-    pub phone:       Option<String>,
-    pub lat:         f64,
-    pub lon:         f64,
-    pub types:       i32,
-}
+    pub id:               i32, 
+    pub user_id:          i32,
+    pub city_id:          Option<i32>,
+    pub district_id:      Option<i32>,
+    pub region_id:        Option<i32>,
+    pub country_id:       i32,
+    pub title:            String,
+    pub description:      Option<String>,
+    pub hours:            Option<String>,
+    pub image:            Option<String>,
+    pub address:          Option<String>,
+    pub count:            i16,
+    pub director:         Option<String>,
+    pub phone:            Option<String>,
+    pub cadastral_number: Option<String>,
+    pub cord:             Option<String>,
+    pub types:            i32,
+    pub created:          chrono::NaiveDateTime,
+} 
 
 // Структура для создания новой записи Place
 #[derive(Serialize, Deserialize, Insertable)]
 #[table_name = "places"] 
 pub struct NewPlace {
-    pub user_id:     i32,
-    pub city_id:     Option<i32>,
-    pub district_id: Option<i32>,
-    pub region_id:   Option<i32>,
-    pub country_id:  i32,
-    pub title:       String,
-    pub description: Option<String>,
-    pub hours:       Option<String>,
-    pub image:       Option<String>,
-    pub address:     Option<String>,
-    pub count:       i16,
-    pub director:    Option<String>,
-    pub phone:       Option<String>,
-    pub lat:         f64,
-    pub lon:         f64,
-    pub types:       i32,
+    pub user_id:          i32,
+    pub city_id:          Option<i32>,
+    pub district_id:      Option<i32>,
+    pub region_id:        Option<i32>,
+    pub country_id:       i32,
+    pub title:            String,
+    pub description:      Option<String>,
+    pub hours:            Option<String>,
+    pub image:            Option<String>,
+    pub address:          Option<String>,
+    pub count:            i16,
+    pub director:         Option<String>,
+    pub phone:            Option<String>,
+    pub cadastral_number: Option<String>,
+    pub cord:             Option<String>,
+    pub types:            i32,
+    pub created:          chrono::NaiveDateTime,
+}
+
+pub struct SmallPlace {
+    pub id:      i32,
+    pub title:   String,
+    pub address: String,
 }
 
 impl Place {
-    pub fn suggested() -> Vec<Place> {
+    pub fn search(name: String) -> Vec<Place> {
+        return schema::places::table
+            .filter(schema::places::ilike("%".to_owned() + &name + "%"))
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
+    pub fn suggested_list() -> Vec<Place> {
         let _connection = establish_connection();
         return schema::places::table
             .filter(schema::places::types.ne(2))
@@ -164,6 +178,7 @@ impl Place {
                 .set(schema::places::types.eq(2))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 3, 4);
         }
     }
     pub fn unpublish(&self, user_id: i32) -> () {
@@ -174,25 +189,26 @@ impl Place {
                 .set(schema::places::types.eq(1))
                 .execute(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 3, 8);
         }
     }
 
     pub fn create (
-        user_id:     i32,
-        city_id:     Option<i32>,
-        district_id: Option<i32>,
-        region_id:   Option<i32>,
-        country_id:  i32,
-        title:       String,
-        description: Option<String>,
-        hours:       Option<String>,
-        image:       Option<String>,
-        address:     Option<String>,
-        director:    Option<String>,
-        phone:       Option<String>,
-        lat:         f64,
-        lon:         f64,
-        images:      Vec<String>,
+        user_id:          i32,
+        city_id:          Option<i32>,
+        district_id:      Option<i32>,
+        region_id:        Option<i32>,
+        country_id:       i32,
+        title:            String,
+        description:      Option<String>,
+        hours:            Option<String>,
+        image:            Option<String>,
+        address:          Option<String>,
+        director:         Option<String>,
+        phone:            Option<String>,
+        cadastral_number: Option<String>,
+        cord:             Option<String>,
+        images:           Vec<String>,
     ) -> i16 {
         use crate::schema::places::dsl::places;
 
@@ -206,49 +222,53 @@ impl Place {
         }
         
         let new_form = NewPlace {
-            user_id:     user_id,
-            city_id:     city_id,
-            district_id: district_id,
-            region_id:   region_id,
-            country_id:  country_id,
-            title:       title,
-            description: description,
-            hours:       hours,
-            image:       image,
-            address:     address,
-            count:       0,
-            director:    director,
-            phone:       phone,
-            lat:         lat,
-            lon:         lon,
-            types:       types,
+            user_id:          user_id,
+            city_id:          city_id,
+            district_id:      district_id,
+            region_id:        region_id,
+            country_id:       country_id,
+            title:            title,
+            description:      description,
+            hours:            hours,
+            image:            image,
+            address:          address,
+            count:            0,
+            director:         director,
+            phone:            phone,
+            cadastral_number: cadastral_number,
+            cord:             cord,
+            types:            types,
+            created:          chrono::Local::now().naive_utc(),
         };
         let _new = diesel::insert_into(schema::places::table)
             .values(&new_form)
             .get_result::<Place>(&_connection)
             .expect("Error.");
 
-        crate::models::File::create(_new.id, 2, images);
+        if images.len() > 0 {
+            crate::models::File::create(_new.id, 2, images);
+        }
+        crate::models::Log::create(user_id, _new.id, 3, 1);
 
         return 1;
     }
-    pub fn edit ( 
+    pub fn edit (  
         &self,
-        user_id:     i32,
-        city_id:     Option<i32>,
-        district_id: Option<i32>,
-        region_id:   Option<i32>,
-        country_id:  i32,
-        title:       String,
-        description: Option<String>,
-        hours:       Option<String>,
-        image:       Option<String>,
-        address:     Option<String>,
-        director:    Option<String>,
-        phone:       Option<String>,
-        lat:         f64,
-        lon:         f64,
-        images:      Vec<String>,
+        user_id:          i32,
+        city_id:          Option<i32>,
+        district_id:      Option<i32>,
+        region_id:        Option<i32>,
+        country_id:       i32,
+        title:            String,
+        description:      Option<String>,
+        hours:            Option<String>,
+        image:            Option<String>,
+        address:          Option<String>,
+        director:         Option<String>,
+        phone:            Option<String>,
+        cadastral_number: Option<String>,
+        cord:             Option<String>,
+        images:           Vec<String>,
     ) -> i16 {
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
@@ -265,8 +285,8 @@ impl Place {
                         schema::places::address.eq(address),
                         schema::places::director.eq(director),
                         schema::places::phone.eq(phone),
-                        schema::places::lat.eq(lat),
-                        schema::places::lon.eq(lon),
+                        schema::places::cadastral_number.eq(cadastral_number),
+                        schema::places::cord.eq(cord),
                     ))
                     .execute(&_connection)
                     .expect("Error.");
@@ -277,15 +297,51 @@ impl Place {
                     .execute(&_connection)
                     .expect("Error.");
             }
-
-            crate::models::File::create(self.id, 2, images);
+            if images.len() > 0 {
+                crate::models::File::create(self.id, 2, images);
+            }
+            crate::models::Log::create(user_id, self.id, 3, 2);
         }
         return 1;
     }
+    pub fn delete(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match self.types {
+                1 => 11,
+                2 => 12,
+                _ => 12,
+            };
+            diesel::update(self)
+                .set(schema::places::types.eq(types))
+                .execute(&_connection)
+                .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 3, 3);
+        }
+    }
+    pub fn restore(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match self.types {
+                11 => 1,
+                12 => 2,
+                _  => 2,
+            }; 
+            diesel::update(self)
+                .set(schema::places::types.eq(types))
+                .execute(&_connection)
+                .expect("Error.");
+            crate::models::Log::create(user_id, self.id, 3, 7);
+        }
+    }
+
     pub fn delete(&self) -> i16 {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
+        crate::models::Log::create(user_id, self.id, 3, 3);
         diesel::delete(places.filter(schema::places::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");

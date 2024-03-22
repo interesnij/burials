@@ -95,7 +95,7 @@ function init() {
   map = new ymaps.Map('map', {
     center: [<%= place.lat %>, <%= place.lon %>],
     zoom: 9,
-    controls: []
+    controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
   });
   map.setType('yandex#satellite');
   // Создадим панель маршрутизации.

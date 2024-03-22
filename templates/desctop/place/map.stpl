@@ -1,51 +1,30 @@
-
-<div class="grid md:grid-cols-2 grid-cols-1 mt-6">
-  <p class="font-semibold mt-2">
-    <br />
-    <div>
-      <label class="font-semibold" for="suggest1">Адрес кладбища:</label>
-      <input value="" type="text" id="suggest1" class="input form-input">
-      <span style="display:none" id="notice1"></span>
-    </div>
-  </p>
-</div>
-<div>
-   <label class="font-semibold" for="suggest2">Адрес назначения:</label>
-   <input value="<%= deceased.lat %>, <%= deceased.lon %>" disable type="text" id="suggest2" class="input form-input">
-   <p style="display:none" id="notice2"></p>
-   <br />
-</div>
-<div>
-   <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
-   <span style="display:none" id="notice3"></span>
-</div>
-
-<div id="map_header" style="margin-top:50px" class="hidden">
-   <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
-   <button type="submit" id="button1">Проверить</button>
-   <p id="notice1"></p>
-   <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
-   <button type="submit" id="button2">Проверить</button>
-   <p id="notice2"></p>
-</div>
-<div id="route" class="hidden">
-   <button type="submit" id="button3">Построить маршрут</button>
-   <p id="notice3"></p>
-</div>
-
-<div id="map" style="width: 100%; height: 400px; padding: 0; margin: 0;"></div>
-
-<div id="map_footer">
-   <div id="messageHeader1"></div>
-   <div id="message1"></div>
-   <div id="messageHeader2"></div>
-   <div id="message2"></div>
-</div>
-
-
-
-
-
+<h6 class="text-lg font-semibold">
+                        Построить маршрут
+                    </h6>
+                    <p class="font-semibold mt-2">
+                        <br />
+                        <div>
+                            <label class="font-semibold" for="suggest1">Адрес отправления:</label>
+                            <input type="text" id="suggest1" class="input form-input">
+                            <span id="notice1"></span>
+                        </div> 
+                        <div>
+                            <label class="font-semibold" for="suggest2">Адрес назначения:</label>
+                            <% if place.address.is_some() { %>
+                              <input value="<%= place.get_loc() %>, <%= place.address.as_deref().unwrap() %>" type="text" id="suggest2" class="input form-input">
+                            <% } else { %>
+                              <input value="<%= place.lat %>, <%= place.lon %>" type="text" id="suggest2" class="input form-input">
+                            <% } %>
+                            <p id="notice2"></p>
+                            <br />
+                        </div>
+                        <div>
+                            <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
+                            <span id="notice3"></span>
+                        </div>
+                    </p>
+                    
+<div id="map"></div>
 
 
 <script>
@@ -57,30 +36,33 @@ function init() {
     map, routePanelControl,
     addrFrom, addrTo;
 
-  var map; 
+
   map = new ymaps.Map('map', {
-    center: [<%= deceased.lat %>, <%= deceased.lon %>],
-    zoom: 18,
+    center: [<%= place.cord %>],
+    zoom: 9,
     controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
   });
-
   map.setType('yandex#satellite');
-      map.geoObjects
-          .add(new ymaps.Placemark([<%= deceased.lat %>, <%= deceased.lon %>], {
-          balloonContent: '<%= deceased.last_name %> <%= deceased.first_name %>',
-          iconCaption: ''
-      }, {
-          preset: 'islands#blueCircleDotIconWithCaption',
-          iconCaptionMaxWidth: '50',
-          iconLayout: 'default#image',
-          iconImageHref: '<%= deceased.get_image() %>',
-          icon_imagesize: [30, 42],
-          iconImageOffset: [-3, -42]
-      }));
+
+  //<% for i in object_list.iter() { %>
+  //    map.geoObjects
+  //        .add(new ymaps.Placemark([<%= i.cord %>], {
+  //        balloonContent: '<%= i.last_name %> <%= i.first_name %>',
+  //        iconCaption: ''
+  //    }, {
+  //        preset: 'islands#blueCircleDotIconWithCaption',
+  //        iconCaptionMaxWidth: '50',
+  //        iconLayout: 'default#image',
+  //        iconImageHref: '<%= i.get_image() %>',
+  //        icon_imagesize: [30, 42],
+  //        iconImageOffset: [-3, -42]
+  //    }));
+  //<% } %>
 
   //////////////////////////////////
   routePanelControl = new ymaps.control.RoutePanel({
       options: {
+        // Добавим заголовок панели.
         showHeader: true,
         title: 'Расчёт расстояния'
       }
@@ -95,11 +77,13 @@ function init() {
         }
       }
     });
+    // Пользователь сможет построить только автомобильный маршрут.
     routePanelControl.routePanel.options.set({
       types: {
         auto: true
       }
     });
+    // Неизменяемые точки "откуда" и "куда"
     routePanelControl.routePanel.state.set({
       fromEnabled: false,
       toEnabled: false
@@ -108,18 +92,9 @@ function init() {
     map.controls.add(routePanelControl).add(zoomControl);
   //////////////////////////////////
 
-  function create_path() {
+  on('body', 'click', '#button3', function() { 
     addrFrom = document.body.querySelector("#suggest1");
     addrTo = document.body.querySelector("#suggest2");
-    
-    geocode('#suggest1');
-    geocode('#suggest2');
-    showRoute(addrFrom.value, addrTo.value);
-  }
-
-  on('body', 'click', '#button3', function() { 
-    addrFrom = document.body.querySelector("#suggest1").value;
-    addrTo = document.body.querySelector("#suggest2").value;
     addrFrom.style.setProperty('border', 'inherit', 'important');
     addrTo.style.setProperty('border', 'inherit', 'important');
     if (!addrFrom.value) {
@@ -132,21 +107,10 @@ function init() {
       toast_error("Укажите адрес назначения");
       return
     }
-    create_path();
-  });
-
-  on('body', 'click', '.get_ma', function() { 
     geocode('#suggest1');
     geocode('#suggest2');
-    addrFrom = document.body.querySelector("#suggest1").value;
-    addrTo = document.body.querySelector("#suggest2").value;
-    if (addrFrom && addrTo) {
-      showRoute(addrFrom, addrTo);
-    } else {
-      alert("Согласитесь на использование Вашего местоположение");
-    }
+    showRoute(addrFrom.value, addrTo.value);
   });
-
 
   function geocode(ctrl_id) {
     document.body.querySelector(ctrl_id)
@@ -162,20 +126,20 @@ function init() {
           case 'number':
           case 'near':
           case 'range':
-            error = '';
+            error = 'Неточный адрес, требуется уточнение';
             hint = 'Уточните номер дома';
             break;
           case 'street':
-            error = '';
+            error = 'Неполный адрес, требуется уточнение';
             hint = 'Уточните номер дома';
             break;
           case 'other':
           default:
-            error = '';
+            error = 'Неточный адрес, требуется уточнение';
             hint = 'Уточните адрес';
         }
       } else {
-        error = '';
+        error = 'Адрес не найден';
         hint = 'Уточните адрес';
       }
 
@@ -226,8 +190,8 @@ function init() {
       document.body.querySelector("#notice2").innerHTML = message;
       document.body.querySelector("#notice2").style.display = "block";
     }
-
   }
+
 
   function showRoute(from, to) {
     routePanelControl.routePanel.state.set({
@@ -242,27 +206,24 @@ function init() {
         var activeRoute = route.getActiveRoute();
         if (activeRoute) {
           var length = route.getActiveRoute().properties.get("distance");
-            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<span>Расстояние: ' + length.text + '.</span>');
             
-            balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+          balloonContentLayout = ymaps.templateLayoutFactory.createClass(
               '<span>Расстояние: ' + length.text + '.</span>');
           route.options.set('routeBalloonContentLayout', balloonContentLayout);
           activeRoute.balloon.open();
         }
       });
     });
-  }
+  } 
 
   function showMessage(ctrl_id, message) {
     if (ctrl_id == '#suggest1') {
-      //document.body.querySelector("#messageHeader1").innerHTML = '';
+      document.body.querySelector("#messageHeader1").innerHTML = '<b>Пункт отправления:</b>';
       document.body.message1("#messageHeader1").innerHTML = message;
     } else {
-      //document.body.querySelector("#messageHeader2").innerHTML = '';
+      document.body.querySelector("#messageHeader2").innerHTML = '<b>Пункт назначения:</b>';
       document.body.message1("#message2").innerHTML = message;
     }
   }
-  create_path();
 }
 </script>

@@ -50,6 +50,9 @@
           </div><!--end container-->
       </div>
   </footer>
+
+  <div class="body_overlay pointer"></div>
+
   <a href="#" onclick="topFunction()" id="back-to-top" class="back-to-top fixed hidden text-lg rounded-full z-10 bottom-5 right-5 h-9 w-9 text-center bg-indigo-600 text-white leading-9"><i class="uil uil-arrow-up"></i></a>
             
     <script src="/static/libs/tiny-slider/min/tiny-slider.js"></script>
@@ -58,9 +61,9 @@
     <script src="/static/js/app.js"></script>
     <script src="/static/js/easy_background.js"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f24c512a-4137-4c65-a9e6-39f5d7cd0ebe&suggest_apikey=6d98461b-030b-42e8-9a8b-0ad3c4bea025&height=100%" type="text/javascript"></script>
-    <script src="/static/scripts/main3.js?ver12"></script>
+    <script src="/static/scripts/main4.js?ver12"></script>
     <% if request_user.is_superuser() { %>
-        <script defer type="text/javascript" src="/static/scripts/admin2.js?ver12"></script>
+        <script defer type="text/javascript" src="/static/scripts/admin3.js?ver12"></script>
     <% } %>
     <script>
         easy_background("#home",

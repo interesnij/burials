@@ -36,14 +36,14 @@ use crate::models::{
 };
 
 
-//-------------------------------------------------------------------------
-
 pub fn place_routes(config: &mut web::ServiceConfig) {
     config.route("/places/", web::get().to(all_places_page));
+    config.route("/search_places/", web::get().to(search_places_page));
     config.route("/all_place_city/{id}/", web::get().to(all_place_city_page));
     config.route("/all_place_region/{id}/", web::get().to(all_place_region_page));
     config.route("/all_place_countries/{id}/", web::get().to(all_place_countries_page));
     config.route("/place/{id}/", web::get().to(place_page));
+    config.route("/place/{id}/map/", web::get().to(place_map));
     config.route("/create_place/", web::get().to(create_place_page));
     config.route("/edit_place/{id}/", web::get().to(edit_place_page));
 
@@ -55,8 +55,27 @@ pub fn place_routes(config: &mut web::ServiceConfig) {
 }
 
 
+pub async fn place_map(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let services_enabled = false;
+    let _place = crate::utils::get_place(*_id).expect("E.");
+    #[derive(TemplateOnce)]
+    #[template(path = "desctop/place/map.stpl")]
+    struct Template {                
+        deceased:         Place,
+        services_enabled: bool,
+    }
+    let body = Template {
+        deceased:         _place,
+        services_enabled: services_enabled,
+    }
+    .render_once()
+    .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+}
+
 pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
 
     let user_id = get_request_user(&req).await;
     let object_list = Place::get_all();
@@ -99,10 +118,10 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_places.stpl")]
             struct Template {
-                object_list:  Vec<Place>,
+                object_list: Vec<Place>,
             }
             let body = Template {
-                object_list:  object_list,
+                object_list: object_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -112,10 +131,10 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_places.stpl")]
             struct Template {
-                object_list:  Vec<Place>,
+                object_list: Vec<Place>,
             }
             let body = Template {
-                object_list:  object_list,
+                object_list: object_list,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -124,8 +143,39 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
     }
 }
 
+#[derive(Deserialize)]
+pub struct SeacrhData {
+    pub name: Option<String>,
+} 
+pub async fn search_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
+    if params_some.is_ok() {
+        let params = params_some.unwrap();
+        if params.name.is_none() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no name valuee")); 
+        }
+
+        let object_list = block(move || Place::search(params.name.as_deref().unwrap())).await?;
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/place/search.stpl")]
+        struct Template {
+            object_list: Vec<Place>,
+        }
+        let body = Template {
+            object_list: object_list,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+    else {
+        return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no params"));
+    }
+}
+
 pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _city = crate::utils::get_city(*_id).expect("E."); 
     let _places = block(move || Place::city_list(*_id)).await?;
     let user_id = get_request_user(&req).await;
@@ -171,12 +221,12 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
-                city:         Citie,
-                all_places:   Vec<Place>,
+                city:       Citie,
+                all_places: Vec<Place>,
             }
             let body = Template {
-                city:         _city,
-                all_places:   _places,
+                city:       _city,
+                all_places: _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -186,12 +236,12 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_city.stpl")]
             struct Template {
-                city:         Citie,
-                all_places:   Vec<Place>,
+                city:       Citie,
+                all_places: Vec<Place>,
             }
             let body = Template {
-                city:         _city,
-                all_places:   _places,
+                city:       _city,
+                all_places: _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -203,6 +253,7 @@ pub async fn all_place_city_page(req: HttpRequest, _id: web::Path<i32>) -> actix
 
 pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _region = crate::utils::get_region(*_id).expect("E."); 
     let _places = block(move || Place::region_list(*_id)).await?;
     let user_id = get_request_user(&req).await;
@@ -248,12 +299,12 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
-                region:       Region,
-                all_places:   Vec<Place>,
+                region:     Region,
+                all_places: Vec<Place>,
             }
             let body = Template {
-                region:       _region,
-                all_places:   _places,
+                region:     _region,
+                all_places: _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -263,12 +314,12 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_region.stpl")]
             struct Template {
-                region:       Region,
-                all_places:   Vec<Place>,
+                region:     Region,
+                all_places: Vec<Place>,
             }
             let body = Template {
-                region:       _region,
-                all_places:   _places,
+                region:     _region,
+                all_places: _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -280,6 +331,7 @@ pub async fn all_place_region_page(req: HttpRequest, _id: web::Path<i32>) -> act
 
 pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _country = crate::utils::get_country(*_id).expect("E."); 
     let _places = block(move || Place::country_list(*_id)).await?;
     let user_id = get_request_user(&req).await;
@@ -325,12 +377,12 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_countries.stpl")]
             struct Template {
-                country:      Countrie,
-                all_places:   Vec<Place>,
+                country:    Countrie,
+                all_places: Vec<Place>,
             }
             let body = Template {
-                country:      _country,
-                all_places:   _places,
+                country:    _country,
+                all_places: _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -340,12 +392,12 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_all_place_countries.stpl")]
             struct Template {
-                country:      Countrie,
-                all_places:   Vec<Place>,
+                country:    Countrie,
+                all_places: Vec<Place>,
             }
             let body = Template {
-                country:      _country,
-                all_places:   _places,
+                country:    _country,
+                all_places: _places,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -359,6 +411,7 @@ pub async fn all_place_countries_page(req: HttpRequest, _id: web::Path<i32>) -> 
 
 pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _place = crate::utils::get_place(*_id).expect("E."); 
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
@@ -400,10 +453,10 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_place.stpl")]
             struct Template {
-                place:        Place,
+                place: Place,
             }
             let body = Template {
-                place:        _place,
+                place: _place,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -413,10 +466,10 @@ pub async fn place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Res
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/anon_place.stpl")]
             struct Template {
-                place:        Place,
+                place: Place,
             }
             let body = Template {
-                place:        _place,
+                place: _place,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -444,8 +497,8 @@ pub async fn create_place(req: HttpRequest, mut payload: Multipart) -> impl Resp
             form.address.clone(),
             form.director.clone(),
             form.phone.clone(),
-            form.lat,
-            form.lon,
+            form.cadastral_number.clone(),
+            form.cord.clone(),
             form.images.clone(),
         );
     }; 
@@ -471,8 +524,8 @@ pub async fn edit_place(req: HttpRequest, mut payload: Multipart, _id: web::Path
             form.address.clone(),
             form.director.clone(),
             form.phone.clone(),
-            form.lat,
-            form.lon,
+            form.cadastral_number.clone(),
+            form.cord.clone(),
             form.images.clone(),
         );
     };
@@ -514,6 +567,7 @@ pub async fn unpublish_place(req: HttpRequest, mut payload: Multipart) -> impl R
 
 pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
@@ -525,16 +579,18 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/create_place.stpl")]
             struct Template {
-                request_user: User,
-                is_ajax:      i32,
-                country_list: Vec<Countrie>,
-                place_list:   Vec<Place>,
+                request_user:     User,
+                is_ajax:          i32,
+                country_list:     Vec<Countrie>,
+                place_list:       Vec<Place>,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user: _request_user,
-                is_ajax:      is_ajax,
-                country_list: country_list,
-                place_list:   place_list,
+                request_user:     _request_user,
+                is_ajax:          is_ajax,
+                country_list:     country_list,
+                place_list:       place_list,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -544,16 +600,18 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/create_place.stpl")]
             struct Template {
-                request_user: User,
-                is_ajax:      i32,
-                country_list: Vec<Countrie>,
-                place_list:   Vec<Place>,
+                request_user:     User,
+                is_ajax:          i32,
+                country_list:     Vec<Countrie>,
+                place_list:       Vec<Place>,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user: _request_user,
-                is_ajax:      is_ajax,
-                country_list: country_list,
-                place_list:   place_list,
+                request_user:     _request_user,
+                is_ajax:          is_ajax,
+                country_list:     country_list,
+                place_list:       place_list,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -567,6 +625,7 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
 
 pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
 
@@ -595,24 +654,26 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/edit_place.stpl")]
             struct Template {
-                request_user:  User,
-                place:         Place,
-                is_ajax:       i32,
-                country_list:  Vec<Countrie>,
-                region_list:   Vec<Region>,
-                city_list:     Vec<Citie>,
-                district_list: Vec<District>,
-                place_list:    Vec<Place>,
+                request_user:     User,
+                place:            Place,
+                is_ajax:          i32,
+                country_list:     Vec<Countrie>,
+                region_list:      Vec<Region>,
+                city_list:        Vec<Citie>,
+                district_list:    Vec<District>,
+                place_list:       Vec<Place>,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user:  _request_user,
-                place:         _place,
-                is_ajax:       is_ajax,
-                country_list:  country_list,
-                region_list:   region_list,
-                city_list:     city_list,
-                district_list: district_list,
-                place_list:    place_list,
+                request_user:     _request_user,
+                place:            _place,
+                is_ajax:          is_ajax,
+                country_list:     country_list,
+                region_list:      region_list,
+                city_list:        city_list,
+                district_list:    district_list,
+                place_list:       place_list,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -622,24 +683,26 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
             #[derive(TemplateOnce)]
             #[template(path = "desctop/place/edit_place.stpl")]
             struct Template {
-                request_user:  User,
-                place:         Place,
-                is_ajax:       i32,
-                country_list:  Vec<Countrie>,
-                region_list:   Vec<Region>,
-                city_list:     Vec<Citie>,
-                district_list: Vec<District>,
-                place_list:    Vec<Place>,
+                request_user:     User,
+                place:            Place,
+                is_ajax:          i32,
+                country_list:     Vec<Countrie>,
+                region_list:      Vec<Region>,
+                city_list:        Vec<Citie>,
+                district_list:    Vec<District>,
+                place_list:       Vec<Place>,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user:  _request_user,
-                place:         _place,
-                is_ajax:       is_ajax,
-                country_list:  country_list,
-                region_list:   region_list,
-                city_list:     city_list,
-                district_list: district_list,
-                place_list:    place_list,
+                request_user:     _request_user,
+                place:            _place,
+                is_ajax:          is_ajax,
+                country_list:     country_list,
+                region_list:      region_list,
+                city_list:        city_list,
+                district_list:    district_list,
+                place_list:       place_list,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

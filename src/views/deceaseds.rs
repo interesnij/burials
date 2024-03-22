@@ -38,6 +38,7 @@ use std::borrow::BorrowMut;
 pub fn deceased_routes(config: &mut web::ServiceConfig) {
     config.route("/places/{id}/deceased_list/", web::get().to(all_deceased_place_page));
     config.route("/deceased/{id}/", web::get().to(deceased_page));
+    config.route("/deceased/{id}/map/", web::get().to(deceased_map));
     config.route("/create_deceased/", web::get().to(create_deceased_page));
     config.route("/edit_deceased/{id}/", web::get().to(edit_deceased_page));
 
@@ -51,6 +52,7 @@ pub fn deceased_routes(config: &mut web::ServiceConfig) {
 
 pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
 
     let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
@@ -85,6 +87,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
@@ -92,6 +95,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -106,6 +110,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
@@ -113,6 +118,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -128,12 +134,14 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 place:            _place,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -147,12 +155,14 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 place:            _place,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -163,6 +173,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
 
 pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
@@ -171,14 +182,16 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/deceased.stpl")]
             struct Template {
-                request_user: User,
-                deceased:     Deceased,
-                is_ajax:      i32,
+                request_user:     User,
+                deceased:         Deceased,
+                is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user: _request_user,
-                deceased:     _deceased,
-                is_ajax:      is_ajax,
+                request_user:     _request_user,
+                deceased:         _deceased,
+                is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -188,14 +201,16 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/deceased.stpl")]
             struct Template {
-                request_user: User,
-                deceased:     Deceased,
-                is_ajax:      i32,
+                request_user:     User,
+                deceased:         Deceased,
+                is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user: _request_user,
-                deceased:     _deceased,
-                is_ajax:      is_ajax,
+                request_user:     _request_user,
+                deceased:         _deceased,
+                is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -208,11 +223,13 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[template(path = "desctop/deceased/anon_deceased.stpl")]
             struct Template {
                 deceased: Deceased,
-                is_ajax:  i32,
+                is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
-                deceased: _deceased,
-                is_ajax: is_ajax,
+                deceased:         _deceased,
+                is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -222,12 +239,14 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/anon_deceased.stpl")]
             struct Template {
-                deceased: Deceased,
-                is_ajax:  i32,
+                deceased:         Deceased,
+                is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
-                deceased: _deceased,
-                is_ajax:  is_ajax,
+                deceased:         _deceased,
+                is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -236,8 +255,27 @@ pub async fn deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::
     }
 }
 
+pub async fn deceased_map(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
+    let services_enabled = false;
+    let _deceased = crate::utils::get_deceased(*_id).expect("E.");
+    #[derive(TemplateOnce)]
+    #[template(path = "desctop/deceased/map.stpl")]
+    struct Template {                
+        deceased:         Deceased,
+        services_enabled: bool,
+    }
+    let body = Template {
+        deceased:         _deceased,
+        services_enabled: services_enabled,
+    }
+    .render_once()
+    .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+    Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+}
+
 pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
@@ -248,16 +286,18 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/create_deceased.stpl")]
             struct Template {
-                request_user:  User,
-                places_list:   Vec<Place>,
-                deceased_list: Vec<Deceased>,
-                is_ajax:       i32,
+                request_user:     User,
+                places_list:      Vec<Place>,
+                deceased_list:    Vec<Deceased>,
+                is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user:  _request_user,
-                places_list:   places_list,
-                deceased_list: deceased_list,
-                is_ajax:       is_ajax,
+                request_user:     _request_user,
+                places_list:      places_list,
+                deceased_list:    deceased_list,
+                is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -267,16 +307,18 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/create_deceased.stpl")]
             struct Template {
-                request_user:  User,
-                places_list:   Vec<Place>,
-                deceased_list: Vec<Deceased>,
-                is_ajax:       i32,
+                request_user:     User,
+                places_list:      Vec<Place>,
+                deceased_list:    Vec<Deceased>,
+                is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user:  _request_user,
-                places_list:   places_list,
-                deceased_list: deceased_list,
-                is_ajax:       is_ajax,
+                request_user:     _request_user,
+                places_list:      places_list,
+                deceased_list:    deceased_list,
+                is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -290,6 +332,7 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
 
 pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
     let _place = crate::utils::get_place(_deceased.place_id).expect("E.");
     let user_id = get_request_user(&req).await;
@@ -305,20 +348,22 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/edit_deceased.stpl")]
             struct Template {
-                request_user:  User,
-                deceased:      Deceased,
-                place:         Place,
-                is_ajax:       i32,
-                place_list:    Vec<Place>,
-                deceased_list: Vec<Deceased>,
+                request_user:     User,
+                deceased:         Deceased,
+                place:            Place,
+                is_ajax:          i32,
+                place_list:       Vec<Place>,
+                deceased_list:    Vec<Deceased>,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user:  _request_user,
-                deceased:      _deceased,
-                place:         _place,
-                is_ajax:       is_ajax,
-                place_list:    place_list,
-                deceased_list: deceased_list,
+                request_user:     _request_user,
+                deceased:         _deceased,
+                place:            _place,
+                is_ajax:          is_ajax,
+                place_list:       place_list,
+                deceased_list:    deceased_list,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -328,20 +373,22 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
             #[derive(TemplateOnce)]
             #[template(path = "desctop/deceased/edit_deceased.stpl")]
             struct Template {
-                request_user:  User,
-                deceased:      Deceased,
-                place:         Place,
-                is_ajax:       i32,
-                place_list:    Vec<Place>,
-                deceased_list: Vec<Deceased>,
+                request_user:     User,
+                deceased:         Deceased,
+                place:            Place,
+                is_ajax:          i32,
+                place_list:       Vec<Place>,
+                deceased_list:    Vec<Deceased>,
+                services_enabled: bool,
             }
             let body = Template {
-                request_user:  _request_user,
-                deceased:      _deceased,
-                place:         _place,
-                is_ajax:       is_ajax,
-                place_list:    place_list,
-                deceased_list: deceased_list,
+                request_user:     _request_user,
+                deceased:         _deceased,
+                place:            _place,
+                is_ajax:          is_ajax,
+                place_list:       place_list,
+                deceased_list:    deceased_list,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -369,8 +416,10 @@ pub async fn create_deceased(req: HttpRequest, mut payload: Multipart) -> impl R
             form.death_date.clone(),
             form.image.clone(),
             form.memory_words.clone(),
-            form.lat.clone(),
-            form.lon.clone(),
+            form.cord.clone(),
+            form.is_veteran,
+            form.is_famous,
+            form.is_wow_monument,
             form.images.clone(),
         );
     };
@@ -392,8 +441,10 @@ pub async fn edit_deceased(req: HttpRequest, mut payload: Multipart, _id: web::P
             form.death_date.clone(),
             form.image.clone(),
             form.memory_words.clone(),
-            form.lat.clone(),
-            form.lon.clone(),
+            form.cord.clone(),
+            form.is_veteran,
+            form.is_famous,
+            form.is_wow_monument,
             form.images.clone(),
         );
     };
@@ -415,6 +466,7 @@ pub async fn delete_deceased(req: HttpRequest, mut payload: Multipart) -> impl R
 
 pub async fn wall_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
 
     let user_id = get_request_user(&req).await;
     let page = crate::utils::get_page(&req);
@@ -447,12 +499,14 @@ pub async fn wall_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -466,12 +520,14 @@ pub async fn wall_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -486,11 +542,13 @@ pub async fn wall_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -503,11 +561,13 @@ pub async fn wall_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
                 object_list:      Vec<Deceased>,
                 next_page_number: i32,
                 is_ajax:          i32,
+                services_enabled: bool,
             }
             let body = Template {
                 object_list:      object_list,
                 next_page_number: next_page_number,
                 is_ajax:          is_ajax,
+                services_enabled: services_enabled,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

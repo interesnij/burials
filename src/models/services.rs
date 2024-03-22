@@ -74,10 +74,11 @@ impl Service {
             image:       image,
             description: description,
         };
-        diesel::insert_into(schema::services::table)
+        let _new = diesel::insert_into(schema::services::table)
             .values(&new_form)
-            .execute(&_connection)
+            .get_result::<Service>(&_connection)
             .expect("Error.");
+        crate::models::Log::create(user_id, _new.id, 7, 1);
         return 1;
     }
     pub fn edit (
@@ -102,7 +103,7 @@ impl Service {
                 schema::services::description.eq(description),
             ))
             .execute(&_connection)
-        .expect("Error.");
+            .expect("Error.");
 
         if image.is_some() {
             diesel::update(self)
@@ -110,6 +111,7 @@ impl Service {
                 .execute(&_connection)
                 .expect("Error.");
         }
+        crate::models::Log::create(user_id, _new.id, 7, 2);
         return 1;
     }
     pub fn delete(&self, user_id: i32) -> i16 {
@@ -117,7 +119,8 @@ impl Service {
         if _user.perm < 10 {
             return 0;
         }
-        let _connection = establish_connection();            
+        let _connection = establish_connection();
+        crate::models::Log::create(user_id, _new.id, 7, 3);       
         diesel::delete(schema::services::table.filter(schema::services::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");

@@ -1,3 +1,4 @@
+<% if services_enabled { %>
 <section class="relative md:pb-24 pb-16">
     <div class="container">
         <div class="grid grid-cols-1 pb-8 text-center">
@@ -31,3 +32,4 @@
         </div>
     </div>
 </section>
+<% } %>

@@ -8,7 +8,6 @@ use diesel::{
     NullableExpressionMethods,
     PgTextExpressionMethods,
 };
-use chrono::NaiveDateTime;
 use crate::utils::{
     establish_connection,
 };
@@ -22,7 +21,7 @@ pub struct Review {
     pub service_id: i32,
     pub user_id:    i32,
     pub content:    String,
-    pub created:    NaiveDateTime,
+    pub created:    chrono::NaiveDateTime,
 }
 
 // Структура для создания нового отзыва
@@ -32,7 +31,7 @@ pub struct NewReview {
     pub service_id: i32,
     pub user_id:    i32,
     pub content:    String,
-    pub created:    NaiveDateTime,
+    pub created:    chrono::NaiveDateTime,
 }
 
 impl Review {
@@ -40,20 +39,21 @@ impl Review {
         user_id:    i32,
         service_id: i32,
         content:    String,
-    ) -> i16 {
+    ) -> i16 { 
         let _connection = establish_connection();
         let _user = crate::utils::get_user(user_id).expect("E.");
         if _user.perm > 9 {
             let new_form = NewReview {
                 service_id: service_id,
                 user_id:    user_id,
-                content:    content,
+                content:    content, 
                 created:    chrono::Local::now().naive_utc(),
             };
-            diesel::insert_into(schema::reviews::table)
+            let _new = diesel::insert_into(schema::reviews::table)
                 .values(&new_form)
-                .execute(&_connection)
+                .get_result::<Review>(&_connection)
                 .expect("Error.");
+            crate::models::Log::create(user_id, _new.id, 5, 1);
         }
         return 1;
     }
@@ -67,6 +67,7 @@ impl Review {
             .set(schema::reviews::content.eq(content))
             .execute(&_connection)
             .expect("Error.");
+        crate::models::Log::create(user_id, self.id, 5, 2);
         
         return 1;
     }
@@ -77,6 +78,7 @@ impl Review {
         diesel::delete(reviews.filter(schema::reviews::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");
+        crate::models::Log::create(user_id, self.id, 5, 3);
         return 1;
     }
 

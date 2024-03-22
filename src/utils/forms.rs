@@ -42,38 +42,47 @@ impl UploadedFiles {
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DeceasedForms {
-    pub place_id:     i32,
-    pub first_name:   String,
-    pub middle_name:  Option<String>,
-    pub last_name:    String,
-    pub birth_date:   String,
-    pub death_date:   String,
-    pub image:        Option<String>,
-    pub memory_words: Option<String>,
-    pub lat:          f64,
-    pub lon:          f64,
-    pub images:       Vec<String>,
+    pub place_id:        i32,
+    pub first_name:      String,
+    pub middle_name:     Option<String>,
+    pub last_name:       String,
+    pub birth_date:      String,
+    pub death_date:      String,
+    pub image:           Option<String>,
+    pub memory_words:    Option<String>,
+    pub cord:            Option<String>,
+    pub is_veteran:      bool,
+    pub is_veteran:      bool,
+    pub is_famous:       bool,
+    pub is_wow_monument: bool,
+    pub images:          Vec<String>,
 }
 // форма для элементов 
 pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
     let mut form: DeceasedForms = DeceasedForms {
-        place_id:     0,
-        first_name:   "".to_string(),
-        middle_name:  None,
-        last_name:    "".to_string(),
-        birth_date:   "".to_string(),  //NaiveDate::from_ymd(2021, 1, 1),
-        death_date:   "".to_string(),  //NaiveDate::from_ymd(2021, 1, 1),
-        image:        None,
-        memory_words: None,
-        lat:          0.0,
-        lon:          0.0,
-        images:       Vec::new(),
-    }; 
+        place_id:        0,
+        first_name:      "".to_string(),
+        middle_name:     None,
+        last_name:       "".to_string(),
+        birth_date:      "".to_string(),  //NaiveDate::from_ymd(2021, 1, 1),
+        death_date:      "".to_string(),  //NaiveDate::from_ymd(2021, 1, 1),
+        image:           None,
+        memory_words:    None,
+        cord:            None,
+        is_veteran:      is_veteran,
+        is_famous:       is_famous,
+        is_wow_monument: is_wow_monument,
+        images:          Vec::new(),
+    };
+
+    let mut is_veteran = false;
+    let mut is_famous = false;
+    let mut is_wow_monument = false;
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["birth_date", "death_date", "first_name", "last_name","middle_name", "memory_words"];
+        let string_list = ["birth_date", "death_date", "first_name", "last_name","middle_name", "memory_words", "cord"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
@@ -99,27 +108,13 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                     else if field.name() == "death_date" {
                         form.death_date = data_string;
                     }
+                    else if field.name() == "cord" {
+                        form.cord = Some(data_string);
+                    }
                 }
             }
         }
-        else if name == "lat" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lat = _int;
-                }
-            }
-        }
-        else if name == "lon" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lon = _int;
-                }
-            }
-        }
+        
         else if name == "place_id" {
             while let Some(chunk) = field.next().await {
                 let data = chunk.expect("split_payload err chunk");
@@ -147,6 +142,36 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                 form.image = Some(file.path.clone().replace("./","/"));
             }
         }
+        else if name == "is_veteran" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    if s.to_string() == "on" {
+                        is_veteran = true;
+                    }
+                }
+            }
+        }
+        else if name == "is_famous" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    if s.to_string() == "on" {
+                        is_famous = true;
+                    }
+                }
+            }
+        }
+        else if name == "is_wow_monument" {
+            while let Some(chunk) = field.next().await {
+                let data = chunk.expect("split_payload err chunk");
+                if let Ok(s) = str::from_utf8(&data) {
+                    if s.to_string() == "on" {
+                        is_wow_monument = true;
+                    }
+                }
+            }
+        }
         else if field.name() == "files[]" {
             let _new_path = field.content_disposition().get_filename().unwrap();
             if _new_path != "" {
@@ -172,44 +197,44 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
 //---------------------------------ФОРМА КЛАДБИЩЬ-----------------
 #[derive(Deserialize, Serialize, Debug)] 
 pub struct PlaceForms {
-    pub city_id:     Option<i32>,
-    pub district_id: Option<i32>,
-    pub region_id:   Option<i32>,
-    pub country_id:  i32,
-    pub title:       String,
-    pub description: Option<String>,
-    pub hours:       Option<String>,
-    pub image:       Option<String>,
-    pub address:     Option<String>,
-    pub director:    Option<String>,
-    pub phone:       Option<String>,
-    pub lat:         f64,
-    pub lon:         f64,
-    pub images:      Vec<String>,
+    pub city_id:          Option<i32>,
+    pub district_id:      Option<i32>,
+    pub region_id:        Option<i32>,
+    pub country_id:       i32,
+    pub title:            String,
+    pub description:      Option<String>,
+    pub hours:            Option<String>,
+    pub image:            Option<String>,
+    pub address:          Option<String>,
+    pub director:         Option<String>,
+    pub phone:            Option<String>,
+    pub cadastral_number: Option<String>,
+    pub cord:             Option<String>,
+    pub images:           Vec<String>,
 }
 // форма для элементов 
 pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
     let mut form: PlaceForms = PlaceForms {
-        city_id:     None,
-        district_id: None,
-        region_id:   None,
-        country_id:  0,
-        title:       "".to_string(),
-        description: None,
-        hours:       None,
-        image:       None,
-        address:     None,
-        director:    None,
-        phone:       None,
-        lat:         0.0,
-        lon:         0.0,
-        images:      Vec::new(),
+        city_id:          None,
+        district_id:      None,
+        region_id:        None,
+        country_id:       0,
+        title:            "".to_string(),
+        description:      None,
+        hours:            None,
+        image:            None,
+        address:          None,
+        director:         None,
+        phone:            None,
+        cadastral_number: None,
+        cord:             None,
+        images:           Vec::new(),
     };
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["title", "address", "director", "hours", "description", "phone"];
+        let string_list = ["title", "address", "director", "hours", "description", "phone", "cadastral_number", "cord"];
 
         if string_list.contains(&name) {
             while let Some(chunk) = field.next().await {
@@ -228,6 +253,12 @@ pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
                         form.description = Some(data_string);
                     } else if field.name() == "phone" {
                         form.phone = Some(data_string);
+                    }
+                    else if field.name() == "cadastral_number" {
+                        form.cadastral_number = Some(data_string);
+                    }
+                    else if field.name() == "cord" {
+                        form.cord = Some(data_string);
                     }
                 }
             }
@@ -286,24 +317,6 @@ pub async fn place_form(payload: &mut Multipart) -> PlaceForms {
                         .expect("E");
                 }
                 form.image = Some(file.path.clone().replace("./","/"));
-            }
-        }
-        else if name == "lat" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lat = _int;
-                }
-            }
-        }
-        else if name == "lon" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lon = _int;
-                }
             }
         }
         else if field.name() == "files[]" {
@@ -578,8 +591,7 @@ pub struct DistrictForms {
     pub name:       String,
     pub region_id:  Option<i32>,
     pub country_id: i32,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>,
+    pub cord:       Option<String>,
 }
 // форма для элементов 
 pub async fn district_form(payload: &mut Multipart) -> DistrictForms {
@@ -587,15 +599,14 @@ pub async fn district_form(payload: &mut Multipart) -> DistrictForms {
         name:       "".to_string(),
         region_id:  None,
         country_id: 0,
-        lat:        None,
-        lon:        None,
+        cord:       None,
     };
 
    
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["name"];
+        let string_list = ["name", "cord"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
@@ -605,6 +616,9 @@ pub async fn district_form(payload: &mut Multipart) -> DistrictForms {
                     let data_string = s.to_string();
                     if field.name() == "name" {
                         form.name = data_string;
+                    }
+                    else if field.name() == "cord" {
+                        form.cord = Some(data_string);
                     }
                 }
             }
@@ -627,25 +641,6 @@ pub async fn district_form(payload: &mut Multipart) -> DistrictForms {
                 }
             }
         }
-        else if name == "lat" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lat = Some(_int);
-                }
-            }
-        }
-        else if name == "lon" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lon = Some(_int);
-                }
-            }
-        }
-
     }
     form
 }
@@ -654,23 +649,21 @@ pub async fn district_form(payload: &mut Multipart) -> DistrictForms {
 pub struct RegionForms {
     pub name:       String,
     pub country_id: i32,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>,
+    pub cord:       Option<String>,
 }
 // форма для элементов 
 pub async fn region_form(payload: &mut Multipart) -> RegionForms {
     let mut form: RegionForms = RegionForms {
         name:       "".to_string(),
         country_id: 0,
-        lat:        None,
-        lon:        None,
+        cord:       None,
     };
 
    
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["name"];
+        let string_list = ["name", "cord"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
@@ -680,6 +673,9 @@ pub async fn region_form(payload: &mut Multipart) -> RegionForms {
                     let data_string = s.to_string();
                     if field.name() == "name" {
                         form.name = data_string;
+                    }
+                    else if field.name() == "cord" {
+                        form.cord = Some(data_string);
                     }
                 }
             }
@@ -693,25 +689,6 @@ pub async fn region_form(payload: &mut Multipart) -> RegionForms {
                 }
             }
         }
-        else if name == "lat" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lat = Some(_int);
-                }
-            }
-        }
-        else if name == "lon" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lon = Some(_int);
-                }
-            }
-        }
-
     }
     form
 }
@@ -719,21 +696,19 @@ pub async fn region_form(payload: &mut Multipart) -> RegionForms {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CountryForms {
     pub name: String,
-    pub lat:  Option<f64>,
-    pub lon:  Option<f64>,
+    pub cord: Option<String>,
 }
 // форма для элементов 
 pub async fn country_form(payload: &mut Multipart) -> CountryForms {
     let mut form: CountryForms = CountryForms {
         name: "".to_string(),
-        lat:  None,
-        lon:  None,
+        cord: None,
     };
 
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["name"];
+        let string_list = ["name", "cord"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
@@ -744,28 +719,12 @@ pub async fn country_form(payload: &mut Multipart) -> CountryForms {
                     if field.name() == "name" {
                         form.name = data_string;
                     }
+                    if field.name() == "cord" {
+                        form.cord = Some(data_string);
+                    }
                 }
             }
         }
-        else if name == "lat" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lat = Some(_int);
-                }
-            }
-        }
-        else if name == "lon" {
-            while let Some(chunk) = field.next().await {
-                let data = chunk.expect("split_payload err chunk");
-                if let Ok(s) = str::from_utf8(&data) {
-                    let _int: f64 = s.parse().unwrap();
-                    form.lon = Some(_int);
-                }
-            }
-        }
-
     }
     form
 }

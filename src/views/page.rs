@@ -35,6 +35,7 @@ pub fn page_routes(config: &mut web::ServiceConfig) {
 
 pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let user_id = get_request_user(&req).await;
     let service_list = Service::get_all();
 
@@ -111,6 +112,7 @@ pub async fn index_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
 
 pub async fn not_found(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Result<HttpResponse> {
     let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+    let services_enabled = false;
     let user_id = get_request_user(&req).await;
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -168,37 +170,29 @@ pub async fn not_found(req: HttpRequest, _id: web::Path<i32>) -> actix_web::Resu
 
 #[derive(Deserialize)]
 pub struct SeacrhData {
-    pub types:            Option<String>,
     pub first_name:       Option<String>,
     pub middle_name:      Option<String>,
     pub last_name:        Option<String>,
     pub birth_date:       Option<chrono::NaiveDate>,
     pub death_date:       Option<chrono::NaiveDate>,
-    pub location:         Option<String>,
-    pub deceadeds_id:     Option<i32>,
+    pub place:            Option<i32>,
     pub is_veteran:       Option<bool>,
     pub is_famous:        Option<bool>,
     pub with_photo:       Option<bool>,
     pub with_coordinates: Option<bool>,
-}  
+} 
 pub async fn main_search_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let params_some = web::Query::<SeacrhData>::from_query(&req.query_string());
     if params_some.is_ok() {
         let params = params_some.unwrap();
-        if params.last_name.is_none() {
-            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("no last_name"));
-        }
-
         let user_id = get_request_user(&req).await;
         let object_list = Deceased::main_search (
-            params.types.as_deref().unwrap().to_string(),
-            params.first_name.clone(),
+            params.first_name.clone(), 
             params.middle_name.clone(),
-            params.last_name.as_deref().unwrap().to_string(),
+            params.last_name.clone(),
             params.birth_date.clone(),
             params.death_date.clone(),
-            params.location.clone(),
-            params.deceadeds_id,
+            params.place,
             params.is_veteran,
             params.is_famous,
             params.with_photo,

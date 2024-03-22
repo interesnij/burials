@@ -400,6 +400,7 @@
           </div>
 
           <div>
+            <% if services_enabled { %>
             <div
               class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden md:mt-0 mt-4"
             >
@@ -496,7 +497,7 @@
                 </div>
               </div>
             </div>
-
+            <% } %>
             <div
               class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
             >

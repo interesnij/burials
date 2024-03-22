@@ -6,6 +6,7 @@ use crate::schema::{
     cities,
     districts,
     files,
+    logs,
 };
 use crate::diesel::{
     Queryable,
@@ -32,8 +33,12 @@ pub struct User {
     pub description: Option<String>,
     pub image:       Option<String>,
     pub perm:        i16,
+    pub created:     chrono::NaiveDateTime,
 }
 impl User {
+    pub fn get_full_name(&self) -> String {
+        self.first_name + &" ".to_string() + &self.last_name;
+    }
     pub fn edit (   
         &self,
         username:   String,
@@ -159,6 +164,7 @@ pub struct NewUser {
     pub description: Option<String>,
     pub image:       Option<String>,
     pub perm:        i16,
+    pub created:     chrono::NaiveDateTime,
 }
 
 #[derive(Debug, Deserialize)]
@@ -178,8 +184,7 @@ pub struct Countrie {
     pub continent_id: Option<i32>,
     pub timezone_id:  Option<i32>,
     pub phone:        Option<String>,
-    pub lat:          Option<f64>,
-    pub lon:          Option<f64>,
+    pub cord:         Option<String>,
 }
 impl Countrie {
     pub fn get_all() -> Vec<Countrie> {
@@ -190,8 +195,7 @@ impl Countrie {
     }
     pub fn create ( 
         name: String,
-        lat:  Option<f64>,
-        lon:  Option<f64>,
+        cord: Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         let new_form = NewCountrie {
@@ -200,8 +204,7 @@ impl Countrie {
             continent_id: None,
             timezone_id:  None,
             phone:        None,
-            lat:          lat,
-            lon:          lon,
+            cord:         cord,
         };
         let _new = diesel::insert_into(schema::countries::table)
             .values(&new_form)
@@ -213,15 +216,13 @@ impl Countrie {
     pub fn edit ( 
         &self,
         name: String,
-        lat:  Option<f64>,
-        lon:  Option<f64>,
+        cord: Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         diesel::update(self)
             .set((
                 schema::countries::name.eq(name),
-                schema::countries::lat.eq(lat),
-                schema::countries::lon.eq(lon),
+                schema::countries::cord.eq(cord),
             ))
             .execute(&_connection)
             .expect("Error.");
@@ -246,8 +247,7 @@ pub struct NewCountrie {
     pub continent_id: Option<i32>,
     pub timezone_id:  Option<i32>,
     pub phone:        Option<String>,
-    pub lat:          Option<f64>,
-    pub lon:          Option<f64>,
+    pub cord:         Option<String>,
 }
 
 #[derive(Queryable, Serialize, Deserialize, Identifiable)]
@@ -257,8 +257,7 @@ pub struct Region {
     pub geo_id:      Option<i32>,
     pub country_id:  i32,
     pub timezone_id: Option<i32>,
-    pub lat:         Option<f64>,
-    pub lon:         Option<f64>, 
+    pub cord:        Option<String>,
 }
 impl Region {
     pub fn get_country_all(id: i32) -> Vec<Region> {
@@ -277,8 +276,7 @@ impl Region {
     pub fn create (
         country_id: i32,
         name:       String,
-        lat:        Option<f64>,
-        lon:        Option<f64>,
+        cord:       Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         let new_form = NewRegion {
@@ -286,8 +284,7 @@ impl Region {
             geo_id:       None,
             country_id:   country_id,
             timezone_id:  None,
-            lat:          lat,
-            lon:          lon,
+            cord:         cord,
         };
         let _new = diesel::insert_into(schema::regions::table)
             .values(&new_form)
@@ -300,16 +297,14 @@ impl Region {
         &self,
         country_id: i32,
         name:       String,
-        lat:        Option<f64>,
-        lon:        Option<f64>,
+        cord:       Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         diesel::update(self)
             .set((
                 schema::regions::name.eq(name),
                 schema::regions::country_id.eq(country_id),
-                schema::regions::lat.eq(lat),
-                schema::regions::lon.eq(lon),
+                schema::regions::cord.eq(cord),
             ))
             .execute(&_connection)
             .expect("Error.");
@@ -333,8 +328,7 @@ pub struct NewRegion {
     pub geo_id:      Option<i32>,
     pub country_id:  i32,
     pub timezone_id: Option<i32>,
-    pub lat:         Option<f64>,
-    pub lon:         Option<f64>,
+    pub cord:        Option<String>,
 }
 
 #[derive(Queryable, Serialize, Deserialize, Identifiable)]
@@ -344,8 +338,7 @@ pub struct Citie {
     pub geo_id:     Option<i32>,
     pub region_id:  Option<i32>,
     pub country_id: i32,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>,
+    pub cord:       Option<String>,
 }
 impl Citie {
     pub fn get_all() -> Vec<Citie> {
@@ -372,8 +365,7 @@ impl Citie {
         region_id:  Option<i32>,
         country_id: i32,
         name:       String,
-        lat:        Option<f64>,
-        lon:        Option<f64>,
+        cord:       Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         let new_form = NewCitie {
@@ -381,8 +373,7 @@ impl Citie {
             geo_id:       None,
             region_id:    region_id,
             country_id:   country_id,
-            lat:          lat,
-            lon:          lon,
+            cord:         cord,
         };
         let _new = diesel::insert_into(schema::cities::table)
             .values(&new_form)
@@ -396,8 +387,7 @@ impl Citie {
         region_id:  Option<i32>,
         country_id: i32,
         name:       String,
-        lat:        Option<f64>,
-        lon:        Option<f64>,
+        cord:       Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         diesel::update(self)
@@ -405,8 +395,7 @@ impl Citie {
                 schema::cities::name.eq(name),
                 schema::cities::region_id.eq(region_id),
                 schema::cities::country_id.eq(country_id),
-                schema::cities::lat.eq(lat),
-                schema::cities::lon.eq(lon),
+                schema::cities::cord.eq(cord),
             ))
             .execute(&_connection)
             .expect("Error.");
@@ -430,8 +419,7 @@ pub struct NewCitie {
     pub geo_id:     Option<i32>,
     pub region_id:  Option<i32>,
     pub country_id: i32,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>,
+    pub cord:       Option<String>,
 }
 
 
@@ -441,8 +429,7 @@ pub struct District {
     pub name:       String,
     pub region_id:  Option<i32>,
     pub country_id: i32,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>,
+    pub cord:       Option<String>,
 }
 impl District {
     pub fn get_region_all(id: i32) -> Vec<District> {
@@ -469,7 +456,7 @@ impl District {
         region_id:  Option<i32>,
         country_id: i32,
         name:       String,
-        lat:        Option<f64>,
+        cord:       Option<String>,
         lon:        Option<f64>,
     ) -> i16 {
         let _connection = establish_connection();
@@ -477,8 +464,7 @@ impl District {
             name:         name,
             region_id:    region_id,
             country_id:   country_id,
-            lat:          lat,
-            lon:          lon,
+            cord:         cord,
         };
         let _new = diesel::insert_into(schema::districts::table)
             .values(&new_form)
@@ -492,8 +478,7 @@ impl District {
         region_id:  Option<i32>,
         country_id: i32,
         name:       String,
-        lat:        Option<f64>,
-        lon:        Option<f64>,
+        cord:       Option<String>,
     ) -> i16 {
         let _connection = establish_connection();
         diesel::update(self)
@@ -501,8 +486,7 @@ impl District {
                 schema::districts::name.eq(name),
                 schema::districts::region_id.eq(region_id),
                 schema::districts::country_id.eq(country_id),
-                schema::districts::lat.eq(lat),
-                schema::districts::lon.eq(lon),
+                schema::districts::cord.eq(cord),
             ))
             .execute(&_connection)
             .expect("Error.");
@@ -525,8 +509,7 @@ pub struct NewDistrict {
     pub name:       String,
     pub region_id:  Option<i32>,
     pub country_id: i32,
-    pub lat:        Option<f64>,
-    pub lon:        Option<f64>,
+    pub cord:       Option<String>,
 }
 
 
@@ -632,4 +615,140 @@ pub struct NewFile {
     pub object_id:    i32,
     pub object_types: i16,
     pub src:          String,
+}
+
+
+/*
+    object_id - id объекта лога (кладбище, покойник и тд)
+    types ↓                 |   verb ↓
+    1. Профиль              |   1. Создал
+    2. Организация          |   2. Изменил
+    3. Кладбище             |   3. Удалил
+    4. Покойник             |   4. Одобрил (например, предложенное кладбище)
+    5. Отзыв                |   5. Добавил на стену памяти
+    6. Локация офиса        |   6. Удалил со стены памяти
+*/
+
+#[derive(Queryable, Serialize, Deserialize, Identifiable)]
+pub struct Log { 
+    pub id:        i32,
+    pub user_id:   i32,
+    pub object_id: i32,
+    pub types:     i16,
+    pub verb:      i16,
+    pub created:   chrono::NaiveDateTime,
+}
+pub struct LogResp {
+    pub user:    User,
+    pub text:    String,
+    pub created: chrono::NaiveDateTime,
+}
+impl Log {
+    pub fn delete(&self) -> i16 {
+        use crate::schema::logs::dsl::logs;
+
+        let _connection = establish_connection();
+        diesel::delete(logs.filter(schema::logs::id.eq(self.id)))
+            .execute(&_connection)
+            .expect("E");
+        
+        return 1;
+    }
+    pub fn get_text (&self) -> String {
+        let mut text = String::new();
+        let verb: String = match self.verb {
+            1 => "создал(а) ".to_string(),
+            2 => "изменил(а) ".to_string(),
+            3 => "удалил(а) ".to_string(),
+            4 => "одобрил(а) ".to_string(),
+            5 => "добавил(а) на стену памяти ".to_string(),
+            6 => "удалил(а) со стены памяти ".to_string(),
+        };
+        let types: String = match self.types {
+            1 => "профиль".to_string(),
+            2 => {
+                let obj = crate::get_organization(self.object_id).expect("E.");
+                "организацию ".to_string() + &"<a href='/organization/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string();
+            },
+            3 => {
+                let obj = crate::get_place(self.object_id).expect("E.");
+                "кладбище ".to_string() + &"<a href='/place/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.title + &"</a>".to_string();
+            },
+            4 => {
+                let obj = crate::get_deceased(self.object_id).expect("E.");
+                "покойника ".to_string() + &"<a href='/deceased/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.get_full_name() + &"</a>".to_string();
+            },
+            5 => {
+                let obj = crate::get_review(self.object_id).expect("E.");
+                "отзыв ".to_string() + &"<a href='/review/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string();
+            },
+            6 => {
+                let obj = crate::get_organization_loc(self.object_id).expect("E.");
+                "офис ".to_string();
+            },
+        };
+        text.push_str(verb);
+        text.push_str(types);
+        return text;
+    }
+    pub fn create (
+        user_id:   i32,
+        object_id: i32,
+        types:     i16,
+        verb:      i16,
+    ) -> i16 {
+        let new_form = NewLog {
+            user_id:   user_id,
+            object_id: object_id,
+            types:     types,
+            verb:      verb,
+            created:   chrono::Local::now().naive_utc(),
+        };
+        let _new = diesel::insert_into(schema::logs::table)
+            .values(&new_form)
+            .execute(&_connection)
+            .expect("Error.");
+
+        return 1;
+    }
+    pub fn get_all (
+        user_id: i32,
+        limit:   i64,
+        offset:  i64,
+    ) -> Vec<LogResp> {
+        use crate::utils::get_user;
+        let _connection = establish_connection();
+        let _user = crate::get_user(user_id).expect("E.");
+        let mut stack = Vec::new();
+        if _user.perm > 9 {
+            let list = logs
+                .order(schema::logs::created.desc())
+                .limit(limit)
+                .offset(offset)
+                .load::<Log>(&_connection)
+                .expect("E.");
+            
+            for i in list.into_iter() {
+                stack.push( LogResp { 
+                    text:    i.get_text(),
+                    created: i.created,
+                });
+            }
+
+            return stack;
+        }
+        else {
+            return Vec::new();
+        }
+    }
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="logs"]
+pub struct NewLog { 
+    pub user_id:   i32,
+    pub object_id: i32,
+    pub types:     i16,
+    pub verb:      i16,
+    pub created:   chrono::NaiveDateTime,
 }

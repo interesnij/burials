@@ -76,12 +76,14 @@
                     <div id="map" style="height:400px"></div>
                     
                 </div>
-            </div>
+            </div> 
 
             <div class="lg:col-span-8 md:col-span-7">
                 <h4 class="text-xl font-semibold">О компании:</h4>
                 
                 <p class="text-slate-400 mt-4"><%= organization.description %></p>
+
+                <% if services_enabled { %>
                 <h4 class="text-xl font-semibold" style="margin-top:50px">Услуги:</h4>
                 <div class="grid lg:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
                     <% for i in organization.get_services().iter() { %>
@@ -91,7 +93,8 @@
                             </div>
                         </div> 
                     <% } %>
-                </div>
+                </div> 
+                <% } %>
             </div>
         </div><!--end grid-->
     </div><!--end container-->

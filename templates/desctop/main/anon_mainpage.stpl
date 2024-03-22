@@ -400,6 +400,7 @@
           </div>
 
           <div>
+            <% if services_enabled { %>
             <div
               class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden md:mt-0 mt-4"
             >
@@ -496,7 +497,7 @@
                 </div>
               </div>
             </div>
-
+            <% } %>
             <div
               class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
             >
@@ -674,36 +675,38 @@
       </div>
 
       <div class="tiny-single-item">
-        <div class="tiny-slide">
-          <div class="text-center">
-            <p class="text-lg text-slate-400 italic">
-              " Заказывал услуги ухода за захоронением во Владивостоке.
-              Сделали быстро, и качественно. А также, приятно удивила
-              стоимость. На кладбище, за тот же спектр услуг, ломили в 2-3
-              раза больше. Я доволен. "
-            </p>
+        <% if services_enabled { %>
+          <div class="tiny-slide">
+            <div class="text-center">
+              <p class="text-lg text-slate-400 italic">
+                " Заказывал услуги ухода за захоронением во Владивостоке.
+                Сделали быстро, и качественно. А также, приятно удивила
+                стоимость. На кладбище, за тот же спектр услуг, ломили в 2-3
+                раза больше. Я доволен. "
+              </p>
 
-            <div class="text-center mt-5">
-              <ul
-                class="text-xl font-medium text-amber-400 list-none mb-2"
-              >
-                <li class="inline"><i class="mdi mdi-star"></i></li>
-                <li class="inline"><i class="mdi mdi-star"></i></li>
-                <li class="inline"><i class="mdi mdi-star"></i></li>
-                <li class="inline"><i class="mdi mdi-star"></i></li>
-                <li class="inline"><i class="mdi mdi-star"></i></li>
-              </ul>
+              <div class="text-center mt-5">
+                <ul
+                  class="text-xl font-medium text-amber-400 list-none mb-2"
+                >
+                  <li class="inline"><i class="mdi mdi-star"></i></li>
+                  <li class="inline"><i class="mdi mdi-star"></i></li>
+                  <li class="inline"><i class="mdi mdi-star"></i></li>
+                  <li class="inline"><i class="mdi mdi-star"></i></li>
+                  <li class="inline"><i class="mdi mdi-star"></i></li>
+                </ul>
 
-              <img
-                src="static/images/user/01.jpg"
-                class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
-                alt=""
-              />
-              <h6 class="mt-2 font-semibold">Бусыгин Иван</h6>
-              <span class="text-slate-400 text-sm">Пользователь</span>
+                <img
+                  src="static/images/user/01.jpg"
+                  class="h-14 w-14 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
+                  alt=""
+                />
+                <h6 class="mt-2 font-semibold">Бусыгин Иван</h6>
+                <span class="text-slate-400 text-sm">Пользователь</span>
+              </div>
             </div>
           </div>
-        </div>
+        <% } %>
 
         <div class="tiny-slide">
           <div class="text-center">
