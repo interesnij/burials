@@ -732,7 +732,8 @@ impl Log {
                 .expect("E.");
             
             for i in list.into_iter() {
-                stack.push( LogResp { 
+                stack.push( LogResp {
+                    user:    crate::utils::get_user(i.user_id).expect("E."),
                     text:    i.get_text(),
                     created: i.created,
                 });

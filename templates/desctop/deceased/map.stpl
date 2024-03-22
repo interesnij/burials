@@ -11,7 +11,7 @@
 </div>
 <div>
    <label class="font-semibold" for="suggest2">Адрес назначения:</label>
-   <input value="<%= deceased.lat %>, <%= deceased.lon %>" disable type="text" id="suggest2" class="input form-input">
+   <input value="" disable type="text" id="suggest2" class="input form-input">
    <p style="display:none" id="notice2"></p>
    <br />
 </div>

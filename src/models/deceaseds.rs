@@ -176,7 +176,7 @@ impl Deceased {
         return crate::utils::get_place(self.place_id);
     }
     pub fn get_full_name(&self) -> String {
-        self.first_name.clone() + &" ".to_string() + &self.last_name.clone()
+        return self.first_name.clone() + &" ".to_string() + &self.last_name.clone();
     }
     pub fn get_image(&self) -> String {
         if self.image.is_some() {
@@ -346,7 +346,7 @@ impl Deceased {
     pub fn main_search (
         first_name:  Option<String>, 
         middle_name: Option<String>,
-        last_name:   String,
+        last_name:   Option<String>,
         birth_date:  Option<chrono::NaiveDate>,
         death_date:  Option<chrono::NaiveDate>,
         place:       Option<i32>,
@@ -470,11 +470,11 @@ impl Deceased {
                 default = false;
             }
             if case != 3 && birth_date.is_some() { 
-                check_exists = i.birth_date == birth_date.as_deref().unwrap();
+                check_exists = i.birth_date == birth_date.unwrap();
                 default = false;
             }
             if case != 4 && death_date.is_some() {
-                check_exists = i.death_date == death_date.as_deref().unwrap();
+                check_exists = i.death_date == death_date.unwrap();
                 default = false;
             }
             if case != 9 && with_photo.is_some() {
@@ -482,7 +482,7 @@ impl Deceased {
                 default = false;
             }
             if case != 2 && place.is_some() {
-                check_exists == i.place_id = place.unwrap();
+                check_exists = i.place_id == place.unwrap();
                 default = false;
             }
             if case != 7 && is_veteran.is_some() {
