@@ -107,7 +107,7 @@
 								type="text" 
 								class="form-input mt-3"
 								<% if deceased.cord.is_some() { %>
-                                	value="<%= deceased.as_deref().unwrap() %>"
+                                	value="<%= deceased.cord.as_deref().unwrap() %>"
                             	<% } %>
 							/>
 						</div>
