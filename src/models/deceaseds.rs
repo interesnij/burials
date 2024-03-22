@@ -414,12 +414,12 @@ impl Deceased {
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             3  => schema::deceaseds::table
-                .filter(schema::deceaseds::birth_date.eq(birth_date.as_deref().unwrap()))
+                .filter(schema::deceaseds::birth_date.eq(birth_date.unwrap()))
                 .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             4  => schema::deceaseds::table
-                .filter(schema::deceaseds::death_date.eq(death_date.as_deref().unwrap()))
+                .filter(schema::deceaseds::death_date.eq(death_date.unwrap()))
                 .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),

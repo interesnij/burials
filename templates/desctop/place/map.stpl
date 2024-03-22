@@ -24,6 +24,15 @@
 
 
 <script>
+<% 
+  let cord: String;
+  if place.cord.is_some() {
+    cord = place.cord.as_deref().unwrap();
+  }
+  else {
+    cord = "".to_string();
+  }
+%>
 ymaps.ready(init);
 
 function init() {
@@ -34,7 +43,7 @@ function init() {
 
 
   map = new ymaps.Map('map', {
-    center: [<%= place.cord %>],
+    center: [<%= cord %>],
     zoom: 9,
     controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
   });
