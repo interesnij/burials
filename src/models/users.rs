@@ -663,32 +663,34 @@ impl Log {
             4 => "одобрил(а) ".to_string(),
             5 => "добавил(а) на стену памяти ".to_string(),
             6 => "удалил(а) со стены памяти ".to_string(),
+            _ => "".to_string()
         };
         let types: String = match self.types {
             1 => "профиль".to_string(),
             2 => {
                 let obj = crate::utils::get_organization(self.object_id).expect("E.");
-                "организацию ".to_string() + &"<a href='/organization/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string();
+                "организацию ".to_string() + &"<a href='/organization/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string()
             },
             3 => {
                 let obj = crate::utils::get_place(self.object_id).expect("E.");
-                "кладбище ".to_string() + &"<a href='/place/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.title + &"</a>".to_string();
+                "кладбище ".to_string() + &"<a href='/place/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.title + &"</a>".to_string()
             },
             4 => {
                 let obj = crate::utils::get_deceased(self.object_id).expect("E.");
-                "покойника ".to_string() + &"<a href='/deceased/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.get_full_name() + &"</a>".to_string();
+                "покойника ".to_string() + &"<a href='/deceased/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.get_full_name() + &"</a>".to_string()
             },
             5 => {
                 let obj = crate::utils::get_review(self.object_id).expect("E.");
-                "отзыв ".to_string() + &"<a href='/review/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.name + &"</a>".to_string();
+                "отзыв ".to_string() + &"<a href='/review/".to_string() + &self.object_id.to_string() + &"/' target='_blank'>".to_string() + &obj.content + &"</a>".to_string()
             },
             6 => {
-                let obj = crate::utils::get_organization_loc(self.object_id).expect("E.");
-                "офис ".to_string();
+                let obj = crate::utils::get_organization_loc(self.object_id).expect("E."); 
+                "офис ".to_string()
             },
+            _ => "".to_string()
         };
-        text.push_str(verb);
-        text.push_str(types);
+        text.push_str(&verb);
+        text.push_str(&types);
         return text;
     }
     pub fn create (

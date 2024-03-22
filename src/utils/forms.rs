@@ -50,6 +50,7 @@ pub struct DeceasedForms {
     pub death_date:      String,
     pub image:           Option<String>,
     pub memory_words:    Option<String>,
+    pub description:     Option<String>,
     pub cord:            Option<String>,
     pub is_veteran:      bool,
     pub is_famous:       bool,
@@ -67,6 +68,7 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
         death_date:      "".to_string(),  //NaiveDate::from_ymd(2021, 1, 1),
         image:           None,
         memory_words:    None,
+        description:     None,
         cord:            None,
         is_veteran:      false,
         is_famous:       false,
@@ -81,7 +83,7 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
     while let Some(item) = payload.next().await {
         let mut field: Field = item.expect("split_payload err");
         let name = field.name();
-        let string_list = ["birth_date", "death_date", "first_name", "last_name","middle_name", "memory_words", "cord"];
+        let string_list = ["birth_date", "death_date", "first_name", "last_name","middle_name", "memory_words", "description", "cord"];
 
         if string_list.contains(&name) {
             let mut _content = "".to_string();
@@ -100,6 +102,9 @@ pub async fn deceased_form(payload: &mut Multipart) -> DeceasedForms {
                     }
                     else if field.name() == "memory_words" {
                         form.memory_words = Some(data_string);
+                    }
+                    else if field.name() == "description" {
+                        form.description = Some(data_string);
                     }
                     else if field.name() == "birth_date" {
                         form.birth_date = data_string;
