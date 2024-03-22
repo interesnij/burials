@@ -37,7 +37,7 @@ pub struct User {
 }
 impl User {
     pub fn get_full_name(&self) -> String {
-        return self.first_name + &" ".to_string() + &self.last_name;
+        return self.first_name.clone() + &" ".to_string() + &self.last_name;
     }
     pub fn edit (   
         &self,

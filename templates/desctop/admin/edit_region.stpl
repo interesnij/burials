@@ -29,7 +29,7 @@
 								type="text" 
 								class="form-input mt-3"
 								<% if object.cord.is_some() { %>
-                                	value="<%= object.cord.unwrap() %>"
+                                	value="<%= object.cord.as_deref().unwrap() %>"
                             	<% } %>
 							/>
 						</div>

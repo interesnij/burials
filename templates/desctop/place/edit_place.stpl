@@ -165,7 +165,7 @@
                                     type="text" 
                                     class="form-input mt-3"
                                     <% if place.cord.is_some() { %>
-                                        value="<%= place.cord.unwrap() %>"
+                                        value="<%= place.cord.as_deref().unwrap() %>"
                                     <% } %>
                                 />
                             </div>
