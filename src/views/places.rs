@@ -79,7 +79,7 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
     let user_id = get_request_user(&req).await;
 
     let page = crate::utils::get_page(&req);
-    let count = crate::models:MainStat::get_or_create().places_count;
+    let count = crate::models::MainStat::get_or_create().places_count;
 
     let mut next_page_number = 0;
     let have_next: i32;
