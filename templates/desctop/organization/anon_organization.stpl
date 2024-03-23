@@ -56,6 +56,7 @@
                     </div>
 
                     <div class="w-full leading-[0] border-0 mt-8">
+                        <a class="pointer show_org_map" data-pk="<%= organization.id %>">Показать на карте / проложить маршрут</a>
                         <div id="map"></div>
                     </div>
                 </div>

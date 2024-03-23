@@ -72,7 +72,7 @@
                         </div>
                     </div>
 
-                    
+                    <a class="pointer show_org_map" data-pk="<%= organization.id %>">Показать на карте / проложить маршрут</a>
                     <div id="map" style="height:400px"></div>
                     
                 </div>

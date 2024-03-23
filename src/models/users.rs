@@ -7,6 +7,8 @@ use crate::schema::{
     districts,
     files,
     logs,
+    main_stats,
+    stat_pages,
 };
 use crate::diesel::{
     Queryable,
@@ -21,6 +23,16 @@ use crate::utils::establish_connection;
 use crate::errors::Error;
 
 
+/*
+perm ↓
+1 обычный
+10 админ
+60 суперпользователь
+
+11 удален обычный
+20 удален админ
+70 удален суперпользователь
+*/
 #[derive(Debug, Queryable, Serialize, Deserialize, Identifiable)]
 pub struct User {
     pub id:          i32,
@@ -36,6 +48,42 @@ pub struct User {
     pub created:     chrono::NaiveDateTime,
 }
 impl User {
+    pub fn delete(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match self.perm {
+                1 => 11,
+                10 => 20,
+                60 => 70,
+                _ => 11,
+            };
+            diesel::update(self)
+                .set(schema::users::perm.eq(perm))
+                .execute(&_connection)
+                .expect("Error.");
+            Log::create(user_id, self.id, 1, 3);
+            MainStat::update_model(1, false, 1);
+        } 
+    }
+    pub fn restore(&self, user_id: i32) -> () {
+        let _connection = establish_connection();
+        let _user = crate::utils::get_user(user_id).expect("E.");
+        if _user.perm > 9 {
+            let types = match self.perm {
+                11 => 1,
+                20 => 10,
+                70 => 60,
+                _ => 1,
+            }; 
+            diesel::update(self)
+                .set(schema::users::perm.eq(perm))
+                .execute(&_connection)
+                .expect("Error.");
+            Log::create(user_id, self.id, 1, 7);
+            MainStat::update_model(20, true, 1);
+        }
+    }
     pub fn get_full_name(&self) -> String {
         return self.first_name.clone() + &" ".to_string() + &self.last_name;
     }
@@ -67,31 +115,6 @@ impl User {
                 .expect("Error.");
         }
         return 1;
-    }
-    pub fn get_suggested_stat(&self) -> (usize, usize, usize) {
-        if self.is_admin() {
-            let _connection = establish_connection();
-            let org_count = schema::organizations::table
-                .filter(schema::organizations::types.ne(2))
-                .select(schema::organizations::id)
-                .load::<i32>(&_connection)
-                .expect("E.")
-                .len();
-            let place_count = schema::places::table
-                .filter(schema::places::types.ne(2))
-                .select(schema::places::id)
-                .load::<i32>(&_connection)
-                .expect("E.")
-                .len(); 
-            let deceased_count = schema::deceaseds::table
-                .filter(schema::deceaseds::types.ne(2))
-                .select(schema::deceaseds::id)
-                .load::<i32>(&_connection)
-                .expect("E.")
-                .len();
-            return (org_count, place_count, deceased_count);
-        }
-        return (0,0,0)
     }
 
     pub fn get_all(exclude_user_id: i32) -> Vec<User> {
@@ -234,7 +257,7 @@ impl Countrie {
         diesel::delete(schema::countries::table.filter(schema::countries::id.eq(self.id)))
             .execute(&_connection)
             .expect("E");
-        
+        crate::models::MainStat::update_model(1, false, 1);
         return 1;
     }
 }
@@ -754,4 +777,675 @@ pub struct NewLog {
     pub types:     i16,
     pub verb:      i16,
     pub created:   chrono::NaiveDateTime,
+}
+
+
+#[derive(Queryable, Serialize, Deserialize, Identifiable)]
+pub struct MainStat { 
+    pub id:                        i32,
+    pub users_count:               i32,
+    pub deleted_users_count:       i32,
+    pub orgs_count:                i32,
+    pub suggested_orgs_count:      i32,
+    pub deleted_orgs_count:        i32,
+    pub places_count:              i32,
+    pub suggested_places_count:    i32,
+    pub deleted_places_count:      i32,
+    pub deceaseds_count:           i32,
+    pub suggested_deceaseds_count: i32,
+    pub deleted_deceaseds_count:   i32,
+    pub reviews_count:             i32,
+}
+
+impl MainStat {
+    pub fn update_model(
+        model_types: i16,
+        plus: bool,
+        count: i32
+    ) -> () {
+        /*
+            model_types - номер поля, которое надо менять: 
+            1 создание(plus true) или удаление пользователя (plus false)
+            3 создание(plus true) или удаление одобренной организации (plus false)
+            4 создание(plus true) или удаление предложенной организации (plus false)
+            6 создание(plus true) или удаление одобренного кладбища (plus false)
+            7 создание(plus true) или удаление предложенного кладбища (plus false)
+            9 создание(plus true) или удаление одобренного покойника (plus false)
+            10 создание(plus true) или удаление предложенного покойника (plus false)
+            12 создание(plus true) или удаление отзыва (plus false)
+
+            далее восстановление одобренного и предложенного объекта
+
+            20 восстановление пользователя
+            21 восстановление одобренной организации
+            22 восстановление предложенной организации
+            23 восстановление одобренного кладбища
+            24 восстановление предложенного кладбища
+            25 восстановление одобренного покойника
+            26 восстановление предложенного покойника
+
+            31 одобрение(plus true) организации или ее возврат к предложенному состоянию(plus false)
+            32 одобрение(plus true) кладбища или его возврат к предложенному состоянию(plus false)
+            33 одобрение(plus true) покойника или его возврат к предложенному состоянию(plus false)
+
+            plus - добавлять если true, иначе убавлять
+            count - на какое количество добавлять или убавлять
+        */ 
+        let _model = MainStat::get_or_create();
+        let _connection = establish_connection();
+        return match case {
+            1 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::users_count.eq(_model.users_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.users_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::users_count.eq(_model.users_count - count),
+                                schema::main_stats::deleted_users_count.eq(_model.deleted_users_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            3 => {
+                if plus { 
+                    diesel::update(&_model)
+                        .set(schema::main_stats::orgs_count.eq(_model.orgs_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.orgs_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::orgs_count.eq(_model.orgs_count - count),
+                                schema::main_stats::deleted_orgs_count.eq(_model.deleted_orgs_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            4 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::suggested_orgs_count.eq(_model.suggested_orgs_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.suggested_orgs_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::suggested_orgs_count.eq(_model.suggested_orgs_count - count),
+                                schema::main_stats::deleted_orgs_count.eq(_model.deleted_orgs_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            6 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::places_count.eq(_model.places_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.places_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::places_count.eq(_model.places_count - count),
+                                schema::main_stats::deleted_places_count.eq(_model.deleted_places_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            7 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::suggested_places_count.eq(_model.suggested_places_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.suggested_places_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::suggested_places_count.eq(_model.suggested_places_count - count),
+                                schema::main_stats::deleted_places_count.eq(_model.deleted_places_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            9 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::deceaseds_count.eq(_model.deceaseds_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.deceaseds_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::deceaseds_count.eq(_model.deceaseds_count - count),
+                                schema::main_stats::deleted_deceaseds_count.eq(_model.deleted_deceaseds_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            10 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::suggested_deceaseds_count.eq(_model.suggested_deceaseds_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.suggested_deceaseds_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::suggested_deceaseds_count.eq(_model.suggested_deceaseds_count - count),
+                                schema::main_stats::deleted_deceaseds_count.eq(_model.deleted_deceaseds_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            12 => {
+                if plus {
+                    diesel::update(&_model)
+                        .set(schema::main_stats::reviews_count.eq(_model.reviews_count + count))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+                else {
+                    if (_model.reviews_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set(schema::main_stats::reviews_count.eq(_model.reviews_count - count))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            20 => {
+                diesel::update(&_model)
+                    .set(schema::main_stats::users_count.eq(_model.users_count + count))
+                    .execute(&_connection)
+                    .expect("Error.");
+            } 
+            21 => {
+                if (_model.deleted_orgs_count - count) > -1 {
+                    diesel::update(&_model)
+                        .set((
+                            schema::main_stats::deleted_orgs_count.eq(_model.deleted_orgs_count - count),
+                            schema::main_stats::orgs_count.eq(_model.orgs_count + count)
+                        ))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+            }
+            22 => {
+                if (_model.deleted_orgs_count - count) > -1 {
+                    diesel::update(&_model)
+                        .set((
+                            schema::main_stats::deleted_orgs_count.eq(_model.deleted_orgs_count - count),
+                            schema::main_stats::suggested_orgs_count.eq(_model.suggested_orgs_count + count)
+                        ))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+            }
+            23 => {
+                if (_model.deleted_places_count - count) > -1 {
+                    diesel::update(&_model)
+                        .set((
+                            schema::main_stats::deleted_places_count.eq(_model.deleted_places_count - count),
+                            schema::main_stats::places_count.eq(_model.places_count + count)
+                        ))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+            }
+            24 => {
+                if (_model.deleted_places_count - count) > -1 {
+                    diesel::update(&_model)
+                        .set((
+                            schema::main_stats::deleted_places_count.eq(_model.deleted_places_count - count),
+                            schema::main_stats::suggested_places_count.eq(_model.suggested_places_count + count)
+                        ))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+            }
+            25 => {
+                if (_model.deleted_deceaseds_count - count) > -1 {
+                    diesel::update(&_model)
+                        .set((
+                            schema::main_stats::deleted_deceaseds_count.eq(_model.deleted_deceaseds_count - count),
+                            schema::main_stats::deceaseds_count.eq(_model.deceaseds_count + count)
+                        ))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+            }
+            26 => {
+                if (_model.deleted_deceaseds_count - count) > -1 {
+                    diesel::update(&_model)
+                        .set((
+                            schema::main_stats::deleted_deceaseds_count.eq(_model.deleted_deceaseds_count - count),
+                            schema::main_stats::suggested_deceaseds_count.eq(_model.suggested_deceaseds_count + count)
+                        ))
+                        .execute(&_connection)
+                        .expect("Error.");
+                }
+            }
+            31 => {
+                if plus {
+                    if (_model.suggested_orgs_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::suggested_orgs_count.eq(_model.suggested_orgs_count - count),
+                                schema::main_stats::orgs_count.eq(_model.orgs_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+                else {
+                    if (_model.orgs_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::orgs_count.eq(_model.orgs_count - count),
+                                schema::main_stats::suggested_orgs_count.eq(_model.suggested_orgs_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            32 => {
+                if plus {
+                    if (_model.suggested_places_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::suggested_places_count.eq(_model.suggested_places_count - count),
+                                schema::main_stats::places_count.eq(_model.places_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+                else {
+                    if (_model.places_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::places_count.eq(_model.places_count - count),
+                                schema::main_stats::suggested_places_count.eq(_model.suggested_places_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+            33 => {
+                if plus {
+                    if (_model.suggested_deceaseds_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::suggested_deceaseds_count.eq(_model.suggested_deceaseds_count - count),
+                                schema::main_stats::deceaseds_count.eq(_model.deceaseds_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+                else {
+                    if (_model.places_count - count) > -1 {
+                        diesel::update(&_model)
+                            .set((
+                                schema::main_stats::deceaseds_count.eq(_model.deceaseds_count - count),
+                                schema::main_stats::suggested_deceaseds_count.eq(_model.suggested_deceaseds_count + count)
+                            ))
+                            .execute(&_connection)
+                            .expect("Error.");
+                    }
+                }
+            },
+        }
+
+    }
+    pub fn get_or_create() -> MainStat {
+        let _connection = establish_connection();
+        let _stats = schema::main_stats::table.first::<MainStat>(&_connection);
+        if _stats.is_ok() {
+            return _stats.expect("E");
+        }
+        else { 
+            let form = NewMainStat {
+                users_count:               0,
+                deleted_users_count:       0,
+                orgs_count:                0,
+                suggested_orgs_count:      0,
+                deleted_orgs_count:        0,
+                places_count:              0,
+                suggested_places_count:    0,
+                deleted_places_count:      0,
+                deceaseds_count:           0,
+                suggested_deceaseds_count: 0,
+                deleted_deceaseds_count:   0,
+                reviews_count:             0,
+            };
+            let _stat = diesel::insert_into(schema::main_stats::table)
+                .values(&form)
+                .get_result::<MainStat>(&_connection)
+                .expect("Error.");
+            return _stat;
+        }
+    }
+}
+
+#[derive(Deserialize, Insertable)]
+#[table_name="main_stats"]
+pub struct NewMainStat { 
+    pub users_count:               i32,
+    pub deleted_users_count:       i32,
+    pub orgs_count:                i32,
+    pub suggested_orgs_count:      i32,
+    pub deleted_orgs_count:        i32,
+    pub places_count:              i32,
+    pub suggested_places_count:    i32,
+    pub deleted_places_count:      i32,
+    pub deceaseds_count:           i32,
+    pub suggested_deceaseds_count: i32,
+    pub deleted_deceaseds_count:   i32,
+    pub reviews_count:             i32,
+}
+
+
+////////////////////
+// Шифры посещаемых страниц
+// 1 - главная
+// 2 - о сайте
+// 3 - контакты
+// 4 - команда
+// 5 - сотрудничество
+// 6 - вход
+// 7 - регитрация
+// 8 - выход
+// 9 - вопросы ответы
+// 10 - инфо
+
+// 11 - профиль
+// 12 - заказы
+// 13 - история
+// 14 - статистика
+
+// 21 - Список организаций
+// 22 - Список кладбищ
+// 23 - Список покойников
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct StatPage {
+    pub id:      i32,
+    pub types:   i16,
+    pub view:    i32,
+    pub height:  f64,
+    pub seconds: i32,
+}
+impl StatPage {
+    pub fn get_or_create(types: i16) -> StatPage {
+        let _connection = establish_connection();
+        let _stats = schema::stat_pages::table
+            .filter(schema::stat_pages::types.eq(types))
+            .first::<StatPage>(&_connection);
+        if _stats.is_ok() {
+            return _stats.expect("E");
+        }
+        else { 
+            let form = NewStatPage {
+                types:   types,
+                view:    0,
+                height:  0.0,
+                seconds: 0,
+            };
+            let _stat = diesel::insert_into(schema::stat_pages::table)
+                .values(&form)
+                .get_result::<StatPage>(&_connection)
+                .expect("Error.");
+            return _stat;
+        }
+    }
+}
+
+////////////////////
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="stat_pages"]
+pub struct NewStatPage {
+    pub types:   i16,
+    pub view:    i32,
+    pub height:  f64,
+    pub seconds: i32,
+}
+
+
+////////////////////
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct CookieUser {
+    pub id:         i32,
+    pub ip:         String,
+    pub device:     i16,
+    pub linguage:   i16,
+    pub currency:   String,
+    pub city_ru:    Option<String>,
+    pub city_en:    Option<String>,
+    pub region_ru:  Option<String>,
+    pub region_en:  Option<String>,
+    pub country_ru: Option<String>,
+    pub country_en: Option<String>,
+    pub height:     f64,
+    pub seconds:    i32,
+    pub created:    chrono::NaiveDateTime,
+}
+impl CookieUser {
+    pub fn update_l(id: i32, l: i16) -> i16 {
+        let _connection = establish_connection();
+        let _item = CookieUser::get(id);
+        diesel::update(&_item)
+            .set(schema::cookie_users::linguage.eq(l))
+            .execute(&_connection)
+            .expect("E");
+        return 1;
+    }
+    pub fn update_c(id: i32, c: String) -> i16 {
+        let _connection = establish_connection();
+        let _item = CookieUser::get(id);
+        diesel::update(&_item)
+            .set(schema::cookie_users::currency.eq(c))
+            .execute(&_connection)
+            .expect("E");
+        return 1;
+    }
+    pub fn get(user_id: i32) -> CookieUser {
+        let _connection = establish_connection();
+        return schema::cookie_users::table
+            .filter(schema::cookie_users::id.eq(user_id))
+            .first::<CookieUser>(&_connection)
+            .expect("Error"); 
+    }
+    pub fn get_res(user_id: i32) -> Result<CookieUser, Error> {
+        let _connection = establish_connection();
+        return Ok(schema::cookie_users::table
+            .filter(schema::cookie_users::id.eq(user_id))
+            .first::<CookieUser>(&_connection)?);
+    }
+    pub fn get_res_lc(user_id: i32) -> Result<(i16, i16), Error> {
+        let _connection = establish_connection();
+        return Ok(schema::cookie_users::table
+            .filter(schema::cookie_users::id.eq(user_id))
+            .select((
+                schema::cookie_users::linguage,
+                schema::cookie_users::currency,
+            ))
+            .first::<(i16, i16)>(&_connection)?);
+    }
+    pub fn get_res_lic(user_id: i32) -> Result<(i16, i32, String), Error> {
+        let _connection = establish_connection();
+        return Ok(schema::cookie_users::table
+            .filter(schema::cookie_users::id.eq(user_id))
+            .select((
+                schema::cookie_users::linguage, 
+                schema::cookie_users::id,
+                schema::cookie_users::currency,
+            ))
+            .first::<(i16, i32, String)>(&_connection)?);
+    }
+    pub fn get_res_l(user_id: i32) -> Result<i16, Error> {
+        let _connection = establish_connection();
+        return Ok(schema::cookie_users::table
+            .filter(schema::cookie_users::id.eq(user_id))
+            .select(schema::cookie_users::linguage)
+            .first::<i16>(&_connection)?);
+    }
+    pub fn get_users_list(page: i32, limit: i32) -> (Vec<CookieUser>, i32) {
+        let mut next_page_number = 0;
+        let have_next: i32;
+        let object_list: Vec<CookieUser>;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * limit + 1;
+            object_list = CookieUser::get_users(limit.into(), step.into());
+        }
+        else {
+            have_next = limit + 1;
+            object_list = CookieUser::get_users(limit.into(), 0);
+        }
+        if CookieUser::get_users(1, have_next.into()).len() > 0 {
+            next_page_number = page + 1;
+        }
+
+        return (object_list, next_page_number);
+    }
+    pub fn get_users(limit: i64, offset: i64) -> Vec<CookieUser> {
+        use crate::schema::cookie_users::dsl::cookie_users;
+
+        let _connection = establish_connection();
+        return cookie_users
+            .filter(schema::cookie_users::seconds.ne(0))
+            .filter(schema::cookie_users::height.ne(0.0))
+            .order(schema::cookie_users::created.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<CookieUser>(&_connection)
+            .expect("E.");
+    }
+}
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="cookie_users"]
+pub struct NewCookieUser {
+    pub ip:         String,
+    pub device:     i16,
+    pub linguage:   i16,
+    pub currency:   String,
+    pub city_ru:    Option<String>,
+    pub city_en:    Option<String>,
+    pub region_ru:  Option<String>,
+    pub region_en:  Option<String>,
+    pub country_ru: Option<String>,
+    pub country_en: Option<String>,
+    pub height:     f64,
+    pub seconds:    i32,
+    pub created:    chrono::NaiveDateTime,
+}
+
+/////////////////////////
+// Шифры посещаемых страниц
+// 1 - главная
+////////////////////
+
+#[derive(Debug, Queryable, Serialize, Identifiable)]
+pub struct CookieStat {  
+    pub id:       i32,
+    pub user_id:  i32,
+    pub page:     i16,
+    pub link:     String,
+    pub title:    String,
+    pub height:   f64,
+    pub seconds:  i32, 
+    pub created:  chrono::NaiveDateTime,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct HistoryResponse {
+    pub id:       i32,
+    pub link:     String,
+    pub title:    String,
+    pub height:   f64,
+    pub seconds:  i32,
+}
+
+impl CookieStat {
+    pub fn get_stat_list(user_id: i32, page: i32, limit: i32) -> Result<(Vec<CookieStat>, i32), Error> {
+        let mut next_page_number = 0;
+        let have_next: i32;
+        let object_list: Vec<CookieStat>;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * limit + 1;
+            object_list = CookieStat::get_stat_items(user_id, limit.into(), step.into())?;
+        }
+        else {
+            have_next = limit + 1;
+            object_list = CookieStat::get_stat_items(user_id, limit.into(), 0)?;
+        }
+        if CookieStat::get_stat_items(user_id, 1, have_next.into())?.len() > 0 {
+            next_page_number = page + 1;
+        }
+        let _tuple = (object_list, next_page_number);
+        Ok(_tuple)
+    }
+    pub fn get_stat_items(user_id: i32, limit: i64, offset: i64) -> Result<Vec<CookieStat>, Error> {
+        use crate::schema::cookie_stats::dsl::cookie_stats;
+
+        let _connection = establish_connection();
+        let list = cookie_stats
+            .filter(schema::cookie_stats::user_id.eq(user_id))
+            .order(schema::cookie_stats::created.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<CookieStat>(&_connection)
+            .expect("E");
+        Ok(list)
+    }
+}
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name="cookie_stats"]
+pub struct NewCookieStat {
+    pub user_id:  i32,
+    pub page:     i16,
+    pub link:     String,
+    pub title:    String,
+    pub height:   f64,
+    pub seconds:  i32,
+    pub created:  chrono::NaiveDateTime,
 }

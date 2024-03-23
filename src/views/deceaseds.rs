@@ -57,7 +57,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
     let _place = crate::utils::get_place(*_id).expect("E.");
     let user_id = get_request_user(&req).await;
     let page = crate::utils::get_page(&req);
-    let count = Deceased::count(*_id);
+    let count = _place.count;
 
     let mut next_page_number = 0;
     let have_next: i32;

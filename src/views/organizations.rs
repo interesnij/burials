@@ -37,9 +37,9 @@ use std::borrow::BorrowMut;
 
 
 pub fn organization_routes(config: &mut web::ServiceConfig) {
-    config.route("/all_organization_city/{id}/", web::get().to(all_organization_city_page));
-    config.route("/all_organization_region/{id}/", web::get().to(all_organization_region_page));
-    config.route("/all_organization_country/{id}/", web::get().to(all_organization_country_page));
+    config.route("/organizations_city/{id}/", web::get().to(all_organization_city_page));
+    config.route("/organizations_region/{id}/", web::get().to(all_organization_region_page));
+    config.route("/organizations_country/{id}/", web::get().to(all_organization_country_page));
     config.route("/organization/{id}/", web::get().to(organization_page));
 
     config.route("/create_organization/", web::get().to(create_organization_page));

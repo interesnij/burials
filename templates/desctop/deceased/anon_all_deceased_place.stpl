@@ -22,9 +22,9 @@
                             </div>
                           </div>
                         <% } %>
-            </div>
+            </div> 
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
-                <a class="pointer show_place_map">Показать на карте / проложить маршрут</a>
+                <a class="pointer show_place_map" data-pk="<%= place.id %>">Показать на карте / проложить маршрут</a>
             </div>
           </div>
         </div>

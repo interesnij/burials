@@ -41,24 +41,24 @@
                 <!-- Navigation Menu-->   
                 <ul class="navigation-menu">
                     <li>
-                        <a href="/wall/" class="sub-menu-item active">Стена памяти</a>
+                        <a href="/wall/" class="sub-menu-item wall">Стена памяти</a>
                     </li>
     
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/places/">Захоронения</a>
+                        <a href="/places/" class="places">Захоронения</a>
                     </li>
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/all_organization_country/1/">Организации</a>
+                        <a href="/all_organizations_country/1/" class="organizations">Организации</a>
                     </li>
                     <!--
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/about/">О нас</a>
+                        <a href="/about/" class="about">О нас</a>
                     </li>
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/faq/">FAQ</a>
+                        <a href="/faq/" class="faq">FAQ</a>
                     </li>
                     --> 
-                    <li><a href="/login/" class="sub-menu-item">Войти</a></li>
+                    <li><a href="/login/" class="sub-menu-item login">Войти</a></li>
                 </ul>
             </div>
         </div>

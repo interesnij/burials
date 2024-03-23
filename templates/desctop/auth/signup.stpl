@@ -1,11 +1,10 @@
 <% include!("../anon_header.stpl"); %>
 
-    <section class="md:h-screen py-36 flex items-center" style="background: linear-gradient(45deg, #ff6600, #0066ff);">
+    <section class="md:h-screen py-36 flex items-center" style="background: linear-gradient(45deg, #ff6600, #0066ff);padding-top: 20rem!important;">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
             <div class="container">
                 <div class="flex justify-center">
                     <div class="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-800 rounded-md">
-                        <a href="/"><img src="/static/images/main/logo-icon.png" class="mx-auto" alt=""></a>
                         <h5 class="my-6 text-xl api_response font-semibold">Регистрация</h5>
                         <form class="text-left">
                             <div class="grid grid-cols-1">

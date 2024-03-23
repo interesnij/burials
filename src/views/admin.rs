@@ -37,6 +37,7 @@ use crate::models::{
 };
 
 pub fn admin_routes(config: &mut web::ServiceConfig) {
+    config.route("/lists/", web::get().to(lists_page));
     config.route("/load_countries/", web::get().to(load_countries));
     config.route("/load_regions/{id}/", web::get().to(load_regions));
     config.route("/load_region_districts/{id}/", web::get().to(load_region_districts));
@@ -56,6 +57,11 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     //config.route("/create_service/", web::get().to(create_service_page));
     //config.route("/edit_service/{id}/", web::get().to(edit_service_page));
 
+    config.route("/lists/suggested_organizations/", web::get().to(suggested_organizations_page));
+    config.route("/lists/suggested_places/", web::get().to(suggested_places_page));
+    config.route("/lists/suggested_deceaseds/", web::get().to(suggested_deceaseds_page));
+    config.route("/lists/users/", web::get().to(users_list));
+
     config.route("/create_country/", web::post().to(create_country));
     config.route("/edit_country/{id}/", web::post().to(edit_country));
     config.route("/delete_country/", web::post().to(delete_country));
@@ -69,11 +75,6 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/edit_city/{id}/", web::post().to(edit_city));
     config.route("/delete_city/", web::post().to(delete_city));
 
-    config.route("/admin/organizations/", web::get().to(suggested_organizations_page));
-    config.route("/admin/places/", web::get().to(suggested_places_page));
-    config.route("/admin/deceaseds/", web::get().to(suggested_deceaseds_page));
-
-    config.route("/users/all/", web::get().to(all_users_list));
     config.route("/users/create_admin/", web::post().to(create_admin));
     config.route("/users/remove_staff/", web::post().to(remove_staff));
 
@@ -91,8 +92,35 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     //config.route("/delete_service/", web::post().to(delete_service));
 }
 
+pub async fn lists_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let services_enabled = false;
 
-pub async fn all_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists.stpl")]
+        struct Template { 
+            request_user:     User,
+            services_enabled: bool,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            services_enabled: services_enabled,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
 
     if user_id.is_none() {
@@ -101,6 +129,9 @@ pub async fn all_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse>
     else {
         let services_enabled = false;
         let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
         let users_list = crate::models::User::get_all(_request_user.id);
 
         #[derive(TemplateOnce)] 

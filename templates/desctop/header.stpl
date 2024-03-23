@@ -41,52 +41,53 @@
                 <!-- Navigation Menu-->   
                 <ul class="navigation-menu">
                     <li> 
-                        <a href="/wall/" class="sub-menu-item active">Стена памяти</a></li> 
+                        <a href="/wall/" class="sub-menu-item wall">Стена памяти</a></li> 
     
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/places/">Захоронения</a>
+                        <a href="/places/" class="places">Захоронения</a>
                     </li>
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/all_organization_country/1/">Организации</a>
+                        <a href="/all_organizations_country/1/" class="organizations">Организации</a>
                     </li>
                     <!--
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/about/">О нас</a>
+                        <a href="/about/" class="about">О нас</a>
                     </li>
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/faq/">FAQ</a>
+                        <a href="/faq/" class="faq">FAQ</a>
                     </li>
                     -->
                     <% if request_user.is_superuser() { %>
                         <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Админ</a><span class="menu-arrow"></span>
+                            <a href="javascript:void(0)" class="admin">Админ</a><span class="menu-arrow"></span>
 
                             <% let (org_count, place_count, deceased_count) = request_user.get_suggested_stat(); %>
 
                             <ul class="submenu">
                                 <% if services_enabled { %>
-                                    <li><a href="/create_service/" class="sub-menu-item">Добавить услугу</a></li>
+                                    <li><a href="/create_service/" class="sub-menu-item create_service">Добавить услугу</a></li>
                                 <% } %>
-                                <li><a href="/create_country/" class="sub-menu-item">Добавить страну</a></li>
-                                <li><a href="/create_region/" class="sub-menu-item">Добавить регион</a></li>
-                                <li><a href="/create_district/" class="sub-menu-item">Добавить район</a></li>
-                                <li><a href="/create_city/" class="sub-menu-item">Добавить город</a></li>
-                                <li><a href="/create_place/" class="sub-menu-item">Добавить кладбище</a></li>
-                                <li><a href="/create_deceased/" class="sub-menu-item">Добавить покойника</a></li>
-                                <li><a href="/admin/organizations/" class="sub-menu-item">Предложка организаций (<%= org_count %>)</a></li>
-                                <li><a href="/admin/places/" class="sub-menu-item">Предложка кладбищ (<%= place_count %>)</a></li>
-                                <li><a href="/admin/deceaseds/" class="sub-menu-item">Предложка усопших (<%= deceased_count %>)</a></li>
-                                <li><a href="/users/all/" class="sub-menu-item">Пользователи</a></li>
+                                <li><a href="/create_country/" class="sub-menu-item create_country">Добавить страну</a></li>
+                                <li><a href="/create_region/" class="sub-menu-item create_region">Добавить регион</a></li>
+                                <li><a href="/create_district/" class="sub-menu-item create_district">Добавить район</a></li>
+                                <li><a href="/create_city/" class="sub-menu-item create_city">Добавить город</a></li>
+                                <li><a href="/create_organization/" class="sub-menu-item create_organization">Добавить организацию</a></li>
+                                <li><a href="/create_place/" class="sub-menu-item create_place">Добавить кладбище</a></li>
+                                <li><a href="/create_deceased/" class="sub-menu-item create_deceased">Добавить покойника</a></li>
+                                <li><a href="/lists/suggested_organizations/" class="sub-menu-item admin">Предложка организаций (<%= org_count %>)</a></li>
+                                <li><a href="/lists/suggested_places/" class="sub-menu-item admin">Предложка кладбищ (<%= place_count %>)</a></li>
+                                <li><a href="/lists/suggested_deceaseds/" class="sub-menu-item">Предложка усопших (<%= deceased_count %>)</a></li>
+                                <li><a href="/lists/" class="sub-menu-item lists">Списки</a></li>
                             </ul>
                         </li>
                     <% } else { %>
                         <li class="has-submenu parent-menu-item">
-                            <a href="javascript:void(0)">Создать</a><span class="menu-arrow"></span>
+                            <a href="javascript:void(0)" class="create_link">Создать</a><span class="menu-arrow"></span>
 
                             <ul class="submenu">
-                                <li><a href="/create_deceased/" class="sub-menu-item">Захоронение</a></li>
-                                <li><a href="/create_place/" class="sub-menu-item">Кладбище</a></li> 
-                                <li><a href="/create_organization/" class="sub-menu-item">Организацию</a></li>
+                                <li><a href="/create_deceased/" class="sub-menu-item create_deceased">Захоронение</a></li>
+                                <li><a href="/create_place/" class="sub-menu-item create_place">Кладбище</a></li> 
+                                <li><a href="/create_organization/" class="sub-menu-item create_organization">Организацию</a></li>
                             </ul>
                         </li>
                     <% } %>

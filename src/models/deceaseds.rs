@@ -50,6 +50,9 @@ pub struct Deceased {
     pub deceased_id:     Option<i32>, 
     pub types:           i32,
     pub created:         chrono::NaiveDateTime,
+    pub view:            i32,
+    pub height:          f64,
+    pub seconds:         i32,
 }
 
 // Структура для создания новых записей об усопших
@@ -73,6 +76,9 @@ pub struct NewDeceased {
     pub deceased_id:     Option<i32>,
     pub types:           i32,
     pub created:         chrono::NaiveDateTime,
+    pub view:            i32,
+    pub height:          f64,
+    pub seconds:         i32,
 }
 
 impl Deceased {
@@ -85,6 +91,7 @@ impl Deceased {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 4, 4);
+            crate::models::MainStat::update_model(33, true, 1);
         }
     }
     pub fn unpublish(&self, user_id: i32) -> () {
@@ -96,6 +103,7 @@ impl Deceased {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 4, 8);
+            crate::models::MainStat::update_model(33, false, 1);
         }
     }
     pub fn wall(&self, user_id: i32) -> () {
@@ -135,6 +143,12 @@ impl Deceased {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 4, 3);
+            if types != 11 { 
+                crate::models::MainStat::update_model(9, false, 1);
+            }
+            else {
+                crate::models::MainStat::update_model(10, false, 1);
+            }
         }
     }
     pub fn restore(&self, user_id: i32) -> () {
@@ -152,6 +166,12 @@ impl Deceased {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 4, 7);
+            if types != 1 {
+                crate::models::MainStat::update_model(25, true, 1);
+            }
+            else {
+                crate::models::MainStat::update_model(26, true, 1);
+            }
         }
     } 
     pub fn suggested_list() -> Vec<Deceased> {
@@ -232,6 +252,9 @@ impl Deceased {
             deceased_id:     None,
             types:           types,
             created:         chrono::Local::now().naive_utc(),
+            view:            0,
+            height:          0.0,
+            seconds:         0,
         };
         let _new = diesel::insert_into(schema::deceaseds::table)
             .values(&new_form)
@@ -244,6 +267,12 @@ impl Deceased {
             crate::models::File::create(_new.id, 3, images);
         }
         crate::models::Log::create(user_id, _new.id, 4, 1);
+        if types == 1 { 
+            crate::models::MainStat::update_model(10, true, 1);
+        }
+        else {
+            crate::models::MainStat::update_model(9, true, 1);
+        }
         
         return 1;
     }
@@ -306,7 +335,7 @@ impl Deceased {
     pub fn list (
         place_id: i32,
         limit:  i64,
-        offset: i64,
+        offset: i64, 
     ) -> Vec<Deceased> {
         use crate::schema::deceaseds::dsl::deceaseds;
 

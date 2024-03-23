@@ -62,7 +62,7 @@
                   </p>
                </div>
 
-               <a class="pointer show_deceased_map">Показать на карте / проложить маршрут</a>
+               <a class="pointer show_deceased_map" data-pk="<%= deceased.id %>">Показать на карте / проложить маршрут</a>
             </div>
          </div>
       </div>

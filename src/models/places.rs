@@ -42,6 +42,9 @@ pub struct Place {
     pub cord:             Option<String>,
     pub types:            i32,
     pub created:          chrono::NaiveDateTime,
+    pub view:             i32,
+    pub height:           f64,
+    pub seconds:          i32,
 } 
 
 // Структура для создания новой записи Place
@@ -65,6 +68,9 @@ pub struct NewPlace {
     pub cord:             Option<String>,
     pub types:            i32,
     pub created:          chrono::NaiveDateTime,
+    pub view:             i32,
+    pub height:           f64,
+    pub seconds:          i32,
 }
 
 pub struct SmallPlace {
@@ -173,6 +179,7 @@ impl Place {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 3, 4);
+            crate::models::MainStat::update_model(32, true, 1);
         }
     }
     pub fn unpublish(&self, user_id: i32) -> () {
@@ -184,6 +191,7 @@ impl Place {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 3, 8);
+            crate::models::MainStat::update_model(32, false, 1);
         }
     }
 
@@ -233,6 +241,9 @@ impl Place {
             cord:             cord,
             types:            types,
             created:          chrono::Local::now().naive_utc(),
+            view:             0,
+            height:           0.0,
+            seconds:          0,
         };
         let _new = diesel::insert_into(schema::places::table)
             .values(&new_form)
@@ -243,6 +254,12 @@ impl Place {
             crate::models::File::create(_new.id, 2, images);
         }
         crate::models::Log::create(user_id, _new.id, 3, 1);
+        if types == 1 {
+            crate::models::MainStat::update_model(7, true, 1);
+        }
+        else {
+            crate::models::MainStat::update_model(6, true, 1);
+        }
 
         return 1;
     }
@@ -312,6 +329,12 @@ impl Place {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 3, 3);
+            if types != 11 { 
+                crate::models::MainStat::update_model(6, false, 1);
+            }
+            else {
+                crate::models::MainStat::update_model(7, false, 1);
+            }
         }
     }
     pub fn restore(&self, user_id: i32) -> () {
@@ -328,6 +351,12 @@ impl Place {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 3, 7);
+            if types == 1 {
+                crate::models::MainStat::update_model(24, true, 1);
+            }
+            else {
+                crate::models::MainStat::update_model(23, true, 1);
+            }
         }
     }
 
@@ -361,12 +390,17 @@ impl Place {
             .load::<Place>(&_connection)
             .expect("E.");
     }
-    pub fn get_all() -> Vec<Place> {
+    pub fn get_all (
+        limit:  i64,
+        offset: i64,
+    ) -> Vec<Place> { 
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
         return places
             .filter(schema::places::types.eq(2))
+            .limit(limit)
+            .offset(offset)
             .load::<Place>(&_connection)
             .expect("E.");
     }

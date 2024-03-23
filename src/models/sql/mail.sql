@@ -15,7 +15,54 @@ CREATE TABLE users (
     
     UNIQUE(username),
     UNIQUE(email)
-);  
+);
+
+/*
+RUB рубль
+USD доллар США
+EUR евро
+GBP Фунт стерлингов
+BYN Белорусский рубль
+GEL Грузинский лари
+JPY Японская йена
+CHF Швейцарский франк
+TRY Турецкая лира
+PLN Польский злотый
+CNY Китайский юань
+CAD Канадский доллар
+KZT Казахстанский тенге
+INR Индийская рупия
+*/ 
+CREATE TABLE cookie_users (
+    id         SERIAL PRIMARY KEY,
+    ip         VARCHAR(100) NOT NULL, -- ip адрес пользователя
+    device     SMALLINT NOT NULL,     -- комп - смартфон - планшет
+    linguage   SMALLINT NOT NULL,     -- язык
+    currency   VARCHAR(10)  NOT NULL, -- валюта RUB, USD, EUR и тд
+    city_ru    VARCHAR(150),          -- город по русски
+    city_en    VARCHAR(150),          -- город по английски
+    region_ru  VARCHAR(150),          -- регион по русски
+    region_en  VARCHAR(150),          -- регион по английски
+    country_ru VARCHAR(150),          -- страна по русски
+    country_en VARCHAR(150),          -- страна по английски
+    height     FLOAT NOT NULL,
+    seconds    INT NOT NULL,
+    created    TIMESTAMP NOT NULL     -- когда создан пользователь
+);
+CREATE TABLE cookie_stats (
+    id       SERIAL PRIMARY KEY,
+    user_id  INT NOT NULL,          -- связь с пользователем куки
+    page     SMALLINT NOT NULL,     -- номер страницы, которая просматривается
+    link     VARCHAR(200) NOT NULL, -- ссылка страницы
+    title    VARCHAR(200) NOT NULL, -- название страницы
+    height   FLOAT NOT NULL,        -- высота просмотра страницы
+    seconds  INT NOT NULL,          -- секунды нахождения страницы
+    created  TIMESTAMP NOT NULL     -- когда создана запись
+
+    CONSTRAINT fk_cookie_stat_user
+        FOREIGN KEY(user_id)
+            REFERENCES cookie_users(id)
+);
  
 -- Создание таблицы для хранения существующих записей об усопших
 /*
@@ -46,7 +93,10 @@ CREATE TABLE deceaseds (
     is_wow_monument BOOLEAN NOT NULL DEFAULT FALSE,
     deceased_id     INT,
     types           INT NOT NULL,
-    created         TIMESTAMP NOT NULL 
+    created         TIMESTAMP NOT NULL,
+    view            INT NOT NULL,
+    height          FLOAT NOT NULL,
+    seconds         INT NOT NULL
 );
 
 /*
@@ -130,7 +180,10 @@ CREATE TABLE organizations (
     image       VARCHAR(100),           -- Ссылка на фотографию организации (может быть пустой)
     user_id     INT NOT NULL,
     types       INT NOT NULL,
-    created     TIMESTAMP NOT NULL
+    created     TIMESTAMP NOT NULL,
+    view        INT NOT NULL,
+    height      FLOAT NOT NULL,
+    seconds     INT NOT NULL
 );
 
 -- Создание индекса для ускорения поиска по идентификатору организации
@@ -187,8 +240,11 @@ CREATE TABLE places (
     cadastral_number VARCHAR(100),
     cord             VARCHAR(100),
     types            INT NOT NULL,
-    created          TIMESTAMP NOT NULL
-);
+    created          TIMESTAMP NOT NULL,
+    view             INT NOT NULL,
+    height           FLOAT NOT NULL,
+    seconds          INT NOT NULL
+); 
 
 CREATE TABLE reviews (
     id         SERIAL PRIMARY KEY,
@@ -218,3 +274,28 @@ CREATE TABLE logs (
     verb      SMALLINT NOT NULL,
     created   TIMESTAMP NOT NULL
 ); 
+
+
+CREATE TABLE main_stats (
+    id                        SERIAL PRIMARY KEY, 
+    users_count               INT NOT NULL,
+    deleted_users_count       INT NOT NULL,
+    orgs_count                INT NOT NULL,
+    suggested_orgs_count      INT NOT NULL,
+    deleted_orgs_count        INT NOT NULL,
+    places_count              INT NOT NULL,
+    suggested_places_count    INT NOT NULL,
+    deleted_places_count      INT NOT NULL,
+    deceaseds_count           INT NOT NULL,
+    suggested_deceaseds_count INT NOT NULL,
+    deleted_deceaseds_count   INT NOT NULL,
+    reviews_count             INT NOT NULL
+); 
+
+CREATE TABLE stat_pages (
+    id      SERIAL PRIMARY KEY,
+    types   SMALLINT NOT NULL,
+    view    INT NOT NULL,
+    height  FLOAT NOT NULL,
+    seconds INT NOT NULL
+);

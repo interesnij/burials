@@ -77,7 +77,27 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
     let services_enabled = false;
 
     let user_id = get_request_user(&req).await;
-    let object_list = Place::get_all();
+    let object_list = Place::get_all(); 
+
+    let page = crate::utils::get_page(&req);
+    let count = MainStat::get_or_create().places_count;
+
+    let mut next_page_number = 0;
+    let have_next: i32;
+    let object_list: Vec<Place>;
+
+    if page > 1 {
+        let step = (page - 1) * 20;
+        have_next = page * 20 + 1;
+        object_list = Place::get_all(20, step.into());
+    }
+    else {
+        have_next = 20 + 1;
+        object_list = Place::get_all(20, 0);
+    }
+    if count > (have_next as usize) {
+        next_page_number = page + 1;
+    }
 
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
@@ -88,11 +108,13 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
                 request_user:     User,
                 object_list:      Vec<Place>,
                 services_enabled: bool,
+                next_page_number: i32,
             }
             let body = Template {
                 request_user:     _request_user,
                 object_list:      object_list,
                 services_enabled: services_enabled,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -105,11 +127,13 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
                 request_user:     User,
                 object_list:      Vec<Place>,
                 services_enabled: bool,
+                next_page_number: i32,
             }
             let body = Template {
                 request_user:     _request_user,
                 object_list:      object_list,
                 services_enabled: services_enabled,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -123,10 +147,12 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             struct Template {
                 object_list:      Vec<Place>,
                 services_enabled: bool,
+                next_page_number: i32,
             }
             let body = Template {
                 object_list:      object_list,
                 services_enabled: services_enabled,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -138,10 +164,12 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
             struct Template {
                 object_list:      Vec<Place>,
                 services_enabled: bool,
+                next_page_number: i32,
             }
             let body = Template {
                 object_list:      object_list,
                 services_enabled: services_enabled,
+                next_page_number: next_page_number,
             }
             .render_once()
             .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

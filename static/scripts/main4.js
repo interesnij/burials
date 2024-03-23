@@ -1,5 +1,82 @@
 function on(elSelector, eventName, selector, fn) {var element = document.querySelector(elSelector);element.addEventListener(eventName, function(event) {var possibleTargets = element.querySelectorAll(selector);var target = event.target;for (var i = 0, l = possibleTargets.length; i < l; i++) {var el = target;var p = possibleTargets[i];while (el && el !== element) {if (el === p) {return fn.call(p, event);}el = el.parentNode;}}});};
 
+function get_active_btn() {
+  nav = document.querySelector(".navigation-menu");
+  items = nav.querySelectorAll("a");
+  for (let i = 0; i < items.length; i++) {
+    items[i].classList.remove("active")
+  };
+
+  path = document.location.pathname;
+
+  if (path == "/wall/") {
+    nav.querySelector(".main").classList.add("active");
+  }
+  else if (path.includes("places")) {
+    nav.querySelector(".places").classList.add("active");
+  }
+  else if (path.includes("/organization")) {
+    nav.querySelector(".organizations").classList.add("active");
+  }
+  else if (path == "/about/") {
+    nav.querySelector(".about").classList.add("active");
+  }
+  else if (path == "/faq/") {
+    nav.querySelector(".faq").classList.add("active");
+  }
+  else if (path == "/create_service/") {
+    nav.querySelector(".create_service").classList.add("active");
+    nav.querySelector(".admin").classList.add("active");
+  }
+  else if (path == "/create_country/") {
+    nav.querySelector(".create_country").classList.add("active");
+    nav.querySelector(".admin").classList.add("active");
+  }
+  else if (path == "/create_region/") {
+    nav.querySelector(".create_region").classList.add("active");
+    nav.querySelector(".admin").classList.add("active");
+  }
+  else if (path == "/create_district/") {
+    nav.querySelector(".create_district").classList.add("active");
+    nav.querySelector(".admin").classList.add("active");
+  }
+  else if (path == "/lists/") {
+    nav.querySelector(".lists").classList.add("active");
+    nav.querySelector(".admin").classList.add("active");
+  }
+  else if (path == "/create_place/") {
+    if (nav.querySelector(".admin")) {
+      link = nav.querySelector(".admin");
+    }
+    else {
+      link = nav.querySelector(".create_link");
+    }
+    nav.querySelector(".create_district").classList.add("active");
+    link.classList.add("active");
+  }
+  else if (path == "/create_deceased/") {
+    if (nav.querySelector(".admin")) {
+      link = nav.querySelector(".admin");
+    }
+    else {
+      link = nav.querySelector(".create_link");
+    }
+    nav.querySelector(".create_deceased").classList.add("active");
+    link.classList.add("active");
+  }
+  else if (path == "/create_organization/") {
+    if (nav.querySelector(".admin")) {
+      link = nav.querySelector(".admin");
+    }
+    else {
+      link = nav.querySelector(".create_link");
+    }
+    nav.querySelector(".create_organization").classList.add("active");
+    link.classList.add("active");
+  }
+
+};
+
 function getCookie(name) {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
@@ -889,7 +966,7 @@ function paginate(block) {
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
 
-function create_fullscreen(url, type_class) {
+function create_fullscreen(url, type_class, deseaced_map, place_map, org_map) {
   container = document.body.querySelector("#fullscreens_container");
 
   try {
@@ -978,3 +1055,17 @@ function create_fullscreen(url, type_class) {
 };
 link.send();
 };
+
+
+on('body', 'click', '.show_deceased_map', function() {
+  create_fullscreen ("/deceased/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", true, false, false)
+});
+on('body', 'click', '.show_place_map', function() {
+  create_fullscreen ("/place/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, true, false)
+});
+on('body', 'click', '.show_deceased_map', function() {
+  create_fullscreen ("/organization/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, false, true)
+});
+
+
+get_active_btn();

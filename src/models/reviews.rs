@@ -81,6 +81,7 @@ impl Review {
             .execute(&_connection)
             .expect("E");
         crate::models::Log::create(user_id, self.id, 5, 3);
+        crate::models::MainStat::update_model(12, false, 1);
         return 1;
     }
 

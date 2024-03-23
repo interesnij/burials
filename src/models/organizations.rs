@@ -24,6 +24,9 @@ use crate::models::{Service, File};
 types
 1  предложена
 2  одобрена
+
+11  удалена предложенная
+12  удалена одобренная
 */
 #[derive(Debug, Queryable, Serialize, PartialEq, Deserialize, Identifiable)]
 pub struct Organization {
@@ -38,6 +41,9 @@ pub struct Organization {
     pub user_id:     i32,
     pub types:       i32,
     pub created:     chrono::NaiveDateTime,
+    pub view:        i32,
+    pub height:      f64,
+    pub seconds:     i32,
 } 
 
 // Структура для создания новой организации
@@ -54,6 +60,9 @@ pub struct NewOrganization {
     pub user_id:     i32,
     pub types:       i32,
     pub created:     chrono::NaiveDateTime,
+    pub view:        i32,
+    pub height:      f64,
+    pub seconds:     i32,
 }
 
 pub struct PlaceSmall {
@@ -161,6 +170,7 @@ impl Organization {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 2, 4);
+            crate::models::MainStat::update_model(31, true, 1);
         }
     }
     pub fn unpublish(&self, user_id: i32) -> () {
@@ -172,6 +182,7 @@ impl Organization {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 2, 8);
+            crate::models::MainStat::update_model(31, false, 1);
         }
     }
 
@@ -209,6 +220,9 @@ impl Organization {
             user_id:     user_id,
             types:       types,
             created:     chrono::Local::now().naive_utc(),
+            view:        0,
+            height:      0.0,
+            seconds:     0,
         };
         let _new = diesel::insert_into(schema::organizations::table)
             .values(&new_form)
@@ -222,6 +236,12 @@ impl Organization {
             crate::models::OrganizationsService::create(_new.id, services);
         }
         crate::models::Log::create(user_id, _new.id, 2, 1);
+        if types == 1 { 
+            crate::models::MainStat::update_model(4, true, 1);
+        }
+        else {
+            crate::models::MainStat::update_model(3, true, 1);
+        }
 
         return _new.id;
     }
@@ -290,6 +310,12 @@ impl Organization {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 2, 3);
+            if types != 11 { 
+                crate::models::MainStat::update_model(3, false, 1);
+            }
+            else {
+                crate::models::MainStat::update_model(4, false, 1);
+            }
         }
     }
     pub fn restore(&self, user_id: i32) -> () {
@@ -306,6 +332,12 @@ impl Organization {
                 .execute(&_connection)
                 .expect("Error.");
             crate::models::Log::create(user_id, self.id, 2, 7);
+            if types == 1 {
+                crate::models::MainStat::update_model(22, true, 1);
+            }
+            else {
+                crate::models::MainStat::update_model(21, true, 1);
+            }
         }
     }
 

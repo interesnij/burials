@@ -79,6 +79,7 @@ impl Service {
             .get_result::<Service>(&_connection)
             .expect("Error.");
         crate::models::Log::create(user_id, _new.id, 7, 1);
+        crate::models::MainStat::update_model(12, true, 1);
         return 1;
     }
     pub fn edit (

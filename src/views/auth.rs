@@ -277,6 +277,7 @@ pub async fn process_signup(req: HttpRequest, mut payload: Multipart) -> actix_w
             .expect("Error saving user.");
 
         crate::models::Log::create(_new_user.id, _new_user.id, 1, 1);
+        crate::models::MainStat::update_model(1, true, 1);
 
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(_new_user.id.to_string()))
     }
