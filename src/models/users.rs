@@ -9,6 +9,8 @@ use crate::schema::{
     logs,
     main_stats,
     stat_pages,
+    cookie_stats,
+    cookie_users,
 };
 use crate::diesel::{
     Queryable,
