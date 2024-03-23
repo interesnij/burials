@@ -47,7 +47,7 @@
                         <a href="/places/" class="places">Захоронения</a>
                     </li>
                     <li class="has-submenu parent-parent-menu-item">
-                        <a href="/all_organizations_country/1/" class="organizations">Организации</a>
+                        <a href="/organizations_country/1/" class="organizations">Организации</a>
                     </li>
                     <!--
                     <li class="has-submenu parent-parent-menu-item">
