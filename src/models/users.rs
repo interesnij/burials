@@ -61,7 +61,7 @@ impl User {
                 _ => 11,
             };
             diesel::update(self)
-                .set(schema::users::perm.eq(perm))
+                .set(schema::users::perm.eq(types))
                 .execute(&_connection)
                 .expect("Error.");
             Log::create(user_id, self.id, 1, 3);
@@ -79,7 +79,7 @@ impl User {
                 _ => 1,
             }; 
             diesel::update(self)
-                .set(schema::users::perm.eq(perm))
+                .set(schema::users::perm.eq(types))
                 .execute(&_connection)
                 .expect("Error.");
             Log::create(user_id, self.id, 1, 7);
