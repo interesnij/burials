@@ -61,8 +61,6 @@
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)" class="admin">Админ</a><span class="menu-arrow"></span>
 
-                            <% let (org_count, place_count, deceased_count) = request_user.get_suggested_stat(); %>
-
                             <ul class="submenu">
                                 <% if services_enabled { %>
                                     <li><a href="/create_service/" class="sub-menu-item create_service">Добавить услугу</a></li>
@@ -74,9 +72,9 @@
                                 <li><a href="/create_organization/" class="sub-menu-item create_organization">Добавить организацию</a></li>
                                 <li><a href="/create_place/" class="sub-menu-item create_place">Добавить кладбище</a></li>
                                 <li><a href="/create_deceased/" class="sub-menu-item create_deceased">Добавить покойника</a></li>
-                                <li><a href="/lists/suggested_organizations/" class="sub-menu-item admin">Предложка организаций (<%= org_count %>)</a></li>
-                                <li><a href="/lists/suggested_places/" class="sub-menu-item admin">Предложка кладбищ (<%= place_count %>)</a></li>
-                                <li><a href="/lists/suggested_deceaseds/" class="sub-menu-item">Предложка усопших (<%= deceased_count %>)</a></li>
+                                <li><a href="/lists/suggested_organizations/" class="sub-menu-item admin">Предложка организаций ()</a></li>
+                                <li><a href="/lists/suggested_places/" class="sub-menu-item admin">Предложка кладбищ ()</a></li>
+                                <li><a href="/lists/suggested_deceaseds/" class="sub-menu-item">Предложка усопших ()</a></li>
                                 <li><a href="/lists/" class="sub-menu-item lists">Списки</a></li>
                             </ul>
                         </li>
