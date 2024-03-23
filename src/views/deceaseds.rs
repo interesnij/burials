@@ -60,7 +60,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
     let count = _place.count;
 
     let mut next_page_number = 0;
-    let have_next: i16;
+    let have_next: i32;
     let object_list: Vec<Deceased>;
 
     if page > 1 {
@@ -72,7 +72,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         have_next = 20 + 1;
         object_list = Deceased::list(*_id, 20, 0);
     }
-    if count > have_next {
+    if count > (have_next as i32) {
         next_page_number = page + 1;
     } 
 

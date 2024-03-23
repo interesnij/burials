@@ -835,7 +835,7 @@ impl MainStat {
         */ 
         let _model = MainStat::get_or_create();
         let _connection = establish_connection();
-        return match case {
+        return match model_types {
             1 => {
                 if plus {
                     diesel::update(&_model)
@@ -1297,15 +1297,15 @@ impl CookieUser {
             .filter(schema::cookie_users::id.eq(user_id))
             .first::<CookieUser>(&_connection)?);
     }
-    pub fn get_res_lc(user_id: i32) -> Result<(i16, i16), Error> {
+    pub fn get_res_lc(user_id: i32) -> Result<(i16, String), Error> {
         let _connection = establish_connection();
         return Ok(schema::cookie_users::table
             .filter(schema::cookie_users::id.eq(user_id))
             .select((
                 schema::cookie_users::linguage,
                 schema::cookie_users::currency,
-            ))
-            .first::<(i16, i16)>(&_connection)?);
+            )) 
+            .first::<(i16, String)>(&_connection)?);
     }
     pub fn get_res_lic(user_id: i32) -> Result<(i16, i32, String), Error> {
         let _connection = establish_connection();
