@@ -72,7 +72,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
         have_next = 20 + 1;
         object_list = Deceased::list(*_id, 20, 0);
     }
-    if i32::from(count) > have_next {
+    if i32::from(count) > have_next as i32 {
         next_page_number = page + 1;
     } 
 
