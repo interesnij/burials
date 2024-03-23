@@ -94,7 +94,7 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
         have_next = 20 + 1;
         object_list = Place::get_all(20, 0);
     }
-    if count > (have_next as usize) {
+    if i32::from(count) > have_next as i32 {
         next_page_number = page + 1;
     }
 
