@@ -279,7 +279,7 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
     let user_id = get_request_user(&req).await;
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
-        let places_list = Place::get_all();
+        let places_list = Place::all();
         let deceased_list = Deceased::get_all(); 
 
         if is_desctop {
@@ -336,7 +336,7 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
     let _place = crate::utils::get_place(_deceased.place_id).expect("E.");
     let user_id = get_request_user(&req).await;
-    let place_list = Place::get_all();
+    let place_list = Place::all();
     let deceased_list = Deceased::get_all(); 
 
     if user_id.is_some() { 

@@ -77,7 +77,6 @@ pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse
     let services_enabled = false;
 
     let user_id = get_request_user(&req).await;
-    let object_list = Place::get_all(); 
 
     let page = crate::utils::get_page(&req);
     let count = MainStat::get_or_create().places_count;
@@ -559,7 +558,7 @@ pub async fn create_place_page(req: HttpRequest) -> actix_web::Result<HttpRespon
         let _request_user = user_id.unwrap();
 
         let country_list = crate::models::Countrie::get_all();
-        let place_list = crate::models::Place::get_all();
+        let place_list = crate::models::Place::all();
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -632,7 +631,7 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     else {
         district_list = Vec::new();
     }
-    let place_list = crate::models::Place::get_all();
+    let place_list = crate::models::Place::all();
 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();

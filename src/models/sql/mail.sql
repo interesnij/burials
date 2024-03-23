@@ -58,10 +58,6 @@ CREATE TABLE cookie_stats (
     height   FLOAT NOT NULL,        -- высота просмотра страницы
     seconds  INT NOT NULL,          -- секунды нахождения страницы
     created  TIMESTAMP NOT NULL     -- когда создана запись
-
-    CONSTRAINT fk_cookie_stat_user
-        FOREIGN KEY(user_id)
-            REFERENCES cookie_users(id)
 );
  
 -- Создание таблицы для хранения существующих записей об усопших
