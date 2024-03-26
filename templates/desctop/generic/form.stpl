@@ -46,12 +46,13 @@
 		<div class="d-flex col-md-12 col-lg-4">
 			<div class="flex-grow-1 form-group">
                 <label for="location-input" class="">Кладбище</label>
-				<div class="blur flex-no-wrap flex-grow-1 input-group">
-					<select id="id_place" name="place" class="place_search form-select load_regions form-input mt-2 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                    </select>
-				</div>
+				<input type="hidden" id="id_place" name="place">
+				<input type="text" class="place_search place_click form-control">
+				<div style="max-height:600px" class="hidden">
+					<p>Начинайте вводить текст</p>
+				</div> 
 			</div> 
-		</div> 
+		</div>  
 		<div class="submit-col col-md-12 col-lg-4">
 			<div class="row">
 				<div class="col-md-4">

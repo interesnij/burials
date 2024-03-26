@@ -223,8 +223,6 @@
   }
   .sub-menu-item.active {
     text-decoration: underline;
-    text-decoration-color: #0d6efd;
-    color: #0d6efd !important;
   }
   .rounded-full {
     object-fit: cover;

@@ -451,12 +451,28 @@ on('body', 'change', '.place_search', function() {
       link.onreadystatechange = function () {
         if ( link.readyState == 4 ) { 
             if ( link.status == 200 ) {
-              _this.innerHTML = link.responseText;
-            }
+              _this.nextElementSibling.innerHTML = link.responseText;
+            } 
         }
     };
     link.send( null );
   };
+});
+on('body', 'click', '.place_search_item', function() {
+  _value = this.parentElement.previousElementSibling;
+  _value.value = this.innerHTML;
+  _value.previousElementSibling.value = this.getAttribute("data-pk");
+  this.parentElement.classList.add("hidden");
+});
+
+on('body', 'click', '.place_click', function() {
+  block = this.previousElementSibling;
+  if (block.classList.contains("hidden")) {
+    block.classList.remove("hidden")
+  } 
+  else {
+    block.classList.add("hidden");
+  }
 });
 
 on('body', 'click', '.show_dop_search_form', function() {
