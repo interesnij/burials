@@ -955,17 +955,17 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
 
         let mut next_page_number = 0;
         let have_next: i32; 
-        let org_list: Vec<Place>;
+        let places_list: Vec<Place>;
         let services_enabled = false;
 
         if page > 1 {
             let step = (page - 1) * 20;
             have_next = page * 20 + 1;
-            org_list = Place::suggested_list(20, step.into());
+            places_list = Place::suggested_list(20, step.into());
         }
         else { 
             have_next = 20 + 1; 
-            org_list = Place::suggested_list(20, 0);
+            places_list = Place::suggested_list(20, 0);
         }
         if count > have_next {
             next_page_number = page + 1;
@@ -976,11 +976,13 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         #[template(path = "desctop/admin/suggested_places.stpl")]
         struct Template { 
             request_user:     User,
+            places_list:      Vec<Place>,
             services_enabled: bool,
             next_page_number: i32,
         }
         let body = Template {
             request_user:     _request_user,
+            places_list:      places_list,
             services_enabled: services_enabled,
             next_page_number: next_page_number,
         }
@@ -1005,18 +1007,18 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
         let count = crate::models::MainStat::get_or_create().suggested_deceaseds_count; 
         let mut next_page_number = 0;
         let have_next: i32; 
-        let org_list: Vec<Deceased>;
+        let deceaseds_list: Vec<Deceased>;
         let services_enabled = false;
         let page = crate::utils::get_page(&req);
 
         if page > 1 {
             let step = (page - 1) * 20;
             have_next = page * 20 + 1;
-            org_list = Deceased::suggested_list(20, step.into());
+            deceaseds_list = Deceased::suggested_list(20, step.into());
         }
         else { 
             have_next = 20 + 1; 
-            org_list = Deceased::suggested_list(20, 0);
+            deceaseds_list = Deceased::suggested_list(20, 0);
         }
         if count > have_next {
             next_page_number = page + 1;
