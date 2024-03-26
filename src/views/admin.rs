@@ -901,7 +901,7 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
         let count = crate::models::MainStat::get_or_create().suggested_orgs_count; 
 
         let mut next_page_number = 0;
-        let have_next: i32;
+        let have_next: i32; 
         let org_list: Vec<Organization>;
         let services_enabled = false;
 
@@ -950,7 +950,26 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let places_list = Place::suggested_list();
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().suggested_orgs_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let org_list: Vec<Place>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = Place::suggested_list(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = Place::suggested_list(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
         let services_enabled = false;
 
         #[derive(TemplateOnce)]
@@ -959,11 +978,13 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
             request_user:     User,
             places_list:      Vec<Place>,
             services_enabled: bool,
+            next_page_number: i32,
         }
         let body = Template {
             request_user:     _request_user,
             places_list:      places_list,
             services_enabled: services_enabled,
+            next_page_number: next_page_number,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
@@ -983,7 +1004,23 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let deceaseds_list = Deceased::suggested_list();
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let org_list: Vec<Deceased>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = Deceased::suggested_list(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = Deceased::suggested_list(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
         let services_enabled = false;
 
         #[derive(TemplateOnce)]
@@ -992,11 +1029,13 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
             request_user:     User,
             deceaseds_list:   Vec<Deceased>,
             services_enabled: bool,
+            next_page_number: i32,
         }
         let body = Template {
             request_user:     _request_user,
             deceaseds_list:   deceaseds_list,
             services_enabled: services_enabled,
+            next_page_number: next_page_number,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
