@@ -58,7 +58,7 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     //config.route("/edit_service/{id}/", web::get().to(edit_service_page));
 
     config.route("/lists/suggested_organizations/", web::get().to(suggested_organizations_page));
-    config.route("/lists/suggested_places/", web::get().to(suggested_places_page));
+    config.route("/lists/suggested_places/", web::get().to(suggested_places_page)); 
     config.route("/lists/suggested_deceaseds/", web::get().to(suggested_deceaseds_page));
     config.route("/lists/users/", web::get().to(users_list));
 
@@ -890,15 +890,33 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
     if user_id.is_none() {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
     }
-    else {
+    else { 
         use crate::models::Organization;
 
         let _request_user = user_id.unwrap();
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let org_list = Organization::suggested_list();
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().suggested_orgs_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32;
+        let org_list: Vec<Organization>;
         let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = Organization::suggested_list(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = Organization::suggested_list(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
 
         #[derive(TemplateOnce)]
         #[template(path = "desctop/admin/suggested_organizations.stpl")]
@@ -906,11 +924,13 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
             request_user:     User,
             org_list:         Vec<Organization>,
             services_enabled: bool,
+            next_page_number: i32,
         }
         let body = Template {
             request_user:     _request_user,
             org_list:         org_list,
             services_enabled: services_enabled,
+            next_page_number: next_page_number,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;

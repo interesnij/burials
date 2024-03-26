@@ -180,10 +180,6 @@
                 </div>
             </div>
             </form>
-
-            <% if request_user.is_admin() { %>
-                <% for i in org_list.iter() { %><p><%= i.name %></p><% } %>
-            <% } %>
         </section>
 
 

@@ -631,7 +631,6 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
     else {
         district_list = Vec::new();
     }
-    let place_list = crate::models::Place::all();
 
     if user_id.is_some() {
         let _request_user = user_id.unwrap();
@@ -646,7 +645,6 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                 region_list:      Vec<Region>,
                 city_list:        Vec<Citie>,
                 district_list:    Vec<District>,
-                place_list:       Vec<Place>,
                 services_enabled: bool,
             }
             let body = Template {
@@ -657,7 +655,6 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                 region_list:      region_list,
                 city_list:        city_list,
                 district_list:    district_list,
-                place_list:       place_list,
                 services_enabled: services_enabled,
             }
             .render_once()
@@ -675,7 +672,6 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                 region_list:      Vec<Region>,
                 city_list:        Vec<Citie>,
                 district_list:    Vec<District>,
-                place_list:       Vec<Place>,
                 services_enabled: bool,
             }
             let body = Template {
@@ -686,7 +682,6 @@ pub async fn edit_place_page(req: HttpRequest, _id: web::Path<i32>) -> actix_web
                 region_list:      region_list,
                 city_list:        city_list,
                 district_list:    district_list,
-                place_list:       place_list,
                 services_enabled: services_enabled,
             }
             .render_once()

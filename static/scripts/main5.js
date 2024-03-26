@@ -464,7 +464,7 @@ on('body', 'click', '.place_search_item', function() {
   _value.previousElementSibling.value = this.getAttribute("data-pk");
   this.parentElement.classList.add("hidden");
 });
-
+ 
 on('body', 'click', '.place_click', function() {
   block = this.previousElementSibling;
   if (block.classList.contains("hidden")) {

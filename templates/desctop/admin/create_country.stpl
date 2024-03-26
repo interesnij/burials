@@ -30,7 +30,7 @@
             <p><%= object.name %>
                 | <a class="ajax" href="/edit_country/<%= object.id %>/">Изменить</a>
                 | <a class="pointer remove_country" data-pk="<%= object.id %>">Удалить</a>
-            </p>
+            </p> 
             <% } %>
         </div>
 	</div>

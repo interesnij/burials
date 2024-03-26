@@ -80,10 +80,15 @@ pub struct SmallPlace {
 }
 
 impl Place {
-    pub fn suggested_list() -> Vec<Place> {
+    pub fn suggested_list (
+        limit: i64,
+        offset: i64,
+    ) -> Vec<Place> {
         let _connection = establish_connection();
         return schema::places::table
-            .filter(schema::places::types.ne(2))
+            .filter(schema::places::types.eq(1))
+            .limit(limit)
+            .offset(offset)
             .load::<Place>(&_connection)
             .expect("E.");
     }

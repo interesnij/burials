@@ -174,10 +174,15 @@ impl Deceased {
             }
         }
     } 
-    pub fn suggested_list() -> Vec<Deceased> {
+    pub fn suggested_list(
+        limit:  i64,
+        offset: i64,
+    ) -> Vec<Deceased> {
         let _connection = establish_connection();
         return schema::deceaseds::table
-            .filter(schema::deceaseds::types.ne(2))
+            .filter(schema::deceaseds::types.eq(1))
+            .limit(limit)
+            .offset(offset)
             .load::<Deceased>(&_connection)
             .expect("E.");
     }

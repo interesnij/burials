@@ -59,7 +59,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
     let page = crate::utils::get_page(&req);
     let count = _place.count;
 
-    let mut next_page_number = 0;
+    let mut next_page_number = 0; 
     let have_next: i32;
     let object_list: Vec<Deceased>;
 
@@ -71,7 +71,7 @@ pub async fn all_deceased_place_page(req: HttpRequest, _id: web::Path<i32>) -> a
     else {
         have_next = 20 + 1;
         object_list = Deceased::list(*_id, 20, 0);
-    }
+    } 
     if i32::from(count) > have_next as i32 {
         next_page_number = page + 1;
     } 
@@ -280,7 +280,6 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         let places_list = Place::all();
-        let deceased_list = Deceased::get_all(); 
 
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -288,14 +287,12 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
             struct Template {
                 request_user:     User,
                 places_list:      Vec<Place>,
-                deceased_list:    Vec<Deceased>,
                 is_ajax:          i32,
                 services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 places_list:      places_list,
-                deceased_list:    deceased_list,
                 is_ajax:          is_ajax,
                 services_enabled: services_enabled,
             }
@@ -309,14 +306,12 @@ pub async fn create_deceased_page(req: HttpRequest) -> actix_web::Result<HttpRes
             struct Template {
                 request_user:     User,
                 places_list:      Vec<Place>,
-                deceased_list:    Vec<Deceased>,
                 is_ajax:          i32,
                 services_enabled: bool,
             }
             let body = Template {
                 request_user:     _request_user,
                 places_list:      places_list,
-                deceased_list:    deceased_list,
                 is_ajax:          is_ajax,
                 services_enabled: services_enabled,
             }
@@ -336,8 +331,7 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
     let _deceased = crate::utils::get_deceased(*_id).expect("E.");
     let _place = crate::utils::get_place(_deceased.place_id).expect("E.");
     let user_id = get_request_user(&req).await;
-    let place_list = Place::all();
-    let deceased_list = Deceased::get_all(); 
+    let place_list = Place::all(100, 0);
 
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
@@ -353,7 +347,6 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
                 place:            Place,
                 is_ajax:          i32,
                 place_list:       Vec<Place>,
-                deceased_list:    Vec<Deceased>,
                 services_enabled: bool,
             }
             let body = Template {
@@ -362,7 +355,6 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
                 place:            _place,
                 is_ajax:          is_ajax,
                 place_list:       place_list,
-                deceased_list:    deceased_list,
                 services_enabled: services_enabled,
             }
             .render_once()
@@ -378,7 +370,6 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
                 place:            Place,
                 is_ajax:          i32,
                 place_list:       Vec<Place>,
-                deceased_list:    Vec<Deceased>,
                 services_enabled: bool,
             }
             let body = Template {
@@ -387,7 +378,6 @@ pub async fn edit_deceased_page(req: HttpRequest, _id: web::Path<i32>) -> actix_
                 place:            _place,
                 is_ajax:          is_ajax,
                 place_list:       place_list,
-                deceased_list:    deceased_list,
                 services_enabled: services_enabled,
             }
             .render_once()

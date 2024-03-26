@@ -384,16 +384,26 @@ impl Organization {
         
         return (org_stack, places_stack);
     }
-    pub fn get_all() -> Vec<Organization> {
+    pub fn get_all (
+        limit:  i64,
+        offset: i64,
+    ) -> Vec<Organization> { 
         let _connection = establish_connection();
         return schema::organizations::table
+            .limit(limit)
+            .offset(offset)
             .load::<Organization>(&_connection)
             .expect("E."); 
     }
-    pub fn suggested_list() -> Vec<Organization> {
+    pub fn suggested_list (
+        limit:  i64,
+        offset: i64,
+    ) -> Vec<Organization> {
         let _connection = establish_connection();
         return schema::organizations::table
-            .filter(schema::organizations::types.ne(2))
+            .filter(schema::organizations::types.eq(1))
+            .limit(limit)
+            .offset(offset)
             .load::<Organization>(&_connection)
             .expect("E."); 
     }

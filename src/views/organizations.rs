@@ -432,7 +432,6 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
-        let org_list = Organization::get_all();
         let service_list = Service::get_all();
 
         if is_desctop {
@@ -442,7 +441,6 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 request_user:     User,
                 is_ajax:          i32,
                 country_list:     Vec<Countrie>,
-                org_list:         Vec<Organization>,
                 service_list:     Vec<Service>,
                 services_enabled: bool,
             }
@@ -450,7 +448,6 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 request_user:     _request_user,
                 is_ajax:          is_ajax,
                 country_list:     country_list,
-                org_list:         org_list,
                 service_list:     service_list,
                 services_enabled: services_enabled,
             }
@@ -465,7 +462,6 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 request_user:     User,
                 is_ajax:          i32,
                 country_list:     Vec<Countrie>,
-                org_list:         Vec<Organization>,
                 service_list:     Vec<Service>,
                 services_enabled: bool,
             }
@@ -473,7 +469,6 @@ pub async fn create_organization_page(req: HttpRequest) -> actix_web::Result<Htt
                 request_user:     _request_user,
                 is_ajax:          is_ajax,
                 country_list:     country_list,
-                org_list:         org_list,
                 service_list:     service_list,
                 services_enabled: services_enabled,
             }
@@ -496,7 +491,6 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
     if user_id.is_some() { 
         let _request_user = user_id.unwrap();
         let country_list = Countrie::get_all();
-        let org_list = Organization::get_all();
         let service_list = Service::get_all();
         if is_desctop {
             #[derive(TemplateOnce)]
@@ -506,7 +500,6 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 organization:     Organization,
                 is_ajax:          i32,
                 country_list:     Vec<Countrie>,
-                org_list:         Vec<Organization>,
                 service_list:     Vec<Service>,
                 services_enabled: bool,
             }
@@ -515,7 +508,6 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 organization:     _organization,
                 is_ajax:          is_ajax,
                 country_list:     country_list,
-                org_list:         org_list,
                 service_list:     service_list,
                 services_enabled: services_enabled,
             }
@@ -531,7 +523,6 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 organization:     Organization,
                 is_ajax:          i32,
                 country_list:     Vec<Countrie>,
-                org_list:         Vec<Organization>,
                 service_list:     Vec<Service>,
                 services_enabled: bool,
             }
@@ -540,7 +531,6 @@ pub async fn edit_organization_page(req: HttpRequest, _id: web::Path<i32>) -> ac
                 organization:     _organization,
                 is_ajax:          is_ajax,
                 country_list:     country_list,
-                org_list:         org_list,
                 service_list:     service_list,
                 services_enabled: services_enabled,
             }
