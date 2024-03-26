@@ -951,7 +951,7 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
         let page = crate::utils::get_page(&req);
-        let count = crate::models::MainStat::get_or_create().suggested_orgs_count; 
+        let count = crate::models::MainStat::get_or_create().suggested_places_count; 
 
         let mut next_page_number = 0;
         let have_next: i32; 
@@ -1004,6 +1004,7 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
+        let count = crate::models::MainStat::get_or_create().suggested_deceaseds_count; 
         let mut next_page_number = 0;
         let have_next: i32; 
         let org_list: Vec<Deceased>;
