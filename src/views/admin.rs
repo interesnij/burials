@@ -976,13 +976,11 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         #[template(path = "desctop/admin/suggested_places.stpl")]
         struct Template { 
             request_user:     User,
-            places_list:      Vec<Place>,
             services_enabled: bool,
             next_page_number: i32,
         }
         let body = Template {
             request_user:     _request_user,
-            places_list:      places_list,
             services_enabled: services_enabled,
             next_page_number: next_page_number,
         }
@@ -1009,6 +1007,7 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
         let have_next: i32; 
         let org_list: Vec<Deceased>;
         let services_enabled = false;
+        let page = crate::utils::get_page(&req);
 
         if page > 1 {
             let step = (page - 1) * 20;
