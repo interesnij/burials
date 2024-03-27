@@ -200,17 +200,17 @@ pub async fn all_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse>
 
         let mut next_page_number = 0;
         let have_next: i32; 
-        let org_list: Vec<User>;
+        let users_list: Vec<User>;
         let services_enabled = false;
 
         if page > 1 {
             let step = (page - 1) * 20;
             have_next = page * 20 + 1;
-            org_list = User::get_all(_request_user.id, 20, step.into());
+            users_list = User::get_all(_request_user.id, 20, step.into());
         }
         else { 
             have_next = 20 + 1; 
-            org_list = User::get_all(_request_user.id, 20, 0);
+            users_list = User::get_all(_request_user.id, 20, 0);
         }
         if count > have_next {
             next_page_number = page + 1;
@@ -252,17 +252,17 @@ pub async fn deleted_users_list(req: HttpRequest) -> actix_web::Result<HttpRespo
 
         let mut next_page_number = 0;
         let have_next: i32; 
-        let org_list: Vec<User>;
+        let users_list: Vec<User>;
         let services_enabled = false;
 
         if page > 1 {
             let step = (page - 1) * 20;
             have_next = page * 20 + 1;
-            org_list = User::deleted_users(20, step.into());
+            users_list = User::deleted_users(20, step.into());
         }
         else { 
             have_next = 20 + 1; 
-            org_list = User::deleted_users(20, 0);
+            users_list = User::deleted_users(20, 0);
         }
         if count > have_next {
             next_page_number = page + 1;
@@ -1370,7 +1370,7 @@ pub async fn all_deceaseds_page(req: HttpRequest) -> actix_web::Result<HttpRespo
         else { 
             have_next = 20 + 1; 
             deceaseds_list = Deceased::get_all(20, 0);
-        }
+        } 
         if count > have_next {
             next_page_number = page + 1;
         }
