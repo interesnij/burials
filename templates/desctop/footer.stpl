@@ -62,6 +62,7 @@
     <script src="/static/js/easy_background.js"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f24c512a-4137-4c65-a9e6-39f5d7cd0ebe&suggest_apikey=6d98461b-030b-42e8-9a8b-0ad3c4bea025&height=100%" type="text/javascript"></script>
     <script src="/static/scripts/main7.js?ver12"></script>
+    <script src="/static/scripts/map.js"></script>
     <% if request_user.is_superuser() { %>
         <script defer type="text/javascript" src="/static/scripts/admin3.js?ver12"></script>
     <% } %>
