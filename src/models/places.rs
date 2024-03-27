@@ -425,14 +425,14 @@ impl Place {
         q:        String,
         limit:    i64,
         offset:   i64, 
-    ) -> Vec<Place> {
+    ) -> Vec<Place> { 
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
         return places
             .filter(schema::places::title.ilike(&q))
-            .or_filter(schema::places::description.ilike(&q))
-            .or_filter(schema::places::address.ilike(&q))
+            //.or_filter(schema::places::description.ilike(&q))
+            //.or_filter(schema::places::address.ilike(&q))
             .filter(schema::places::types.eq(2))
             .order(schema::places::title.desc())
             .limit(limit)
