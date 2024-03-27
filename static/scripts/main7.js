@@ -2,27 +2,27 @@ function on(elSelector, eventName, selector, fn) {var element = document.querySe
 
 function get_active_btn() {
   nav = document.querySelector(".navigation-menu");
-  items = nav.querySelectorAll("a");
+  items = nav.querySelectorAll("li");
   for (let i = 0; i < items.length; i++) {
     items[i].classList.remove("active")
-  };
+  }; 
 
   path = document.location.pathname;
 
   if (path == "/wall/") {
-    nav.querySelector(".main").classList.add("active");
+    nav.querySelector(".main").parentElement.classList.add("active");
   }
   else if (path.includes("places")) {
-    nav.querySelector(".places").classList.add("active");
+    nav.querySelector(".places").parentElement.classList.add("active");
   }
   else if (path.includes("/organization")) {
-    nav.querySelector(".organizations").classList.add("active");
+    nav.querySelector(".organizations").parentElement.classList.add("active");
   }
   else if (path == "/about/") {
-    nav.querySelector(".about").classList.add("active");
+    nav.querySelector(".about").parentElement.classList.add("active");
   }
   else if (path == "/faq/") {
-    nav.querySelector(".faq").classList.add("active");
+    nav.querySelector(".faq").parentElement.classList.add("active");
   }
   else if (path == "/create_service/") {
     nav.querySelector(".create_service").classList.add("active");
