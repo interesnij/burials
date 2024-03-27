@@ -1066,9 +1066,9 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map) {
         };
         if (deseaced_map) {
           load_deceadeds_map()
-        };
+        }
         else if (place_map) {
-          load_deceadeds_map()
+          load_places_map()
         };
     }
 };
