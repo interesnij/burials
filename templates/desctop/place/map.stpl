@@ -14,7 +14,7 @@
                             <p id="notice2"></p>
                             <br />
                         </div>
-                        <div>
+                        <div style="margin-bottom: 60px;">
                             <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
                             <span id="notice3"></span>
                         </div>

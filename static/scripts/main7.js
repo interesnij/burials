@@ -1171,8 +1171,8 @@ function load_deceadeds_map(cord) {
     }
   
     on('body', 'click', '#button3', function() { 
-      addrFrom = document.body.querySelector("#suggest1").value;
-      addrTo = document.body.querySelector("#suggest2").value;
+      addrFrom = document.body.querySelector("#suggest1");
+      addrTo = document.body.querySelector("#suggest2");
       addrFrom.style.setProperty('border', 'inherit', 'important');
       addrTo.style.setProperty('border', 'inherit', 'important');
       if (!addrFrom.value) {
@@ -1392,8 +1392,8 @@ function load_places_map(cord) {
     }
   
     on('body', 'click', '#button3', function() { 
-      addrFrom = document.body.querySelector("#suggest1").value;
-      addrTo = document.body.querySelector("#suggest2").value;
+      addrFrom = document.body.querySelector("#suggest1");
+      addrTo = document.body.querySelector("#suggest2");
       addrFrom.style.setProperty('border', 'inherit', 'important');
       addrTo.style.setProperty('border', 'inherit', 'important');
       if (!addrFrom.value) {

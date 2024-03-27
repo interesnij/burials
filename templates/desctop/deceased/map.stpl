@@ -28,7 +28,7 @@
    <button type="submit" id="button2">Проверить</button>
    <p id="notice2"></p>
 </div>
-<div id="route" class="hidden">
+<div style="margin-bottom: 60px;">
    <button type="submit" id="button3">Построить маршрут</button>
    <p id="notice3"></p>
 </div>
