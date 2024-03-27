@@ -1,4 +1,4 @@
-ап
+
 <% for i in object_list.iter() { %>
     <p class="place_search_item pointer" data-pk="<%= i.id %>"><%= i.title %> (<%= i.get_loc() %>)</p>
 <% } %>
