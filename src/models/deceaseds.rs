@@ -553,11 +553,16 @@ impl Deceased {
         return stack;
     }
 
-    pub fn get_all() -> Vec<Deceased> {
+    pub fn get_all (
+        limit: i64,
+        offset: i64,
+    ) -> Vec<Deceased> {
         use crate::schema::deceaseds::dsl::deceaseds;
 
         let _connection = establish_connection();
         return deceaseds
+            .limit(limit)
+            .limit(offset)
             .load::<Deceased>(&_connection)
             .expect("E.");
     }
