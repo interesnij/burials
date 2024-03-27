@@ -455,7 +455,7 @@ on('body', 'input', '.place_search', function() {
             if ( link.status == 200 ) {
               
               _this.nextElementSibling.innerHTML = link.responseText;
-              block = this.nextElementSibling;
+              block = _this.nextElementSibling;
               block.classList.remove("hidden");
             }
         }
