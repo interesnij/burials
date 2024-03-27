@@ -979,7 +979,7 @@ function paginate(block) {
 function elementInViewport(el){var bounds = el.getBoundingClientRect();return ((bounds.top + bounds.height > 0) && (window.innerHeight - bounds.top > 0));}
 
 
-function create_fullscreen(url, type_class, deseaced_map, place_map, org_map) {
+function create_fullscreen(url, type_class, deseaced_map, place_map, org_map, cord) {
   container = document.body.querySelector("#fullscreens_container");
 
   try {
@@ -1065,10 +1065,10 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map) {
           }
         };
         if (deseaced_map) {
-          load_deceadeds_map()
+          load_deceadeds_map(cord)
         }
         else if (place_map) {
-          load_places_map()
+          load_places_map(cord)
         };
     }
 };
@@ -1077,20 +1077,20 @@ link.send();
 
 
 on('body', 'click', '.show_deceased_map', function() {
-  create_fullscreen ("/deceased/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", true, false, false)
+  create_fullscreen ("/deceased/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", true, false, false, this.getAttribute("data-cord"))
 });
 on('body', 'click', '.show_place_map', function() {
-  create_fullscreen ("/place/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, true, false)
+  create_fullscreen ("/place/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, true, false, this.getAttribute("data-cord"))
 }); 
 on('body', 'click', '.show_deceased_map', function() {
-  create_fullscreen ("/organization/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, false, true)
+  create_fullscreen ("/organization/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, false, true, this.getAttribute("data-cord"))
 });
 
  
 get_active_btn();
 
 
-function load_deceadeds_map() {
+function load_deceadeds_map(cord) {
   ymaps.ready(init);
 
   function init() {
@@ -1101,7 +1101,7 @@ function load_deceadeds_map() {
   
     var map; 
     map = new ymaps.Map('map', {
-      center: ["", ""],
+      center: [cord],
       zoom: 18,
       controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
     });
@@ -1311,7 +1311,7 @@ function load_deceadeds_map() {
 
 
 
-function load_places_map() {
+function load_places_map(cord) {
   ymaps.ready(init);
 
   function init() {
@@ -1322,7 +1322,7 @@ function load_places_map() {
   
     var map; 
     map = new ymaps.Map('map', {
-      center: ["", ""],
+      center: [cord],
       zoom: 14,
       controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
     });

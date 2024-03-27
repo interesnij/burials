@@ -62,7 +62,9 @@
                   </p>
                </div>
 
-               <a class="pointer show_deceased_map" data-pk="<%= deceased.id %>">Показать на карте / проложить маршрут</a>
+               <% if deceased.cord.is_some() { %>
+                  <a class="pointer show_deceased_map" data-cord="<%= deceased.cord.as_deref().unwrap() %>" data-pk="<%= deceased.id %>">Показать на карте / проложить маршрут</a>
+               <% } %>
             </div>
          </div>
       </div>

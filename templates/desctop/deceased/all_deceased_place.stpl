@@ -88,7 +88,9 @@
                 </div>
                 <br />
                 <br />
-                <a class="pointer show_place_map" style="font-size: x-large;" data-pk="<%= place.id %>">Показать на карте / проложить маршрут</a>
+                <% if place.cord.is_some() { %>
+                  <a class="pointer show_place_map" style="font-size: x-large;" data-cord="<%= place.cord.as_deref().unwrap() %>" data-pk="<%= place.id %>">Показать на карте / проложить маршрут</a>
+                <% } %>
             </div>
           </div>
         </div>
