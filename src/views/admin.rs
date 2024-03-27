@@ -57,10 +57,21 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     //config.route("/create_service/", web::get().to(create_service_page));
     //config.route("/edit_service/{id}/", web::get().to(edit_service_page));
 
+    config.route("/lists/all_organizations/", web::get().to(all_organizations_page));
     config.route("/lists/suggested_organizations/", web::get().to(suggested_organizations_page));
+    config.route("/lists/deleted_organizations/", web::get().to(deleted_organizations_page));
+    
+    config.route("/lists/all_places/", web::get().to(all_places_page)); 
     config.route("/lists/suggested_places/", web::get().to(suggested_places_page)); 
+    config.route("/lists/deleted_places/", web::get().to(deleted_places_page));
+
+    config.route("/lists/all_deceaseds/", web::get().to(all_deceaseds_page));
     config.route("/lists/suggested_deceaseds/", web::get().to(suggested_deceaseds_page));
-    config.route("/lists/users/", web::get().to(users_list));
+    config.route("/lists/deleted_deceaseds/", web::get().to(deleted_deceaseds_page));
+    config.route("/lists/all_logs/", web::get().to(all_logs_page));
+
+    config.route("/lists/users/", web::get().to(all_users_list));
+    config.route("/lists/deleted_users/", web::get().to(deleted_users_list));
 
     config.route("/create_country/", web::post().to(create_country));
     config.route("/edit_country/{id}/", web::post().to(edit_country));
@@ -119,8 +130,60 @@ pub async fn lists_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
+pub async fn all_logs_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let (is_desctop, is_ajax) = crate::utils::get_device_and_ajax(&req);
+        let services_enabled = false;
 
-pub async fn users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+        let page = crate::utils::get_page(&req);
+        let count = Log::count(); 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let logs_list: Vec<crate::models::LogResp>;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            logs_list = Log::get_all(20, step.into());
+        }
+        else {
+            have_next = 20 + 1;
+            logs_list = Log::get_all(20, 0);
+        }
+        if count > (have_next as usize) {
+            next_page_number = page + 1;
+        }
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/logs.stpl")]
+        struct Template { 
+            request_user:     User,
+            services_enabled: bool,
+            logs_list:        Vec<crate::models::LogResp>,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            services_enabled: services_enabled,
+            logs_list:        logs_list,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn all_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
 
     if user_id.is_none() {
@@ -132,25 +195,99 @@ pub async fn users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
         if !_request_user.is_admin() {
             return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
         }
-        let users_list = crate::models::User::get_all(_request_user.id);
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().users_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let org_list: Vec<User>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = User::get_all(_request_user.id, 20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = User::get_all(_request_user.id, 20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
 
         #[derive(TemplateOnce)] 
-        #[template(path = "desctop/admin/users.stpl")]
+        #[template(path = "desctop/admin/lists/all_users.stpl")]
         struct Template { 
             request_user:     User,
             users_list:       Vec<User>,
             services_enabled: bool,
+            next_page_number: i32,
         }
         let body = Template {
             request_user:     _request_user,
             users_list:       users_list,
             services_enabled: services_enabled,
+            next_page_number: next_page_number,
         }
         .render_once()
         .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
         Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
     }
 }
+pub async fn deleted_users_list(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        let services_enabled = false;
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().deleted_users_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let org_list: Vec<User>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = User::deleted_users(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = User::deleted_users(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+
+        #[derive(TemplateOnce)] 
+        #[template(path = "desctop/admin/lists/deleted_users.stpl")]
+        struct Template { 
+            request_user:     User,
+            users_list:       Vec<User>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            users_list:       users_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
 pub async fn load_countries(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_none() {
@@ -885,6 +1022,59 @@ pub async fn remove_staff(req: HttpRequest, mut payload: Multipart) -> impl Resp
 }
 
 
+pub async fn all_organizations_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else { 
+        use crate::models::Organization;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().suggested_orgs_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let org_list: Vec<Organization>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = Organization::get_all(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = Organization::get_all(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/all_organizations.stpl")]
+        struct Template { 
+            request_user:     User,
+            org_list:         Vec<Organization>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            org_list:         org_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
 pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
     let user_id = get_request_user(&req).await;
     if user_id.is_none() {
@@ -919,7 +1109,7 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
         }
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/admin/suggested_organizations.stpl")]
+        #[template(path = "desctop/admin/lists/suggested_organizations.stpl")]
         struct Template { 
             request_user:     User,
             org_list:         Vec<Organization>,
@@ -929,6 +1119,113 @@ pub async fn suggested_organizations_page(req: HttpRequest) -> actix_web::Result
         let body = Template {
             request_user:     _request_user,
             org_list:         org_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn deleted_organizations_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else { 
+        use crate::models::Organization;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().deleted_orgs_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let org_list: Vec<Organization>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            org_list = Organization::deleted_list(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            org_list = Organization::deleted_list(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/deleted_organizations.stpl")]
+        struct Template { 
+            request_user:     User,
+            org_list:         Vec<Organization>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            org_list:         org_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn all_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Organization;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().places_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let places_list: Vec<Place>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            places_list = Place::get_all(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            places_list = Place::get_all(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+        let services_enabled = false;
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/all_places.stpl")]
+        struct Template { 
+            request_user:     User,
+            places_list:      Vec<Place>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            places_list:      places_list,
             services_enabled: services_enabled,
             next_page_number: next_page_number,
         }
@@ -973,7 +1270,7 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         let services_enabled = false;
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/admin/suggested_places.stpl")]
+        #[template(path = "desctop/admin/lists/suggested_places.stpl")]
         struct Template { 
             request_user:     User,
             places_list:      Vec<Place>,
@@ -983,6 +1280,113 @@ pub async fn suggested_places_page(req: HttpRequest) -> actix_web::Result<HttpRe
         let body = Template {
             request_user:     _request_user,
             places_list:      places_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn deleted_places_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Organization;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let page = crate::utils::get_page(&req);
+        let count = crate::models::MainStat::get_or_create().deleted_places_count; 
+
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let places_list: Vec<Place>;
+        let services_enabled = false;
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            places_list = Place::deleted_list(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            places_list = Place::deleted_list(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+        let services_enabled = false;
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/deleted_places.stpl")]
+        struct Template { 
+            request_user:     User,
+            places_list:      Vec<Place>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            places_list:      places_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
+
+pub async fn all_deceaseds_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Deceased;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let count = crate::models::MainStat::get_or_create().deceaseds_count; 
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let deceaseds_list: Vec<Deceased>;
+        let services_enabled = false;
+        let page = crate::utils::get_page(&req);
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            deceaseds_list = Deceased::get_all(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            deceaseds_list = Deceased::get_all(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+        let services_enabled = false;
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/all_deceaseds.stpl")]
+        struct Template { 
+            request_user:     User,
+            deceaseds_list:   Vec<Deceased>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            deceaseds_list:   deceaseds_list,
             services_enabled: services_enabled,
             next_page_number: next_page_number,
         }
@@ -1026,7 +1430,7 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
         let services_enabled = false;
 
         #[derive(TemplateOnce)]
-        #[template(path = "desctop/admin/suggested_deceaseds.stpl")]
+        #[template(path = "desctop/admin/lists/suggested_deceaseds.stpl")]
         struct Template { 
             request_user:     User,
             deceaseds_list:   Vec<Deceased>,
@@ -1045,6 +1449,58 @@ pub async fn suggested_deceaseds_page(req: HttpRequest) -> actix_web::Result<Htt
     }
 }
 
+pub async fn deleted_deceaseds_page(req: HttpRequest) -> actix_web::Result<HttpResponse> {
+    let user_id = get_request_user(&req).await;
+    if user_id.is_none() {
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(""))
+    }
+    else {
+        use crate::models::Deceased;
+
+        let _request_user = user_id.unwrap();
+        if !_request_user.is_admin() {
+            return Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body("403"));
+        }
+        let count = crate::models::MainStat::get_or_create().deleted_deceaseds_count; 
+        let mut next_page_number = 0;
+        let have_next: i32; 
+        let deceaseds_list: Vec<Deceased>;
+        let services_enabled = false;
+        let page = crate::utils::get_page(&req);
+
+        if page > 1 {
+            let step = (page - 1) * 20;
+            have_next = page * 20 + 1;
+            deceaseds_list = Deceased::deleted_list(20, step.into());
+        }
+        else { 
+            have_next = 20 + 1; 
+            deceaseds_list = Deceased::deleted_list(20, 0);
+        }
+        if count > have_next {
+            next_page_number = page + 1;
+        }
+        let services_enabled = false;
+
+        #[derive(TemplateOnce)]
+        #[template(path = "desctop/admin/lists/deleted_deceaseds.stpl")]
+        struct Template { 
+            request_user:     User,
+            deceaseds_list:   Vec<Deceased>,
+            services_enabled: bool,
+            next_page_number: i32,
+        }
+        let body = Template {
+            request_user:     _request_user,
+            deceaseds_list:   deceaseds_list,
+            services_enabled: services_enabled,
+            next_page_number: next_page_number,
+        }
+        .render_once()
+        .map_err(|e| InternalError::new(e, StatusCode::INTERNAL_SERVER_ERROR))?;
+        Ok(HttpResponse::Ok().content_type("text/html; charset=utf-8").body(body))
+    }
+}
 
 pub async fn publish_organization(req: HttpRequest, mut payload: Multipart) -> impl Responder {
     let user_id = get_request_user(&req).await; 

@@ -407,6 +407,18 @@ impl Organization {
             .load::<Organization>(&_connection)
             .expect("E."); 
     }
+    pub fn deleted_list (
+        limit:  i64,
+        offset: i64,
+    ) -> Vec<Organization> {
+        let _connection = establish_connection();
+        return schema::organizations::table
+            .filter(schema::organizations::types.eq_any(vec!(11, 12, 13)))
+            .limit(limit)
+            .offset(offset)
+            .load::<Organization>(&_connection)
+            .expect("E."); 
+    }
     pub fn get_services(&self) -> Vec<Service> {
         let _connection = establish_connection();
         let services_ids = schema::organizations_services::table

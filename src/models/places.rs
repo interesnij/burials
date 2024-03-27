@@ -92,6 +92,18 @@ impl Place {
             .load::<Place>(&_connection)
             .expect("E.");
     }
+    pub fn deleted_list (
+        limit: i64,
+        offset: i64,
+    ) -> Vec<Place> {
+        let _connection = establish_connection();
+        return schema::places::table
+            .filter(schema::organizations::types.eq_any(vec!(11, 12, 13)))
+            .limit(limit)
+            .offset(offset)
+            .load::<Place>(&_connection)
+            .expect("E.");
+    }
     pub fn count_images(&self) -> usize {
         let _connection = establish_connection();
         return schema::files::table

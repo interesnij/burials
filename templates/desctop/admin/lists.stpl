@@ -8,10 +8,10 @@
             <div style="margin-bottom:10px">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="ms-3 flex-1">
-                            <a href="/lists/organizations/">Пользователи (<%= main_stat_model.users_count %>)</a>
-                            &nbsp;|&nbsp;
-                            <a href="/lists/deleted_organizations/">Удаленные пользователи (<%= main_stat_model.deleted_users_count %>)</a>
+                        <div class="m-3 flex-1">
+                            <a href="/lists/all_users/">Пользователи (<%= main_stat_model.users_count %>)</a>
+                            &nbsp;|&nbsp; 
+                            <a href="/lists/deleted_users/">Удаленные пользователи (<%= main_stat_model.deleted_users_count %>)</a>
                         </div>
                     </div>
                 </div>
@@ -20,8 +20,8 @@
             <div style="margin-bottom:10px">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="ms-3 flex-1">
-                            <a href="/lists/organizations/">Организации (<%= main_stat_model.orgs_count %>)</a>
+                        <div class="m-3 flex-1">
+                            <a href="/lists/all_organizations/">Организации (<%= main_stat_model.orgs_count %>)</a>
                             &nbsp;|&nbsp;
                             <a href="/lists/suggested_organizations/">Предложка организаций (<%= main_stat_model.suggested_orgs_count %>)</a>
                             &nbsp;|&nbsp;
@@ -34,8 +34,8 @@
             <div style="margin-bottom:10px">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="ms-3 flex-1">
-                            <a href="/lists/places/">Кладбища (<%= main_stat_model.places_count %>)</a>
+                        <div class="m-3 flex-1">
+                            <a href="/lists/all_places/">Кладбища (<%= main_stat_model.places_count %>)</a>
                             &nbsp;|&nbsp;
                             <a href="/lists/suggested_places/">Предложка кладбищ (<%= main_stat_model.suggested_places_count %>)</a>
                             &nbsp;|&nbsp;
@@ -48,8 +48,8 @@
             <div style="margin-bottom:10px">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="ms-3 flex-1">
-                            <a href="/lists/deceaseds/">Усопшие (<%= main_stat_model.deceaseds_count %>)</a>
+                        <div class="m-3 flex-1">
+                            <a href="/lists/all_deceaseds/">Усопшие (<%= main_stat_model.deceaseds_count %>)</a>
                             &nbsp;|&nbsp;
                             <a href="/lists/suggested_deceaseds/">Предложка усопших (<%= main_stat_model.suggested_deceaseds_count %>)</a>
                             &nbsp;|&nbsp;

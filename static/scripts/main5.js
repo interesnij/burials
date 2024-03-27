@@ -933,11 +933,6 @@ function close_fullscreen() {
     prev_window = container.querySelector(".card_fullscreen");
     prev_window.classList.remove("hide");
   };
-  try {
-    if (!container.querySelector(".order_window")) {
-      document.body.querySelector(".price_section_block").style.display = "unset";
-    }
-  } catch { null };
 };
 
 var delayedExec = function(after, fn) {
@@ -1018,8 +1013,8 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map) {
         elem = link.responseText;
 
         $loader.innerHTML = elem;
-        height = $loader.scrollHeight*1 + 30;
-        if (!price && height < 500 && !$loader.querySelector(".data_display")) {
+        height = $loader.scrollHeight*1 + 30; 
+        if (height < 500) {
           $parent_div.style.height = height + "px";
           $loader.style.overflowY = "unset";
 

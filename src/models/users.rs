@@ -119,10 +119,28 @@ impl User {
         return 1;
     }
 
-    pub fn get_all(exclude_user_id: i32) -> Vec<User> {
+    pub fn get_all (
+        exclude_user_id: i32,
+        limit: i32,
+        offset: i32,
+    ) -> Vec<User> {
         let _connection = establish_connection();
         return schema::users::table
             .filter(schema::users::id.ne(exclude_user_id))
+            .limit(limit)
+            .offset(offset)
+            .load::<User>(&_connection)
+            .expect("E");
+    }
+    pub fn deleted_users (
+        limit: i32,
+        offset: i32,
+    ) -> Vec<User> {
+        let _connection = establish_connection();
+        return schema::users::table
+            .filter(schema::users::perm.lt(10))
+            .limit(limit)
+            .offset(offset)
             .load::<User>(&_connection)
             .expect("E");
     }
@@ -663,7 +681,7 @@ pub struct Log {
     pub created:   chrono::NaiveDateTime,
 }
 pub struct LogResp {
-    pub user:    User,
+    pub user:    User, 
     pub text:    String,
     pub created: chrono::NaiveDateTime,
 }
@@ -739,37 +757,35 @@ impl Log {
         return 1;
     }
     pub fn get_all (
-        user_id: i32,
         limit:   i64,
-        offset:  i64,
-    ) -> Vec<LogResp> {
-        use crate::utils::get_user;
+        offset:  i64, 
+    ) -> Vec<LogResp> { 
         let _connection = establish_connection();
-        let _user = crate::utils::get_user(user_id).expect("E.");
         let mut stack = Vec::new();
-        if _user.perm > 9 {
-            let list = schema::logs::table
-                .order(schema::logs::created.desc())
-                .limit(limit)
-                .offset(offset)
-                .load::<Log>(&_connection)
-                .expect("E.");
+        let list = schema::logs::table
+            .order(schema::logs::created.desc())
+            .limit(limit)
+            .offset(offset)
+            .load::<Log>(&_connection)
+            .expect("E.");
             
-            for i in list.into_iter() {
-                stack.push( LogResp {
-                    user:    crate::utils::get_user(i.user_id).expect("E."),
-                    text:    i.get_text(),
-                    created: i.created,
-                });
-            }
-
-            return stack;
+        for i in list.into_iter() {
+            stack.push( LogResp {
+                user:    crate::utils::get_user(i.user_id).expect("E."),
+                text:    i.get_text(),
+                created: i.created,
+            });
         }
-        else {
-            return Vec::new();
-        }
+        return stack;
     }
-}
+    pub fn count() -> usize { 
+        let _connection = establish_connection();
+        return schema::logs::table
+            .select(schema::logs::id)
+            .load::<i32>(&_connection)
+            .expect("E.");
+    }
+} 
 
 #[derive(Deserialize, Insertable)]
 #[table_name="logs"]
@@ -787,7 +803,7 @@ pub struct MainStat {
     pub id:                        i32,
     pub users_count:               i32,
     pub deleted_users_count:       i32,
-    pub orgs_count:                i32,
+    pub orgs_count:                i32, 
     pub suggested_orgs_count:      i32,
     pub deleted_orgs_count:        i32,
     pub places_count:              i32,

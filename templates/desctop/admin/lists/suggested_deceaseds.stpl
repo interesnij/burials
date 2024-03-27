@@ -14,7 +14,7 @@
                                     <a class="pointer publish_deceased" data-pk="<%= i.id %>">
                                         Опубликовать
                                     </a>
-                                </p> 
+                                </p>  
                             </div>
                         </div>
                     </div>
