@@ -1093,7 +1093,7 @@ on('body', 'click', '.show_deceased_map', function() {
 on('body', 'click', '.show_place_map', function() {
   create_fullscreen ("/place/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, true, false, this.getAttribute("data-cord"))
 }); 
-on('body', 'click', '.show_deceased_map', function() {
+on('body', 'click', '.show_org_map', function() {
   create_fullscreen ("/organization/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", false, false, true, this.getAttribute("data-cord"))
 });
 
@@ -1112,14 +1112,14 @@ function load_deceadeds_map(cord) {
   
     var map; 
     map = new ymaps.Map('map', {
-      center: [cord],
+      center: "['" + cord + "]'",
       zoom: 18,
       controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
     });
   
     map.setType('yandex#satellite');
         map.geoObjects
-            .add(new ymaps.Placemark(["", ""], {
+            .add(new ymaps.Placemark("['" + cord + "]'", {
             balloonContent: '',
             iconCaption: ''
         }, {

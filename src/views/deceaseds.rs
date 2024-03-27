@@ -36,7 +36,7 @@ use std::borrow::BorrowMut;
 
 
 pub fn deceased_routes(config: &mut web::ServiceConfig) {
-    config.route("/places/{id}/deceased_list/", web::get().to(all_deceased_place_page));
+    config.route("/place/{id}/", web::get().to(all_deceased_place_page));
     config.route("/deceased/{id}/", web::get().to(deceased_page));
     config.route("/deceased/{id}/map/", web::get().to(deceased_map));
     config.route("/create_deceased/", web::get().to(create_deceased_page));
