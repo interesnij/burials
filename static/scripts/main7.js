@@ -441,7 +441,7 @@ on('body', 'change', '.load_regions', function() {
 
 on('body', 'input', '.place_search', function() {
   console.log("place_search change");
-  _this = this;
+  _this = this; 
   var val = _this.value;
   console.log("val ", val);
   if (val == '') {

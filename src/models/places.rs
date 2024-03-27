@@ -429,9 +429,8 @@ impl Place {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
-        let s = "%".to_owned() + &q + "%";
         return places
-            .filter(schema::places::title.eq(q))
+            .filter(schema::places::title.eq("%".to_owned() + &q + "%"))
             //.or_filter(schema::places::description.ilike("%".to_owned() + &q + "%"))
             //.or_filter(schema::places::address.ilike("%".to_owned() + &q + "%"))
             //.filter(schema::places::types.eq(2))

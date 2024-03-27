@@ -48,7 +48,7 @@
                 <label for="location-input" class="">Кладбище</label>
 				<input type="hidden" id="id_place" name="place">
 				<input type="text" class="place_search place_click form-control">
-				<div style="max-height:600px;position: absolute;z-index: 1000;background: white;border: 1px solid grey;padding: 5px;" class="hidden">
+				<div style="max-height:600px;position: absolute;z-index: 1000;background: white;border: 1px solid grey;" class="hidden">
 					<p>Начинайте вводить текст</p>
 				</div> 
 			</div> 
