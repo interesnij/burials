@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-5">
-        <label class="font-semibold" for="suggest2">Адрес отправления:</label>
+        <label class="font-semibold" for="suggest1">Адрес отправления:</label>
         <input type="text" id="suggest1" class="input form-input">
         <p style="display:none" id="notice1"></p>
     </div>
@@ -14,14 +14,14 @@
         <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
         <span style="display:none" id="notice3"></span>
     </div>
-  </div>
+  </div> 
+
+
 
   
   <div id="map_header" style="margin-top:50px" class="hidden">
-      <input type="text" id="suggest1" class="input" placeholder="Введите адрес отправления">
       <button type="submit" id="button1">Проверить</button>
       <p id="notice1"></p>
-      <input type="text" id="suggest2" class="input" placeholder="Введите адрес назначения">
       <button type="submit" id="button2">Проверить</button>
       <p id="notice2"></p>
   </div>

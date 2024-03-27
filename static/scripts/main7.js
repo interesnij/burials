@@ -1085,7 +1085,7 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map, co
 };
 link.send();
 };
-
+ 
 
 on('body', 'click', '.show_deceased_map', function() {
   create_fullscreen ("/deceased/" + this.getAttribute("data-pk") + "/map/" , "photo_fullsvreen", true, false, false, this.getAttribute("data-cord"))
