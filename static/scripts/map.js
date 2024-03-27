@@ -14,14 +14,14 @@ function load_places_map(cord) {
     
       var map; 
       map = new ymaps.Map('map', {
-        center: cord,
+        center: list[0] + "," + list[1],
         zoom: 14, 
         controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
       });
     
       map.setType('yandex#satellite');
           map.geoObjects
-              .add(new ymaps.Placemark(cord, {
+              .add(new ymaps.Placemark(list[0] + "," + list[1], {
               balloonContent: '',
               iconCaption: ''
           }, {  
@@ -223,7 +223,7 @@ function load_places_map(cord) {
   }; 
 
   function load_deceadeds_map(cord) {
-    ymaps.ready(init);
+    ymaps.ready(init); 
   
     function init() {
       var suggestView = new ymaps.SuggestView('suggest1'),
