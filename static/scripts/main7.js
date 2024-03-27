@@ -457,8 +457,15 @@ on('body', 'input', '.place_search', function() {
         if ( link.readyState == 4 ) { 
             if ( link.status == 200 ) {
               _this.nextElementSibling.innerHTML = link.responseText;
-              console.log(link.responseText);
-              block.classList.remove("hidden");
+              if (link.responseText) {
+                console.log(link.responseText);
+                block.classList.remove("hidden");
+              }
+              else {
+                _this.innerHTML = "";
+                block.classList.add("hidden");
+                _this.previousElementSibling.value = "";
+              }
             } 
         }
     };
