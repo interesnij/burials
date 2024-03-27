@@ -5,7 +5,7 @@
         <h4 style="text-decoration: underline">Списки объектов</h4>
         <div class="row">
 
-            <div style="margin-bottom:10px">
+            <div style="margin-bottom:10px;border-bottom: 1px solid grey;">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div class="m-3 flex-1">
@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <div style="margin-bottom:10px">
+            <div style="margin-bottom:10px;border-bottom: 1px solid grey;">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div class="m-3 flex-1">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div style="margin-bottom:10px">
+            <div style="margin-bottom:10px;border-bottom: 1px solid grey;">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div class="m-3 flex-1">
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div style="margin-bottom:10px">
+            <div style="margin-bottom:10px;border-bottom: 1px solid grey;">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div class="m-3 flex-1">

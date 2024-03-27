@@ -440,8 +440,10 @@ on('body', 'change', '.load_regions', function() {
 });
 
 on('body', 'change', '.place_search', function() {
+  console.log("place_search change");
   _this = this;
-  var val = _this.value; 
+  var val = _this.value;
+  console.log("val ", val);
   if (val == '') {
     _this.innerHTML = "";
   } else {
@@ -451,6 +453,7 @@ on('body', 'change', '.place_search', function() {
       link.onreadystatechange = function () {
         if ( link.readyState == 4 ) { 
             if ( link.status == 200 ) {
+              
               _this.nextElementSibling.innerHTML = link.responseText;
             } 
         }

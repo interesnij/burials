@@ -3,12 +3,12 @@
     <section class="property-five" style="margin-top:100px;height: 100vh;">
         <div class="container">
             <% for i in logs_list.iter() { %>
-                <div style="margin-bottom:10px">
+                <div style="margin-bottom:10px;border-bottom: 1px solid grey;">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             <div class="ms-3 flex-1">
                                 <p>  
-                                    <a href="/users/<%= i.user.id %>/" ><%= i.user.get_full_name() %></a> <%= i.text %>
+                                    <a href="/users/<%= i.user.id %>/" ><%= i.user.get_full_name() %></a> <%- i.text %>
                                 </p>
                                 <p class="small"><%= i.created.format("%d-%m-%Y в %H:%M").to_string() %></p>
                             </div>
