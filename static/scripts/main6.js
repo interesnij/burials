@@ -1329,7 +1329,7 @@ function load_places_map(cord) {
   
     map.setType('yandex#satellite');
         map.geoObjects
-            .add(new ymaps.Placemark(["", ""], {
+            .add(new ymaps.Placemark([load_places_map], {
             balloonContent: '',
             iconCaption: ''
         }, {
