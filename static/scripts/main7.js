@@ -457,8 +457,7 @@ on('body', 'input', '.place_search', function() {
         if ( link.readyState == 4 ) { 
             if ( link.status == 200 ) {
               _this.nextElementSibling.innerHTML = link.responseText;
-              if (link.responseText) {
-                console.log(link.responseText.length > 10);
+              if (link.responseText.length > 10) {
                 block.classList.remove("hidden");
               }
               else {
