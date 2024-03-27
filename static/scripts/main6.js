@@ -591,9 +591,9 @@ on('body', 'click', '#create_deceased', function() {
     toast_error("Укажите место захоронения усопшего");
     return
   }
-  else if (!form.querySelector("#get_my_lon").value) {
-    form.querySelector("#get_my_lon").style.setProperty('border', '1px #FF0000 solid', 'important');
-    toast_error("Укажите долготу местоположения усопшего");
+  else if (!form.querySelector("#id_cord").value) {
+    form.querySelector("#id_cord").style.setProperty('border', '1px #FF0000 solid', 'important');
+    toast_error("Укажите координаты усопшего");
     return
   }
 
