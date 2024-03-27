@@ -34,13 +34,8 @@
                 </div>
             <% } %>
             <% } else { %>
-                <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="ms-3 flex-1">
-                                <p>Пока никого нет</p>
-                            </div>
-                        </div>
-                    </div>
+                <div style="margin-top: 100px;text-align: center;font-size: x-large;">
+                    <p>Пока никого нет</p>
                 </div>
             <% } %>
         </div>
