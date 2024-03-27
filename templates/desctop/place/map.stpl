@@ -17,7 +17,6 @@
         <span style="display:none" id="notice3"></span>
     </div>
   </div>
-                  
-  <div id="map"></div>
+</div>
 
-<div>
+<div id="map"></div>
