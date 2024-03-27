@@ -133,8 +133,8 @@ impl User {
             .expect("E");
     }
     pub fn deleted_users (
-        limit: i32,
-        offset: i32,
+        limit: i64,
+        offset: i64,
     ) -> Vec<User> {
         let _connection = establish_connection();
         return schema::users::table

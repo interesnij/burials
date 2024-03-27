@@ -144,7 +144,7 @@ pub async fn all_logs_page(req: HttpRequest) -> actix_web::Result<HttpResponse> 
         let services_enabled = false;
 
         let page = crate::utils::get_page(&req);
-        let count = Log::count(); 
+        let count = crate::models::Log::count(); 
 
         let mut next_page_number = 0;
         let have_next: i32; 
@@ -153,11 +153,11 @@ pub async fn all_logs_page(req: HttpRequest) -> actix_web::Result<HttpResponse> 
         if page > 1 {
             let step = (page - 1) * 20;
             have_next = page * 20 + 1;
-            logs_list = Log::get_all(20, step.into());
+            logs_list = crate::models::Log::get_all(20, step.into());
         }
         else {
             have_next = 20 + 1;
-            logs_list = Log::get_all(20, 0);
+            logs_list = crate::models::Log::get_all(20, 0);
         }
         if count > (have_next as usize) {
             next_page_number = page + 1;

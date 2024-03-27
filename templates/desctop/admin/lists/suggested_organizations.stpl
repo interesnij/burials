@@ -28,4 +28,4 @@
         </div>
       </section>
 
-<% include!("../footer.stpl"); %>
+<% include!("../../footer.stpl"); %>
