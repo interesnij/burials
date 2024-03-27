@@ -28,6 +28,7 @@
       <button type="submit" id="button3">Маршрут</button>
       <p id="notice3"></p>
     </div>
+  </div>
 </div>
 
 
