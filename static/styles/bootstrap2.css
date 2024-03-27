@@ -243,3 +243,9 @@
   .ymaps-2-1-79-controls__control_toolbar {
     display: none;
   }
+
+  .card_fullscreen {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+  }

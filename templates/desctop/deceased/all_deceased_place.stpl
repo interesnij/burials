@@ -86,6 +86,8 @@
                   </div>
                   <% } %>
                 </div>
+                <br />
+                <br />
                 <a class="pointer show_place_map" style="font-size: x-large;" data-pk="<%= place.id %>">Показать на карте / проложить маршрут</a>
             </div>
           </div>

@@ -900,7 +900,9 @@ on('body', 'click', '#edit_profile', function() {
 //////////////////////////////////
 //////////////////////////////////
 //////////////////////////////////
-
+on('body', 'click', '.body_overlay', function() {
+  close_fullscreen();
+});
 function get_document_opacity_0() {
   document.body.style.overflowY = "hidden";
   //document.body.style.marginRight = "20px";

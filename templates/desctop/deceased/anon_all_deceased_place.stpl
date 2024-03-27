@@ -22,9 +22,73 @@
                             </div>
                           </div>
                         <% } %>
-            </div> 
+            </div>
             <div class="col-xl-9 col-lg-9 col-md-12 colum2">
-                <a class="pointer show_place_map" data-pk="<%= place.id %>">Показать на карте / проложить маршрут</a>
+                <div class="">
+                  <h1 class="font-semibold" style="font-size: x-large;"><%= place.title %></h1>
+
+                  <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                      <h6 class="text-lg font-semibold">
+                        Адрес
+                      </h6>
+                      <p class="font-semibold mt-2">
+                        <%= place.get_loc() %>
+                      </p>
+                  </div> 
+                  <% if place.hours.is_some() { %>
+                  <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                      <h6 class="text-lg font-semibold">
+                        Часы работы
+                      </h6>
+                      <p class="font-semibold mt-2">
+                        <%= place.hours.as_deref().unwrap() %>
+                      </p>
+                  </div>
+                  <% } %>
+                  <% if place.description.is_some() { %>
+                  <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                      <h6 class="text-lg font-semibold">
+                        Описание
+                      </h6>
+                      <p class="font-semibold mt-2">
+                        <%= place.description.as_deref().unwrap() %>
+                      </p>
+                  </div>
+                  <% } %>
+                  <% if place.director.is_some() { %>
+                  <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                      <h6 class="text-lg font-semibold">
+                        Директор
+                      </h6>
+                      <p class="font-semibold mt-2">
+                        <%= place.director.as_deref().unwrap() %>
+                      </p>
+                  </div>
+                  <% } %>
+                  <% if place.phone.is_some() { %>
+                  <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                      <h6 class="text-lg font-semibold">
+                        Телефон
+                      </h6>
+                      <p class="font-semibold mt-2">
+                        <%= place.phone.as_deref().unwrap() %>
+                      </p>
+                  </div>
+                  <% } %>
+                  <% if place.cadastral_number.is_some() { %>
+                  <div class="grid md:grid-cols-2 grid-cols-1 mt-6">
+                      <h6 class="text-lg font-semibold">
+                        Кадастровый номер
+                      </h6>
+                      <p class="font-semibold mt-2">
+                        <%= place.cadastral_number.as_deref().unwrap() %>
+                      </p>
+                  </div>
+                  <% } %>
+                </div>
+                <br />
+                <br />
+                <a class="pointer show_place_map" style="font-size: x-large;" data-pk="<%= place.id %>">Показать на карте / проложить маршрут</a>
             </div>
           </div>
         </div>

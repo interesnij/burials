@@ -34,7 +34,7 @@ pub struct Place {
     pub description:      Option<String>,
     pub hours:            Option<String>,
     pub image:            Option<String>,
-    pub address:          Option<String>,
+    pub address:          Option<String>, 
     pub count:            i16,
     pub director:         Option<String>,
     pub phone:            Option<String>,
