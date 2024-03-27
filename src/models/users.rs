@@ -121,8 +121,8 @@ impl User {
 
     pub fn get_all (
         exclude_user_id: i32,
-        limit: i32,
-        offset: i32,
+        limit: i64,
+        offset: i64,
     ) -> Vec<User> {
         let _connection = establish_connection();
         return schema::users::table
@@ -783,7 +783,8 @@ impl Log {
         return schema::logs::table
             .select(schema::logs::id)
             .load::<i32>(&_connection)
-            .expect("E.");
+            .expect("E.")
+            .len();
     }
 } 
 
