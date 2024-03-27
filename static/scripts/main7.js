@@ -1338,14 +1338,14 @@ function load_places_map(cord) {
   
     var map; 
     map = new ymaps.Map('map', {
-      center: v,
+      center: [62.355295, 50.081872],
       zoom: 14, 
       controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
     });
   
     map.setType('yandex#satellite');
         map.geoObjects
-            .add(new ymaps.Placemark(v, {
+            .add(new ymaps.Placemark([62.355295, 50.081872], {
             balloonContent: '',
             iconCaption: ''
         }, {  
