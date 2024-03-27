@@ -1324,7 +1324,10 @@ function load_deceadeds_map(cord) {
 
 function load_places_map(cord) {
   ymaps.ready(init);
-  let v = "[" + cord + "]";
+  let v = [];
+  let list = cord.split(".");
+  v.push(list[0]);
+  v.push(list[1]);
   function init() {
     console.log(v);
     var suggestView = new ymaps.SuggestView('suggest1'),
@@ -1344,7 +1347,7 @@ function load_places_map(cord) {
             .add(new ymaps.Placemark(v, {
             balloonContent: '',
             iconCaption: ''
-        }, {
+        }, {  
             preset: 'islands#blueCircleDotIconWithCaption',
             iconCaptionMaxWidth: '50',
             iconLayout: 'default#image',
