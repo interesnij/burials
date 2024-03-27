@@ -225,7 +225,7 @@ function load_places_map(cord) {
   function load_deceadeds_map(cord) {
     ymaps.ready(init); 
     let v = [];
-    cord_str = cord + "";
+    cord_str = "'" + cord + "'";
     if (cord_str.contains(", ")) {
       list = cord.split(", ");
     }
