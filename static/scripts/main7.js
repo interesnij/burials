@@ -1031,7 +1031,7 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map, co
           }
           else {
             $parent_div.style.height = "800px";
-            $parent_div.style.top = "30%";
+            $parent_div.style.top = "10%";
           }
           $loader.style.overflowY = "unset";
         } else {
