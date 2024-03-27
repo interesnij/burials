@@ -1023,7 +1023,7 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map, co
         $loader.innerHTML = elem;
         height = $loader.scrollHeight*1 + 30; 
         if (height < 500) {
-          if (!cord)
+          if (!cord) {
             $parent_div.style.height = height + "px";
             _height = (window.innerHeight - height - 50) / 2;
             $parent_div.style.top = _height + "px";
