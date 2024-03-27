@@ -455,7 +455,9 @@ on('body', 'input', '.place_search', function() {
             if ( link.status == 200 ) {
               
               _this.nextElementSibling.innerHTML = link.responseText;
-            } 
+              block = this.previousElementSibling;
+              block.classList.remove("hidden");
+            }
         }
     };
     link.send( null );
