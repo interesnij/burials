@@ -446,7 +446,7 @@ on('body', 'input', '.place_search', function() {
   block = _this.nextElementSibling;
   console.log("val ", val);
   if (val == '') {
-    _this.innerHTML = "";
+    _this.value = "";
     block.classList.add("hidden");
     _this.previousElementSibling.value = "";
   } else {
@@ -461,7 +461,7 @@ on('body', 'input', '.place_search', function() {
                 block.classList.remove("hidden");
               }
               else {
-                _this.innerHTML = "";
+                _this.value = "";
                 block.classList.add("hidden");
                 _this.previousElementSibling.value = "";
               }
