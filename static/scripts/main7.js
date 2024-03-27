@@ -331,7 +331,7 @@ on('body', 'click', '.search_deceaseds', function() {
     url += "&death_date=" + form.querySelector("#id_death_date").value
   };
   if (form.querySelector("#id_place") && form.querySelector("#id_place").value) {
-    url += "&place=" + form.querySelector("#id_place").value.stripe()
+    url += "&place=" + form.querySelector("#id_place").value
   }; 
   if (form.querySelector("#is_veteran").checked) {
     url += "&is_veteran=true"
