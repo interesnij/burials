@@ -429,11 +429,11 @@ impl Place {
         use crate::schema::places::dsl::places;
 
         let _connection = establish_connection();
-        return places
+        return places 
+            .filter(schema::places::types.eq(2))
             .filter(schema::places::title.ilike("%".to_owned() + &q + "%"))
-            //.or_filter(schema::places::description.ilike("%".to_owned() + &q + "%"))
-            //.or_filter(schema::places::address.ilike("%".to_owned() + &q + "%"))
-            //.filter(schema::places::types.eq(2))
+            .or_filter(schema::places::description.ilike("%".to_owned() + &q + "%"))
+            .or_filter(schema::places::address.ilike("%".to_owned() + &q + "%"))
             .limit(limit) 
             .offset(offset)
             .load::<Place>(&_connection)

@@ -448,7 +448,7 @@ on('body', 'input', '.place_search', function() {
     _this.innerHTML = "";
   } else {
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
-      link.open( 'GET', "/search_places/?name='" + val + "'", true );
+      link.open( 'GET', "/search_places/?name=" + val, true );
       link.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       link.onreadystatechange = function () {
         if ( link.readyState == 4 ) { 
