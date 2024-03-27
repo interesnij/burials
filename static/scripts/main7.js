@@ -1323,10 +1323,10 @@ function load_deceadeds_map(cord) {
 
 
 function load_places_map(cord) {
-  console.log(cord);
   ymaps.ready(init);
-
+  let v = "[" + cord + "]";
   function init() {
+    console.log(v);
     var suggestView = new ymaps.SuggestView('suggest1'),
       suggestView = new ymaps.SuggestView('suggest2'),
       map, routePanelControl,
@@ -1334,14 +1334,14 @@ function load_places_map(cord) {
   
     var map; 
     map = new ymaps.Map('map', {
-      center: [cord],
+      center: v,
       zoom: 14, 
       controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
     });
   
     map.setType('yandex#satellite');
         map.geoObjects
-            .add(new ymaps.Placemark([cord], {
+            .add(new ymaps.Placemark(v, {
             balloonContent: '',
             iconCaption: ''
         }, {
