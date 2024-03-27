@@ -430,11 +430,11 @@ impl Place {
 
         let _connection = establish_connection();
         return places
-            .filter(schema::places::title.eq("%".to_owned() + &q + "%"))
+            .filter(schema::places::title.ilike("%".to_owned() + &q + "%"))
             //.or_filter(schema::places::description.ilike("%".to_owned() + &q + "%"))
             //.or_filter(schema::places::address.ilike("%".to_owned() + &q + "%"))
             //.filter(schema::places::types.eq(2))
-            .limit(limit)
+            .limit(limit) 
             .offset(offset)
             .load::<Place>(&_connection)
             .expect("E.");
