@@ -455,7 +455,7 @@ on('body', 'input', '.place_search', function() {
             if ( link.status == 200 ) {
               
               _this.nextElementSibling.innerHTML = link.responseText;
-              block = this.previousElementSibling;
+              block = this.nextElementSibling;
               block.classList.remove("hidden");
             }
         }
@@ -471,7 +471,7 @@ on('body', 'click', '.place_search_item', function() {
 });
  
 on('body', 'click', '.place_click', function() {
-  block = this.previousElementSibling;
+  block = this.nextElementSibling;
   if (block.classList.contains("hidden")) {
     block.classList.remove("hidden")
   } 
