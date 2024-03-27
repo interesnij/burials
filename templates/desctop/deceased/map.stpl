@@ -1,7 +1,7 @@
 
 
 <div class="container">
-  <div class="row"> 
+  <div class="row" style="margin-bottom: 20px;"> 
     <div class="col-md-5">
         <label class="font-semibold" for="suggest1">Адрес отправления:</label>
         <input type="text" id="suggest1" class="input form-input">
@@ -13,7 +13,7 @@
         <p style="display:none" id="notice2"></p>
     </div>
     <div class="col-md-2" style="margin-bottom: 60px;">
-        <button class="btn" style="border: 1px solid grey; float: right;margin-bottom: 10px;" type="submit" id="button3">Построить</button>
+        <button class="btn" style="border: 1px solid grey;top: 23px;position: absolute;" type="submit" id="button3">Построить</button>
         <span style="display:none" id="notice3"></span>
     </div>
   </div>
