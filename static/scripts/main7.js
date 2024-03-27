@@ -453,11 +453,10 @@ on('body', 'input', '.place_search', function() {
       link.onreadystatechange = function () {
         if ( link.readyState == 4 ) { 
             if ( link.status == 200 ) {
-              
               _this.nextElementSibling.innerHTML = link.responseText;
               block = _this.nextElementSibling;
               block.classList.remove("hidden");
-            }
+            } 
         }
     };
     link.send( null );
