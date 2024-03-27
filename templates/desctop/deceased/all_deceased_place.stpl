@@ -41,7 +41,7 @@
                         Часы работы
                       </h6>
                       <p class="font-semibold mt-2">
-                        <%= place.hours.as_dreef().unwrap() %>
+                        <%= place.hours.as_deref().unwrap() %>
                       </p>
                   </div>
                   <% } %>
@@ -51,7 +51,7 @@
                         Описание
                       </h6>
                       <p class="font-semibold mt-2">
-                        <%= place.description.as_dreef().unwrap() %>
+                        <%= place.description.as_deref().unwrap() %>
                       </p>
                   </div>
                   <% } %>
@@ -61,7 +61,7 @@
                         Директор
                       </h6>
                       <p class="font-semibold mt-2">
-                        <%= place.director.as_dreef().unwrap() %>
+                        <%= place.director.as_deref().unwrap() %>
                       </p>
                   </div>
                   <% } %>
@@ -71,7 +71,7 @@
                         Телефон
                       </h6>
                       <p class="font-semibold mt-2">
-                        <%= place.phone.as_dreef().unwrap() %>
+                        <%= place.phone.as_deref().unwrap() %>
                       </p>
                   </div>
                   <% } %>
@@ -81,7 +81,7 @@
                         Кадастровый номер
                       </h6>
                       <p class="font-semibold mt-2">
-                        <%= place.cadastral_number.as_dreef().unwrap() %>
+                        <%= place.cadastral_number.as_deref().unwrap() %>
                       </p>
                   </div>
                   <% } %>
