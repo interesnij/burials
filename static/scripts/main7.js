@@ -443,9 +443,12 @@ on('body', 'input', '.place_search', function() {
   console.log("place_search change");
   _this = this; 
   var val = _this.value;
+  block = _this.nextElementSibling;
   console.log("val ", val);
   if (val == '') {
     _this.innerHTML = "";
+    block.classList.add("hidden");
+    _this.previousElementSibling.value = "";
   } else {
       var link = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject( 'Microsoft.XMLHTTP' );
       link.open( 'GET', "/search_places/?name=" + val, true );
@@ -454,7 +457,7 @@ on('body', 'input', '.place_search', function() {
         if ( link.readyState == 4 ) { 
             if ( link.status == 200 ) {
               _this.nextElementSibling.innerHTML = link.responseText;
-              block = _this.nextElementSibling;
+              console.log(link.responseText);
               block.classList.remove("hidden");
             } 
         }
