@@ -70,7 +70,7 @@ pub fn admin_routes(config: &mut web::ServiceConfig) {
     config.route("/lists/deleted_deceaseds/", web::get().to(deleted_deceaseds_page));
     config.route("/lists/all_logs/", web::get().to(all_logs_page));
 
-    config.route("/lists/users/", web::get().to(all_users_list));
+    config.route("/lists/all_users/", web::get().to(all_users_list));
     config.route("/lists/deleted_users/", web::get().to(deleted_users_list));
 
     config.route("/create_country/", web::post().to(create_country));
