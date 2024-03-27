@@ -224,7 +224,10 @@ function load_places_map(cord) {
 
   function load_deceadeds_map(cord) {
     ymaps.ready(init); 
-  
+    let v = [];
+    let list = cord.split(", ");
+    v.push(list[0]);
+    v.push(list[1]);
     function init() {
       var suggestView = new ymaps.SuggestView('suggest1'),
         suggestView = new ymaps.SuggestView('suggest2'),
@@ -233,14 +236,14 @@ function load_places_map(cord) {
     
       var map; 
       map = new ymaps.Map('map', {
-        center: cord,
+        center: v,
         zoom: 18,
         controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
       });
     
       map.setType('yandex#satellite');
           map.geoObjects
-              .add(new ymaps.Placemark(cord, {
+              .add(new ymaps.Placemark(v, {
               balloonContent: '',
               iconCaption: ''
           }, {
