@@ -1323,6 +1323,7 @@ function load_deceadeds_map(cord) {
 
 
 function load_places_map(cord) {
+  console.log(cord);
   ymaps.ready(init);
 
   function init() {
