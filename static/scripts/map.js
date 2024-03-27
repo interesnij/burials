@@ -225,7 +225,12 @@ function load_places_map(cord) {
   function load_deceadeds_map(cord) {
     ymaps.ready(init); 
     let v = [];
-    let list = cord.split(", ");
+    if (cord.contains(" ")) {
+      list = cord.split(", ");
+    }
+    else {
+      list = cord.split(",");
+    }
     v.push(list[0]);
     v.push(list[1]);
     function init() {
