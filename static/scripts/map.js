@@ -14,14 +14,14 @@ function load_places_map(cord) {
     
       var map; 
       map = new ymaps.Map('map', {
-        center: [cord],
+        center: cord,
         zoom: 14, 
         controls: ["typeSelector", "fullscreenControl", "zoomControl", "geolocationControl"]
       });
     
       map.setType('yandex#satellite');
           map.geoObjects
-              .add(new ymaps.Placemark([cord], {
+              .add(new ymaps.Placemark(cord, {
               balloonContent: '',
               iconCaption: ''
           }, {  
