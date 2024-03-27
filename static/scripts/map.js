@@ -225,21 +225,13 @@ function load_places_map(cord) {
   function load_deceadeds_map(cord) {
     ymaps.ready(init); 
     let v = [];
-    cord_str = "'" + cord + "'";
-    if (cord_str.contains(", ")) {
-      list = cord.split(", ");
-    }
-    else if (cord_str.contains(",")) {
-      list = cord.split(",");
-    }
+    list = cord.split(",");
     
-    console.log(list);
-    
+    console.log(list[0]);
+    console.log(list[1]);
     v.push(list[0]);
     v.push(list[1]);
     function init() {
-      console.log(cord_str);
-      console.log(v);
       var suggestView = new ymaps.SuggestView('suggest1'),
         suggestView = new ymaps.SuggestView('suggest2'),
         map, routePanelControl,
