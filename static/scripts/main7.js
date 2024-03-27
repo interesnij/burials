@@ -1329,6 +1329,7 @@ function load_places_map(cord) {
   v.push(list[0]);
   v.push(list[1]);
   function init() {
+    console.log(cord);
     console.log(v);
     var suggestView = new ymaps.SuggestView('suggest1'),
       suggestView = new ymaps.SuggestView('suggest2'),
