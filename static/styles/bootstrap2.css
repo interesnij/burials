@@ -220,6 +220,11 @@
     object-fit: cover;
     height: 200px;
     width:100%
+  } 
+  .list_fit {
+    object-fit: cover;
+    height: 50px;
+    width: 50px;
   }
   .sub-menu-item.active {
     text-decoration: underline;

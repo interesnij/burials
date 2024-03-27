@@ -4,7 +4,7 @@
         <div style="margin-bottom:10px">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <img src="<%= i.get_image() %>" class="h-11 w-11 shadow" alt="img">
+                    <img src="<%= i.get_image() %>" class="list_fit shadow" alt="img">
                     <div class="ms-3 flex-1">
                         <a href="/deceased/<%= i.id %>/" class="">
                             <%= i.last_name %> <%= i.first_name %>
