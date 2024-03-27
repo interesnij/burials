@@ -1,5 +1,5 @@
 <% include!("../anon_header.stpl"); %>
-      <section class="property-five" style="margin-top:80px">
+      <section class="property-five" style="margin-top:80px;min-height: 90vh;">
         <div class="container">
             <a style="text-decoration: underline" href="/create_organization/">Добавить организацию</a>
             <div class="row">

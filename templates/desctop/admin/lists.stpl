@@ -59,6 +59,16 @@
                 </div>
             </div>
 
+            <div style="margin-bottom:10px">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="m-3 flex-1">
+                            <a href="/lists/all_logs/">Логи</a>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

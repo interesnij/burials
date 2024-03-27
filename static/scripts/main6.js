@@ -903,6 +903,9 @@ on('body', 'click', '#edit_profile', function() {
 on('body', 'click', '.body_overlay', function() {
   close_fullscreen();
 });
+on('body', 'click', '.this_fullscreen_hide', function() {
+  close_fullscreen();
+});
 function get_document_opacity_0() {
   document.body.style.overflowY = "hidden";
   //document.body.style.marginRight = "20px";
@@ -1017,12 +1020,17 @@ function create_fullscreen(url, type_class, deseaced_map, place_map, org_map, co
         $loader.innerHTML = elem;
         height = $loader.scrollHeight*1 + 30; 
         if (height < 500) {
-          $parent_div.style.height = height + "px";
+          if (!cord)
+            $parent_div.style.height = height + "px";
+            _height = (window.innerHeight - height - 50) / 2;
+            $parent_div.style.top = _height + "px";
+            prev_next_height = _height*1 + 50 + "px";
+          }
+          else {
+            $parent_div.style.height = "700px";
+            $parent_div.style.top = "15px";
+          }
           $loader.style.overflowY = "unset";
-
-          _height = (window.innerHeight - height - 50) / 2;
-          $parent_div.style.top = _height + "px";
-          prev_next_height = _height*1 + 50 + "px";
         } else {
           $parent_div.style.height = "100%";
           $parent_div.style.top = "15px";
