@@ -49,7 +49,7 @@
                      Кладбище
                   </h6>
                   <p class="font-semibold mt-2">
-                     <a href="/places/<%= _place.id %>/deceased_list/" style="text-decoration: underline;">
+                     <a href="/place/<%= _place.id %>/" style="text-decoration: underline;">
                         <%= _place.title %>
                      </a>
                      <br />

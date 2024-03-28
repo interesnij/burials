@@ -509,39 +509,48 @@ impl Deceased {
             let mut default = true;
 
             if case != 5 && first_name.is_some() {
+                println!("first_name exists");
                 check_exists = i.first_name.contains(first_name.as_deref().unwrap());
                 default = false;
-            } 
+            }
             if case != 6 && middle_name.is_some() && i.middle_name.is_some() {
+                println!("middle_name exists");
                 let i_middle_name = i.middle_name.as_deref().unwrap();
                 check_exists = i_middle_name.contains(middle_name.as_deref().unwrap());
                 default = false;
             }
-            if case != 3 && birth_date.is_some() { 
+            if case != 3 && birth_date.is_some() {
+                println!("birth_date exists");
                 check_exists = i.birth_date == birth_date.unwrap();
                 default = false;
             }
             if case != 4 && death_date.is_some() {
+                println!("death_date exists");
                 check_exists = i.death_date == death_date.unwrap();
                 default = false;
             }
             if case != 9 && with_photo.is_some() {
+                println!("image exists");
                 check_exists == i.image.is_some();
                 default = false;
             }
             if case != 2 && place.is_some() {
+                println!("place exists");
                 check_exists = i.place_id == place.unwrap();
                 default = false;
             }
             if case != 7 && is_veteran.is_some() {
+                println!("veteran exists");
                 check_exists == i.is_veteran;
                 default = false; 
             }
             if case != 8 && is_famous.is_some() {
+                println!("famous exists");
                 check_exists == i.is_famous;
                 default = false;
             }
             if case != 10 && with_cord.is_some() {
+                println!("cord exists");
                 check_exists == i.cord.is_some();
                 default = false;
             }

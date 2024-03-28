@@ -9,7 +9,7 @@
                         <div style="margin-bottom:10px">
                             <div class="single-properties-box-style1" style="border: #ccc solid 1px;padding: 5px;">
                                 <div class="img-holder">
-                                    <img src="<%= i.get_image() %>" alt="img">
+                                    <img class="image_fit_200" src="<%= i.get_image() %>" alt="img">
                                 </div>
                                 <div class="text-holder">
                                     <h3> 

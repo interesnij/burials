@@ -28,7 +28,7 @@ function load_places_map(cord) {
               preset: 'islands#blueCircleDotIconWithCaption',
               iconCaptionMaxWidth: '50',
               iconLayout: 'default#image',
-              iconImageHref: '/static/images/img.jpg',
+              iconImageHref: '/static/images/myIcon.gif',
               icon_imagesize: [30, 42],
               iconImageOffset: [-3, -42]
         }));
@@ -253,7 +253,7 @@ function load_places_map(cord) {
               preset: 'islands#blueCircleDotIconWithCaption',
               iconCaptionMaxWidth: '50',
               iconLayout: 'default#image',
-              iconImageHref: '/static/images/img.jpg',
+              iconImageHref: '/static/images/myIcon.gif',
               icon_imagesize: [30, 42],
               iconImageOffset: [-3, -42]
           }));

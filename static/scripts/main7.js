@@ -460,11 +460,11 @@ on('body', 'input', '.place_search', function() {
               if (link.responseText.length > 10) {
                 block.classList.remove("hidden");
               }
-              else {
-                _this.value = "";
-                block.classList.add("hidden");
-                _this.previousElementSibling.value = "";
-              }
+              //else {
+              //  _this.value = "";
+              //  block.classList.add("hidden");
+              //  _this.previousElementSibling.value = "";
+              //}
             } 
         }
     };
