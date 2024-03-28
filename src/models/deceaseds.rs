@@ -483,12 +483,12 @@ impl Deceased {
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             7  => schema::deceaseds::table
-                .filter(schema::deceaseds::is_veteran.eq(is_veteran.unwrap()))
+                .filter(schema::deceaseds::is_veteran.eq(true))
                 .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
             8  => schema::deceaseds::table
-                .filter(schema::deceaseds::is_famous.eq(is_famous.unwrap()))
+                .filter(schema::deceaseds::is_famous.eq(true))
                 .filter(schema::deceaseds::types.eq_any(vec!(2, 3)))
                 .load::<Deceased>(&_connection)
                 .expect("E."),
