@@ -515,7 +515,7 @@ impl Deceased {
                 default = false;
             }
             if case != 6 && middle_name.is_some() {
-                if i.middle_name.none() {
+                if i.middle_name.is_none() {
                     check_exists = false;
                     default = false;
                 }
