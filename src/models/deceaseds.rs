@@ -509,7 +509,7 @@ impl Deceased {
             let mut check_exists = false;
             let mut default = true;
 
-            if case != 1 && first_name.is_some() {
+            if case != 1 && last_name.is_some() {
                 println!("last_name exists");
                 check_exists = i.last_name.contains(last_name.as_deref().unwrap());
                 default = false;
