@@ -321,6 +321,9 @@ on('body', 'click', '.search_deceaseds', function() {
   if (form.querySelector("#id_first_name").value) {
     url += "&first_name=" + form.querySelector("#id_first_name").value
   };
+  if (form.querySelector("#id_last_name").value) {
+    url += "&last_name=" + form.querySelector("#id_last_name").value
+  };
   if (form.querySelector("#id_middle_name").value) {
     url += "&middle_name=" + form.querySelector("#id_middle_name").value
   };
