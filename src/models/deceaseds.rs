@@ -450,6 +450,7 @@ impl Deceased {
         if with_cord.is_some() {
             case = 10;
         }
+        println!("case {:?}", case);
         let list: Vec<Deceased> = match case {
             1  => schema::deceaseds::table
                 .filter(schema::deceaseds::last_name.ilike("%".to_owned() + &last_name.as_deref().unwrap() + "%"))
