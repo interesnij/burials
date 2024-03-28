@@ -423,31 +423,31 @@ impl Deceased {
         if last_name.is_some() {
             case = 1;
         }
-        if place.is_some() {
+        else if place.is_some() {
             case = 2;
         }
-        if birth_date.is_some() {
+        else if birth_date.is_some() {
             case = 3;
         }
-        if death_date.is_some() {
+        else if death_date.is_some() {
             case = 4;
         }
-        if first_name.is_some() {
+        else if first_name.is_some() {
             case = 5;
         }
-        if middle_name.is_some() {
+        else if middle_name.is_some() {
             case = 6;
         }
-        if is_veteran.is_some() {
+        else if is_veteran.is_some() {
             case = 7;
         }
-        if is_famous.is_some() {
+        else if is_famous.is_some() {
             case = 8;
         }
-        if with_photo.is_some() {
+        else if with_photo.is_some() {
             case = 9;
         }
-        if with_cord.is_some() {
+        else if with_cord.is_some() {
             case = 10;
         }
         println!("case {:?}", case);
