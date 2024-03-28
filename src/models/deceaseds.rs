@@ -509,6 +509,11 @@ impl Deceased {
             let mut check_exists = false;
             let mut default = true;
 
+            if case != 1 && first_name.is_some() {
+                println!("last_name exists");
+                check_exists = i.last_name.contains(last_name.as_deref().unwrap());
+                default = false;
+            }
             if case != 5 && first_name.is_some() {
                 println!("first_name exists");
                 check_exists = i.first_name.contains(first_name.as_deref().unwrap());
@@ -538,7 +543,7 @@ impl Deceased {
             }
             if case != 9 && with_photo.is_some() {
                 println!("image exists");
-                check_exists == i.image.is_some();
+                check_exists = i.image.is_some();
                 default = false;
             }
             if case != 2 && place.is_some() {
@@ -548,17 +553,17 @@ impl Deceased {
             }
             if case != 7 && is_veteran.is_some() {
                 println!("veteran exists");
-                check_exists == i.is_veteran;
+                check_exists = i.is_veteran;
                 default = false; 
             }
             if case != 8 && is_famous.is_some() {
                 println!("famous exists");
-                check_exists == i.is_famous;
+                check_exists = i.is_famous;
                 default = false;
             }
             if case != 10 && with_cord.is_some() {
                 println!("cord exists");
-                check_exists == i.cord.is_some();
+                check_exists = i.cord.is_some();
                 default = false;
             }
 
