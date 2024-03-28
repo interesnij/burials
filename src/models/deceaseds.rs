@@ -597,9 +597,9 @@ impl Deceased {
                 default = false;
             }
 
-            if default {
+            //if default {
                 stack.push(i);
-            }
+            //}
         }
         return stack;
     }
