@@ -514,11 +514,17 @@ impl Deceased {
                 check_exists = i.first_name.contains(first_name.as_deref().unwrap());
                 default = false;
             }
-            if case != 6 && middle_name.is_some() && i.middle_name.is_some() {
-                println!("middle_name exists");
-                let i_middle_name = i.middle_name.as_deref().unwrap();
-                check_exists = i_middle_name.contains(middle_name.as_deref().unwrap());
-                default = false;
+            if case != 6 && middle_name.is_some() {
+                if i.middle_name.none() {
+                    check_exists = false;
+                    default = false;
+                }
+                else {
+                    println!("middle_name exists");
+                    let i_middle_name = i.middle_name.as_deref().unwrap();
+                    check_exists = i_middle_name.contains(middle_name.as_deref().unwrap());
+                    default = false;
+                }
             }
             if case != 3 && birth_date.is_some() {
                 println!("birth_date exists");
